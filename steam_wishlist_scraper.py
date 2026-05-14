@@ -33,10 +33,9 @@ def is_major(publisher: str) -> bool:
 def check_released(date_str: str) -> bool:
     """リリース済みかどうか判定"""
     if not date_str:
-        return False  # 日付不明 = 未発売扱い
+        return True  # 日付不明 = リリース済み扱い（top100は全て発売済み）
     try:
-        # SteamSpy形式: "Jan 01, 2020" or "2020-01-01"
-        for fmt in ("%b %d, %Y", "%Y-%m-%d", "%d %b, %Y"):
+        for fmt in ("%b %d, %Y", "%Y-%m-%d", "%d %b, %Y", "%B %d, %Y"):
             try:
                 dt = datetime.strptime(date_str.strip(), fmt)
                 return dt <= datetime.now()
