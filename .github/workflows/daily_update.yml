@@ -78,7 +78,7 @@ jobs:
       - name: Fetch OpenCritic scores
         continue-on-error: true
         env:
-          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI }}
         run: python opencritic_scraper.py
 
       - name: Update rank history

@@ -12,7 +12,7 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 import requests
 
-RAPIDAPI_KEY  = os.environ.get("RAPIDAPI_KEY", "")
+RAPIDAPI_KEY  = os.environ.get("RAPIDAPI_KEY") or os.environ.get("RAPIDAPI", "")
 API_HOST      = "opencritic-api.p.rapidapi.com"
 BASE_URL      = f"https://{API_HOST}"
 OUTPUT_PATH   = Path("docs/data/opencritic.json")
