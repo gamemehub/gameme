@@ -89,9 +89,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git add docs/data/rankings.json docs/data/history.json || true
-          [ -f docs/data/igdb_upcoming.json ] && git add docs/data/igdb_upcoming.json || true
-          [ -f docs/data/opencritic.json ] && git add docs/data/opencritic.json || true
+          git add docs/data/ || true
           git diff --staged --quiet || git commit -m "data: update steam wishlist ranking $(date +'%Y-%m-%d')"
           git push
 
