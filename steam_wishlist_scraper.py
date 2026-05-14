@@ -131,6 +131,7 @@ class SteamSpyScraper:
                 price=self._parse_price(info.get("price", -1)),
                 review_summary=self._calc_review(pos, neg),
                 review_count=f"{pos+neg:,}" if pos+neg > 0 else "",
+                review_score=int(pos/(pos+neg)*100) if pos+neg > 0 else None,
                 owners=self._parse_owners(info.get("owners", "")),
                 url=f"{STEAM_APP_URL}/{app_id}",
             ))

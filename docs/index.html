@@ -275,7 +275,7 @@ function render(){
         <div class="game-name">${e.name}</div>
         <div class="game-meta">
           ${pubBadge}
-          ${e.review_summary?`<span>⭐ ${e.review_summary}</span>`:""}
+          ${e.review_summary?`<span>⭐ ${e.review_summary}${e.review_score!=null?" "+e.review_score+"点":""}</span>`:""}
           ${e.hypes?`<span>🔥 hypes: ${e.hypes.toLocaleString()}</span>`:""}
           ${e.top_critic_score!=null?`<span>📰 批評家: ${Math.round(e.top_critic_score)}点 (${e.critic_reviews}件)</span>`:""}
           ${e.owners?`<span>👥 ${e.owners}</span>`:""}
