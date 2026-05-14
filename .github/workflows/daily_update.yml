@@ -68,6 +68,13 @@ jobs:
           print(f"[OK] {len(new_data)}件保存")
           EOF
 
+      - name: Fetch IGDB upcoming games
+        continue-on-error: true
+        env:
+          IGDB_CLIENT_ID: ${{ secrets.IGDB_CLIENT_ID }}
+          IGDB_CLIENT_SECRET: ${{ secrets.IGDB_CLIENT_SECRET }}
+        run: python igdb_scraper.py
+
       - name: Update rank history
         run: python track_history.py
 
@@ -76,7 +83,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git add docs/data/rankings.json docs/data/history.json
+          git add docs/data/rankings.json docs/data/history.json docs/data/igdb_upcoming.json
           git diff --staged --quiet || git commit -m "data: update steam wishlist ranking $(date +'%Y-%m-%d')"
           git push
 

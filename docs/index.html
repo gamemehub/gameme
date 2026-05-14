@@ -115,16 +115,17 @@
 <footer>データはSteamデータより自動取得 · GameMeHub © 2026</footer>
 
 <script>
-const DATA_URL="./data/rankings.json",HISTORY_URL="./data/history.json";
-let allEntries=[],historyData={},currentPub="all",currentRel="all",currentFilter="all",openCardId=null;
+const DATA_URL="./data/rankings.json",HISTORY_URL="./data/history.json",IGDB_URL="./data/igdb_upcoming.json";
+let allEntries=[],igdbEntries=[],historyData={},currentPub="all",currentRel="all",currentFilter="all",openCardId=null;
 
 async function loadData(){
   try{
-    const[r1,r2]=await Promise.all([fetch(DATA_URL),fetch(HISTORY_URL).catch(()=>null)]);
+    const[r1,r2,r3]=await Promise.all([fetch(DATA_URL),fetch(HISTORY_URL).catch(()=>null),fetch(IGDB_URL).catch(()=>null)]);
     if(!r1.ok)throw new Error("HTTP "+r1.status);
     const d=await r1.json();
     allEntries=d.entries||[];
     if(r2&&r2.ok)historyData=await r2.json();
+    if(r3&&r3.ok){const ig=await r3.json();igdbEntries=(ig.entries||[]);}
     const dt=new Date(d.updated_at);
     document.getElementById("updated-at").textContent="更新: "+dt.toLocaleString("ja-JP",{timeZone:"Asia/Tokyo"});
     render();
@@ -133,9 +134,16 @@ async function loadData(){
   }
 }
 
+function getActiveEntries(){
+  // リリース前タブのときはIGDBデータを使う
+  if(currentRel==="unreleased") return igdbEntries;
+  if(currentRel==="all") return [...allEntries,...igdbEntries];
+  return allEntries;
+}
 function getFiltered(){
   const q=document.getElementById("search").value.toLowerCase();
-  return allEntries.filter(e=>{
+  const base=getActiveEntries();
+  return base.filter(e=>{
     if(currentPub==="major"&&!e.is_major)return false;
     if(currentPub==="indie"&&e.is_major)return false;
     if(currentRel==="released"&&!e.is_released)return false;
@@ -244,6 +252,7 @@ function render(){
         <div class="game-meta">
           ${pubBadge}
           ${e.review_summary?`<span>⭐ ${e.review_summary}</span>`:""}
+          ${e.hypes?`<span>🔥 hypes: ${e.hypes.toLocaleString()}</span>`:""}
           ${e.owners?`<span>👥 ${e.owners}</span>`:""}
         </div>
       </div>
