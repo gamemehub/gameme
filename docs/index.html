@@ -28,6 +28,13 @@
     .tab-rel.active{background:rgba(74,222,128,.12);color:var(--up);}
     .tab-released.active{background:rgba(74,222,128,.12);color:var(--up);}
     .tab-unreleased.active{background:rgba(250,204,21,.12);color:var(--new);}
+    .tab-src.active{background:rgba(27,156,252,.12);color:var(--accent);}
+    .tab-oc.active{background:rgba(255,215,0,.12);color:var(--gold);}
+    .oc-score{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:8px;font-weight:800;font-size:.95rem;flex-shrink:0;}
+    .oc-must{background:rgba(74,222,128,.2);color:var(--up);border:1px solid rgba(74,222,128,.4);}
+    .oc-strong{background:rgba(27,156,252,.2);color:var(--accent);border:1px solid rgba(27,156,252,.4);}
+    .oc-fair{background:rgba(250,204,21,.2);color:var(--new);border:1px solid rgba(250,204,21,.4);}
+    .oc-weak{background:rgba(248,113,113,.2);color:var(--down);border:1px solid rgba(248,113,113,.4);}
     .tab-panel{max-width:960px;margin:0 auto;padding:0 16px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding-top:1px;margin-top:8px;}
 
     .controls{padding:16px 0 4px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
@@ -99,6 +106,13 @@
     <button class="tab tab-rel tab-released" data-rel="released">✅ リリース済み</button>
     <button class="tab tab-rel tab-unreleased" data-rel="unreleased">🗓 リリース前</button>
   </div>
+  <div class="tab-row">
+    <span class="tab-label">データソース</span>
+    <button class="tab tab-src active" data-src="all">🌐 すべて</button>
+    <button class="tab tab-src" data-src="steam">🎮 Steam</button>
+    <button class="tab tab-src" data-src="igdb">🎯 IGDB</button>
+    <button class="tab tab-src tab-oc" data-src="opencritic">🏆 批評家スコア</button>
+  </div>
 </div>
 <div class="tab-panel">
   <div class="controls">
@@ -115,17 +129,18 @@
 <footer>データはSteam・IGDBデータより自動取得 · GameMeHub © 2026</footer>
 
 <script>
-const DATA_URL="./data/rankings.json",HISTORY_URL="./data/history.json",IGDB_URL="./data/igdb_upcoming.json";
-let allEntries=[],igdbEntries=[],historyData={},currentPub="all",currentRel="all",currentFilter="all",openCardId=null;
+const DATA_URL="./data/rankings.json",HISTORY_URL="./data/history.json",IGDB_URL="./data/igdb_upcoming.json",OC_URL="./data/opencritic.json";
+let allEntries=[],igdbEntries=[],ocEntries=[],historyData={},currentPub="all",currentRel="all",currentSrc="all",currentFilter="all",openCardId=null;
 
 async function loadData(){
   try{
-    const[r1,r2,r3]=await Promise.all([fetch(DATA_URL),fetch(HISTORY_URL).catch(()=>null),fetch(IGDB_URL).catch(()=>null)]);
+    const[r1,r2,r3,r4]=await Promise.all([fetch(DATA_URL),fetch(HISTORY_URL).catch(()=>null),fetch(IGDB_URL).catch(()=>null),fetch(OC_URL).catch(()=>null)]);
     if(!r1.ok)throw new Error("HTTP "+r1.status);
     const d=await r1.json();
     allEntries=d.entries||[];
     if(r2&&r2.ok)historyData=await r2.json();
     if(r3&&r3.ok){const ig=await r3.json();igdbEntries=(ig.entries||[]);}
+    if(r4&&r4.ok){const oc=await r4.json();ocEntries=(oc.entries||[]);}
     const dt=new Date(d.updated_at);
     document.getElementById("updated-at").textContent="更新: "+dt.toLocaleString("ja-JP",{timeZone:"Asia/Tokyo"});
     render();
@@ -135,7 +150,10 @@ async function loadData(){
 }
 
 function getActiveEntries(){
-  // リリース前タブのときはIGDBデータを使う
+  if(currentSrc==="opencritic") return ocEntries;
+  if(currentSrc==="igdb") return igdbEntries;
+  if(currentSrc==="steam") return allEntries;
+  // allの場合
   if(currentRel==="unreleased") return igdbEntries;
   if(currentRel==="all") return [...allEntries,...igdbEntries];
   return allEntries;
@@ -253,6 +271,7 @@ function render(){
           ${pubBadge}
           ${e.review_summary?`<span>⭐ ${e.review_summary}</span>`:""}
           ${e.hypes?`<span>🔥 hypes: ${e.hypes.toLocaleString()}</span>`:""}
+          ${e.top_critic_score!=null?`<span>📰 批評家: ${Math.round(e.top_critic_score)}点 (${e.critic_reviews}件)</span>`:""}
           ${e.owners?`<span>👥 ${e.owners}</span>`:""}
         </div>
       </div>
@@ -261,6 +280,7 @@ function render(){
         <div class="sparkline-label">${hist.length>1?hist.length+"日間":""}</div>
       </div>
       <div class="game-right">
+        ${e.top_critic_score!=null?`<div class="oc-score ${e.top_critic_score>=90?'oc-must':e.top_critic_score>=75?'oc-strong':e.top_critic_score>=60?'oc-fair':'oc-weak'}">${Math.round(e.top_critic_score)}</div>`:""}
         <div class="price">${e.price||"未発表"}</div>
         ${badge}
       </div>`;
@@ -311,6 +331,12 @@ document.querySelectorAll(".tab-rel").forEach(t=>{
   t.addEventListener("click",()=>{
     document.querySelectorAll(".tab-rel").forEach(x=>x.classList.remove("active"));
     t.classList.add("active");currentRel=t.dataset.rel;render();
+  });
+});
+document.querySelectorAll(".tab-src").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab-src").forEach(x=>x.classList.remove("active"));
+    t.classList.add("active");currentSrc=t.dataset.src;render();
   });
 });
 loadData();

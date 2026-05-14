@@ -75,6 +75,12 @@ jobs:
           IGDB_CLIENT_SECRET: ${{ secrets.IGDB_CLIENT_SECRET }}
         run: python igdb_scraper.py
 
+      - name: Fetch OpenCritic scores
+        continue-on-error: true
+        env:
+          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+        run: python opencritic_scraper.py
+
       - name: Update rank history
         run: python track_history.py
 
@@ -83,7 +89,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git add docs/data/rankings.json docs/data/history.json docs/data/igdb_upcoming.json
+          git add docs/data/rankings.json docs/data/history.json docs/data/igdb_upcoming.json docs/data/opencritic.json
           git diff --staged --quiet || git commit -m "data: update steam wishlist ranking $(date +'%Y-%m-%d')"
           git push
 
