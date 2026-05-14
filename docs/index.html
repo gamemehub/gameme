@@ -1,60 +1,74 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Steam Wishlist Ranking | GameMeHub</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Steam Ranking | GameMeHub</title>
   <style>
-    :root {
-      --bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--accent:#1b9cfc;--accent2:#4ecdc4;
-      --gold:#ffd700;--silver:#c0c0c0;--bronze:#cd7f32;--text:#e8eaf0;--muted:#7a8099;
-      --up:#4ade80;--down:#f87171;--new:#facc15;--border:rgba(255,255,255,0.07);
-    }
+    :root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--accent:#1b9cfc;--accent2:#4ecdc4;--gold:#ffd700;--silver:#c0c0c0;--bronze:#cd7f32;--text:#e8eaf0;--muted:#7a8099;--up:#4ade80;--down:#f87171;--new:#facc15;--border:rgba(255,255,255,0.07);--major:#f97316;--indie:#a78bfa;}
     *{box-sizing:border-box;margin:0;padding:0;}
     body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh;}
-    header{background:linear-gradient(135deg,#0f1117,#1a1d27);border-bottom:1px solid var(--border);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+    header{background:linear-gradient(135deg,#0f1117,#1a1d27);border-bottom:1px solid var(--border);padding:18px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
     .logo{display:flex;align-items:center;gap:10px;font-size:1.2rem;font-weight:700;color:var(--accent);}
     .logo span{color:var(--text);}
     .updated{font-size:.78rem;color:var(--muted);}
-    .hero{background:linear-gradient(180deg,#1a1d27,#0f1117);padding:40px 24px 32px;text-align:center;border-bottom:1px solid var(--border);}
-    .hero h1{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;}
+    .hero{background:linear-gradient(180deg,#1a1d27,#0f1117);padding:36px 24px 28px;text-align:center;border-bottom:1px solid var(--border);}
+    .hero h1{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px;}
     .hero p{color:var(--muted);font-size:.9rem;}
-    .controls{max-width:960px;margin:24px auto;padding:0 16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
-    .search-box{flex:1;min-width:200px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:.9rem;outline:none;transition:border-color .2s;}
+
+    /* タブ */
+    .tabs{max-width:960px;margin:20px auto 0;padding:0 16px;display:flex;gap:4px;}
+    .tab{padding:9px 20px;border-radius:8px 8px 0 0;border:1px solid var(--border);border-bottom:none;background:var(--surface);color:var(--muted);font-size:.88rem;cursor:pointer;font-weight:600;transition:all .2s;}
+    .tab.active{background:var(--surface2);color:var(--text);border-color:var(--accent);border-bottom:1px solid var(--surface2);}
+    .tab-all.active{color:var(--accent);}
+    .tab-major.active{color:var(--major);}
+    .tab-indie.active{color:var(--indie);}
+    .tab-panel{max-width:960px;margin:0 auto;padding:0 16px;background:var(--surface2);border:1px solid var(--border);border-radius:0 8px 8px 8px;padding-top:1px;}
+
+    .controls{padding:16px 0 4px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+    .search-box{flex:1;min-width:180px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:9px 13px;color:var(--text);font-size:.88rem;outline:none;transition:border-color .2s;}
     .search-box:focus{border-color:var(--accent);}
-    .filter-btn{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 16px;color:var(--muted);font-size:.85rem;cursor:pointer;transition:all .2s;}
+    .filter-btn{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:9px 14px;color:var(--muted);font-size:.82rem;cursor:pointer;transition:all .2s;}
     .filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
-    .ranking{max-width:960px;margin:0 auto 60px;padding:0 16px;display:flex;flex-direction:column;gap:8px;}
-    .card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 18px;display:grid;grid-template-columns:52px 1fr 90px auto;gap:12px;align-items:center;cursor:pointer;transition:transform .15s,border-color .15s;}
-    .card:hover{transform:translateX(4px);border-color:var(--accent);}
+
+    /* 統計バー */
+    .stats-bar{display:flex;gap:20px;padding:10px 0 14px;font-size:.8rem;color:var(--muted);}
+    .stat-item strong{color:var(--text);}
+
+    .ranking{display:flex;flex-direction:column;gap:6px;padding-bottom:20px;}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:13px 16px;display:grid;grid-template-columns:50px 1fr 88px auto;gap:10px;align-items:center;cursor:pointer;transition:transform .15s,border-color .15s;}
+    .card:hover{transform:translateX(3px);border-color:var(--accent);}
     .card.rank-1{border-left:3px solid var(--gold);}
     .card.rank-2{border-left:3px solid var(--silver);}
     .card.rank-3{border-left:3px solid var(--bronze);}
-    .rank-badge{text-align:center;font-size:1.4rem;font-weight:900;color:var(--muted);}
+    .rank-badge{text-align:center;font-size:1.3rem;font-weight:900;color:var(--muted);}
     .rank-1 .rank-badge{color:var(--gold);}
     .rank-2 .rank-badge{color:var(--silver);}
     .rank-3 .rank-badge{color:var(--bronze);}
     .game-info{min-width:0;}
-    .game-name{font-weight:600;font-size:1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:4px;}
-    .game-meta{font-size:.78rem;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;}
+    .game-name{font-weight:600;font-size:.97rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px;}
+    .game-meta{font-size:.75rem;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
+    .pub-badge{display:inline-block;font-size:.68rem;font-weight:700;padding:1px 6px;border-radius:99px;}
+    .pub-major{background:rgba(249,115,22,.15);color:var(--major);}
+    .pub-indie{background:rgba(167,139,250,.15);color:var(--indie);}
     .sparkline-wrap{display:flex;flex-direction:column;align-items:center;gap:2px;}
-    .sparkline-label{font-size:.65rem;color:var(--muted);}
+    .sparkline-label{font-size:.63rem;color:var(--muted);}
     .game-right{text-align:right;}
-    .price{font-size:.9rem;font-weight:600;color:var(--accent2);margin-bottom:4px;}
-    .badge{display:inline-block;font-size:.7rem;font-weight:700;padding:2px 7px;border-radius:99px;}
+    .price{font-size:.88rem;font-weight:600;color:var(--accent2);margin-bottom:3px;}
+    .badge{display:inline-block;font-size:.68rem;font-weight:700;padding:2px 6px;border-radius:99px;}
     .badge-new{background:rgba(250,204,21,.15);color:var(--new);}
     .badge-up{background:rgba(74,222,128,.15);color:var(--up);}
     .badge-down{background:rgba(248,113,113,.15);color:var(--down);}
-    .detail-panel{display:none;background:var(--surface2);border:1px solid var(--border);border-top:none;border-radius:0 0 12px 12px;padding:16px 18px;margin-top:-8px;}
+    .detail-panel{display:none;background:#1e2235;border:1px solid var(--border);border-top:none;border-radius:0 0 10px 10px;padding:14px 16px;margin-top:-6px;}
     .detail-panel.open{display:block;}
-    .detail-title{font-size:.8rem;color:var(--muted);margin-bottom:8px;}
+    .detail-title{font-size:.78rem;color:var(--muted);margin-bottom:8px;}
     .chart-wrap{position:relative;width:100%;height:150px;}
     .chart-wrap canvas{width:100%!important;height:150px!important;}
-    .state-msg{text-align:center;padding:60px 20px;color:var(--muted);}
-    .spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 16px;}
+    .state-msg{text-align:center;padding:50px 20px;color:var(--muted);}
+    .spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 14px;}
     @keyframes spin{to{transform:rotate(360deg);}}
-    footer{text-align:center;padding:20px;font-size:.75rem;color:var(--muted);border-top:1px solid var(--border);}
-    @media(max-width:600px){.card{grid-template-columns:44px 1fr auto;}.sparkline-wrap{display:none;}}
+    footer{text-align:center;padding:20px;font-size:.75rem;color:var(--muted);border-top:1px solid var(--border);margin-top:40px;}
+    @media(max-width:600px){.card{grid-template-columns:42px 1fr auto;}.sparkline-wrap{display:none;}.tabs{overflow-x:auto;}.tab{white-space:nowrap;}}
   </style>
 </head>
 <body>
@@ -63,24 +77,32 @@
   <div class="updated" id="updated-at">読み込み中...</div>
 </header>
 <div class="hero">
-  <h1>Steam Wishlist Ranking</h1>
-  <p>Steamのウィッシュリスト登録数ランキング・毎日自動更新</p>
+  <h1>Steam Ranking</h1>
+  <p>SteamSpyデータによるゲームランキング・毎日自動更新</p>
 </div>
-<div class="controls">
-  <input class="search-box" type="text" placeholder="🔍 ゲームを検索..." id="search"/>
-  <button class="filter-btn active" data-filter="all">すべて</button>
-  <button class="filter-btn" data-filter="new">🆕 新着</button>
-  <button class="filter-btn" data-filter="up">📈 上昇</button>
-  <button class="filter-btn" data-filter="unreleased">🗓 未発売</button>
+
+<div class="tabs">
+  <button class="tab tab-all active" data-tab="all">🌐 すべて</button>
+  <button class="tab tab-major" data-tab="major">🏢 メジャー</button>
+  <button class="tab tab-indie" data-tab="indie">🎯 インディー</button>
 </div>
-<div class="ranking" id="ranking">
-  <div class="state-msg"><div class="spinner"></div>データを読み込み中...</div>
+<div class="tab-panel">
+  <div class="controls">
+    <input class="search-box" type="text" placeholder="🔍 ゲームを検索..." id="search"/>
+    <button class="filter-btn active" data-filter="all">すべて</button>
+    <button class="filter-btn" data-filter="new">🆕 新着</button>
+    <button class="filter-btn" data-filter="up">📈 上昇</button>
+  </div>
+  <div class="stats-bar" id="stats-bar"></div>
+  <div class="ranking" id="ranking">
+    <div class="state-msg"><div class="spinner"></div>データを読み込み中...</div>
+  </div>
 </div>
 <footer>データはSteamSpy APIより自動取得 · GameMeHub © 2026</footer>
 
 <script>
 const DATA_URL="./data/rankings.json",HISTORY_URL="./data/history.json";
-let allEntries=[],historyData={},currentFilter="all",openCardId=null;
+let allEntries=[],historyData={},currentTab="all",currentFilter="all",openCardId=null;
 
 async function loadData(){
   try{
@@ -93,8 +115,20 @@ async function loadData(){
     document.getElementById("updated-at").textContent="更新: "+dt.toLocaleString("ja-JP",{timeZone:"Asia/Tokyo"});
     render();
   }catch(e){
-    document.getElementById("ranking").innerHTML=`<div class="state-msg">⚠️ 読み込み失敗: ${e.message}</div>`;
+    document.getElementById("ranking").innerHTML=`<div class="state-msg">⚠️ ${e.message}</div>`;
   }
+}
+
+function getFiltered(){
+  const q=document.getElementById("search").value.toLowerCase();
+  return allEntries.filter(e=>{
+    if(currentTab==="major"&&!e.is_major)return false;
+    if(currentTab==="indie"&&e.is_major)return false;
+    if(q&&!e.name.toLowerCase().includes(q)&&!e.publisher.toLowerCase().includes(q))return false;
+    if(currentFilter==="new")return e.is_new;
+    if(currentFilter==="up")return e.prev_rank&&(e.prev_rank-e.rank)>=1;
+    return true;
+  });
 }
 
 function drawSparkline(canvas,appId){
@@ -103,12 +137,10 @@ function drawSparkline(canvas,appId){
   const ctx=canvas.getContext("2d"),W=canvas.width,H=canvas.height;
   ctx.clearRect(0,0,W,H);
   const ranks=hist.map(h=>h.rank),maxR=Math.max(...ranks),minR=Math.min(...ranks),range=maxR-minR||1;
-  const toY=r=>H-2-((maxR-r)/range)*(H-4);
-  const toX=i=>(i/(hist.length-1))*(W-2)+1;
+  const toY=r=>H-2-((maxR-r)/range)*(H-4),toX=i=>(i/(hist.length-1))*(W-2)+1;
   const g=ctx.createLinearGradient(0,0,W,0);
   g.addColorStop(0,"#1b9cfc88");g.addColorStop(1,"#4ecdc4cc");
-  ctx.beginPath();
-  hist.forEach((h,i)=>i===0?ctx.moveTo(toX(i),toY(h.rank)):ctx.lineTo(toX(i),toY(h.rank)));
+  ctx.beginPath();hist.forEach((h,i)=>i===0?ctx.moveTo(toX(i),toY(h.rank)):ctx.lineTo(toX(i),toY(h.rank)));
   ctx.strokeStyle=g;ctx.lineWidth=1.5;ctx.stroke();
   ctx.beginPath();ctx.arc(toX(hist.length-1),toY(hist[hist.length-1].rank),2.5,0,Math.PI*2);
   ctx.fillStyle="#4ecdc4";ctx.fill();
@@ -118,46 +150,30 @@ function drawDetailChart(canvas,appId){
   const hist=historyData[appId];
   if(!hist||hist.length===0)return;
   const W=canvas.width=canvas.offsetWidth,H=canvas.height=150;
-  const ctx=canvas.getContext("2d");
-  ctx.clearRect(0,0,W,H);
+  const ctx=canvas.getContext("2d");ctx.clearRect(0,0,W,H);
   const ranks=hist.map(h=>h.rank);
   const maxR=Math.max(...ranks)+2,minR=Math.max(1,Math.min(...ranks)-2),range=maxR-minR||1;
-  const pad={t:10,r:10,b:28,l:32};
-  const gW=W-pad.l-pad.r,gH=H-pad.t-pad.b;
-  const toY=r=>pad.t+((maxR-r)/range)*gH;
-  const toX=i=>pad.l+(i/Math.max(hist.length-1,1))*gW;
-
-  // グリッド
+  const pad={t:10,r:10,b:26,l:32},gW=W-pad.l-pad.r,gH=H-pad.t-pad.b;
+  const toY=r=>pad.t+((maxR-r)/range)*gH,toX=i=>pad.l+(i/Math.max(hist.length-1,1))*gW;
   ctx.strokeStyle="rgba(255,255,255,0.05)";ctx.lineWidth=1;
   for(let i=0;i<=4;i++){
-    const y=pad.t+(i/4)*gH;
-    ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+gW,y);ctx.stroke();
-    const rv=Math.round(maxR-(i/4)*range);
+    const y=pad.t+(i/4)*gH;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(pad.l+gW,y);ctx.stroke();
     ctx.fillStyle="rgba(255,255,255,0.35)";ctx.font="10px sans-serif";ctx.textAlign="right";
-    ctx.fillText(rv+"位",pad.l-4,y+3);
+    ctx.fillText(Math.round(maxR-(i/4)*range)+"位",pad.l-4,y+3);
   }
-
-  // 塗りつぶし
   const grad=ctx.createLinearGradient(0,pad.t,0,pad.t+gH);
   grad.addColorStop(0,"rgba(27,156,252,0.3)");grad.addColorStop(1,"rgba(27,156,252,0)");
-  ctx.beginPath();
-  hist.forEach((h,i)=>i===0?ctx.moveTo(toX(i),toY(h.rank)):ctx.lineTo(toX(i),toY(h.rank)));
-  ctx.lineTo(toX(hist.length-1),pad.t+gH);ctx.lineTo(toX(0),pad.t+gH);ctx.closePath();
-  ctx.fillStyle=grad;ctx.fill();
-
-  // ライン
-  ctx.beginPath();
-  hist.forEach((h,i)=>i===0?ctx.moveTo(toX(i),toY(h.rank)):ctx.lineTo(toX(i),toY(h.rank)));
+  ctx.beginPath();hist.forEach((h,i)=>i===0?ctx.moveTo(toX(i),toY(h.rank)):ctx.lineTo(toX(i),toY(h.rank)));
+  ctx.lineTo(toX(hist.length-1),pad.t+gH);ctx.lineTo(toX(0),pad.t+gH);ctx.closePath();ctx.fillStyle=grad;ctx.fill();
+  ctx.beginPath();hist.forEach((h,i)=>i===0?ctx.moveTo(toX(i),toY(h.rank)):ctx.lineTo(toX(i),toY(h.rank)));
   ctx.strokeStyle="#1b9cfc";ctx.lineWidth=2;ctx.stroke();
-
-  // ポイント＆日付
   const step=Math.ceil(hist.length/7);
   hist.forEach((h,i)=>{
     const x=toX(i),y=toY(h.rank);
     ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fillStyle="#fff";ctx.fill();
     if(hist.length<=7||i%step===0||i===hist.length-1){
       ctx.fillStyle="rgba(255,255,255,0.4)";ctx.font="9px sans-serif";ctx.textAlign="center";
-      ctx.fillText(h.date.slice(5),x,H-6);
+      ctx.fillText(h.date.slice(5),x,H-5);
     }
   });
 }
@@ -171,25 +187,37 @@ function getDiff(e){
   return null;
 }
 
+function updateStats(entries){
+  const total=entries.length;
+  const major=entries.filter(e=>e.is_major).length;
+  const indie=total-major;
+  const news=entries.filter(e=>e.is_new).length;
+  document.getElementById("stats-bar").innerHTML=`
+    <div class="stat-item">合計 <strong>${total}</strong>件</div>
+    <div class="stat-item">🏢 メジャー <strong>${major}</strong>件</div>
+    <div class="stat-item">🎯 インディー <strong>${indie}</strong>件</div>
+    ${news?`<div class="stat-item">🆕 新着 <strong>${news}</strong>件</div>`:""}
+  `;
+}
+
 function render(){
-  const q=document.getElementById("search").value.toLowerCase();
-  const entries=allEntries.filter(e=>{
-    if(q&&!e.name.toLowerCase().includes(q))return false;
-    if(currentFilter==="new")return e.is_new;
-    if(currentFilter==="up")return e.prev_rank&&(e.prev_rank-e.rank)>=1;
-    if(currentFilter==="unreleased")return!e.release_date||e.price==="未発表";
-    return true;
-  });
+  const entries=getFiltered();
+  updateStats(currentTab==="all"?allEntries:entries);
   const container=document.getElementById("ranking");
   if(entries.length===0){container.innerHTML=`<div class="state-msg">該当するゲームが見つかりませんでした</div>`;return;}
   container.innerHTML="";
 
-  entries.forEach(e=>{
+  // タブ内での順位を再付番
+  entries.forEach((e,idx)=>{
+    const displayRank=idx+1;
     const diff=getDiff(e);
-    const rc=e.rank<=3?`rank-${e.rank}`:"";
-    const medal=e.rank===1?"🥇":e.rank===2?"🥈":e.rank===3?"🥉":e.rank;
+    const rc=displayRank<=3?`rank-${displayRank}`:"";
+    const medal=displayRank===1?"🥇":displayRank===2?"🥈":displayRank===3?"🥉":displayRank;
     const badge=diff?`<span class="badge ${diff.cls}">${diff.label}</span>`:"";
     const hist=historyData[e.app_id]||[];
+    const pubBadge=e.is_major
+      ?`<span class="pub-badge pub-major">🏢 ${e.publisher||"Major"}</span>`
+      :`<span class="pub-badge pub-indie">🎯 ${e.publisher||"Indie"}</span>`;
 
     const card=document.createElement("div");
     card.className=`card ${rc}`;
@@ -198,14 +226,14 @@ function render(){
       <div class="game-info">
         <div class="game-name">${e.name}</div>
         <div class="game-meta">
-          <span>📅 ${e.release_date||"未定"}</span>
+          ${pubBadge}
           ${e.review_summary?`<span>⭐ ${e.review_summary}</span>`:""}
           ${e.owners?`<span>👥 ${e.owners}</span>`:""}
         </div>
       </div>
       <div class="sparkline-wrap">
         <canvas width="80" height="32" id="spark-${e.app_id}"></canvas>
-        <div class="sparkline-label">${hist.length>1?hist.length+"日間の推移":"蓄積中"}</div>
+        <div class="sparkline-label">${hist.length>1?hist.length+"日間":""}</div>
       </div>
       <div class="game-right">
         <div class="price">${e.price||"未発表"}</div>
@@ -216,11 +244,13 @@ function render(){
     panel.className="detail-panel";
     panel.id=`panel-${e.app_id}`;
     panel.innerHTML=`
-      <div class="detail-title">📈 順位推移（過去${hist.length}日）　※クリックで開閉</div>
+      <div class="detail-title">📈 順位推移（過去${hist.length}日）</div>
       <div class="chart-wrap"><canvas id="chart-${e.app_id}"></canvas></div>
-      <div style="margin-top:10px;font-size:.8rem;color:var(--muted);display:flex;gap:16px;flex-wrap:wrap;">
-        ${e.review_count?`<span>レビュー数: ${e.review_count}</span>`:""}
-        <span><a href="${e.url}" target="_blank" rel="noopener" style="color:var(--accent);">Steamで見る →</a></span>
+      <div style="margin-top:10px;font-size:.78rem;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap;">
+        <span>開発: ${e.developer||"不明"}</span>
+        <span>発売: ${e.publisher||"不明"}</span>
+        ${e.review_count?`<span>レビュー: ${e.review_count}</span>`:""}
+        <a href="${e.url}" target="_blank" rel="noopener" style="color:var(--accent);margin-left:auto;">Steamで見る →</a>
       </div>`;
 
     card.addEventListener("click",()=>togglePanel(e.app_id));
@@ -244,6 +274,12 @@ document.querySelectorAll(".filter-btn").forEach(b=>{
   b.addEventListener("click",()=>{
     document.querySelectorAll(".filter-btn").forEach(x=>x.classList.remove("active"));
     b.classList.add("active");currentFilter=b.dataset.filter;render();
+  });
+});
+document.querySelectorAll(".tab").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+    t.classList.add("active");currentTab=t.dataset.tab;render();
   });
 });
 loadData();
