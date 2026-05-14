@@ -33,7 +33,7 @@ def get_client() -> tweepy.Client:
 # ─────────────────────────────────────────────
 # データ読み込み
 # ─────────────────────────────────────────────
-def load_rankings(path: str = "data/rankings.json") -> dict:
+def load_rankings(path: str = "docs/data/rankings.json") -> dict:
     with open(path, encoding="utf-8") as f:
         return json.load(f)
 
