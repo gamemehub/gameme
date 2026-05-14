@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Steam Ranking | GameMeHub</title>
+  <title>GameMe Charts</title>
   <style>
     :root{--bg:#0f1117;--surface:#1a1d27;--surface2:#22263a;--accent:#1b9cfc;--accent2:#4ecdc4;--gold:#ffd700;--silver:#c0c0c0;--bronze:#cd7f32;--text:#e8eaf0;--muted:#7a8099;--up:#4ade80;--down:#f87171;--new:#facc15;--border:rgba(255,255,255,0.07);--major:#f97316;--indie:#a78bfa;}
     *{box-sizing:border-box;margin:0;padding:0;}
@@ -82,8 +82,8 @@
   <div class="updated" id="updated-at">読み込み中...</div>
 </header>
 <div class="hero">
-  <h1>Steam Ranking</h1>
-  <p>Steamデータによるゲームランキング・毎日自動更新</p>
+  <h1>GameMe Charts</h1>
+  <p>Steam・IGDBデータ等による注目ゲームランキング・毎日自動更新</p>
 </div>
 
 <div class="tabs">
@@ -112,7 +112,7 @@
     <div class="state-msg"><div class="spinner"></div>データを読み込み中...</div>
   </div>
 </div>
-<footer>データはSteamデータより自動取得 · GameMeHub © 2026</footer>
+<footer>データはSteam・IGDBデータより自動取得 · GameMeHub © 2026</footer>
 
 <script>
 const DATA_URL="./data/rankings.json",HISTORY_URL="./data/history.json",IGDB_URL="./data/igdb_upcoming.json";
