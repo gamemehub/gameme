@@ -23,6 +23,8 @@
     .tab-all.active{color:var(--accent);}
     .tab-major.active{color:var(--major);}
     .tab-indie.active{color:var(--indie);}
+    .tab-released.active{color:var(--up);}
+    .tab-unreleased.active{color:var(--new);}
     .tab-panel{max-width:960px;margin:0 auto;padding:0 16px;background:var(--surface2);border:1px solid var(--border);border-radius:0 8px 8px 8px;padding-top:1px;}
 
     .controls{padding:16px 0 4px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
@@ -85,6 +87,8 @@
   <button class="tab tab-all active" data-tab="all">🌐 すべて</button>
   <button class="tab tab-major" data-tab="major">🏢 メジャー</button>
   <button class="tab tab-indie" data-tab="indie">🎯 インディー</button>
+  <button class="tab tab-released" data-tab="released">✅ リリース済み</button>
+  <button class="tab tab-unreleased" data-tab="unreleased">🗓 リリース前</button>
 </div>
 <div class="tab-panel">
   <div class="controls">
@@ -124,6 +128,8 @@ function getFiltered(){
   return allEntries.filter(e=>{
     if(currentTab==="major"&&!e.is_major)return false;
     if(currentTab==="indie"&&e.is_major)return false;
+    if(currentTab==="released"&&!e.is_released)return false;
+    if(currentTab==="unreleased"&&e.is_released)return false;
     if(q&&!e.name.toLowerCase().includes(q)&&!e.publisher.toLowerCase().includes(q))return false;
     if(currentFilter==="new")return e.is_new;
     if(currentFilter==="up")return e.prev_rank&&(e.prev_rank-e.rank)>=1;

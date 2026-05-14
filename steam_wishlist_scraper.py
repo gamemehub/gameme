@@ -4,6 +4,7 @@ Steam Ranking Scraper (SteamSpy API版)
 
 import argparse, csv, json, sys
 from dataclasses import asdict, dataclass
+from datetime import datetime
 from typing import Optional
 import requests
 
@@ -29,6 +30,22 @@ def is_major(publisher: str) -> bool:
         return False
     return publisher.strip().lower() in MAJOR_PUBLISHERS
 
+def check_released(date_str: str) -> bool:
+    """リリース済みかどうか判定"""
+    if not date_str:
+        return False  # 日付不明 = 未発売扱い
+    try:
+        # SteamSpy形式: "Jan 01, 2020" or "2020-01-01"
+        for fmt in ("%b %d, %Y", "%Y-%m-%d", "%d %b, %Y"):
+            try:
+                dt = datetime.strptime(date_str.strip(), fmt)
+                return dt <= datetime.now()
+            except ValueError:
+                continue
+        return True  # パース失敗 = リリース済み扱い
+    except Exception:
+        return True
+
 
 @dataclass
 class GameEntry:
@@ -42,6 +59,7 @@ class GameEntry:
     price: str
     review_summary: str
     review_count: str
+    is_released: bool = True
     owners: str = ""
     url: str = ""
 
@@ -110,6 +128,7 @@ class SteamSpyScraper:
                 publisher=pub,
                 is_major=is_major(pub),
                 release_date=info.get("initiallyreleased", ""),
+                is_released=check_released(info.get("initiallyreleased", "")),
                 price=self._parse_price(info.get("price", -1)),
                 review_summary=self._calc_review(pos, neg),
                 review_count=f"{pos+neg:,}" if pos+neg > 0 else "",
