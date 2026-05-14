@@ -5,6 +5,9 @@ on:
     - cron: "0 1 * * *"   # 毎日 JST 10:00 (UTC 01:00)
   workflow_dispatch:        # 手動実行も可能
 
+permissions:
+  contents: write
+
 jobs:
   scrape-and-post:
     runs-on: ubuntu-latest
@@ -69,6 +72,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git add data/rankings.json
           git diff --staged --quiet || git commit -m "data: update steam wishlist ranking $(date +'%Y-%m-%d')"
           git push
