@@ -92,7 +92,7 @@
 </header>
 <div class="hero">
   <h1>GameMe Charts</h1>
-  <p>Steam・IGDBデータ等による注目ゲームランキング・毎日自動更新</p>
+  <p>各種プラットフォーム・サービスデータ等による注目ゲームランキング・毎日自動更新</p>
 </div>
 
 <div class="tabs">
@@ -132,7 +132,7 @@
 
 <script>
 const DATA_URL="./data/rankings.json",HISTORY_URL="./data/history.json",IGDB_URL="./data/igdb_upcoming.json",OC_URL="./data/opencritic.json";
-let allEntries=[],igdbEntries=[],ocEntries=[],historyData={},currentPub="all",currentRel="all",currentSrc="all",currentFilter="all",openCardId=null;
+let allEntries=[],igdbEntries=[],ocEntries=[],historyData={},currentPub="all",currentRel="all",currentFilter="all",openCardId=null;
 
 async function loadData(){
   try{
@@ -152,13 +152,26 @@ async function loadData(){
 }
 
 function getActiveEntries(){
-  if(currentSrc==="opencritic") return ocEntries;
-  if(currentSrc==="igdb") return igdbEntries;
-  if(currentSrc==="steam") return allEntries;
-  // allの場合
+  // 全ソースをマージ（重複をname+sourceで除外）
   if(currentRel==="unreleased") return igdbEntries;
-  if(currentRel==="all") return [...allEntries,...igdbEntries];
-  return allEntries;
+  const merged=[...allEntries];
+  const steamNames=new Set(allEntries.map(e=>e.name.toLowerCase()));
+  for(const e of igdbEntries){
+    if(!steamNames.has(e.name.toLowerCase())) merged.push(e);
+  }
+  // OpenCriticスコアをSteam/IGDBエントリにマージ
+  const ocMap={};
+  for(const oc of ocEntries) ocMap[oc.name.toLowerCase()]={score:oc.top_critic_score,label:oc.score_label,reviews:oc.critic_reviews};
+  for(const e of merged){
+    const oc=ocMap[e.name.toLowerCase()];
+    if(oc&&e.top_critic_score==null){
+      e.top_critic_score=oc.score;
+      e.score_label=oc.label;
+      e.critic_reviews=oc.reviews;
+    }
+  }
+  if(currentRel==="released") return merged.filter(e=>e.is_released);
+  return merged;
 }
 function getFiltered(){
   const q=document.getElementById("search").value.toLowerCase();
@@ -335,11 +348,7 @@ document.querySelectorAll(".tab-rel").forEach(t=>{
     t.classList.add("active");currentRel=t.dataset.rel;render();
   });
 });
-document.querySelectorAll(".tab-src").forEach(t=>{
-  t.addEventListener("click",()=>{
-    document.querySelectorAll(".tab-src").forEach(x=>x.classList.remove("active"));
-    t.classList.add("active");currentSrc=t.dataset.src;render();
-  });
+
 });
 loadData();
 </script>
