@@ -17,15 +17,18 @@
     .hero p{color:var(--muted);font-size:.9rem;}
 
     /* タブ */
-    .tabs{max-width:960px;margin:20px auto 0;padding:0 16px;display:flex;gap:4px;}
-    .tab{padding:9px 20px;border-radius:8px 8px 0 0;border:1px solid var(--border);border-bottom:none;background:var(--surface);color:var(--muted);font-size:.88rem;cursor:pointer;font-weight:600;transition:all .2s;}
-    .tab.active{background:var(--surface2);color:var(--text);border-color:var(--accent);border-bottom:1px solid var(--surface2);}
-    .tab-all.active{color:var(--accent);}
-    .tab-major.active{color:var(--major);}
-    .tab-indie.active{color:var(--indie);}
-    .tab-released.active{color:var(--up);}
-    .tab-unreleased.active{color:var(--new);}
-    .tab-panel{max-width:960px;margin:0 auto;padding:0 16px;background:var(--surface2);border:1px solid var(--border);border-radius:0 8px 8px 8px;padding-top:1px;}
+    .tabs{max-width:960px;margin:20px auto 0;padding:0 16px;display:flex;flex-direction:column;gap:6px;}
+    .tab-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+    .tab-label{font-size:.72rem;color:var(--muted);min-width:90px;}
+    .tab{padding:7px 14px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-size:.82rem;cursor:pointer;font-weight:600;transition:all .2s;}
+    .tab.active{border-color:currentColor;}
+    .tab-pub.active{background:rgba(27,156,252,.12);color:var(--accent);}
+    .tab-major.active{background:rgba(249,115,22,.12);color:var(--major);}
+    .tab-indie.active{background:rgba(167,139,250,.12);color:var(--indie);}
+    .tab-rel.active{background:rgba(74,222,128,.12);color:var(--up);}
+    .tab-released.active{background:rgba(74,222,128,.12);color:var(--up);}
+    .tab-unreleased.active{background:rgba(250,204,21,.12);color:var(--new);}
+    .tab-panel{max-width:960px;margin:0 auto;padding:0 16px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding-top:1px;margin-top:8px;}
 
     .controls{padding:16px 0 4px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
     .search-box{flex:1;min-width:180px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:9px 13px;color:var(--text);font-size:.88rem;outline:none;transition:border-color .2s;}
@@ -80,15 +83,22 @@
 </header>
 <div class="hero">
   <h1>Steam Ranking</h1>
-  <p>SteamSpyデータによるゲームランキング・毎日自動更新</p>
+  <p>SteamSデータによるゲームランキング・毎日自動更新</p>
 </div>
 
 <div class="tabs">
-  <button class="tab tab-all active" data-tab="all">🌐 すべて</button>
-  <button class="tab tab-major" data-tab="major">🏢 メジャー</button>
-  <button class="tab tab-indie" data-tab="indie">🎯 インディー</button>
-  <button class="tab tab-released" data-tab="released">✅ リリース済み</button>
-  <button class="tab tab-unreleased" data-tab="unreleased">🗓 リリース前</button>
+  <div class="tab-row">
+    <span class="tab-label">パブリッシャー</span>
+    <button class="tab tab-pub active" data-pub="all">🌐 すべて</button>
+    <button class="tab tab-pub tab-major" data-pub="major">🏢 メジャー</button>
+    <button class="tab tab-pub tab-indie" data-pub="indie">🎯 インディー</button>
+  </div>
+  <div class="tab-row">
+    <span class="tab-label">リリース状態</span>
+    <button class="tab tab-rel active" data-rel="all">📋 すべて</button>
+    <button class="tab tab-rel tab-released" data-rel="released">✅ リリース済み</button>
+    <button class="tab tab-rel tab-unreleased" data-rel="unreleased">🗓 リリース前</button>
+  </div>
 </div>
 <div class="tab-panel">
   <div class="controls">
@@ -102,11 +112,11 @@
     <div class="state-msg"><div class="spinner"></div>データを読み込み中...</div>
   </div>
 </div>
-<footer>データはSteamSpy APIより自動取得 · GameMeHub © 2026</footer>
+<footer>データはSteamSデータより自動取得 · GameMeHub © 2026</footer>
 
 <script>
 const DATA_URL="./data/rankings.json",HISTORY_URL="./data/history.json";
-let allEntries=[],historyData={},currentTab="all",currentFilter="all",openCardId=null;
+let allEntries=[],historyData={},currentPub="all",currentRel="all",currentFilter="all",openCardId=null;
 
 async function loadData(){
   try{
@@ -126,10 +136,10 @@ async function loadData(){
 function getFiltered(){
   const q=document.getElementById("search").value.toLowerCase();
   return allEntries.filter(e=>{
-    if(currentTab==="major"&&!e.is_major)return false;
-    if(currentTab==="indie"&&e.is_major)return false;
-    if(currentTab==="released"&&!e.is_released)return false;
-    if(currentTab==="unreleased"&&e.is_released)return false;
+    if(currentPub==="major"&&!e.is_major)return false;
+    if(currentPub==="indie"&&e.is_major)return false;
+    if(currentRel==="released"&&!e.is_released)return false;
+    if(currentRel==="unreleased"&&e.is_released)return false;
     if(q&&!e.name.toLowerCase().includes(q)&&!e.publisher.toLowerCase().includes(q))return false;
     if(currentFilter==="new")return e.is_new;
     if(currentFilter==="up")return e.prev_rank&&(e.prev_rank-e.rank)>=1;
@@ -193,7 +203,7 @@ function getDiff(e){
   return null;
 }
 
-function updateStats(entries){
+function updateStats(all,entries){
   const total=entries.length;
   const major=entries.filter(e=>e.is_major).length;
   const indie=total-major;
@@ -208,7 +218,7 @@ function updateStats(entries){
 
 function render(){
   const entries=getFiltered();
-  updateStats(currentTab==="all"?allEntries:entries);
+  updateStats(allEntries,entries);
   const container=document.getElementById("ranking");
   if(entries.length===0){container.innerHTML=`<div class="state-msg">該当するゲームが見つかりませんでした</div>`;return;}
   container.innerHTML="";
@@ -282,10 +292,16 @@ document.querySelectorAll(".filter-btn").forEach(b=>{
     b.classList.add("active");currentFilter=b.dataset.filter;render();
   });
 });
-document.querySelectorAll(".tab").forEach(t=>{
+document.querySelectorAll(".tab-pub").forEach(t=>{
   t.addEventListener("click",()=>{
-    document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
-    t.classList.add("active");currentTab=t.dataset.tab;render();
+    document.querySelectorAll(".tab-pub").forEach(x=>x.classList.remove("active"));
+    t.classList.add("active");currentPub=t.dataset.pub;render();
+  });
+});
+document.querySelectorAll(".tab-rel").forEach(t=>{
+  t.addEventListener("click",()=>{
+    document.querySelectorAll(".tab-rel").forEach(x=>x.classList.remove("active"));
+    t.classList.add("active");currentRel=t.dataset.rel;render();
   });
 });
 loadData();
