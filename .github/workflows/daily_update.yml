@@ -29,7 +29,7 @@ jobs:
           python steam_wishlist_scraper.py \
             --count 100 \
             --output json \
-            --file data/rankings_new.json
+            --file docs/data/rankings_new.json
 
       - name: Merge with previous rankings (track changes)
         run: |
@@ -37,8 +37,8 @@ jobs:
           import json, os
           from pathlib import Path
 
-          new_path = Path("data/rankings_new.json")
-          old_path = Path("data/rankings.json")
+          new_path = Path("docs/data/rankings_new.json")
+          old_path = Path("docs/data/rankings.json")
 
           new_data = json.loads(new_path.read_text(encoding="utf-8"))
 
@@ -73,7 +73,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git add data/rankings.json
+          git add docs/data/rankings.json
           git diff --staged --quiet || git commit -m "data: update steam wishlist ranking $(date +'%Y-%m-%d')"
           git push
 
