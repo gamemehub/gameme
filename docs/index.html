@@ -35,6 +35,8 @@
     .oc-strong{background:rgba(27,156,252,.2);color:var(--accent);border:1px solid rgba(27,156,252,.4);}
     .oc-fair{background:rgba(250,204,21,.2);color:var(--new);border:1px solid rgba(250,204,21,.4);}
     .oc-weak{background:rgba(248,113,113,.2);color:var(--down);border:1px solid rgba(248,113,113,.4);}
+    .oc-score-wrap{display:flex;flex-direction:column;align-items:center;gap:2px;}
+    .oc-label{font-size:.6rem;color:var(--muted);white-space:nowrap;}
     .tab-panel{max-width:960px;margin:0 auto;padding:0 16px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding-top:1px;margin-top:8px;}
 
     .controls{padding:16px 0 4px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
@@ -280,7 +282,7 @@ function render(){
         <div class="sparkline-label">${hist.length>1?hist.length+"日間":""}</div>
       </div>
       <div class="game-right">
-        ${e.top_critic_score!=null?`<div class="oc-score ${e.top_critic_score>=90?'oc-must':e.top_critic_score>=75?'oc-strong':e.top_critic_score>=60?'oc-fair':'oc-weak'}">${Math.round(e.top_critic_score)}</div>`:""}
+        ${e.top_critic_score!=null?`<div class="oc-score-wrap"><div class="oc-score ${e.top_critic_score>=90?'oc-must':e.top_critic_score>=75?'oc-strong':e.top_critic_score>=60?'oc-fair':'oc-weak'}">${Math.round(e.top_critic_score)}</div><div class="oc-label">${e.top_critic_score>=90?'Must Play':e.top_critic_score>=75?'Strong':e.top_critic_score>=60?'Fair':'Weak'}</div></div>`:""}
         <div class="price">${e.price||"未発表"}</div>
         ${badge}
       </div>`;
