@@ -1,0 +1,82 @@
+name: Daily Steam Wishlist Update
+
+on:
+  schedule:
+    - cron: "0 1 * * *"   # 毎日 JST 10:00 (UTC 01:00)
+  workflow_dispatch:        # 手動実行も可能
+
+jobs:
+  scrape-and-post:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests beautifulsoup4 tweepy
+
+      - name: Scrape Steam wishlist ranking
+        run: |
+          python steam_wishlist_scraper.py \
+            --count 100 \
+            --output json \
+            --file data/rankings_new.json
+
+      - name: Merge with previous rankings (track changes)
+        run: |
+          python - <<'EOF'
+          import json, os
+          from pathlib import Path
+
+          new_path = Path("data/rankings_new.json")
+          old_path = Path("data/rankings.json")
+
+          new_data = json.loads(new_path.read_text(encoding="utf-8"))
+
+          # 前回データがあれば順位変動を計算
+          if old_path.exists():
+              old_data = json.loads(old_path.read_text(encoding="utf-8"))
+              old_ranks = {e["app_id"]: e["rank"] for e in old_data.get("entries", [])}
+              old_ids = set(old_ranks.keys())
+          else:
+              old_ranks = {}
+              old_ids = set()
+
+          for entry in new_data:
+              app_id = entry["app_id"]
+              entry["prev_rank"] = old_ranks.get(app_id)
+              entry["is_new"] = app_id not in old_ids
+
+          from datetime import datetime, timezone, timedelta
+          JST = timezone(timedelta(hours=9))
+          output = {
+              "updated_at": datetime.now(JST).isoformat(),
+              "entries": new_data,
+          }
+
+          old_path.write_text(json.dumps(output, ensure_ascii=False, indent=2), encoding="utf-8")
+          new_path.unlink()
+          print(f"[OK] {len(new_data)}件保存")
+          EOF
+
+      - name: Post to Twitter
+        env:
+          TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
+          TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
+          TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+          TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+        run: python twitter_poster.py
+
+      - name: Commit & push data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/rankings.json
+          git diff --staged --quiet || git commit -m "data: update steam wishlist ranking $(date +'%Y-%m-%d')"
+          git push
