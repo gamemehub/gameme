@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-15T10:01:39.677170+09:00",
+  "updated_at": "2026-05-15T19:05:26.756293+09:00",
   "entries": [
     {
       "rank": 1,
@@ -16,8 +16,8 @@
       "is_released": true,
       "owners": "100M〜200M",
       "url": "https://store.steampowered.com/app/730",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 1,
+      "is_new": false
     },
     {
       "rank": 2,
@@ -34,8 +34,8 @@
       "is_released": true,
       "owners": "100M〜200M",
       "url": "https://store.steampowered.com/app/1172470",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 2,
+      "is_new": false
     },
     {
       "rank": 3,
@@ -52,8 +52,8 @@
       "is_released": true,
       "owners": "100M〜200M",
       "url": "https://store.steampowered.com/app/578080",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 3,
+      "is_new": false
     },
     {
       "rank": 4,
@@ -70,8 +70,8 @@
       "is_released": true,
       "owners": "50M〜100M",
       "url": "https://store.steampowered.com/app/1623730",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 4,
+      "is_new": false
     },
     {
       "rank": 5,
@@ -88,8 +88,8 @@
       "is_released": true,
       "owners": "50M〜100M",
       "url": "https://store.steampowered.com/app/440",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 5,
+      "is_new": false
     },
     {
       "rank": 6,
@@ -106,8 +106,8 @@
       "is_released": true,
       "owners": "50M〜100M",
       "url": "https://store.steampowered.com/app/1938090",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 6,
+      "is_new": false
     },
     {
       "rank": 7,
@@ -124,8 +124,8 @@
       "is_released": true,
       "owners": "50M〜100M",
       "url": "https://store.steampowered.com/app/1063730",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 7,
+      "is_new": false
     },
     {
       "rank": 8,
@@ -142,8 +142,8 @@
       "is_released": true,
       "owners": "50M〜100M",
       "url": "https://store.steampowered.com/app/2358720",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 8,
+      "is_new": false
     },
     {
       "rank": 9,
@@ -160,8 +160,8 @@
       "is_released": true,
       "owners": "50M〜100M",
       "url": "https://store.steampowered.com/app/271590",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 9,
+      "is_new": false
     },
     {
       "rank": 10,
@@ -178,8 +178,8 @@
       "is_released": true,
       "owners": "50M〜100M",
       "url": "https://store.steampowered.com/app/550",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 10,
+      "is_new": false
     },
     {
       "rank": 11,
@@ -196,8 +196,8 @@
       "is_released": true,
       "owners": "50M〜100M",
       "url": "https://store.steampowered.com/app/304930",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 11,
+      "is_new": false
     },
     {
       "rank": 12,
@@ -214,8 +214,8 @@
       "is_released": true,
       "owners": "50M〜100M",
       "url": "https://store.steampowered.com/app/1599340",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 12,
+      "is_new": false
     },
     {
       "rank": 13,
@@ -232,8 +232,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/236390",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 13,
+      "is_new": false
     },
     {
       "rank": 14,
@@ -250,8 +250,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/2246340",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 14,
+      "is_new": false
     },
     {
       "rank": 15,
@@ -268,8 +268,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/553850",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 15,
+      "is_new": false
     },
     {
       "rank": 16,
@@ -286,8 +286,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/230410",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 16,
+      "is_new": false
     },
     {
       "rank": 17,
@@ -304,8 +304,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/1245620",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 17,
+      "is_new": false
     },
     {
       "rank": 18,
@@ -322,8 +322,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/105600",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 18,
+      "is_new": false
     },
     {
       "rank": 19,
@@ -340,8 +340,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/2694490",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 19,
+      "is_new": false
     },
     {
       "rank": 20,
@@ -358,8 +358,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/431960",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 20,
+      "is_new": false
     },
     {
       "rank": 21,
@@ -376,8 +376,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/1086940",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 21,
+      "is_new": false
     },
     {
       "rank": 22,
@@ -394,8 +394,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/291550",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 22,
+      "is_new": false
     },
     {
       "rank": 23,
@@ -412,8 +412,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/4000",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 23,
+      "is_new": false
     },
     {
       "rank": 24,
@@ -430,8 +430,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/1085660",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 24,
+      "is_new": false
     },
     {
       "rank": 25,
@@ -448,8 +448,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/359550",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 25,
+      "is_new": false
     },
     {
       "rank": 26,
@@ -466,8 +466,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/252490",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 26,
+      "is_new": false
     },
     {
       "rank": 27,
@@ -484,8 +484,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/552990",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 27,
+      "is_new": false
     },
     {
       "rank": 28,
@@ -502,8 +502,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/346110",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 28,
+      "is_new": false
     },
     {
       "rank": 29,
@@ -513,15 +513,15 @@
       "publisher": "ConcernedApe",
       "is_major": false,
       "release_date": "",
-      "price": "$14.99",
+      "price": "$7.49",
       "review_summary": "圧倒的に好評",
       "review_count": "886,195",
       "review_score": 98,
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/413150",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 29,
+      "is_new": false
     },
     {
       "rank": 30,
@@ -538,8 +538,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/242760",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 30,
+      "is_new": false
     },
     {
       "rank": 31,
@@ -556,8 +556,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/1491000",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 31,
+      "is_new": false
     },
     {
       "rank": 32,
@@ -574,8 +574,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/238960",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 32,
+      "is_new": false
     },
     {
       "rank": 33,
@@ -592,8 +592,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/218620",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 33,
+      "is_new": false
     },
     {
       "rank": 34,
@@ -610,8 +610,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/291480",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 34,
+      "is_new": false
     },
     {
       "rank": 35,
@@ -628,8 +628,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/901583",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 35,
+      "is_new": false
     },
     {
       "rank": 36,
@@ -646,8 +646,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/899770",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 36,
+      "is_new": false
     },
     {
       "rank": 37,
@@ -664,8 +664,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/340",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 37,
+      "is_new": false
     },
     {
       "rank": 38,
@@ -682,8 +682,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/1091500",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 38,
+      "is_new": false
     },
     {
       "rank": 39,
@@ -700,8 +700,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/381210",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 39,
+      "is_new": false
     },
     {
       "rank": 40,
@@ -718,8 +718,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/990080",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 40,
+      "is_new": false
     },
     {
       "rank": 41,
@@ -736,8 +736,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/438100",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 41,
+      "is_new": false
     },
     {
       "rank": 42,
@@ -754,8 +754,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/292030",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 42,
+      "is_new": false
     },
     {
       "rank": 43,
@@ -772,8 +772,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/945360",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 43,
+      "is_new": false
     },
     {
       "rank": 44,
@@ -790,8 +790,8 @@
       "is_released": true,
       "owners": "20M〜50M",
       "url": "https://store.steampowered.com/app/1097150",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 44,
+      "is_new": false
     },
     {
       "rank": 45,
@@ -808,8 +808,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/49520",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 45,
+      "is_new": false
     },
     {
       "rank": 46,
@@ -819,15 +819,15 @@
       "publisher": "SCS Software",
       "is_major": false,
       "release_date": "",
-      "price": "$19.99",
+      "price": "$4.99",
       "review_summary": "圧倒的に好評",
       "review_count": "867,404",
       "review_score": 97,
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/227300",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 46,
+      "is_new": false
     },
     {
       "rank": 47,
@@ -844,8 +844,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/892970",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 47,
+      "is_new": false
     },
     {
       "rank": 48,
@@ -862,8 +862,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/739630",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 48,
+      "is_new": false
     },
     {
       "rank": 49,
@@ -880,8 +880,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/444090",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 49,
+      "is_new": false
     },
     {
       "rank": 50,
@@ -898,8 +898,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/1203220",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 50,
+      "is_new": false
     },
     {
       "rank": 51,
@@ -916,8 +916,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/320",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 51,
+      "is_new": false
     },
     {
       "rank": 52,
@@ -934,8 +934,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/70",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 52,
+      "is_new": false
     },
     {
       "rank": 53,
@@ -952,8 +952,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/582010",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 53,
+      "is_new": false
     },
     {
       "rank": 54,
@@ -970,8 +970,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/227940",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 54,
+      "is_new": false
     },
     {
       "rank": 55,
@@ -988,8 +988,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/252950",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 55,
+      "is_new": false
     },
     {
       "rank": 56,
@@ -1006,8 +1006,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/108600",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 56,
+      "is_new": false
     },
     {
       "rank": 57,
@@ -1024,8 +1024,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/1966720",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 57,
+      "is_new": false
     },
     {
       "rank": 58,
@@ -1042,8 +1042,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/1174180",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 58,
+      "is_new": false
     },
     {
       "rank": 59,
@@ -1060,8 +1060,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/1517290",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 59,
+      "is_new": false
     },
     {
       "rank": 60,
@@ -1078,8 +1078,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/1240440",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 60,
+      "is_new": false
     },
     {
       "rank": 61,
@@ -1096,8 +1096,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/648800",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 61,
+      "is_new": false
     },
     {
       "rank": 62,
@@ -1114,8 +1114,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/386360",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 62,
+      "is_new": false
     },
     {
       "rank": 63,
@@ -1132,8 +1132,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/444200",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 63,
+      "is_new": false
     },
     {
       "rank": 64,
@@ -1150,8 +1150,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/10",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 64,
+      "is_new": false
     },
     {
       "rank": 65,
@@ -1168,8 +1168,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/240",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 65,
+      "is_new": false
     },
     {
       "rank": 66,
@@ -1186,8 +1186,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/3164500",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 66,
+      "is_new": false
     },
     {
       "rank": 67,
@@ -1204,8 +1204,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/755790",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 67,
+      "is_new": false
     },
     {
       "rank": 68,
@@ -1222,8 +1222,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/400",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 68,
+      "is_new": false
     },
     {
       "rank": 69,
@@ -1240,8 +1240,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/1222670",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 69,
+      "is_new": false
     },
     {
       "rank": 70,
@@ -1258,8 +1258,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/550650",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 70,
+      "is_new": false
     },
     {
       "rank": 71,
@@ -1276,8 +1276,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/322330",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 71,
+      "is_new": false
     },
     {
       "rank": 72,
@@ -1294,8 +1294,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/239140",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 72,
+      "is_new": false
     },
     {
       "rank": 73,
@@ -1312,8 +1312,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/477160",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 73,
+      "is_new": false
     },
     {
       "rank": 74,
@@ -1330,8 +1330,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/251570",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 74,
+      "is_new": false
     },
     {
       "rank": 75,
@@ -1348,8 +1348,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/100",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 75,
+      "is_new": false
     },
     {
       "rank": 76,
@@ -1366,8 +1366,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/1665460",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 76,
+      "is_new": false
     },
     {
       "rank": 77,
@@ -1384,8 +1384,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/417910",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 77,
+      "is_new": false
     },
     {
       "rank": 78,
@@ -1402,8 +1402,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/433850",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 78,
+      "is_new": false
     },
     {
       "rank": 79,
@@ -1420,8 +1420,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/594650",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 79,
+      "is_new": false
     },
     {
       "rank": 80,
@@ -1438,8 +1438,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/814380",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 80,
+      "is_new": false
     },
     {
       "rank": 81,
@@ -1456,8 +1456,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/1116170",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 81,
+      "is_new": false
     },
     {
       "rank": 82,
@@ -1474,8 +1474,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/220",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 82,
+      "is_new": false
     },
     {
       "rank": 83,
@@ -1492,8 +1492,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/107410",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 83,
+      "is_new": false
     },
     {
       "rank": 84,
@@ -1510,8 +1510,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/1326470",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 84,
+      "is_new": false
     },
     {
       "rank": 85,
@@ -1528,8 +1528,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/219990",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 85,
+      "is_new": false
     },
     {
       "rank": 86,
@@ -1546,8 +1546,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/255710",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 86,
+      "is_new": false
     },
     {
       "rank": 87,
@@ -1564,8 +1564,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/261550",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 87,
+      "is_new": false
     },
     {
       "rank": 88,
@@ -1575,15 +1575,15 @@
       "publisher": "2K, Aspyr (Mac), Aspyr (Linux)",
       "is_major": false,
       "release_date": "",
-      "price": "$7.49",
+      "price": "$29.99",
       "review_summary": "圧倒的に好評",
       "review_count": "204,265",
       "review_score": 95,
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/8930",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 88,
+      "is_new": false
     },
     {
       "rank": 89,
@@ -1600,8 +1600,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/304050",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 89,
+      "is_new": false
     },
     {
       "rank": 90,
@@ -1611,15 +1611,15 @@
       "publisher": "2K, Aspyr (Mac), Aspyr (Linux)",
       "is_major": false,
       "release_date": "",
-      "price": "$5.99",
+      "price": "$59.99",
       "review_summary": "非常に好評",
       "review_count": "349,920",
       "review_score": 86,
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/289070",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 90,
+      "is_new": false
     },
     {
       "rank": 91,
@@ -1636,8 +1636,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/377160",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 91,
+      "is_new": false
     },
     {
       "rank": 92,
@@ -1654,8 +1654,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/532210",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 92,
+      "is_new": false
     },
     {
       "rank": 93,
@@ -1672,8 +1672,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/2186680",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 93,
+      "is_new": false
     },
     {
       "rank": 94,
@@ -1690,8 +1690,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/1238810",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 94,
+      "is_new": false
     },
     {
       "rank": 95,
@@ -1708,8 +1708,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/3241660",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 95,
+      "is_new": false
     },
     {
       "rank": 96,
@@ -1726,8 +1726,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/221100",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 96,
+      "is_new": false
     },
     {
       "rank": 97,
@@ -1744,8 +1744,8 @@
       "is_released": true,
       "owners": "10M〜20M",
       "url": "https://store.steampowered.com/app/526870",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 97,
+      "is_new": false
     },
     {
       "rank": 98,
@@ -1762,8 +1762,8 @@
       "is_released": true,
       "owners": "5M〜10M",
       "url": "https://store.steampowered.com/app/1089350",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 98,
+      "is_new": false
     },
     {
       "rank": 99,
@@ -1780,8 +1780,8 @@
       "is_released": true,
       "owners": "5M〜10M",
       "url": "https://store.steampowered.com/app/632360",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 99,
+      "is_new": false
     },
     {
       "rank": 100,
@@ -1798,8 +1798,8 @@
       "is_released": true,
       "owners": "5M〜10M",
       "url": "https://store.steampowered.com/app/1811260",
-      "prev_rank": null,
-      "is_new": true
+      "prev_rank": 100,
+      "is_new": false
     }
   ]
 }
