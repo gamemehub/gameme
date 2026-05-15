@@ -128,7 +128,7 @@ def parse_game(rank: int, game: dict) -> dict:
 
 def main():
     if not RAPIDAPI_KEY:
-        print("[ERROR] RAPIDAPI_KEY が未設定", file=sys.stderr)
+        print("[ERROR] RAPIDAPI が未設定", file=sys.stderr)
         sys.exit(1)
 
     print("[INFO] OpenCritic 最近リリース取得中...")
