@@ -58,6 +58,7 @@ class GameEntry:
     price: str
     review_summary: str
     review_count: str
+    review_score: int = 0
     is_released: bool = True
     owners: str = ""
     url: str = ""
