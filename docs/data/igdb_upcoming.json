@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-15T19:05:27.811073+09:00",
+  "updated_at": "2026-05-16T16:34:04.210759+09:00",
   "entries": [
     {
       "rank": 1,
@@ -215,7 +215,7 @@
       "rank": 16,
       "igdb_id": "361855",
       "name": "LEGO Batman: Legacy of the Dark Knight",
-      "hypes": 70,
+      "hypes": 71,
       "publisher": "WB Games",
       "is_major": false,
       "is_released": false,
@@ -1235,6 +1235,20 @@
     },
     {
       "rank": 89,
+      "igdb_id": "381222",
+      "name": "Order of the Sinking Star",
+      "hypes": 19,
+      "publisher": "Arc Games",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-12-31",
+      "platforms": "PC",
+      "summary": "From director Jonathan Blow (Braid, The Witness), Order of the Sinking Star is a narrative adventure set in a realm of magic and enigma. Solve over 1000 interconnected, hand-crafted puzzles, discover ",
+      "url": "https://www.igdb.com/games/order-of-the-sinking-star",
+      "source": "igdb"
+    },
+    {
+      "rank": 90,
       "igdb_id": "381212",
       "name": "Stupid Never Dies",
       "hypes": 19,
@@ -1248,7 +1262,7 @@
       "source": "igdb"
     },
     {
-      "rank": 90,
+      "rank": 91,
       "igdb_id": "375111",
       "name": "Project Tal",
       "hypes": 19,
@@ -1262,7 +1276,7 @@
       "source": "igdb"
     },
     {
-      "rank": 91,
+      "rank": 92,
       "igdb_id": "373021",
       "name": "Avatar Legends: The Fighting Game",
       "hypes": 19,
@@ -1276,7 +1290,7 @@
       "source": "igdb"
     },
     {
-      "rank": 92,
+      "rank": 93,
       "igdb_id": "216692",
       "name": "Tenebris Somnia",
       "hypes": 19,
@@ -1290,7 +1304,7 @@
       "source": "igdb"
     },
     {
-      "rank": 93,
+      "rank": 94,
       "igdb_id": "213620",
       "name": "Luna Abyss",
       "hypes": 19,
@@ -1304,7 +1318,7 @@
       "source": "igdb"
     },
     {
-      "rank": 94,
+      "rank": 95,
       "igdb_id": "396030",
       "name": "Artificial Detective",
       "hypes": 18,
@@ -1315,20 +1329,6 @@
       "platforms": "Series X|S, PC, PS5",
       "summary": "Artificial Detective is a third-person action-adventure where you step into the shoes of a robodetective in a dystopian city overrun by rogue robots. Lead your underdog team of a military robodog and ",
       "url": "https://www.igdb.com/games/artificial-detective",
-      "source": "igdb"
-    },
-    {
-      "rank": 95,
-      "igdb_id": "381222",
-      "name": "Order of the Sinking Star",
-      "hypes": 18,
-      "publisher": "Arc Games",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-12-31",
-      "platforms": "PC",
-      "summary": "From director Jonathan Blow (Braid, The Witness), Order of the Sinking Star is a narrative adventure set in a realm of magic and enigma. Solve over 1000 interconnected, hand-crafted puzzles, discover ",
-      "url": "https://www.igdb.com/games/order-of-the-sinking-star",
       "source": "igdb"
     },
     {
