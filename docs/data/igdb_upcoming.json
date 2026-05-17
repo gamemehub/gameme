@@ -1,11 +1,11 @@
 {
-  "updated_at": "2026-05-16T16:34:04.210759+09:00",
+  "updated_at": "2026-05-17T17:38:01.081070+09:00",
   "entries": [
     {
       "rank": 1,
       "igdb_id": "92550",
       "name": "Fable",
-      "hypes": 324,
+      "hypes": 325,
       "publisher": "Xbox Game Studios",
       "is_major": true,
       "is_released": false,
@@ -61,7 +61,7 @@
       "rank": 5,
       "igdb_id": "325602",
       "name": "Onimusha: Way of the Sword",
-      "hypes": 131,
+      "hypes": 132,
       "publisher": "Capcom",
       "is_major": true,
       "is_released": false,
@@ -87,6 +87,20 @@
     },
     {
       "rank": 7,
+      "igdb_id": "348330",
+      "name": "Forza Horizon 6",
+      "hypes": 100,
+      "publisher": "Xbox Game Studios",
+      "is_major": true,
+      "is_released": false,
+      "release_date": "2026-05-19",
+      "platforms": "Series X|S, PC, PS5",
+      "summary": "Discover the breathtaking landscapes of Japan in over 550 real-world cars and become a racing Legend at the Horizon Festival. Start your journey as a tourist and explore a world full of hit music and ",
+      "url": "https://www.igdb.com/games/forza-horizon-6",
+      "source": "igdb"
+    },
+    {
+      "rank": 8,
       "igdb_id": "279621",
       "name": "Exodus",
       "hypes": 98,
@@ -97,20 +111,6 @@
       "platforms": "Series X|S, PC, PS5",
       "summary": "Exodus is an epic new sci-fi action-adventure RPG franchise developed by the team at Archetype Entertainment. The story is fueled by the consequences of player choices due to the impact of Time Dilati",
       "url": "https://www.igdb.com/games/exodus--5",
-      "source": "igdb"
-    },
-    {
-      "rank": 8,
-      "igdb_id": "348330",
-      "name": "Forza Horizon 6",
-      "hypes": 97,
-      "publisher": "Xbox Game Studios",
-      "is_major": true,
-      "is_released": false,
-      "release_date": "2026-05-19",
-      "platforms": "Series X|S, PC, PS5",
-      "summary": "Discover the breathtaking landscapes of Japan in over 550 real-world cars and become a racing Legend at the Horizon Festival. Start your journey as a tourist and explore a world full of hit music and ",
-      "url": "https://www.igdb.com/games/forza-horizon-6",
       "source": "igdb"
     },
     {
@@ -143,6 +143,20 @@
     },
     {
       "rank": 11,
+      "igdb_id": "348180",
+      "name": "Beast of Reincarnation",
+      "hypes": 85,
+      "publisher": "Fictions",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-08-04",
+      "platforms": "Series X|S, PC, PS5",
+      "summary": "In post-apocalyptic Japan, humanity’s last hope may rest with Emma and her loyal canine companion, Koo. Explore what it means to be human in Beast of Reincarnation, an expansive one-person, one-dog ac",
+      "url": "https://www.igdb.com/games/beast-of-reincarnation",
+      "source": "igdb"
+    },
+    {
+      "rank": 12,
       "igdb_id": "347869",
       "name": "The Expanse: Osiris Reborn",
       "hypes": 85,
@@ -153,20 +167,6 @@
       "platforms": "Series X|S, PC, PS5",
       "summary": "The Expanse: Osiris Reborn is a third-person Action RPG set in The Expanse universe. You’re no hero — just a merc caught in the wrong place at the wrong time, trying to hold your crew together and kee",
       "url": "https://www.igdb.com/games/the-expanse-osiris-reborn",
-      "source": "igdb"
-    },
-    {
-      "rank": 12,
-      "igdb_id": "348180",
-      "name": "Beast of Reincarnation",
-      "hypes": 84,
-      "publisher": "Fictions",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-08-04",
-      "platforms": "Series X|S, PC, PS5",
-      "summary": "In post-apocalyptic Japan, humanity’s last hope may rest with Emma and her loyal canine companion, Koo. Explore what it means to be human in Beast of Reincarnation, an expansive one-person, one-dog ac",
-      "url": "https://www.igdb.com/games/beast-of-reincarnation",
       "source": "igdb"
     },
     {
@@ -255,6 +255,20 @@
     },
     {
       "rank": 19,
+      "igdb_id": "347645",
+      "name": "Out of Words",
+      "hypes": 65,
+      "publisher": "Epic Games Publishing",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-12-31",
+      "platforms": "Series X|S, Switch 2, PC, PS5",
+      "summary": "Find your lost voices in a co-op platformer adventure. Together with a friend, via online cross-platform or couch co-op, explore the wild, colorful realm of Vokabulantis as Kurt and Karla in a story a",
+      "url": "https://www.igdb.com/games/out-of-words",
+      "source": "igdb"
+    },
+    {
+      "rank": 20,
       "igdb_id": "262712",
       "name": "Ananta",
       "hypes": 65,
@@ -265,20 +279,6 @@
       "platforms": "Android, PC, iOS, PS5",
       "summary": "Take on the role of an elite Agent within the A.C.D. (Anti-Chaos Directorate) embarking on an exhilarating adventure through a world that breaks all the rules. Meet a variety of interesting characters",
       "url": "https://www.igdb.com/games/ananta",
-      "source": "igdb"
-    },
-    {
-      "rank": 20,
-      "igdb_id": "347645",
-      "name": "Out of Words",
-      "hypes": 64,
-      "publisher": "Epic Games Publishing",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-12-31",
-      "platforms": "Series X|S, Switch 2, PC, PS5",
-      "summary": "Find your lost voices in a co-op platformer adventure. Together with a friend, via online cross-platform or couch co-op, explore the wild, colorful realm of Vokabulantis as Kurt and Karla in a story a",
-      "url": "https://www.igdb.com/games/out-of-words",
       "source": "igdb"
     },
     {
@@ -395,6 +395,20 @@
     },
     {
       "rank": 29,
+      "igdb_id": "389419",
+      "name": "Kena: Scars of Kosmora",
+      "hypes": 54,
+      "publisher": "Sony Interactive Entertainment",
+      "is_major": true,
+      "is_released": false,
+      "release_date": "2026-12-31",
+      "platforms": "PC, PS5",
+      "summary": "In Kena: Scars of Kosmora, Kena is older and renowned as a Spirit Guide. In hopes of finding answers to the affliction she has endured all her life, Kena travels to the mysterious island of Kosmora. H",
+      "url": "https://www.igdb.com/games/kena-scars-of-kosmora",
+      "source": "igdb"
+    },
+    {
+      "rank": 30,
       "igdb_id": "19128",
       "name": "Squadron 42",
       "hypes": 53,
@@ -405,20 +419,6 @@
       "platforms": "PC",
       "summary": "Take the role of a rookie UEE Navy combat pilot in a cinematic single-player epic adventure set in the Star Citizen universe. Battle in the stars and face-to-face as you seamlessly transition between ",
       "url": "https://www.igdb.com/games/squadron-42",
-      "source": "igdb"
-    },
-    {
-      "rank": 30,
-      "igdb_id": "389419",
-      "name": "Kena: Scars of Kosmora",
-      "hypes": 52,
-      "publisher": "Sony Interactive Entertainment",
-      "is_major": true,
-      "is_released": false,
-      "release_date": "2026-12-31",
-      "platforms": "PC, PS5",
-      "summary": "In Kena: Scars of Kosmora, Kena is older and renowned as a Spirit Guide. In hopes of finding answers to the affliction she has endured all her life, Kena travels to the mysterious island of Kosmora. H",
-      "url": "https://www.igdb.com/games/kena-scars-of-kosmora",
       "source": "igdb"
     },
     {
@@ -437,6 +437,20 @@
     },
     {
       "rank": 32,
+      "igdb_id": "312274",
+      "name": "The Eternal Life of Goldman",
+      "hypes": 50,
+      "publisher": "THQ Nordic",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-12-31",
+      "platforms": "Series X|S, PC, PS5, Switch",
+      "summary": "The Eternal Life of Goldman is a vibrant yet dark platformer adventure that weaves together legends, fairy tales and myths. Explore a vast hand-drawn Archipelago, inspired by ancient fables and depict",
+      "url": "https://www.igdb.com/games/the-eternal-life-of-goldman",
+      "source": "igdb"
+    },
+    {
+      "rank": 33,
       "igdb_id": "381248",
       "name": "Star Wars: Galactic Racer",
       "hypes": 49,
@@ -450,21 +464,21 @@
       "source": "igdb"
     },
     {
-      "rank": 33,
-      "igdb_id": "312274",
-      "name": "The Eternal Life of Goldman",
-      "hypes": 49,
-      "publisher": "THQ Nordic",
+      "rank": 34,
+      "igdb_id": "337738",
+      "name": "Assassin's Creed Black Flag Resynced",
+      "hypes": 47,
+      "publisher": "Ubisoft Entertainment",
       "is_major": false,
       "is_released": false,
-      "release_date": "2026-12-31",
-      "platforms": "Series X|S, PC, PS5, Switch",
-      "summary": "The Eternal Life of Goldman is a vibrant yet dark platformer adventure that weaves together legends, fairy tales and myths. Explore a vast hand-drawn Archipelago, inspired by ancient fables and depict",
-      "url": "https://www.igdb.com/games/the-eternal-life-of-goldman",
+      "release_date": "2026-07-09",
+      "platforms": "Series X|S, PC, PS5",
+      "summary": "The iconic solo pirate adventure returns with Assassin's Creed Black Flag Resynced, launching on July 9, 2026. Sail the Caribbean as Edward Kenway during the Golden Age of Piracy in this faithfully en",
+      "url": "https://www.igdb.com/games/assassins-creed-black-flag-resynced",
       "source": "igdb"
     },
     {
-      "rank": 34,
+      "rank": 35,
       "igdb_id": "305550",
       "name": "Acts of Blood",
       "hypes": 47,
@@ -478,24 +492,10 @@
       "source": "igdb"
     },
     {
-      "rank": 35,
-      "igdb_id": "337738",
-      "name": "Assassin's Creed Black Flag Resynced",
-      "hypes": 46,
-      "publisher": "Ubisoft Entertainment",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-07-09",
-      "platforms": "Series X|S, PC, PS5",
-      "summary": "The iconic solo pirate adventure returns with Assassin's Creed Black Flag Resynced, launching on July 9, 2026. Sail the Caribbean as Edward Kenway during the Golden Age of Piracy in this faithfully en",
-      "url": "https://www.igdb.com/games/assassins-creed-black-flag-resynced",
-      "source": "igdb"
-    },
-    {
       "rank": 36,
       "igdb_id": "361880",
       "name": "Zero Parades: For Dead Spies",
-      "hypes": 41,
+      "hypes": 42,
       "publisher": "ZA/UM",
       "is_major": false,
       "is_released": false,
@@ -507,6 +507,20 @@
     },
     {
       "rank": 37,
+      "igdb_id": "398225",
+      "name": "Metro 2039",
+      "hypes": 41,
+      "publisher": "Deep Silver",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-12-31",
+      "platforms": "Series X|S, PC, PS5",
+      "summary": "METRO 2039 is the next landmark FPS from acclaimed storytellers, 4A Games. Journey into the dark heart of post-apocalyptic Moscow in a harrowing conflict for the very soul of the Metro.\n\nThe year is 2",
+      "url": "https://www.igdb.com/games/metro-2039",
+      "source": "igdb"
+    },
+    {
+      "rank": 38,
       "igdb_id": "189781",
       "name": "Mina the Hollower",
       "hypes": 41,
@@ -517,20 +531,6 @@
       "platforms": "Series X|S, Linux, Switch 2, PC, PS5, Mac, Switch",
       "summary": "Mina the Hollower is a bone-chilling action-adventure game featuring classic gameplay and an 8-bit aesthetic in the style of Game Boy Color, refined for the modern era.\n\nQuick and deliberate 60fps act",
       "url": "https://www.igdb.com/games/mina-the-hollower",
-      "source": "igdb"
-    },
-    {
-      "rank": 38,
-      "igdb_id": "398225",
-      "name": "Metro 2039",
-      "hypes": 40,
-      "publisher": "Deep Silver",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-12-31",
-      "platforms": "Series X|S, PC, PS5",
-      "summary": "METRO 2039 is the next landmark FPS from acclaimed storytellers, 4A Games. Journey into the dark heart of post-apocalyptic Moscow in a harrowing conflict for the very soul of the Metro.\n\nThe year is 2",
-      "url": "https://www.igdb.com/games/metro-2039",
       "source": "igdb"
     },
     {
