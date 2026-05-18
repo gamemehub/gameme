@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-17T17:38:01.081070+09:00",
+  "updated_at": "2026-05-18T21:57:09.164412+09:00",
   "entries": [
     {
       "rank": 1,
@@ -215,7 +215,7 @@
       "rank": 16,
       "igdb_id": "361855",
       "name": "LEGO Batman: Legacy of the Dark Knight",
-      "hypes": 71,
+      "hypes": 73,
       "publisher": "WB Games",
       "is_major": false,
       "is_released": false,
@@ -465,6 +465,20 @@
     },
     {
       "rank": 34,
+      "igdb_id": "305550",
+      "name": "Acts of Blood",
+      "hypes": 48,
+      "publisher": "Eksil Team",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-09-30",
+      "platforms": "PC",
+      "summary": "Acts of Blood is a Beat ‘em up, Action, 3rd person game which focuses on fast-paced, brutal hand-to-hand combat. Set in dystopian city of Bandung, Indonesia.",
+      "url": "https://www.igdb.com/games/acts-of-blood",
+      "source": "igdb"
+    },
+    {
+      "rank": 35,
       "igdb_id": "337738",
       "name": "Assassin's Creed Black Flag Resynced",
       "hypes": 47,
@@ -475,20 +489,6 @@
       "platforms": "Series X|S, PC, PS5",
       "summary": "The iconic solo pirate adventure returns with Assassin's Creed Black Flag Resynced, launching on July 9, 2026. Sail the Caribbean as Edward Kenway during the Golden Age of Piracy in this faithfully en",
       "url": "https://www.igdb.com/games/assassins-creed-black-flag-resynced",
-      "source": "igdb"
-    },
-    {
-      "rank": 35,
-      "igdb_id": "305550",
-      "name": "Acts of Blood",
-      "hypes": 47,
-      "publisher": "Eksil Team",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-09-30",
-      "platforms": "PC",
-      "summary": "Acts of Blood is a Beat ‘em up, Action, 3rd person game which focuses on fast-paced, brutal hand-to-hand combat. Set in dystopian city of Bandung, Indonesia.",
-      "url": "https://www.igdb.com/games/acts-of-blood",
       "source": "igdb"
     },
     {
@@ -507,6 +507,20 @@
     },
     {
       "rank": 37,
+      "igdb_id": "189781",
+      "name": "Mina the Hollower",
+      "hypes": 42,
+      "publisher": "Yacht Club Games",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-05-29",
+      "platforms": "Series X|S, Linux, Switch 2, PC, PS5, Mac, Switch",
+      "summary": "Mina the Hollower is a bone-chilling action-adventure game featuring classic gameplay and an 8-bit aesthetic in the style of Game Boy Color, refined for the modern era.\n\nQuick and deliberate 60fps act",
+      "url": "https://www.igdb.com/games/mina-the-hollower",
+      "source": "igdb"
+    },
+    {
+      "rank": 38,
       "igdb_id": "398225",
       "name": "Metro 2039",
       "hypes": 41,
@@ -517,20 +531,6 @@
       "platforms": "Series X|S, PC, PS5",
       "summary": "METRO 2039 is the next landmark FPS from acclaimed storytellers, 4A Games. Journey into the dark heart of post-apocalyptic Moscow in a harrowing conflict for the very soul of the Metro.\n\nThe year is 2",
       "url": "https://www.igdb.com/games/metro-2039",
-      "source": "igdb"
-    },
-    {
-      "rank": 38,
-      "igdb_id": "189781",
-      "name": "Mina the Hollower",
-      "hypes": 41,
-      "publisher": "Yacht Club Games",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-05-29",
-      "platforms": "Series X|S, Linux, Switch 2, PC, PS5, Mac, Switch",
-      "summary": "Mina the Hollower is a bone-chilling action-adventure game featuring classic gameplay and an 8-bit aesthetic in the style of Game Boy Color, refined for the modern era.\n\nQuick and deliberate 60fps act",
-      "url": "https://www.igdb.com/games/mina-the-hollower",
       "source": "igdb"
     },
     {
@@ -899,6 +899,20 @@
     },
     {
       "rank": 65,
+      "igdb_id": "224511",
+      "name": "Thick as Thieves",
+      "hypes": 27,
+      "publisher": "Megabit Publishing",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-05-20",
+      "platforms": "Series X|S, PC, PS5",
+      "summary": "Enter the shadows in this introduction to Thick as Thieves. In the shadow-draped streets of Kilcairn, fortune favours the bold. As a member of the Thieves' Guild, you'll undertake daring heists to cla",
+      "url": "https://www.igdb.com/games/thick-as-thieves",
+      "source": "igdb"
+    },
+    {
+      "rank": 66,
       "igdb_id": "361826",
       "name": "Denshattack!",
       "hypes": 26,
@@ -912,7 +926,7 @@
       "source": "igdb"
     },
     {
-      "rank": 66,
+      "rank": 67,
       "igdb_id": "347120",
       "name": "Bloodstained: The Scarlet Engagement",
       "hypes": 26,
@@ -923,20 +937,6 @@
       "platforms": "Series X|S, PC, PS5",
       "summary": "Unravel the dark history of the Bloodstained universe and explore a hauntingly immersive 16th-century England steeped in a 2.5D gothic atmosphere, enthralling players in strategic battles, crafting, a",
       "url": "https://www.igdb.com/games/bloodstained-the-scarlet-engagement",
-      "source": "igdb"
-    },
-    {
-      "rank": 67,
-      "igdb_id": "224511",
-      "name": "Thick as Thieves",
-      "hypes": 26,
-      "publisher": "Megabit Publishing",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-05-20",
-      "platforms": "Series X|S, PC, PS5",
-      "summary": "Enter the shadows in this introduction to Thick as Thieves. In the shadow-draped streets of Kilcairn, fortune favours the bold. As a member of the Thieves' Guild, you'll undertake daring heists to cla",
-      "url": "https://www.igdb.com/games/thick-as-thieves",
       "source": "igdb"
     },
     {
@@ -1129,7 +1129,7 @@
       "publisher": "Freedom Games",
       "is_major": false,
       "is_released": false,
-      "release_date": "2026-06-30",
+      "release_date": "2026-12-31",
       "platforms": "Series X|S, PC, PS5, Switch",
       "summary": "Mariachi Legends is an action-packed mystery Metroidvania game. In Mariachi Legends, Join fantastical festivities at the Day of the Dead carnival alongside Detective Pablo Cruz, currently masquerading",
       "url": "https://www.igdb.com/games/mariachi-legends",
