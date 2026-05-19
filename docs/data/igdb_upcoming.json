@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-18T21:57:09.164412+09:00",
+  "updated_at": "2026-05-19T21:23:53.953405+09:00",
   "entries": [
     {
       "rank": 1,
@@ -19,7 +19,7 @@
       "rank": 2,
       "igdb_id": "141114",
       "name": "007 First Light",
-      "hypes": 271,
+      "hypes": 273,
       "publisher": "IO Interactive",
       "is_major": false,
       "is_released": false,
@@ -87,20 +87,6 @@
     },
     {
       "rank": 7,
-      "igdb_id": "348330",
-      "name": "Forza Horizon 6",
-      "hypes": 100,
-      "publisher": "Xbox Game Studios",
-      "is_major": true,
-      "is_released": false,
-      "release_date": "2026-05-19",
-      "platforms": "Series X|S, PC, PS5",
-      "summary": "Discover the breathtaking landscapes of Japan in over 550 real-world cars and become a racing Legend at the Horizon Festival. Start your journey as a tourist and explore a world full of hit music and ",
-      "url": "https://www.igdb.com/games/forza-horizon-6",
-      "source": "igdb"
-    },
-    {
-      "rank": 8,
       "igdb_id": "279621",
       "name": "Exodus",
       "hypes": 98,
@@ -114,7 +100,7 @@
       "source": "igdb"
     },
     {
-      "rank": 9,
+      "rank": 8,
       "igdb_id": "325599",
       "name": "Stranger Than Heaven",
       "hypes": 88,
@@ -128,7 +114,7 @@
       "source": "igdb"
     },
     {
-      "rank": 10,
+      "rank": 9,
       "igdb_id": "381234",
       "name": "Tomb Raider: Catalyst",
       "hypes": 86,
@@ -142,7 +128,7 @@
       "source": "igdb"
     },
     {
-      "rank": 11,
+      "rank": 10,
       "igdb_id": "348180",
       "name": "Beast of Reincarnation",
       "hypes": 85,
@@ -156,7 +142,7 @@
       "source": "igdb"
     },
     {
-      "rank": 12,
+      "rank": 11,
       "igdb_id": "347869",
       "name": "The Expanse: Osiris Reborn",
       "hypes": 85,
@@ -170,7 +156,7 @@
       "source": "igdb"
     },
     {
-      "rank": 13,
+      "rank": 12,
       "igdb_id": "216315",
       "name": "Marvel 1943: Rise of Hydra",
       "hypes": 81,
@@ -184,7 +170,7 @@
       "source": "igdb"
     },
     {
-      "rank": 14,
+      "rank": 13,
       "igdb_id": "348168",
       "name": "Resonance: A Plague Tale Legacy",
       "hypes": 78,
@@ -195,6 +181,20 @@
       "platforms": "Series X|S, PC, PS5",
       "summary": "Set 15 years before Requiem, play as Sophia, a fierce young plunderer, on the run and determined to uncover the secrets of her past. Dive into an original story blending combat, myth and fate with a b",
       "url": "https://www.igdb.com/games/resonance-a-plague-tale-legacy",
+      "source": "igdb"
+    },
+    {
+      "rank": 14,
+      "igdb_id": "361855",
+      "name": "LEGO Batman: Legacy of the Dark Knight",
+      "hypes": 76,
+      "publisher": "WB Games",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-05-22",
+      "platforms": "Series X|S, Switch 2, PC, PS5",
+      "summary": "Rise as the Dark Knight and experience the essential Batman story in a bold, action-packed adventure with hard-hitting combat, an open-world Gotham City, and the signature LEGO charm that fans know an",
+      "url": "https://www.igdb.com/games/lego-batman-legacy-of-the-dark-knight",
       "source": "igdb"
     },
     {
@@ -213,20 +213,6 @@
     },
     {
       "rank": 16,
-      "igdb_id": "361855",
-      "name": "LEGO Batman: Legacy of the Dark Knight",
-      "hypes": 73,
-      "publisher": "WB Games",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-05-22",
-      "platforms": "Series X|S, Switch 2, PC, PS5",
-      "summary": "Rise as the Dark Knight and experience the essential Batman story in a bold, action-packed adventure with hard-hitting combat, an open-world Gotham City, and the signature LEGO charm that fans know an",
-      "url": "https://www.igdb.com/games/lego-batman-legacy-of-the-dark-knight",
-      "source": "igdb"
-    },
-    {
-      "rank": 17,
       "igdb_id": "347637",
       "name": "End of Abyss",
       "hypes": 66,
@@ -240,7 +226,7 @@
       "source": "igdb"
     },
     {
-      "rank": 18,
+      "rank": 17,
       "igdb_id": "305160",
       "name": "Gears of War: E-Day",
       "hypes": 66,
@@ -254,7 +240,7 @@
       "source": "igdb"
     },
     {
-      "rank": 19,
+      "rank": 18,
       "igdb_id": "347645",
       "name": "Out of Words",
       "hypes": 65,
@@ -268,7 +254,7 @@
       "source": "igdb"
     },
     {
-      "rank": 20,
+      "rank": 19,
       "igdb_id": "262712",
       "name": "Ananta",
       "hypes": 65,
@@ -282,7 +268,7 @@
       "source": "igdb"
     },
     {
-      "rank": 21,
+      "rank": 20,
       "igdb_id": "67195",
       "name": "Witchbrook",
       "hypes": 63,
@@ -296,7 +282,7 @@
       "source": "igdb"
     },
     {
-      "rank": 22,
+      "rank": 21,
       "igdb_id": "76883",
       "name": "In the Valley of Gods",
       "hypes": 62,
@@ -310,7 +296,7 @@
       "source": "igdb"
     },
     {
-      "rank": 23,
+      "rank": 22,
       "igdb_id": "222342",
       "name": "Silent Hill: Townfall",
       "hypes": 61,
@@ -324,7 +310,7 @@
       "source": "igdb"
     },
     {
-      "rank": 24,
+      "rank": 23,
       "igdb_id": "347633",
       "name": "Mortal Shell II",
       "hypes": 56,
@@ -338,7 +324,7 @@
       "source": "igdb"
     },
     {
-      "rank": 25,
+      "rank": 24,
       "igdb_id": "318503",
       "name": "Lords of the Fallen II",
       "hypes": 56,
@@ -352,7 +338,7 @@
       "source": "igdb"
     },
     {
-      "rank": 26,
+      "rank": 25,
       "igdb_id": "381219",
       "name": "Ontos",
       "hypes": 55,
@@ -366,7 +352,7 @@
       "source": "igdb"
     },
     {
-      "rank": 27,
+      "rank": 26,
       "igdb_id": "361833",
       "name": "Valor Mortis",
       "hypes": 55,
@@ -380,7 +366,7 @@
       "source": "igdb"
     },
     {
-      "rank": 28,
+      "rank": 27,
       "igdb_id": "348199",
       "name": "Mudang: Two Hearts",
       "hypes": 55,
@@ -394,7 +380,7 @@
       "source": "igdb"
     },
     {
-      "rank": 29,
+      "rank": 28,
       "igdb_id": "389419",
       "name": "Kena: Scars of Kosmora",
       "hypes": 54,
@@ -408,7 +394,7 @@
       "source": "igdb"
     },
     {
-      "rank": 30,
+      "rank": 29,
       "igdb_id": "19128",
       "name": "Squadron 42",
       "hypes": 53,
@@ -422,7 +408,7 @@
       "source": "igdb"
     },
     {
-      "rank": 31,
+      "rank": 30,
       "igdb_id": "148227",
       "name": "Gothic 1 Remake",
       "hypes": 52,
@@ -436,7 +422,7 @@
       "source": "igdb"
     },
     {
-      "rank": 32,
+      "rank": 31,
       "igdb_id": "312274",
       "name": "The Eternal Life of Goldman",
       "hypes": 50,
@@ -450,7 +436,7 @@
       "source": "igdb"
     },
     {
-      "rank": 33,
+      "rank": 32,
       "igdb_id": "381248",
       "name": "Star Wars: Galactic Racer",
       "hypes": 49,
@@ -464,7 +450,7 @@
       "source": "igdb"
     },
     {
-      "rank": 34,
+      "rank": 33,
       "igdb_id": "305550",
       "name": "Acts of Blood",
       "hypes": 48,
@@ -478,7 +464,7 @@
       "source": "igdb"
     },
     {
-      "rank": 35,
+      "rank": 34,
       "igdb_id": "337738",
       "name": "Assassin's Creed Black Flag Resynced",
       "hypes": 47,
@@ -489,6 +475,20 @@
       "platforms": "Series X|S, PC, PS5",
       "summary": "The iconic solo pirate adventure returns with Assassin's Creed Black Flag Resynced, launching on July 9, 2026. Sail the Caribbean as Edward Kenway during the Golden Age of Piracy in this faithfully en",
       "url": "https://www.igdb.com/games/assassins-creed-black-flag-resynced",
+      "source": "igdb"
+    },
+    {
+      "rank": 35,
+      "igdb_id": "398225",
+      "name": "Metro 2039",
+      "hypes": 42,
+      "publisher": "Deep Silver",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-12-31",
+      "platforms": "Series X|S, PC, PS5",
+      "summary": "METRO 2039 is the next landmark FPS from acclaimed storytellers, 4A Games. Journey into the dark heart of post-apocalyptic Moscow in a harrowing conflict for the very soul of the Metro.\n\nThe year is 2",
+      "url": "https://www.igdb.com/games/metro-2039",
       "source": "igdb"
     },
     {
@@ -521,20 +521,6 @@
     },
     {
       "rank": 38,
-      "igdb_id": "398225",
-      "name": "Metro 2039",
-      "hypes": 41,
-      "publisher": "Deep Silver",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-12-31",
-      "platforms": "Series X|S, PC, PS5",
-      "summary": "METRO 2039 is the next landmark FPS from acclaimed storytellers, 4A Games. Journey into the dark heart of post-apocalyptic Moscow in a harrowing conflict for the very soul of the Metro.\n\nThe year is 2",
-      "url": "https://www.igdb.com/games/metro-2039",
-      "source": "igdb"
-    },
-    {
-      "rank": 39,
       "igdb_id": "347132",
       "name": "Marvel Tokon: Fighting Souls",
       "hypes": 39,
@@ -548,7 +534,7 @@
       "source": "igdb"
     },
     {
-      "rank": 40,
+      "rank": 39,
       "igdb_id": "322158",
       "name": "Active Matter",
       "hypes": 37,
@@ -562,7 +548,7 @@
       "source": "igdb"
     },
     {
-      "rank": 41,
+      "rank": 40,
       "igdb_id": "289696",
       "name": "The Sinking City 2",
       "hypes": 37,
@@ -576,7 +562,7 @@
       "source": "igdb"
     },
     {
-      "rank": 42,
+      "rank": 41,
       "igdb_id": "26200",
       "name": "Infinitesimals",
       "hypes": 37,
@@ -590,7 +576,7 @@
       "source": "igdb"
     },
     {
-      "rank": 43,
+      "rank": 42,
       "igdb_id": "389434",
       "name": "Castlevania: Belmont's Curse",
       "hypes": 36,
@@ -604,7 +590,7 @@
       "source": "igdb"
     },
     {
-      "rank": 44,
+      "rank": 43,
       "igdb_id": "339608",
       "name": "Neverway",
       "hypes": 36,
@@ -618,7 +604,7 @@
       "source": "igdb"
     },
     {
-      "rank": 45,
+      "rank": 44,
       "igdb_id": "372154",
       "name": "Bellum",
       "hypes": 35,
@@ -632,7 +618,7 @@
       "source": "igdb"
     },
     {
-      "rank": 46,
+      "rank": 45,
       "igdb_id": "347638",
       "name": "Game of Thrones: War for Westeros",
       "hypes": 35,
@@ -646,7 +632,7 @@
       "source": "igdb"
     },
     {
-      "rank": 47,
+      "rank": 46,
       "igdb_id": "203301",
       "name": "Nivalis",
       "hypes": 35,
@@ -660,7 +646,7 @@
       "source": "igdb"
     },
     {
-      "rank": 48,
+      "rank": 47,
       "igdb_id": "356552",
       "name": "Clive Barker's Hellraiser: Revival",
       "hypes": 34,
@@ -674,7 +660,7 @@
       "source": "igdb"
     },
     {
-      "rank": 49,
+      "rank": 48,
       "igdb_id": "381247",
       "name": "Ace Combat 8: Wings of Theve",
       "hypes": 33,
@@ -688,7 +674,7 @@
       "source": "igdb"
     },
     {
-      "rank": 50,
+      "rank": 49,
       "igdb_id": "348202",
       "name": "Aniimo",
       "hypes": 33,
@@ -702,7 +688,7 @@
       "source": "igdb"
     },
     {
-      "rank": 51,
+      "rank": 50,
       "igdb_id": "347841",
       "name": "There Are No Ghosts at the Grand",
       "hypes": 32,
@@ -716,7 +702,7 @@
       "source": "igdb"
     },
     {
-      "rank": 52,
+      "rank": 51,
       "igdb_id": "325600",
       "name": "Turok: Origins",
       "hypes": 32,
@@ -730,7 +716,7 @@
       "source": "igdb"
     },
     {
-      "rank": 53,
+      "rank": 52,
       "igdb_id": "251059",
       "name": "Grave Seasons",
       "hypes": 32,
@@ -744,7 +730,7 @@
       "source": "igdb"
     },
     {
-      "rank": 54,
+      "rank": 53,
       "igdb_id": "236665",
       "name": "Professor Layton and the New World of Steam",
       "hypes": 32,
@@ -758,7 +744,7 @@
       "source": "igdb"
     },
     {
-      "rank": 55,
+      "rank": 54,
       "igdb_id": "340113",
       "name": "Star Wars Zero Company",
       "hypes": 30,
@@ -772,7 +758,7 @@
       "source": "igdb"
     },
     {
-      "rank": 56,
+      "rank": 55,
       "igdb_id": "314449",
       "name": "Hela: Of Mice & Magic",
       "hypes": 29,
@@ -783,6 +769,20 @@
       "platforms": "Series X|S, Switch 2, PC, PS5",
       "summary": "See the world through the eyes of a brave little mouse in this enchanting 3D co-op adventure. Explore breathtaking landscapes inspired by Northern Sweden, solve puzzles, and be a force for good in a l",
       "url": "https://www.igdb.com/games/hela-of-mice-and-magic",
+      "source": "igdb"
+    },
+    {
+      "rank": 56,
+      "igdb_id": "307368",
+      "name": "PVKK: Planetenverteidigungskanonenkommandant",
+      "hypes": 29,
+      "publisher": "Bippinbits",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2027-12-31",
+      "platforms": "PC, Mac",
+      "summary": "Operate your planetary defense cannon to fend off an interplanetary invasion from the comfort of your cozy bunker. You’re here to stay, so obey your superiors, press the right buttons, and sip your da",
+      "url": "https://www.igdb.com/games/pvkk-planetenverteidigungskanonenkommandant",
       "source": "igdb"
     },
     {
@@ -871,20 +871,6 @@
     },
     {
       "rank": 63,
-      "igdb_id": "307368",
-      "name": "PVKK: Planetenverteidigungskanonenkommandant",
-      "hypes": 28,
-      "publisher": "Bippinbits",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2027-12-31",
-      "platforms": "PC, Mac",
-      "summary": "Operate your planetary defense cannon to fend off an interplanetary invasion from the comfort of your cozy bunker. You’re here to stay, so obey your superiors, press the right buttons, and sip your da",
-      "url": "https://www.igdb.com/games/pvkk-planetenverteidigungskanonenkommandant",
-      "source": "igdb"
-    },
-    {
-      "rank": 64,
       "igdb_id": "216609",
       "name": "Long Gone",
       "hypes": 28,
@@ -898,7 +884,7 @@
       "source": "igdb"
     },
     {
-      "rank": 65,
+      "rank": 64,
       "igdb_id": "224511",
       "name": "Thick as Thieves",
       "hypes": 27,
@@ -912,7 +898,7 @@
       "source": "igdb"
     },
     {
-      "rank": 66,
+      "rank": 65,
       "igdb_id": "361826",
       "name": "Denshattack!",
       "hypes": 26,
@@ -926,7 +912,7 @@
       "source": "igdb"
     },
     {
-      "rank": 67,
+      "rank": 66,
       "igdb_id": "347120",
       "name": "Bloodstained: The Scarlet Engagement",
       "hypes": 26,
@@ -940,7 +926,7 @@
       "source": "igdb"
     },
     {
-      "rank": 68,
+      "rank": 67,
       "igdb_id": "165397",
       "name": "The Relic: First Guardian",
       "hypes": 26,
@@ -954,7 +940,7 @@
       "source": "igdb"
     },
     {
-      "rank": 69,
+      "rank": 68,
       "igdb_id": "279624",
       "name": "Big Walk",
       "hypes": 25,
@@ -968,7 +954,7 @@
       "source": "igdb"
     },
     {
-      "rank": 70,
+      "rank": 69,
       "igdb_id": "186613",
       "name": "Showa American Story",
       "hypes": 25,
@@ -982,7 +968,7 @@
       "source": "igdb"
     },
     {
-      "rank": 71,
+      "rank": 70,
       "igdb_id": "389433",
       "name": "Metal Gear Solid Master Collection: Volume 2",
       "hypes": 24,
@@ -996,7 +982,7 @@
       "source": "igdb"
     },
     {
-      "rank": 72,
+      "rank": 71,
       "igdb_id": "361859",
       "name": "Warhammer 40,000: Dawn of War IV",
       "hypes": 24,
@@ -1010,7 +996,7 @@
       "source": "igdb"
     },
     {
-      "rank": 73,
+      "rank": 72,
       "igdb_id": "347662",
       "name": "Blighted",
       "hypes": 24,
@@ -1024,7 +1010,7 @@
       "source": "igdb"
     },
     {
-      "rank": 74,
+      "rank": 73,
       "igdb_id": "313597",
       "name": "Silver Pines",
       "hypes": 24,
@@ -1038,7 +1024,7 @@
       "source": "igdb"
     },
     {
-      "rank": 75,
+      "rank": 74,
       "igdb_id": "202138",
       "name": "Deer & Boy",
       "hypes": 24,
@@ -1052,7 +1038,7 @@
       "source": "igdb"
     },
     {
-      "rank": 76,
+      "rank": 75,
       "igdb_id": "381202",
       "name": "The Free Shepherd",
       "hypes": 22,
@@ -1066,7 +1052,7 @@
       "source": "igdb"
     },
     {
-      "rank": 77,
+      "rank": 76,
       "igdb_id": "322835",
       "name": "Haunted by Femboy",
       "hypes": 22,
@@ -1080,7 +1066,7 @@
       "source": "igdb"
     },
     {
-      "rank": 78,
+      "rank": 77,
       "igdb_id": "381208",
       "name": "TankRat",
       "hypes": 21,
@@ -1094,7 +1080,7 @@
       "source": "igdb"
     },
     {
-      "rank": 79,
+      "rank": 78,
       "igdb_id": "358534",
       "name": "The Adventures of Elliot: The Millennium Tales",
       "hypes": 21,
@@ -1108,7 +1094,7 @@
       "source": "igdb"
     },
     {
-      "rank": 80,
+      "rank": 79,
       "igdb_id": "339619",
       "name": "Ikuma: The Frozen Compass",
       "hypes": 21,
@@ -1122,7 +1108,7 @@
       "source": "igdb"
     },
     {
-      "rank": 81,
+      "rank": 80,
       "igdb_id": "252852",
       "name": "Mariachi Legends",
       "hypes": 21,
@@ -1136,7 +1122,7 @@
       "source": "igdb"
     },
     {
-      "rank": 82,
+      "rank": 81,
       "igdb_id": "152268",
       "name": "SacriFire",
       "hypes": 21,
@@ -1150,7 +1136,7 @@
       "source": "igdb"
     },
     {
-      "rank": 83,
+      "rank": 82,
       "igdb_id": "362096",
       "name": "Halloween",
       "hypes": 20,
@@ -1164,7 +1150,7 @@
       "source": "igdb"
     },
     {
-      "rank": 84,
+      "rank": 83,
       "igdb_id": "336164",
       "name": "Dark Mass",
       "hypes": 20,
@@ -1178,7 +1164,7 @@
       "source": "igdb"
     },
     {
-      "rank": 85,
+      "rank": 84,
       "igdb_id": "305039",
       "name": "Tenjutsu",
       "hypes": 20,
@@ -1192,7 +1178,7 @@
       "source": "igdb"
     },
     {
-      "rank": 86,
+      "rank": 85,
       "igdb_id": "305011",
       "name": "Tears of Metal",
       "hypes": 20,
@@ -1206,7 +1192,7 @@
       "source": "igdb"
     },
     {
-      "rank": 87,
+      "rank": 86,
       "igdb_id": "259874",
       "name": "The God Slayer",
       "hypes": 20,
@@ -1220,7 +1206,7 @@
       "source": "igdb"
     },
     {
-      "rank": 88,
+      "rank": 87,
       "igdb_id": "124209",
       "name": "Shadow of the Road",
       "hypes": 20,
@@ -1234,7 +1220,7 @@
       "source": "igdb"
     },
     {
-      "rank": 89,
+      "rank": 88,
       "igdb_id": "381222",
       "name": "Order of the Sinking Star",
       "hypes": 19,
@@ -1248,7 +1234,7 @@
       "source": "igdb"
     },
     {
-      "rank": 90,
+      "rank": 89,
       "igdb_id": "381212",
       "name": "Stupid Never Dies",
       "hypes": 19,
@@ -1259,6 +1245,20 @@
       "platforms": "PC, PS5",
       "summary": "Set in a monster-ruled otherworldly dungeon, Stupid Never Dies puts you in control of Davy, a timid zombie living at the very bottom of monster society. Defeat enemies, level up, and collect strange i",
       "url": "https://www.igdb.com/games/stupid-never-dies",
+      "source": "igdb"
+    },
+    {
+      "rank": 90,
+      "igdb_id": "381203",
+      "name": "Decrepit",
+      "hypes": 19,
+      "publisher": "",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-12-31",
+      "platforms": "PC",
+      "summary": "Decrepit is a first-person action game with souls-like combat where every death drags you back into the depths. Learn the dungeon, master the combat, and find your way out of the forsaken castle.",
+      "url": "https://www.igdb.com/games/decrepit--1",
       "source": "igdb"
     },
     {
@@ -1333,20 +1333,6 @@
     },
     {
       "rank": 96,
-      "igdb_id": "381203",
-      "name": "Decrepit",
-      "hypes": 18,
-      "publisher": "",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-12-31",
-      "platforms": "PC",
-      "summary": "Decrepit is a first-person action game with souls-like combat where every death drags you back into the depths. Learn the dungeon, master the combat, and find your way out of the forsaken castle.",
-      "url": "https://www.igdb.com/games/decrepit--1",
-      "source": "igdb"
-    },
-    {
-      "rank": 97,
       "igdb_id": "348205",
       "name": "At Fate's End",
       "hypes": 18,
@@ -1360,7 +1346,7 @@
       "source": "igdb"
     },
     {
-      "rank": 98,
+      "rank": 97,
       "igdb_id": "344669",
       "name": "Warhammer 40,000: Boltgun 2",
       "hypes": 18,
@@ -1374,7 +1360,7 @@
       "source": "igdb"
     },
     {
-      "rank": 99,
+      "rank": 98,
       "igdb_id": "194950",
       "name": "Solarpunk",
       "hypes": 18,
@@ -1388,7 +1374,7 @@
       "source": "igdb"
     },
     {
-      "rank": 100,
+      "rank": 99,
       "igdb_id": "194855",
       "name": "The Bornless",
       "hypes": 18,
@@ -1399,6 +1385,20 @@
       "platforms": "PC",
       "summary": "The Bornless is an FPS action shooter packed with a variety of gameplay modes. Dive into last-man-standing co-op gameplay or try the thrilling demon versus disciple mode, all within a terror-filled wo",
       "url": "https://www.igdb.com/games/the-bornless",
+      "source": "igdb"
+    },
+    {
+      "rank": 100,
+      "igdb_id": "348047",
+      "name": "Wanderburg",
+      "hypes": 17,
+      "publisher": "Randwerk",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-12-31",
+      "platforms": "PC",
+      "summary": "Wanderburg is a minimalist open-world roguelike in an ecosystem of Castles on Wheels. Consume, grow bigger, upgrade your modules, and survive! Unlock new weapons, build your castle, and discover the p",
+      "url": "https://www.igdb.com/games/wanderburg",
       "source": "igdb"
     }
   ]
