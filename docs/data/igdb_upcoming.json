@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-19T21:23:53.953405+09:00",
+  "updated_at": "2026-05-20T20:38:06.541003+09:00",
   "entries": [
     {
       "rank": 1,
@@ -75,7 +75,7 @@
       "rank": 6,
       "igdb_id": "225582",
       "name": "Control Resonant",
-      "hypes": 115,
+      "hypes": 116,
       "publisher": "Remedy Entertainment",
       "is_major": false,
       "is_released": false,
@@ -89,7 +89,7 @@
       "rank": 7,
       "igdb_id": "279621",
       "name": "Exodus",
-      "hypes": 98,
+      "hypes": 97,
       "publisher": "Wizards of the Coast",
       "is_major": false,
       "is_released": false,
@@ -131,7 +131,7 @@
       "rank": 10,
       "igdb_id": "348180",
       "name": "Beast of Reincarnation",
-      "hypes": 85,
+      "hypes": 86,
       "publisher": "Fictions",
       "is_major": false,
       "is_released": false,
@@ -395,6 +395,20 @@
     },
     {
       "rank": 29,
+      "igdb_id": "148227",
+      "name": "Gothic 1 Remake",
+      "hypes": 53,
+      "publisher": "THQ Nordic",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-06-05",
+      "platforms": "Series X|S, PC, PS5",
+      "summary": "The Legend is Back - Return to the Valley of the Mines in this faithful remake of the genre-defining classic RPG. Explore a hand-crafted, organic open world that reacts dynamically to your actions in ",
+      "url": "https://www.igdb.com/games/gothic-1-remake",
+      "source": "igdb"
+    },
+    {
+      "rank": 30,
       "igdb_id": "19128",
       "name": "Squadron 42",
       "hypes": 53,
@@ -405,20 +419,6 @@
       "platforms": "PC",
       "summary": "Take the role of a rookie UEE Navy combat pilot in a cinematic single-player epic adventure set in the Star Citizen universe. Battle in the stars and face-to-face as you seamlessly transition between ",
       "url": "https://www.igdb.com/games/squadron-42",
-      "source": "igdb"
-    },
-    {
-      "rank": 30,
-      "igdb_id": "148227",
-      "name": "Gothic 1 Remake",
-      "hypes": 52,
-      "publisher": "THQ Nordic",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-06-05",
-      "platforms": "Series X|S, PC, PS5",
-      "summary": "The Legend is Back - Return to the Valley of the Mines in this faithful remake of the genre-defining classic RPG. Explore a hand-crafted, organic open world that reacts dynamically to your actions in ",
-      "url": "https://www.igdb.com/games/gothic-1-remake",
       "source": "igdb"
     },
     {
@@ -479,6 +479,20 @@
     },
     {
       "rank": 35,
+      "igdb_id": "361880",
+      "name": "Zero Parades: For Dead Spies",
+      "hypes": 43,
+      "publisher": "ZA/UM",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-05-21",
+      "platforms": "PC, PS5",
+      "summary": "From ZA/UM comes ZERO PARADES: For Dead Spies – a story-rich espionage RPG. You're a brilliant but tormented operant on a desperate assignment. Pick up the pieces of your broken network, untangle a bl",
+      "url": "https://www.igdb.com/games/zero-parades-for-dead-spies",
+      "source": "igdb"
+    },
+    {
+      "rank": 36,
       "igdb_id": "398225",
       "name": "Metro 2039",
       "hypes": 42,
@@ -489,20 +503,6 @@
       "platforms": "Series X|S, PC, PS5",
       "summary": "METRO 2039 is the next landmark FPS from acclaimed storytellers, 4A Games. Journey into the dark heart of post-apocalyptic Moscow in a harrowing conflict for the very soul of the Metro.\n\nThe year is 2",
       "url": "https://www.igdb.com/games/metro-2039",
-      "source": "igdb"
-    },
-    {
-      "rank": 36,
-      "igdb_id": "361880",
-      "name": "Zero Parades: For Dead Spies",
-      "hypes": 42,
-      "publisher": "ZA/UM",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-05-21",
-      "platforms": "PC, PS5",
-      "summary": "From ZA/UM comes ZERO PARADES: For Dead Spies – a story-rich espionage RPG. You're a brilliant but tormented operant on a desperate assignment. Pick up the pieces of your broken network, untangle a bl",
-      "url": "https://www.igdb.com/games/zero-parades-for-dead-spies",
       "source": "igdb"
     },
     {
@@ -619,6 +619,20 @@
     },
     {
       "rank": 45,
+      "igdb_id": "356552",
+      "name": "Clive Barker's Hellraiser: Revival",
+      "hypes": 35,
+      "publisher": "Saber Interactive",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-12-31",
+      "platforms": "Series X|S, PC, PS5",
+      "summary": "Experience a new chapter in the legendary horror series like never before. Clive Barker's Hellraiser: Revival takes first-person action horror survival to the next level. Wield the powers of the Genes",
+      "url": "https://www.igdb.com/games/clive-barkers-hellraiser-revival",
+      "source": "igdb"
+    },
+    {
+      "rank": 46,
       "igdb_id": "347638",
       "name": "Game of Thrones: War for Westeros",
       "hypes": 35,
@@ -632,7 +646,7 @@
       "source": "igdb"
     },
     {
-      "rank": 46,
+      "rank": 47,
       "igdb_id": "203301",
       "name": "Nivalis",
       "hypes": 35,
@@ -643,20 +657,6 @@
       "platforms": "PC",
       "summary": "Grow your business, manage restaurants and nightclubs, make friends and enemies, buy and decorate apartments, go fishing and maybe even find love in Nivalis, the city that stretches from the ocean to ",
       "url": "https://www.igdb.com/games/nivalis",
-      "source": "igdb"
-    },
-    {
-      "rank": 47,
-      "igdb_id": "356552",
-      "name": "Clive Barker's Hellraiser: Revival",
-      "hypes": 34,
-      "publisher": "Saber Interactive",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-12-31",
-      "platforms": "Series X|S, PC, PS5",
-      "summary": "Experience a new chapter in the legendary horror series like never before. Clive Barker's Hellraiser: Revival takes first-person action horror survival to the next level. Wield the powers of the Genes",
-      "url": "https://www.igdb.com/games/clive-barkers-hellraiser-revival",
       "source": "igdb"
     },
     {
@@ -759,6 +759,20 @@
     },
     {
       "rank": 55,
+      "igdb_id": "381223",
+      "name": "Warlock",
+      "hypes": 29,
+      "publisher": "Wizards of the Coast",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2027-12-31",
+      "platforms": "Series X|S, PC, PS5",
+      "summary": "In Warlock, you take on the role of Kaatri, a veteran warrior, in a new third-person action-adventure set in a dark fantasy open world inspired by Dungeons & Dragons. Make a pact to wield forbidden ma",
+      "url": "https://www.igdb.com/games/warlock--2",
+      "source": "igdb"
+    },
+    {
+      "rank": 56,
       "igdb_id": "314449",
       "name": "Hela: Of Mice & Magic",
       "hypes": 29,
@@ -772,7 +786,7 @@
       "source": "igdb"
     },
     {
-      "rank": 56,
+      "rank": 57,
       "igdb_id": "307368",
       "name": "PVKK: Planetenverteidigungskanonenkommandant",
       "hypes": 29,
@@ -783,20 +797,6 @@
       "platforms": "PC, Mac",
       "summary": "Operate your planetary defense cannon to fend off an interplanetary invasion from the comfort of your cozy bunker. You’re here to stay, so obey your superiors, press the right buttons, and sip your da",
       "url": "https://www.igdb.com/games/pvkk-planetenverteidigungskanonenkommandant",
-      "source": "igdb"
-    },
-    {
-      "rank": 57,
-      "igdb_id": "381223",
-      "name": "Warlock",
-      "hypes": 28,
-      "publisher": "Wizards of the Coast",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2027-12-31",
-      "platforms": "Series X|S, PC, PS5",
-      "summary": "In Warlock, you take on the role of Kaatri, a veteran warrior, in a new third-person action-adventure set in a dark fantasy open world inspired by Dungeons & Dragons. Make a pact to wield forbidden ma",
-      "url": "https://www.igdb.com/games/warlock--2",
       "source": "igdb"
     },
     {
@@ -885,20 +885,6 @@
     },
     {
       "rank": 64,
-      "igdb_id": "224511",
-      "name": "Thick as Thieves",
-      "hypes": 27,
-      "publisher": "Megabit Publishing",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-05-20",
-      "platforms": "Series X|S, PC, PS5",
-      "summary": "Enter the shadows in this introduction to Thick as Thieves. In the shadow-draped streets of Kilcairn, fortune favours the bold. As a member of the Thieves' Guild, you'll undertake daring heists to cla",
-      "url": "https://www.igdb.com/games/thick-as-thieves",
-      "source": "igdb"
-    },
-    {
-      "rank": 65,
       "igdb_id": "361826",
       "name": "Denshattack!",
       "hypes": 26,
@@ -912,7 +898,7 @@
       "source": "igdb"
     },
     {
-      "rank": 66,
+      "rank": 65,
       "igdb_id": "347120",
       "name": "Bloodstained: The Scarlet Engagement",
       "hypes": 26,
@@ -923,6 +909,20 @@
       "platforms": "Series X|S, PC, PS5",
       "summary": "Unravel the dark history of the Bloodstained universe and explore a hauntingly immersive 16th-century England steeped in a 2.5D gothic atmosphere, enthralling players in strategic battles, crafting, a",
       "url": "https://www.igdb.com/games/bloodstained-the-scarlet-engagement",
+      "source": "igdb"
+    },
+    {
+      "rank": 66,
+      "igdb_id": "279624",
+      "name": "Big Walk",
+      "hypes": 26,
+      "publisher": "Panic",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-12-31",
+      "platforms": "PC, PS5, Mac",
+      "summary": "Hang out and get lost with close friends in a big world. A cooperative online walker-talker from the creators of Untitled Goose Game.",
+      "url": "https://www.igdb.com/games/big-walk",
       "source": "igdb"
     },
     {
@@ -941,16 +941,16 @@
     },
     {
       "rank": 68,
-      "igdb_id": "279624",
-      "name": "Big Walk",
+      "igdb_id": "347662",
+      "name": "Blighted",
       "hypes": 25,
-      "publisher": "Panic",
+      "publisher": "Drinkbox Studios",
       "is_major": false,
       "is_released": false,
       "release_date": "2026-12-31",
-      "platforms": "PC, PS5, Mac",
-      "summary": "Hang out and get lost with close friends in a big world. A cooperative online walker-talker from the creators of Untitled Goose Game.",
-      "url": "https://www.igdb.com/games/big-walk",
+      "platforms": "Switch 2, PC",
+      "summary": "Battle your way through a psychedelic western nightmare to reclaim the memories of your people in this action RPG from the creators of Guacamelee! Harness the power of the deadly, reality-altering Bli",
+      "url": "https://www.igdb.com/games/blighted",
       "source": "igdb"
     },
     {
@@ -997,20 +997,6 @@
     },
     {
       "rank": 72,
-      "igdb_id": "347662",
-      "name": "Blighted",
-      "hypes": 24,
-      "publisher": "Drinkbox Studios",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-12-31",
-      "platforms": "Switch 2, PC",
-      "summary": "Battle your way through a psychedelic western nightmare to reclaim the memories of your people in this action RPG from the creators of Guacamelee! Harness the power of the deadly, reality-altering Bli",
-      "url": "https://www.igdb.com/games/blighted",
-      "source": "igdb"
-    },
-    {
-      "rank": 73,
       "igdb_id": "313597",
       "name": "Silver Pines",
       "hypes": 24,
@@ -1024,7 +1010,7 @@
       "source": "igdb"
     },
     {
-      "rank": 74,
+      "rank": 73,
       "igdb_id": "202138",
       "name": "Deer & Boy",
       "hypes": 24,
@@ -1038,7 +1024,7 @@
       "source": "igdb"
     },
     {
-      "rank": 75,
+      "rank": 74,
       "igdb_id": "381202",
       "name": "The Free Shepherd",
       "hypes": 22,
@@ -1052,7 +1038,7 @@
       "source": "igdb"
     },
     {
-      "rank": 76,
+      "rank": 75,
       "igdb_id": "322835",
       "name": "Haunted by Femboy",
       "hypes": 22,
@@ -1066,7 +1052,7 @@
       "source": "igdb"
     },
     {
-      "rank": 77,
+      "rank": 76,
       "igdb_id": "381208",
       "name": "TankRat",
       "hypes": 21,
@@ -1080,7 +1066,7 @@
       "source": "igdb"
     },
     {
-      "rank": 78,
+      "rank": 77,
       "igdb_id": "358534",
       "name": "The Adventures of Elliot: The Millennium Tales",
       "hypes": 21,
@@ -1094,7 +1080,7 @@
       "source": "igdb"
     },
     {
-      "rank": 79,
+      "rank": 78,
       "igdb_id": "339619",
       "name": "Ikuma: The Frozen Compass",
       "hypes": 21,
@@ -1108,7 +1094,7 @@
       "source": "igdb"
     },
     {
-      "rank": 80,
+      "rank": 79,
       "igdb_id": "252852",
       "name": "Mariachi Legends",
       "hypes": 21,
@@ -1122,7 +1108,7 @@
       "source": "igdb"
     },
     {
-      "rank": 81,
+      "rank": 80,
       "igdb_id": "152268",
       "name": "SacriFire",
       "hypes": 21,
@@ -1136,7 +1122,7 @@
       "source": "igdb"
     },
     {
-      "rank": 82,
+      "rank": 81,
       "igdb_id": "362096",
       "name": "Halloween",
       "hypes": 20,
@@ -1150,7 +1136,7 @@
       "source": "igdb"
     },
     {
-      "rank": 83,
+      "rank": 82,
       "igdb_id": "336164",
       "name": "Dark Mass",
       "hypes": 20,
@@ -1164,7 +1150,7 @@
       "source": "igdb"
     },
     {
-      "rank": 84,
+      "rank": 83,
       "igdb_id": "305039",
       "name": "Tenjutsu",
       "hypes": 20,
@@ -1178,7 +1164,7 @@
       "source": "igdb"
     },
     {
-      "rank": 85,
+      "rank": 84,
       "igdb_id": "305011",
       "name": "Tears of Metal",
       "hypes": 20,
@@ -1192,7 +1178,7 @@
       "source": "igdb"
     },
     {
-      "rank": 86,
+      "rank": 85,
       "igdb_id": "259874",
       "name": "The God Slayer",
       "hypes": 20,
@@ -1206,7 +1192,7 @@
       "source": "igdb"
     },
     {
-      "rank": 87,
+      "rank": 86,
       "igdb_id": "124209",
       "name": "Shadow of the Road",
       "hypes": 20,
@@ -1220,7 +1206,7 @@
       "source": "igdb"
     },
     {
-      "rank": 88,
+      "rank": 87,
       "igdb_id": "381222",
       "name": "Order of the Sinking Star",
       "hypes": 19,
@@ -1234,7 +1220,7 @@
       "source": "igdb"
     },
     {
-      "rank": 89,
+      "rank": 88,
       "igdb_id": "381212",
       "name": "Stupid Never Dies",
       "hypes": 19,
@@ -1248,7 +1234,7 @@
       "source": "igdb"
     },
     {
-      "rank": 90,
+      "rank": 89,
       "igdb_id": "381203",
       "name": "Decrepit",
       "hypes": 19,
@@ -1262,7 +1248,7 @@
       "source": "igdb"
     },
     {
-      "rank": 91,
+      "rank": 90,
       "igdb_id": "375111",
       "name": "Project Tal",
       "hypes": 19,
@@ -1276,7 +1262,7 @@
       "source": "igdb"
     },
     {
-      "rank": 92,
+      "rank": 91,
       "igdb_id": "373021",
       "name": "Avatar Legends: The Fighting Game",
       "hypes": 19,
@@ -1290,7 +1276,7 @@
       "source": "igdb"
     },
     {
-      "rank": 93,
+      "rank": 92,
       "igdb_id": "216692",
       "name": "Tenebris Somnia",
       "hypes": 19,
@@ -1304,7 +1290,7 @@
       "source": "igdb"
     },
     {
-      "rank": 94,
+      "rank": 93,
       "igdb_id": "213620",
       "name": "Luna Abyss",
       "hypes": 19,
@@ -1318,7 +1304,7 @@
       "source": "igdb"
     },
     {
-      "rank": 95,
+      "rank": 94,
       "igdb_id": "396030",
       "name": "Artificial Detective",
       "hypes": 18,
@@ -1332,7 +1318,7 @@
       "source": "igdb"
     },
     {
-      "rank": 96,
+      "rank": 95,
       "igdb_id": "348205",
       "name": "At Fate's End",
       "hypes": 18,
@@ -1346,7 +1332,7 @@
       "source": "igdb"
     },
     {
-      "rank": 97,
+      "rank": 96,
       "igdb_id": "344669",
       "name": "Warhammer 40,000: Boltgun 2",
       "hypes": 18,
@@ -1360,7 +1346,7 @@
       "source": "igdb"
     },
     {
-      "rank": 98,
+      "rank": 97,
       "igdb_id": "194950",
       "name": "Solarpunk",
       "hypes": 18,
@@ -1374,7 +1360,7 @@
       "source": "igdb"
     },
     {
-      "rank": 99,
+      "rank": 98,
       "igdb_id": "194855",
       "name": "The Bornless",
       "hypes": 18,
@@ -1385,6 +1371,20 @@
       "platforms": "PC",
       "summary": "The Bornless is an FPS action shooter packed with a variety of gameplay modes. Dive into last-man-standing co-op gameplay or try the thrilling demon versus disciple mode, all within a terror-filled wo",
       "url": "https://www.igdb.com/games/the-bornless",
+      "source": "igdb"
+    },
+    {
+      "rank": 99,
+      "igdb_id": "367776",
+      "name": "The Lift",
+      "hypes": 17,
+      "publisher": "tinyBuild",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2027-12-31",
+      "platforms": "Series X|S, PC, PS5",
+      "summary": "You are a handyman renovating a massive research facility abandoned after a mysterious incident. The Lift is an eerie first-person simulator with satisfying house-flipping gameplay, a mind-bending sto",
+      "url": "https://www.igdb.com/games/the-lift--1",
       "source": "igdb"
     },
     {
