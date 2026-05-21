@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-20T20:38:06.541003+09:00",
+  "updated_at": "2026-05-21T21:31:53.314054+09:00",
   "entries": [
     {
       "rank": 1,
@@ -33,7 +33,7 @@
       "rank": 3,
       "igdb_id": "282831",
       "name": "The Blood of Dawnwalker",
-      "hypes": 170,
+      "hypes": 171,
       "publisher": "Bandai Namco Entertainment",
       "is_major": true,
       "is_released": false,
@@ -89,7 +89,7 @@
       "rank": 7,
       "igdb_id": "279621",
       "name": "Exodus",
-      "hypes": 97,
+      "hypes": 98,
       "publisher": "Wizards of the Coast",
       "is_major": false,
       "is_released": false,
@@ -115,6 +115,20 @@
     },
     {
       "rank": 9,
+      "igdb_id": "348180",
+      "name": "Beast of Reincarnation",
+      "hypes": 87,
+      "publisher": "Fictions",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-08-04",
+      "platforms": "Series X|S, PC, PS5",
+      "summary": "In post-apocalyptic Japan, humanity’s last hope may rest with Emma and her loyal canine companion, Koo. Explore what it means to be human in Beast of Reincarnation, an expansive one-person, one-dog ac",
+      "url": "https://www.igdb.com/games/beast-of-reincarnation",
+      "source": "igdb"
+    },
+    {
+      "rank": 10,
       "igdb_id": "381234",
       "name": "Tomb Raider: Catalyst",
       "hypes": 86,
@@ -125,20 +139,6 @@
       "platforms": "Series X|S, PC, PS5",
       "summary": "Set in the wake of a mythical cataclysm that has unleashed ancient secrets and awakened mysterious guardian forces, Tomb Raider: Catalyst follows Lara Croft on a new adventure across Northern India.",
       "url": "https://www.igdb.com/games/tomb-raider-catalyst",
-      "source": "igdb"
-    },
-    {
-      "rank": 10,
-      "igdb_id": "348180",
-      "name": "Beast of Reincarnation",
-      "hypes": 86,
-      "publisher": "Fictions",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-08-04",
-      "platforms": "Series X|S, PC, PS5",
-      "summary": "In post-apocalyptic Japan, humanity’s last hope may rest with Emma and her loyal canine companion, Koo. Explore what it means to be human in Beast of Reincarnation, an expansive one-person, one-dog ac",
-      "url": "https://www.igdb.com/games/beast-of-reincarnation",
       "source": "igdb"
     },
     {
@@ -157,6 +157,20 @@
     },
     {
       "rank": 12,
+      "igdb_id": "361855",
+      "name": "LEGO Batman: Legacy of the Dark Knight",
+      "hypes": 82,
+      "publisher": "WB Games",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-05-22",
+      "platforms": "Series X|S, Switch 2, PC, PS5",
+      "summary": "Rise as the Dark Knight and experience the essential Batman story in a bold, action-packed adventure with hard-hitting combat, an open-world Gotham City, and the signature LEGO charm that fans know an",
+      "url": "https://www.igdb.com/games/lego-batman-legacy-of-the-dark-knight",
+      "source": "igdb"
+    },
+    {
+      "rank": 13,
       "igdb_id": "216315",
       "name": "Marvel 1943: Rise of Hydra",
       "hypes": 81,
@@ -170,7 +184,7 @@
       "source": "igdb"
     },
     {
-      "rank": 13,
+      "rank": 14,
       "igdb_id": "348168",
       "name": "Resonance: A Plague Tale Legacy",
       "hypes": 78,
@@ -181,20 +195,6 @@
       "platforms": "Series X|S, PC, PS5",
       "summary": "Set 15 years before Requiem, play as Sophia, a fierce young plunderer, on the run and determined to uncover the secrets of her past. Dive into an original story blending combat, myth and fate with a b",
       "url": "https://www.igdb.com/games/resonance-a-plague-tale-legacy",
-      "source": "igdb"
-    },
-    {
-      "rank": 14,
-      "igdb_id": "361855",
-      "name": "LEGO Batman: Legacy of the Dark Knight",
-      "hypes": 76,
-      "publisher": "WB Games",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-05-22",
-      "platforms": "Series X|S, Switch 2, PC, PS5",
-      "summary": "Rise as the Dark Knight and experience the essential Batman story in a bold, action-packed adventure with hard-hitting combat, an open-world Gotham City, and the signature LEGO charm that fans know an",
-      "url": "https://www.igdb.com/games/lego-batman-legacy-of-the-dark-knight",
       "source": "igdb"
     },
     {
@@ -215,7 +215,7 @@
       "rank": 16,
       "igdb_id": "347637",
       "name": "End of Abyss",
-      "hypes": 66,
+      "hypes": 68,
       "publisher": "Epic Games Publishing",
       "is_major": false,
       "is_released": false,
@@ -397,7 +397,7 @@
       "rank": 29,
       "igdb_id": "148227",
       "name": "Gothic 1 Remake",
-      "hypes": 53,
+      "hypes": 54,
       "publisher": "THQ Nordic",
       "is_major": false,
       "is_released": false,
@@ -479,20 +479,6 @@
     },
     {
       "rank": 35,
-      "igdb_id": "361880",
-      "name": "Zero Parades: For Dead Spies",
-      "hypes": 43,
-      "publisher": "ZA/UM",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-05-21",
-      "platforms": "PC, PS5",
-      "summary": "From ZA/UM comes ZERO PARADES: For Dead Spies – a story-rich espionage RPG. You're a brilliant but tormented operant on a desperate assignment. Pick up the pieces of your broken network, untangle a bl",
-      "url": "https://www.igdb.com/games/zero-parades-for-dead-spies",
-      "source": "igdb"
-    },
-    {
-      "rank": 36,
       "igdb_id": "398225",
       "name": "Metro 2039",
       "hypes": 42,
@@ -506,7 +492,7 @@
       "source": "igdb"
     },
     {
-      "rank": 37,
+      "rank": 36,
       "igdb_id": "189781",
       "name": "Mina the Hollower",
       "hypes": 42,
@@ -520,7 +506,7 @@
       "source": "igdb"
     },
     {
-      "rank": 38,
+      "rank": 37,
       "igdb_id": "347132",
       "name": "Marvel Tokon: Fighting Souls",
       "hypes": 39,
@@ -531,6 +517,20 @@
       "platforms": "PC, PS5",
       "summary": "Assemble your team of legendary Marvel characters in the ultimate 4v4 tag team fighter from PlayStation Studios, Arc System Works and Marvel Games.\nImmerse yourself in the Marvel universe like never b",
       "url": "https://www.igdb.com/games/marvel-tokon-fighting-souls",
+      "source": "igdb"
+    },
+    {
+      "rank": 38,
+      "igdb_id": "356552",
+      "name": "Clive Barker's Hellraiser: Revival",
+      "hypes": 38,
+      "publisher": "Saber Interactive",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-12-31",
+      "platforms": "Series X|S, PC, PS5",
+      "summary": "Experience a new chapter in the legendary horror series like never before. Clive Barker's Hellraiser: Revival takes first-person action horror survival to the next level. Wield the powers of the Genes",
+      "url": "https://www.igdb.com/games/clive-barkers-hellraiser-revival",
       "source": "igdb"
     },
     {
@@ -619,20 +619,6 @@
     },
     {
       "rank": 45,
-      "igdb_id": "356552",
-      "name": "Clive Barker's Hellraiser: Revival",
-      "hypes": 35,
-      "publisher": "Saber Interactive",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-12-31",
-      "platforms": "Series X|S, PC, PS5",
-      "summary": "Experience a new chapter in the legendary horror series like never before. Clive Barker's Hellraiser: Revival takes first-person action horror survival to the next level. Wield the powers of the Genes",
-      "url": "https://www.igdb.com/games/clive-barkers-hellraiser-revival",
-      "source": "igdb"
-    },
-    {
-      "rank": 46,
       "igdb_id": "347638",
       "name": "Game of Thrones: War for Westeros",
       "hypes": 35,
@@ -646,7 +632,7 @@
       "source": "igdb"
     },
     {
-      "rank": 47,
+      "rank": 46,
       "igdb_id": "203301",
       "name": "Nivalis",
       "hypes": 35,
@@ -660,7 +646,7 @@
       "source": "igdb"
     },
     {
-      "rank": 48,
+      "rank": 47,
       "igdb_id": "381247",
       "name": "Ace Combat 8: Wings of Theve",
       "hypes": 33,
@@ -674,7 +660,7 @@
       "source": "igdb"
     },
     {
-      "rank": 49,
+      "rank": 48,
       "igdb_id": "348202",
       "name": "Aniimo",
       "hypes": 33,
@@ -688,7 +674,7 @@
       "source": "igdb"
     },
     {
-      "rank": 50,
+      "rank": 49,
       "igdb_id": "347841",
       "name": "There Are No Ghosts at the Grand",
       "hypes": 32,
@@ -702,7 +688,7 @@
       "source": "igdb"
     },
     {
-      "rank": 51,
+      "rank": 50,
       "igdb_id": "325600",
       "name": "Turok: Origins",
       "hypes": 32,
@@ -716,7 +702,7 @@
       "source": "igdb"
     },
     {
-      "rank": 52,
+      "rank": 51,
       "igdb_id": "251059",
       "name": "Grave Seasons",
       "hypes": 32,
@@ -730,7 +716,7 @@
       "source": "igdb"
     },
     {
-      "rank": 53,
+      "rank": 52,
       "igdb_id": "236665",
       "name": "Professor Layton and the New World of Steam",
       "hypes": 32,
@@ -744,7 +730,7 @@
       "source": "igdb"
     },
     {
-      "rank": 54,
+      "rank": 53,
       "igdb_id": "340113",
       "name": "Star Wars Zero Company",
       "hypes": 30,
@@ -758,7 +744,7 @@
       "source": "igdb"
     },
     {
-      "rank": 55,
+      "rank": 54,
       "igdb_id": "381223",
       "name": "Warlock",
       "hypes": 29,
@@ -772,7 +758,7 @@
       "source": "igdb"
     },
     {
-      "rank": 56,
+      "rank": 55,
       "igdb_id": "314449",
       "name": "Hela: Of Mice & Magic",
       "hypes": 29,
@@ -786,7 +772,7 @@
       "source": "igdb"
     },
     {
-      "rank": 57,
+      "rank": 56,
       "igdb_id": "307368",
       "name": "PVKK: Planetenverteidigungskanonenkommandant",
       "hypes": 29,
@@ -800,7 +786,7 @@
       "source": "igdb"
     },
     {
-      "rank": 58,
+      "rank": 57,
       "igdb_id": "375232",
       "name": "Halo: Campaign Evolved",
       "hypes": 28,
@@ -814,7 +800,7 @@
       "source": "igdb"
     },
     {
-      "rank": 59,
+      "rank": 58,
       "igdb_id": "344218",
       "name": "Sea of Remnants",
       "hypes": 28,
@@ -828,7 +814,7 @@
       "source": "igdb"
     },
     {
-      "rank": 60,
+      "rank": 59,
       "igdb_id": "329124",
       "name": "Over the Hill",
       "hypes": 28,
@@ -842,7 +828,7 @@
       "source": "igdb"
     },
     {
-      "rank": 61,
+      "rank": 60,
       "igdb_id": "320141",
       "name": "Mistfall Hunter",
       "hypes": 28,
@@ -856,7 +842,7 @@
       "source": "igdb"
     },
     {
-      "rank": 62,
+      "rank": 61,
       "igdb_id": "317622",
       "name": "ArcheAge Chronicles",
       "hypes": 28,
@@ -870,7 +856,7 @@
       "source": "igdb"
     },
     {
-      "rank": 63,
+      "rank": 62,
       "igdb_id": "216609",
       "name": "Long Gone",
       "hypes": 28,
@@ -884,7 +870,7 @@
       "source": "igdb"
     },
     {
-      "rank": 64,
+      "rank": 63,
       "igdb_id": "361826",
       "name": "Denshattack!",
       "hypes": 26,
@@ -898,7 +884,7 @@
       "source": "igdb"
     },
     {
-      "rank": 65,
+      "rank": 64,
       "igdb_id": "347120",
       "name": "Bloodstained: The Scarlet Engagement",
       "hypes": 26,
@@ -912,7 +898,7 @@
       "source": "igdb"
     },
     {
-      "rank": 66,
+      "rank": 65,
       "igdb_id": "279624",
       "name": "Big Walk",
       "hypes": 26,
@@ -926,7 +912,7 @@
       "source": "igdb"
     },
     {
-      "rank": 67,
+      "rank": 66,
       "igdb_id": "165397",
       "name": "The Relic: First Guardian",
       "hypes": 26,
@@ -940,7 +926,7 @@
       "source": "igdb"
     },
     {
-      "rank": 68,
+      "rank": 67,
       "igdb_id": "347662",
       "name": "Blighted",
       "hypes": 25,
@@ -954,7 +940,7 @@
       "source": "igdb"
     },
     {
-      "rank": 69,
+      "rank": 68,
       "igdb_id": "186613",
       "name": "Showa American Story",
       "hypes": 25,
@@ -968,7 +954,7 @@
       "source": "igdb"
     },
     {
-      "rank": 70,
+      "rank": 69,
       "igdb_id": "389433",
       "name": "Metal Gear Solid Master Collection: Volume 2",
       "hypes": 24,
@@ -982,7 +968,7 @@
       "source": "igdb"
     },
     {
-      "rank": 71,
+      "rank": 70,
       "igdb_id": "361859",
       "name": "Warhammer 40,000: Dawn of War IV",
       "hypes": 24,
@@ -996,7 +982,7 @@
       "source": "igdb"
     },
     {
-      "rank": 72,
+      "rank": 71,
       "igdb_id": "313597",
       "name": "Silver Pines",
       "hypes": 24,
@@ -1010,7 +996,7 @@
       "source": "igdb"
     },
     {
-      "rank": 73,
+      "rank": 72,
       "igdb_id": "202138",
       "name": "Deer & Boy",
       "hypes": 24,
@@ -1024,7 +1010,7 @@
       "source": "igdb"
     },
     {
-      "rank": 74,
+      "rank": 73,
       "igdb_id": "381202",
       "name": "The Free Shepherd",
       "hypes": 22,
@@ -1035,6 +1021,20 @@
       "platforms": "PC, PS5",
       "summary": "Run fast and free as a sheepdog in a beautiful but troubled world. Herd masses of lost sheep to a secret refuge. Discover a mysterious calamity that only you can stop.",
       "url": "https://www.igdb.com/games/the-free-shepherd",
+      "source": "igdb"
+    },
+    {
+      "rank": 74,
+      "igdb_id": "358534",
+      "name": "The Adventures of Elliot: The Millennium Tales",
+      "hypes": 22,
+      "publisher": "Square Enix",
+      "is_major": true,
+      "is_released": false,
+      "release_date": "2026-06-18",
+      "platforms": "Series X|S, Switch 2, PC, PS5",
+      "summary": "The Adventures of Elliot: The Millennium Tales is an action RPG set in the world of Philabieldia - a beautiful but savage land dominated by warring beast tribes. Humanity’s last bastion is the Kingdom",
+      "url": "https://www.igdb.com/games/the-adventures-of-elliot-the-millennium-tales",
       "source": "igdb"
     },
     {
@@ -1067,20 +1067,6 @@
     },
     {
       "rank": 77,
-      "igdb_id": "358534",
-      "name": "The Adventures of Elliot: The Millennium Tales",
-      "hypes": 21,
-      "publisher": "Square Enix",
-      "is_major": true,
-      "is_released": false,
-      "release_date": "2026-06-18",
-      "platforms": "Series X|S, Switch 2, PC, PS5",
-      "summary": "The Adventures of Elliot: The Millennium Tales is an action RPG set in the world of Philabieldia - a beautiful but savage land dominated by warring beast tribes. Humanity’s last bastion is the Kingdom",
-      "url": "https://www.igdb.com/games/the-adventures-of-elliot-the-millennium-tales",
-      "source": "igdb"
-    },
-    {
-      "rank": 78,
       "igdb_id": "339619",
       "name": "Ikuma: The Frozen Compass",
       "hypes": 21,
@@ -1094,7 +1080,7 @@
       "source": "igdb"
     },
     {
-      "rank": 79,
+      "rank": 78,
       "igdb_id": "252852",
       "name": "Mariachi Legends",
       "hypes": 21,
@@ -1108,7 +1094,7 @@
       "source": "igdb"
     },
     {
-      "rank": 80,
+      "rank": 79,
       "igdb_id": "152268",
       "name": "SacriFire",
       "hypes": 21,
@@ -1122,7 +1108,7 @@
       "source": "igdb"
     },
     {
-      "rank": 81,
+      "rank": 80,
       "igdb_id": "362096",
       "name": "Halloween",
       "hypes": 20,
@@ -1136,7 +1122,7 @@
       "source": "igdb"
     },
     {
-      "rank": 82,
+      "rank": 81,
       "igdb_id": "336164",
       "name": "Dark Mass",
       "hypes": 20,
@@ -1150,7 +1136,7 @@
       "source": "igdb"
     },
     {
-      "rank": 83,
+      "rank": 82,
       "igdb_id": "305039",
       "name": "Tenjutsu",
       "hypes": 20,
@@ -1164,7 +1150,7 @@
       "source": "igdb"
     },
     {
-      "rank": 84,
+      "rank": 83,
       "igdb_id": "305011",
       "name": "Tears of Metal",
       "hypes": 20,
@@ -1178,7 +1164,7 @@
       "source": "igdb"
     },
     {
-      "rank": 85,
+      "rank": 84,
       "igdb_id": "259874",
       "name": "The God Slayer",
       "hypes": 20,
@@ -1192,7 +1178,7 @@
       "source": "igdb"
     },
     {
-      "rank": 86,
+      "rank": 85,
       "igdb_id": "124209",
       "name": "Shadow of the Road",
       "hypes": 20,
@@ -1206,7 +1192,7 @@
       "source": "igdb"
     },
     {
-      "rank": 87,
+      "rank": 86,
       "igdb_id": "381222",
       "name": "Order of the Sinking Star",
       "hypes": 19,
@@ -1220,7 +1206,7 @@
       "source": "igdb"
     },
     {
-      "rank": 88,
+      "rank": 87,
       "igdb_id": "381212",
       "name": "Stupid Never Dies",
       "hypes": 19,
@@ -1234,7 +1220,7 @@
       "source": "igdb"
     },
     {
-      "rank": 89,
+      "rank": 88,
       "igdb_id": "381203",
       "name": "Decrepit",
       "hypes": 19,
@@ -1248,7 +1234,7 @@
       "source": "igdb"
     },
     {
-      "rank": 90,
+      "rank": 89,
       "igdb_id": "375111",
       "name": "Project Tal",
       "hypes": 19,
@@ -1262,7 +1248,7 @@
       "source": "igdb"
     },
     {
-      "rank": 91,
+      "rank": 90,
       "igdb_id": "373021",
       "name": "Avatar Legends: The Fighting Game",
       "hypes": 19,
@@ -1276,7 +1262,7 @@
       "source": "igdb"
     },
     {
-      "rank": 92,
+      "rank": 91,
       "igdb_id": "216692",
       "name": "Tenebris Somnia",
       "hypes": 19,
@@ -1290,21 +1276,7 @@
       "source": "igdb"
     },
     {
-      "rank": 93,
-      "igdb_id": "213620",
-      "name": "Luna Abyss",
-      "hypes": 19,
-      "publisher": "Bonsai Collective",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-05-21",
-      "platforms": "Series X|S, PC, PS5",
-      "summary": "Luna Abyss is a single player story driven action-adventure with fluid platforming and bullet hell combat. Follow the journey of Fawkes, a prisoner of Luna caught between a cryptic prophecy and their ",
-      "url": "https://www.igdb.com/games/luna-abyss",
-      "source": "igdb"
-    },
-    {
-      "rank": 94,
+      "rank": 92,
       "igdb_id": "396030",
       "name": "Artificial Detective",
       "hypes": 18,
@@ -1318,7 +1290,7 @@
       "source": "igdb"
     },
     {
-      "rank": 95,
+      "rank": 93,
       "igdb_id": "348205",
       "name": "At Fate's End",
       "hypes": 18,
@@ -1332,7 +1304,7 @@
       "source": "igdb"
     },
     {
-      "rank": 96,
+      "rank": 94,
       "igdb_id": "344669",
       "name": "Warhammer 40,000: Boltgun 2",
       "hypes": 18,
@@ -1346,7 +1318,21 @@
       "source": "igdb"
     },
     {
-      "rank": 97,
+      "rank": 95,
+      "igdb_id": "330566",
+      "name": "Liminal Point",
+      "hypes": 18,
+      "publisher": "HideWorks",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-12-31",
+      "platforms": "Series X|S, PC, PS5",
+      "summary": "Classic Survival Horror. Drawn to Ashen Point by a cryptic voicemail, Lyra returns to the island where her band’s story ended in tragedy. Shrouded in fog and prowled by horrors, confront deadly creatu",
+      "url": "https://www.igdb.com/games/liminal-point",
+      "source": "igdb"
+    },
+    {
+      "rank": 96,
       "igdb_id": "194950",
       "name": "Solarpunk",
       "hypes": 18,
@@ -1360,7 +1346,7 @@
       "source": "igdb"
     },
     {
-      "rank": 98,
+      "rank": 97,
       "igdb_id": "194855",
       "name": "The Bornless",
       "hypes": 18,
@@ -1374,7 +1360,7 @@
       "source": "igdb"
     },
     {
-      "rank": 99,
+      "rank": 98,
       "igdb_id": "367776",
       "name": "The Lift",
       "hypes": 17,
@@ -1388,7 +1374,7 @@
       "source": "igdb"
     },
     {
-      "rank": 100,
+      "rank": 99,
       "igdb_id": "348047",
       "name": "Wanderburg",
       "hypes": 17,
@@ -1399,6 +1385,20 @@
       "platforms": "PC",
       "summary": "Wanderburg is a minimalist open-world roguelike in an ecosystem of Castles on Wheels. Consume, grow bigger, upgrade your modules, and survive! Unlock new weapons, build your castle, and discover the p",
       "url": "https://www.igdb.com/games/wanderburg",
+      "source": "igdb"
+    },
+    {
+      "rank": 100,
+      "igdb_id": "309799",
+      "name": "Truckful",
+      "hypes": 17,
+      "publisher": "MythicOwl",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-12-31",
+      "platforms": "PS4, Linux, PC, PS5, Mac",
+      "summary": "Drive your pickup truck through seemingly peaceful countryside valleys, deliver much-needed goods to local townsfolk and unravel the small town mystery. Beware, the old forest is watching.",
+      "url": "https://www.igdb.com/games/truckful",
       "source": "igdb"
     }
   ]
