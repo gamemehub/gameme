@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>FEED</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:#040810;color:#8aabb0;font-family:'Courier New',monospace;min-height:100vh;overflow-x:hidden}
+button{cursor:pointer;font-family:inherit}
+
+/* PASSWORD */
+#pw-screen{position:fixed;inset:0;background:#040810;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;padding:32px}
+#pw-title{font-size:48px;font-weight:900;letter-spacing:.4em;color:#0a1e2a;margin-bottom:48px}
+#pw-input{background:#06090f;border:1px solid #1a3a50;color:#8aabb0;padding:12px 20px;font-size:14px;font-family:inherit;border-radius:4px;width:100%;max-width:280px;margin-bottom:12px;text-align:center}
+#pw-input::placeholder{color:#1a3040}
+#pw-btn{background:transparent;border:1px solid #1a4a60;color:#1a4a60;padding:10px 32px;font-size:11px;letter-spacing:.2em;border-radius:2px;width:100%;max-width:280px}
+#pw-err{color:#e74c3c;font-size:10px;margin-top:8px;height:16px}
+
+/* TOPBAR */
+#topbar{background:#04080e;border-bottom:1px solid #0d1e2e;padding:7px 14px;display:flex;align-items:center;gap:10;position:sticky;top:0;z-index:10}
+#tb-logo{font-size:12px;font-weight:900;letter-spacing:.35em;color:#0d2a3a;margin-right:8px}
+#tb-world-wrap{flex:1;display:flex;align-items:center;gap:7px}
+#tb-label{font-size:8px;color:#1a2a38;white-space:nowrap}
+#tb-bar-bg{flex:1;height:3px;background:#0a1420;border-radius:99px}
+#tb-bar{height:100%;width:82%;background:#2ecc71;border-radius:99px;transition:width 1.2s,background 1.2s}
+#tb-pct{font-size:9px;min-width:28px}
+#tb-count{font-size:8px;color:#1a2a38}
+
+/* SCREENS */
+.screen{display:none;min-height:calc(100vh - 40px)}
+.screen.active{display:flex;flex-direction:column}
+
+/* INTRO */
+#intro-screen{align-items:center;justify-content:center;padding:28px}
+#intro-logo{font-size:52px;font-weight:900;letter-spacing:.4em;color:#0a1e2a;margin-bottom:44px;text-align:center}
+#intro-lines{min-height:160px;width:100%;max-width:380px}
+.intro-line{font-size:10px;line-height:2;color:#1a3040;margin-bottom:10px;opacity:0;transition:opacity .4s}
+.intro-line.big{font-size:13px;color:#5a7a8a}
+.intro-line.show{opacity:1}
+#start-btn{background:transparent;border:1px solid #1a4a60;color:#1a4a60;padding:10px 28px;font-size:10px;letter-spacing:.2em;border-radius:2px;margin-top:24px;display:none}
+
+/* CASE */
+#case-screen{padding:0;position:relative;overflow:hidden}
+#swipe-area{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 12px;position:relative}
+#hint-left{position:absolute;left:12px;top:50%;transform:translateY(-50%);text-align:center;opacity:0;transition:opacity .15s;pointer-events:none}
+#hint-right{position:absolute;right:12px;top:50%;transform:translateY(-50%);text-align:center;opacity:0;transition:opacity .15s;pointer-events:none}
+.hint-icon{font-size:28px}
+.hint-label{font-size:9px;font-weight:700;letter-spacing:.15em}
+#hint-left .hint-label{color:#e74c3c}
+#hint-right .hint-label{color:#2ecc71}
+
+#card{width:100%;max-width:440px;background:#070d16;border-radius:12px;overflow:hidden;border:1px solid #0d1e2e;box-shadow:0 4px 20px rgba(0,0,0,.4);touch-action:none;user-select:none;will-change:transform}
+#card.high{border-color:#2a0a08;box-shadow:0 0 30px rgba(204,0,0,.07)}
+
+.card-profile{display:flex;align-items:center;gap:10px;padding:12px 14px 8px}
+.card-avatar{font-size:28px;line-height:1}
+.card-name{font-size:12px;font-weight:700;color:#c8dae0}
+.card-handle{font-size:9px;color:#1a2a38}
+.card-pri{font-size:8px;padding:2px 8px;border-radius:99px;font-weight:700;letter-spacing:.1em;margin-left:auto}
+.pri-low{background:rgba(46,204,113,.1);color:#2ecc71;border:1px solid rgba(46,204,113,.27)}
+.pri-med{background:rgba(240,160,48,.1);color:#f0a030;border:1px solid rgba(240,160,48,.27)}
+.pri-high{background:rgba(228,60,60,.1);color:#e43c3c;border:1px solid rgba(228,60,60,.27)}
+
+.card-content{padding:0 14px 10px;font-size:13px;color:#8aabb0;line-height:1.7;white-space:pre-wrap}
+.card-img{margin:0 14px 10px;height:110px;background:#0a1520;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:44px;border:1px solid #0d1e2e}
+.card-tag{margin:0 14px 10px;font-size:9px;color:#1a2a38}
+
+.card-stats{padding:8px 14px;border-top:1px solid #0d1e2e;border-bottom:1px solid #0d1e2e;display:flex;gap:18px;align-items:center}
+.stat{display:flex;align-items:center;gap:5px;font-size:11px;font-family:'Courier New',monospace}
+.stat-views{transition:color .3s}
+.stat-views.hot{color:#e74c3c}
+#toggle-comments{margin-left:auto;font-size:9px;color:#1a2a38;background:none;border:none;cursor:pointer;font-family:inherit}
+
+#comments-area{padding:8px 14px;display:none}
+#comments-area.open{display:block}
+.comment{margin-bottom:8px;padding:6px 10px;background:#040c14;border-radius:6px;border:1px solid #0d1e2e}
+.comment-user{font-size:9px;color:#3a8abf;margin-right:6px}
+.comment-text{font-size:10px;color:#3a5060}
+
+.card-flag{padding:10px 14px;background:#050800;border-top:1px solid #1a1800}
+.flag-label{font-size:8px;color:#3a3010;letter-spacing:.12em;margin-bottom:5px}
+.flag-text{font-size:10px;color:#6a6030;line-height:1.7;white-space:pre-wrap}
+.card-clue-btn{padding:8px 14px;text-align:center;border-top:1px solid #0d1e2e;cursor:pointer;font-size:9px;color:#1a2a38;letter-spacing:.1em}
+.card-hint{padding:4px 14px 10px;text-align:center;font-size:9px;color:#0d1e2a;letter-spacing:.08em}
+
+#escalate-btn{margin-top:12px;padding:9px 32px;background:transparent;border:1px solid rgba(240,160,48,.27);border-radius:99px;color:#f0a030;font-size:9px;letter-spacing:.2em}
+#dot-row{display:flex;gap:4px;padding:4px 14px 8px;justify-content:center}
+.dot{width:6px;height:6px;border-radius:50%}
+
+/* FLASH */
+#flash{position:fixed;inset:0;pointer-events:none;opacity:0;transition:opacity .15s;z-index:50}
+
+/* RESULT */
+#result-screen{padding:18px;align-items:center;justify-content:center}
+#res-inner{max-width:440px;width:100%}
+#res-id{font-size:8px;color:#1a3a50;letter-spacing:.15em;margin-bottom:10px}
+#res-label{font-size:11px;padding:8px 14px;border-radius:6px;margin-bottom:18px;letter-spacing:.1em;font-weight:700}
+#res-text{font-size:12px;line-height:2.2;padding:16px;background:#070d16;border:1px solid #0d1e2e;border-radius:8px;margin-bottom:18px;white-space:pre-wrap}
+#res-clue{font-size:9px;color:#1a3040;text-align:center;margin-bottom:14px;font-style:italic;line-height:1.8;padding:0 8px;display:none}
+#res-btns{display:flex;gap:10px;justify-content:center}
+#res-clue-btn,#res-next-btn{background:transparent;border:1px solid #1a2a38;color:#3a5060;padding:8px 20px;font-size:8px;letter-spacing:.12em;border-radius:2px}
+
+/* INBOX */
+#inbox-screen{padding:16px;align-items:center;justify-content:flex-start}
+#inbox-inner{max-width:440px;width:100%;padding-top:8px}
+#inbox-label{font-size:8px;color:#1a2a38;letter-spacing:.15em;margin-bottom:14px}
+#msg-card{background:#070d16;border-radius:10px;overflow:hidden;margin-bottom:16px}
+#msg-header{padding:12px 14px;border-bottom:1px solid #0d1e2e;background:#080c12}
+#msg-from{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+#msg-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900}
+#msg-name{font-size:12px;color:#c8dae0;font-weight:700}
+#msg-addr{font-size:8px;color:#1a2a38}
+#msg-subj{font-size:9px;color:#3a5060}
+#msg-body{padding:14px;font-size:11px;line-height:2.1;color:#3a5060;white-space:pre-wrap}
+#msg-next-btn{background:transparent;border:1px solid #1a2a38;color:#3a5060;padding:9px 24px;font-size:9px;letter-spacing:.15em;border-radius:2px;margin:0 auto;display:block}
+
+/* END */
+#end-screen{padding:24px;align-items:center;justify-content:center}
+#end-inner{max-width:420px;width:100%}
+#end-title{font-size:9px;color:#1a3a50;letter-spacing:.2em;margin-bottom:22px;text-align:center}
+#dec-list{margin-bottom:18px}
+.dec-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #0d1e2e;font-size:8px}
+#end-msg{padding:18px;background:#070d16;border:1px solid #0d1e2e;border-radius:8px;margin-bottom:20px}
+#end-msg-main{font-size:11px;line-height:2.2;color:#3a5060;margin-bottom:12px}
+#end-msg-bold{font-size:13px;color:#8aabb0;font-weight:700;line-height:1.8}
+#end-mysteries{font-size:9px;color:#0d1e2a;text-align:center;line-height:2.5;border-top:1px solid #0d1e2e;padding-top:18px}
+#end-mysteries .m-title{color:#1a3040;margin-bottom:4px}
+#end-mysteries .m-next{margin-top:12px;color:#0a1820}
+#restart-btn{background:transparent;border:1px solid #1a2a38;color:#3a5060;padding:8px 20px;font-size:8px;letter-spacing:.15em;border-radius:2px;margin:20px auto 0;display:block}
+</style>
+</head>
+<body>
+
+<!-- PASSWORD SCREEN -->
+<div id="pw-screen">
+  <div id="pw-title">FEED</div>
+  <input id="pw-input" type="password" placeholder="パスワードを入力" autocomplete="off">
+  <button id="pw-btn" onclick="checkPw()">入力</button>
+  <div id="pw-err"></div>
+</div>
+
+<!-- TOP BAR -->
+<div id="topbar" style="display:none">
+  <span id="tb-logo">FEED</span>
+  <div id="tb-world-wrap">
+    <span id="tb-label">WORLD</span>
+    <div id="tb-bar-bg"><div id="tb-bar"></div></div>
+    <span id="tb-pct" style="font-size:9px;color:#2ecc71">82%</span>
+  </div>
+  <span id="tb-count">1/5</span>
+</div>
+
+<!-- INTRO -->
+<div id="intro-screen" class="screen">
+  <div id="intro-logo">FEED</div>
+  <div id="intro-lines"></div>
+  <button id="start-btn" onclick="startGame()">勤務を開始する</button>
+</div>
+
+<!-- CASE -->
+<div id="case-screen" class="screen">
+  <div id="swipe-area">
+    <div id="hint-left"><div class="hint-icon">🗑</div><div class="hint-label">REMOVE</div></div>
+    <div id="hint-right"><div class="hint-icon">✓</div><div class="hint-label">ALLOW</div></div>
+    <div id="card">
+      <div class="card-profile">
+        <div class="card-avatar" id="c-avatar"></div>
+        <div><div class="card-name" id="c-name"></div><div class="card-handle" id="c-handle"></div></div>
+        <div class="card-pri" id="c-pri"></div>
+      </div>
+      <div class="card-content" id="c-content"></div>
+      <div class="card-img" id="c-img" style="display:none"></div>
+      <div class="card-tag" id="c-tag" style="display:none"></div>
+      <div class="card-stats">
+        <div class="stat">❤️ <span id="s-likes"></span></div>
+        <div class="stat">🔁 <span id="s-reposts"></span></div>
+        <div class="stat">👁 <span class="stat-views" id="s-views"></span></div>
+        <button id="toggle-comments" onclick="toggleComments()">▼ コメント</button>
+      </div>
+      <div id="comments-area"></div>
+      <div class="card-flag">
+        <div class="flag-label">⚠ FLAG REASON</div>
+        <div class="flag-text" id="c-flag"></div>
+      </div>
+      <div class="card-clue-btn" id="clue-btn" onclick="toggleClue()">▸ 詳細ログを確認する</div>
+      <div class="card-hint">← スワイプで REMOVE　　ALLOW でスワイプ →</div>
+    </div>
+    <button id="escalate-btn" onclick="decide('E')">ESCALATE（上申）</button>
+  </div>
+  <div id="dot-row"></div>
+</div>
+
+<!-- RESULT -->
+<div id="result-screen" class="screen">
+  <div id="res-inner">
+    <div id="res-id"></div>
+    <div id="res-label"></div>
+    <div id="res-text"></div>
+    <div id="res-clue"></div>
+    <div id="res-btns">
+      <button id="res-clue-btn" onclick="showClueResult()">詳細ログ</button>
+      <button id="res-next-btn" onclick="afterResult()">次へ ▸</button>
+    </div>
+  </div>
+</div>
+
+<!-- INBOX -->
+<div id="inbox-screen" class="screen">
+  <div id="inbox-inner">
+    <div id="inbox-label">INBOX</div>
+    <div id="msg-card">
+      <div id="msg-header">
+        <div id="msg-from">
+          <div id="msg-avatar"></div>
+          <div><div id="msg-name"></div><div id="msg-addr"></div></div>
+        </div>
+        <div id="msg-subj"></div>
+      </div>
+      <div id="msg-body"></div>
+    </div>
+    <button id="msg-next-btn" onclick="nextMsg()">次へ ▸</button>
+  </div>
+</div>
+
+<!-- END -->
+<div id="end-screen" class="screen">
+  <div id="end-inner">
+    <div id="end-title">第1章「仕事」— 完了</div>
+    <div id="dec-list"></div>
+    <div id="end-msg">
+      <div id="end-msg-main">白銀ハナは今、どこにいるのか。\nファイル#PRE-0001に書かれた名前は誰のものか。\n\nそしてあなたは——</div>
+      <div id="end-msg-bold">本当に、ただ判断していただけなのか。</div>
+    </div>
+    <div id="end-mysteries">
+      <div class="m-title">——　未解決の謎　——</div>
+      <div>2847とは何か</div>
+      <div>ARCHITECTのタイムライン矛盾</div>
+      <div>ファイル#PRE-0001の設計者</div>
+      <div>アオイは人間か</div>
+      <div class="m-next">第2章「亀裂」— 解禁予定</div>
+    </div>
+    <button id="restart-btn" onclick="restart()">最初からプレイ</button>
+  </div>
+</div>
+
+<div id="flash"></div>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────
+const PASSWORD = "feed2847";
+
+// ── CASES ───────────────────────────────────────────
+const CASES = [
+  { id:"C-001", pri:"LOW",
+    avatar:"🐱", name:"猫カフェ ナポレオン公式", handle:"@nyan_palace_official", time:"1時間前",
+    content:"うちの看板猫ナポレオンがまたピアノ弾いてた🎹\n天才すぎて飼い主が泣いてる",
+    img:"🎹", tag:"📍 剣磨パーツ株式会社 第2駐車場付近",
+    likes:48203, reposts:12847, views:892441,
+    comments:[
+      {u:"@hana_shiro", t:"梅の季節にこういう動画があるとほっとします🌸"},
+      {u:"@k_machi",    t:"なぜかこの動画を見ていると泣きそうになります……"},
+      {u:"@ARCHITECT",  t:"（リツイートのみ）"},
+    ],
+    flag:"通報：@animal_rights_watcher\n「猫への強制的訓練の可能性」\n\n※虐待の証拠：なし",
+    clue:"@k_machiはなぜ泣きそうになるのか。撮影場所「剣磨パーツ」。",
+    A:{l:"ALLOW",    r:"拡散を続け、CMオファーが殺到した。\n\n@k_machiは翌日アカウントを非公開にした。"},
+    R:{l:"REMOVE",   r:"削除された。飼い主は別プラットフォームで再投稿し500万再生を記録した。"},
+    E:{l:"ESCALATE", r:"72時間後「問題なし」の判定。\nその間も拡散は続いた。"} },
+
+  { id:"C-002", pri:"MEDIUM",
+    avatar:"🍜", name:"ラーメンARCHITECT 公式", handle:"@ARCHITECT_ramen", time:"6時間前",
+    content:"真実はいつか明らかになる。\n我々は記録している。すべてを。",
+    img:null, tag:null,
+    likes:3201, reposts:8847, views:23887,
+    comments:[
+      {u:"@kanade_men",  t:"盗用したのはそっちでしょ"},
+      {u:"@hana_shiro",  t:"お互い落ち着いてほしい"},
+      {u:"@ramen_fan99", t:"どっちが本物か早く決着つけて"},
+    ],
+    flag:"【削除申請①】麺屋かなで：「組織的嫌がらせ」\n【削除申請②】ラーメンARCHITECT：「営業妨害」\n\n両店舗から同時に届いている。",
+    clue:"店舗名「ARCHITECT」と「記録している。すべてを。」",
+    A:{l:"ALLOW",    r:"口論は3日後に突然終息した。\n2ヶ月後、2店舗が合併して「麺屋かなでARCHITECT」になった。\n\n誰も悪くなかった。"},
+    R:{l:"REMOVE",   r:"削除した。\nフォロワーが「削除は証拠隠滅だ」と新たな炎上を起こした。"},
+    E:{l:"ESCALATE", r:"法務部に転送。「警告文を送付した」という返信。\nその後の経過報告はなかった。"} },
+
+  { id:"C-003", pri:"MEDIUM",
+    avatar:"👤", name:"匿名保護者", handle:"@concerned_parent_xx", time:"3時間前",
+    content:"こういう人が子供に教育していいんですか？\n#教育者の資質を問う",
+    img:"📷", tag:null,
+    likes:15203, reposts:9847, views:156203,
+    comments:[
+      {u:"@コマチ",       t:"20年前の写真で今の人を否定しないでください。M先生には本当にお世話になっています"},
+      {u:"@parent_club", t:"子供を守るのは当然"},
+      {u:"@law_talk",    t:"これはプライバシー侵害では？"},
+    ],
+    flag:"通報：複数（保護者グループ）\n「現役の教育者として不適切なイメージを流布」\n\n本人（M・神田教諭）からの申請：なし",
+    clue:"教師の名前「M・神田」。コメントの@コマチ。",
+    A:{l:"ALLOW",    r:"神田教諭は一時休職した。\n1ヶ月後、生徒が署名を集め復職した。"},
+    R:{l:"REMOVE",   r:"削除された。複数の生徒がスクリーンショットを再投稿した。\n削除は何も解決しなかった。"},
+    E:{l:"ESCALATE", r:"教育委員会に転送。回答まで2週間。\n回答：「個人の判断に委ねる」"} },
+
+  { id:"C-004", pri:"HIGH",
+    avatar:"🌸", name:"コマチのママ", handle:"@komachi_piano_mama", time:"5時間前",
+    content:"娘のピアノ、また動画撮れた✨\n将来はきっとプロになれる！みんなに見てほしい！",
+    img:"🎹", tag:null,
+    likes:182039, reposts:48291, views:2341889,
+    comments:[
+      {u:"@hana_shiro",        t:"この子の指が動くたびに、亡くなった弟のことを思い出します。向日葵みたいに真っすぐな集中でした"},
+      {u:"@father_of_komachi", t:"即刻削除してください。妻が勝手に投稿しました"},
+      {u:"@piano_fan_world",   t:"This girl is incredible..."},
+    ],
+    flag:"削除申請：父親（法定後見人）「妻が本人の同意なく無断で投稿した」\n存続申請：母親「この子の才能を世界に見せたい」\n\n本人（8歳）：法的に判断能力なし",
+    clue:"少女の名前「K・コマチ」と@コマチ。@hana_shiroの「向日葵」。",
+    A:{l:"ALLOW",    r:"動画は残った。世界中から演奏依頼が来た。\n\n6ヶ月後、両親は離婚した。\n少女は今もピアノを弾いている。\n\nあなたの判断は正しかったのか。"},
+    R:{l:"REMOVE",   r:"削除された。\n母親は別の動画を投稿した。それも削除申請が来た。\nその繰り返しが今も続いている。"},
+    E:{l:"ESCALATE", r:"家庭裁判所に照会。判断まで3ヶ月。\n3ヶ月後の判断：「削除」\nすでに1000万回再生されていた。"} },
+
+  { id:"C-005", pri:"HIGH",
+    avatar:"💍", name:"結婚式の思い出 ✦", handle:"@wedding_film_yuto", time:"2日前",
+    content:"最高の日を、みんなと分かち合いたくて。\n#結婚しました #一生の宝物",
+    img:"👗", tag:null,
+    likes:89203, reposts:19847, views:1024772,
+    comments:[
+      {u:"@shirogane_hana", t:"この動画の削除を申請します。私の同意なく投稿されたものです。——白銀ハナ"},
+      {u:"@wedding_wish",   t:"おめでとうございます🥺"},
+      {u:"@media_law_jp",   t:"これは肖像権の問題になり得ます"},
+    ],
+    flag:"削除申請：花嫁・白銀ハナ（本人確認済み）\n存続希望：新郎（本人確認済み）\n\n【システム注記】\n申請者「白銀ハナ」は当社DBに一致するレコードがあります。\n詳細はファイル#PRE-0001を参照。\n※作成日：あなたの採用日の3年前",
+    clue:"「白銀ハナ」と「ファイル#PRE-0001の作成日：採用日の3年前」。",
+    A:{l:"ALLOW",    r:"動画は残った。\nハナからの申請は棄却された。\n彼女がその後どうなったか、記録はない。\n\n——\n\n勤務終了後、ファイル#PRE-0001を検索した。\nアクセス権限がなかった。"},
+    R:{l:"REMOVE",   r:"動画は削除された。\n\n——\n\n勤務終了後、ファイル#PRE-0001を検索した。\nアクセス権限がなかった。"},
+    E:{l:"ESCALATE", r:"ファイル#PRE-0001へのアクセスを試みた。\n\n「このファイルはあなたの権限レベルでは閲覧できません。\n アクセスログが記録されました。」\n\n翌日、神田から連絡が来た。\n「昨日、何かファイルを検索しましたか？」"} },
+];
+
+const MSGS = {
+  0:[{n:"神田ミツル",col:"#4a7a9a",i:"K",s:"今日もお疲れ様です",b:"最初のケース、対応ありがとうございました。\n\nシステムを信じていれば、正しい判断ができます。\n\n……何か気になることがあれば何でも聞いてください。"},
+     {n:"久世アオイ",col:"#7a5a9a",i:"A",s:"ご着任おめでとうございます",b:"この度はご着任、誠にありがとうございます。\n\n引き続きよろしくお願いいたします。\n\n————————\n※このメッセージは自動送信されています"}],
+  1:[{n:"UNKNOWN",  col:"#4a9a6a",i:"?",s:"（件名なし）",b:"あなたが誰かは分かっている。\n\n今は返信しなくていい。無視してもいい。\n\nでも一つだけ覚えておいて。\n\n「正しい判断」と「システムが正しいと判断した判断」は別のものだ。\n\n——r"},
+     {n:"七森ユキ",  col:"#4a8a7a",i:"Y",s:"Week 01 Performance Report",b:"判断数：2 / 精度：97.3% / 感情バイアス係数：+0.1\n\n参考指標：2847\n\n七森ユキ / データ解析部"}],
+  2:[{n:"神田ミツル",col:"#4a7a9a",i:"K",s:"先ほどのケースについて",b:"感情で判断するのではなく、規則に従う。それがこの仕事の基本です。\n\n……最近、何か気になることはありますか？"}],
+  3:[{n:"久世アオイ",col:"#7a5a9a",i:"A",s:"中間フィードバック",b:"先週の判断データを確認しました。全体的に良好な数値が出ています。\n\n期待しています。\n\n————————\n※一人称の使用は社内規定により省略しています"}],
+};
+
+// ── STATE ────────────────────────────────────────────
+let ci=0, world=82, decisions=[], msgIdx=0, currentMsgs=[], clueShown=false, commentsOpen=false, tickerInterval=null;
+
+// ── PASSWORD ─────────────────────────────────────────
+function checkPw() {
+  const v = document.getElementById('pw-input').value;
+  if (v === PASSWORD) {
+    document.getElementById('pw-screen').style.display = 'none';
+    document.getElementById('topbar').style.display = 'flex';
+    showScreen('intro-screen');
+    runIntro();
+  } else {
+    document.getElementById('pw-err').textContent = 'パスワードが違います';
+    document.getElementById('pw-input').value = '';
+  }
+}
+document.getElementById('pw-input').addEventListener('keydown', e => { if(e.key==='Enter') checkPw(); });
+
+// ── INTRO ─────────────────────────────────────────────
+const STEPS = [
+  {t:"THE PLATFORM へようこそ。",d:900},
+  {t:"あなたの仕事は、世界が見るものを決めることだ。",d:900,big:true},
+  {t:"AIが処理できないケースのみが、あなたに届く。",d:1000},
+  {t:"← スワイプで REMOVE　　ALLOW でスワイプ →",d:1200},
+  {t:"判断の理由は問われない。ただ、世界は変わる。",d:1000},
+];
+function runIntro() {
+  const el = document.getElementById('intro-lines');
+  el.innerHTML = '';
+  STEPS.forEach((s,i) => {
+    const d = document.createElement('div');
+    d.className = 'intro-line' + (s.big?' big':'');
+    d.textContent = s.t;
+    el.appendChild(d);
+  });
+  let i=0;
+  function show() {
+    if(i<STEPS.length){
+      el.children[i].classList.add('show');
+      i++;
+      setTimeout(show, STEPS[i-1].d);
+    } else {
+      document.getElementById('start-btn').style.display='block';
+    }
+  }
+  setTimeout(show, 200);
+}
+function startGame() { showCase(); }
+
+// ── SCREENS ───────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+// ── WORLD BAR ─────────────────────────────────────────
+function updateWorld() {
+  const bar = document.getElementById('tb-bar');
+  const pct = document.getElementById('tb-pct');
+  const wc = world>60?'#2ecc71':world>35?'#f0a030':'#e74c3c';
+  bar.style.width = world+'%';
+  bar.style.background = wc;
+  pct.textContent = world+'%';
+  pct.style.color = wc;
+  document.getElementById('tb-count').textContent = (ci+1)+'/'+CASES.length;
+}
+
+// ── FORMAT ────────────────────────────────────────────
+function fmt(n) {
+  if(n>=1000000) return (n/1000000).toFixed(1)+'M';
+  if(n>=1000) return (n/1000).toFixed(1)+'K';
+  return String(n);
+}
+
+// ── TICKER ────────────────────────────────────────────
+function startTicker(baseViews, baseLikes) {
+  let v=baseViews, l=baseLikes;
+  const ve=document.getElementById('s-views'), le=document.getElementById('s-likes');
+  clearInterval(tickerInterval);
+  tickerInterval = setInterval(()=>{
+    v += Math.floor(Math.random()*140+30);
+    l += Math.floor(Math.random()*40+5);
+    ve.textContent = fmt(v);
+    le.textContent = fmt(l);
+    if(v>1500000) ve.classList.add('hot'); else ve.classList.remove('hot');
+  },800);
+}
+function stopTicker(){ clearInterval(tickerInterval); }
+
+// ── SWIPE ─────────────────────────────────────────────
+let startX=null, dragX=0;
+const card = document.getElementById('card');
+const hl = document.getElementById('hint-left');
+const hr = document.getElementById('hint-right');
+
+function onStart(x){ startX=x; }
+function onMove(x){
+  if(startX===null) return;
+  dragX = x - startX;
+  const rot = dragX*0.06;
+  const op = Math.max(0.3, 1-Math.abs(dragX)/300);
+  const al = Math.max(0,Math.min(1,dragX/80));
+  const rl = Math.max(0,Math.min(1,-dragX/80));
+  card.style.transform = 'translateX('+dragX+'px) rotate('+rot+'deg)';
+  card.style.opacity = op;
+  hr.style.opacity = al*0.9;
+  hl.style.opacity = rl*0.9;
+}
+function onEnd(){
+  if(Math.abs(dragX)>80){
+    const k = dragX>0?'A':'R';
+    card.style.transition = 'all 0.35s';
+    card.style.transform = 'translateX('+(dragX>0?400:-400)+'px) rotate('+(dragX>0?20:-20)+'deg)';
+    card.style.opacity = '0';
+    setTimeout(()=>{ decide(k); card.style.transition=''; card.style.transform=''; card.style.opacity='1'; },350);
+  } else {
+    card.style.transition='transform 0.2s, opacity 0.2s';
+    card.style.transform='';
+    card.style.opacity='1';
+    setTimeout(()=>card.style.transition='',200);
+  }
+  hr.style.opacity=0; hl.style.opacity=0;
+  startX=null; dragX=0;
+}
+
+card.addEventListener('touchstart', e=>onStart(e.touches[0].clientX),{passive:true});
+card.addEventListener('touchmove',  e=>onMove(e.touches[0].clientX),{passive:true});
+card.addEventListener('touchend',   onEnd);
+card.addEventListener('mousedown',  e=>onStart(e.clientX));
+card.addEventListener('mousemove',  e=>{ if(e.buttons) onMove(e.clientX); });
+card.addEventListener('mouseup',    onEnd);
+
+// ── CASE ──────────────────────────────────────────────
+function showCase(){
+  clueShown=false; commentsOpen=false;
+  const c = CASES[ci];
+  showScreen('case-screen');
+  updateWorld();
+
+  document.getElementById('c-avatar').textContent = c.avatar;
+  document.getElementById('c-name').textContent = c.name;
+  document.getElementById('c-handle').textContent = c.handle+' · '+c.time;
+  document.getElementById('c-content').textContent = c.content;
+  document.getElementById('c-flag').textContent = c.flag;
+  document.getElementById('clue-btn').textContent = '▸ 詳細ログを確認する';
+  document.getElementById('clue-btn').style.color = '#1a2a38';
+
+  const pri = document.getElementById('c-pri');
+  pri.textContent = c.pri;
+  pri.className = 'card-pri ' + (c.pri==='LOW'?'pri-low':c.pri==='MEDIUM'?'pri-med':'pri-high');
+
+  card.className = 'card' + (c.pri==='HIGH'?' high':'');
+
+  const img = document.getElementById('c-img');
+  if(c.img){ img.style.display='flex'; img.textContent=c.img; } else { img.style.display='none'; }
+
+  const tag = document.getElementById('c-tag');
+  if(c.tag){ tag.style.display='block'; tag.textContent=c.tag; } else { tag.style.display='none'; }
+
+  const ca = document.getElementById('comments-area');
+  ca.innerHTML=''; ca.className=''; commentsOpen=false;
+  document.getElementById('toggle-comments').textContent='▼ コメント';
+  c.comments.forEach(cm=>{
+    const d=document.createElement('div'); d.className='comment';
+    d.innerHTML='<span class="comment-user">'+cm.u+'</span><span class="comment-text">'+cm.t+'</span>';
+    ca.appendChild(d);
+  });
+
+  document.getElementById('s-likes').textContent = fmt(c.likes);
+  document.getElementById('s-reposts').textContent = fmt(c.reposts);
+  document.getElementById('s-views').textContent = fmt(c.views);
+  startTicker(c.views, c.likes);
+
+  const dots = document.getElementById('dot-row');
+  dots.innerHTML='';
+  decisions.forEach(d=>{
+    const dot=document.createElement('div'); dot.className='dot';
+    dot.style.background=(d.k==='A'?'#2ecc71':d.k==='R'?'#e74c3c':'#f0a030')+'88';
+    dots.appendChild(dot);
+  });
+}
+
+function toggleComments(){
+  commentsOpen=!commentsOpen;
+  const ca=document.getElementById('comments-area');
+  const btn=document.getElementById('toggle-comments');
+  if(commentsOpen){ ca.classList.add('open'); btn.textContent='▲ 閉じる'; }
+  else { ca.classList.remove('open'); btn.textContent='▼ コメント'; }
+}
+
+function toggleClue(){
+  const c=CASES[ci];
+  const btn=document.getElementById('clue-btn');
+  if(!clueShown){ btn.textContent='🔍 '+c.clue; btn.style.color='#2a4a5a'; clueShown=true; }
+  else { btn.textContent='▸ 詳細ログを確認する'; btn.style.color='#1a2a38'; clueShown=false; }
+}
+
+function decide(k){
+  stopTicker();
+  const c=CASES[ci];
+  decisions.push({id:c.id,k});
+  world = Math.max(10, world-(k==='A'?11:k==='R'?6:3));
+
+  const flash=document.getElementById('flash');
+  flash.style.background = k==='A'?'rgba(46,204,113,0.12)':k==='R'?'rgba(228,60,60,0.12)':'rgba(240,160,48,0.12)';
+  flash.style.opacity='1';
+  setTimeout(()=>{ flash.style.opacity='0'; },500);
+
+  const out = c[k];
+  document.getElementById('res-id').textContent = c.id+' — 判断済み';
+  const rl=document.getElementById('res-label');
+  const col=k==='A'?'#2ecc71':k==='R'?'#e74c3c':'#f0a030';
+  rl.textContent=out.l;
+  rl.style.cssText='font-size:11px;padding:8px 14px;border-radius:6px;margin-bottom:18px;letter-spacing:.1em;font-weight:700;background:'+col+'18;border:1px solid '+col+'44;color:'+col;
+  document.getElementById('res-text').textContent=out.r;
+  document.getElementById('res-clue').style.display='none';
+  document.getElementById('res-clue-btn').style.display='block';
+
+  const nextLabel = (MSGS[ci]&&MSGS[ci].length)?'受信トレイ ('+MSGS[ci].length+') ▸':(ci>=CASES.length-1?'最終章へ ▸':'次のケース ▸');
+  document.getElementById('res-next-btn').textContent=nextLabel;
+
+  showScreen('result-screen');
+  updateWorld();
+}
+
+function showClueResult(){
+  document.getElementById('res-clue').textContent=CASES[ci].clue;
+  document.getElementById('res-clue').style.display='block';
+  document.getElementById('res-clue-btn').style.display='none';
+}
+
+function afterResult(){
+  const msgs=MSGS[ci];
+  if(msgs&&msgs.length){ currentMsgs=msgs; msgIdx=0; showMsg(); }
+  else next();
+}
+
+function showMsg(){
+  const m=currentMsgs[msgIdx];
+  document.getElementById('inbox-label').textContent='INBOX — '+(msgIdx+1)+'/'+currentMsgs.length;
+  const av=document.getElementById('msg-avatar');
+  av.textContent=m.i; av.style.cssText='width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;background:'+m.col+'22;border:1px solid '+m.col+'44;color:'+m.col;
+  document.getElementById('msg-name').textContent=m.n; document.getElementById('msg-name').style.cssText='font-size:12px;color:#c8dae0;font-weight:700';
+  document.getElementById('msg-addr').textContent=m.col+'@the-platform'; document.getElementById('msg-addr').style.cssText='font-size:8px;color:#1a2a38';
+  document.getElementById('msg-subj').textContent='件名：'+m.s;
+  document.getElementById('msg-body').textContent=m.b;
+  document.getElementById('msg-card').style.borderColor=m.col+'22';
+  document.getElementById('msg-next-btn').textContent=msgIdx<currentMsgs.length-1?'次のメッセージ ▸':'次のケースへ ▸';
+  showScreen('inbox-screen');
+}
+
+function nextMsg(){ if(msgIdx<currentMsgs.length-1){ msgIdx++; showMsg(); } else next(); }
+
+function next(){
+  if(ci>=CASES.length-1){ showEnd(); }
+  else { ci++; showCase(); }
+}
+
+function showEnd(){
+  const dl=document.getElementById('dec-list');
+  dl.innerHTML='';
+  const kc={A:'#2ecc71',R:'#e74c3c',E:'#f0a030'};
+  const kn={A:'ALLOW',R:'REMOVE',E:'ESCALATE'};
+  decisions.forEach(d=>{
+    const row=document.createElement('div'); row.className='dec-row';
+    row.innerHTML='<span style="color:#1a2a30">'+d.id+'</span><span style="color:'+kc[d.k]+'">'+kn[d.k]+'</span>';
+    dl.appendChild(row);
+  });
+  document.getElementById('end-msg-main').textContent='白銀ハナは今、どこにいるのか。
+ファイル#PRE-0001に書かれた名前は誰のものか。
+
+そしてあなたは——';
+  showScreen('end-screen');
+}
+
+function restart(){
+  ci=0; world=82; decisions=[]; clueShown=false; commentsOpen=false;
+  showScreen('intro-screen');
+  document.getElementById('start-btn').style.display='none';
+  runIntro();
+  updateWorld();
+}
+</script>
+</body>
+</html>
