@@ -212,7 +212,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Courier New',monos
 .title-gc{position:absolute;bottom:20px;left:20px;font-size:8px;color:#0a1a28;letter-spacing:.15em}
 
 /* ══ STORY MODE ══ */
-#story-screen{background:#040810}
+#story-screen{background:#040810;cursor:pointer}
 .story-bg{position:absolute;inset:0}
 .story-content{position:relative;z-index:10;display:flex;flex-direction:column;height:100%}
 
@@ -229,8 +229,8 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Courier New',monos
 }
 /* Narrator text */
 .narrator{
-  padding:16px 20px;font-size:11px;color:#4a6070;
-  line-height:2;letter-spacing:.04em;font-style:italic;
+  padding:16px 20px;font-size:12px;color:#5a7080;
+  line-height:2;letter-spacing:.04em;
   min-height:60px;
 }
 
@@ -260,8 +260,9 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Courier New',monos
   min-height:44px;
 }
 .dialog-next{
-  display:flex;justify-content:flex-end;padding:6px 16px 10px;
-  font-size:8px;color:#0d1e2e;letter-spacing:.15em;cursor:pointer;
+  display:flex;justify-content:center;align-items:center;padding:10px 16px 14px;
+  font-size:10px;color:#1a4a60;letter-spacing:.2em;cursor:pointer;
+  border-top:1px solid #08101a;
 }
 
 /* ══ CASE SCREEN ══ */
@@ -402,13 +403,11 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Courier New',monos
 </div>
 
 <!-- ══ STORY ══════════════════════════════════════════ -->
-<div class="screen" id="story-screen">
+<div class="screen" id="story-screen" onclick="nextBeat()">
   <div class="story-bg" id="story-bg"></div>
   <div class="story-content">
     <div class="sprite-area">
-      <div class="sprite-placeholder" id="sprite-area">
-        <!-- キャラクター立ち絵 -->
-      </div>
+      <div id="sprite-area" style="width:100%;height:100%"></div>
     </div>
     <div class="narrator" id="narrator"></div>
     <div class="dialog-box">
@@ -418,7 +417,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Courier New',monos
       </div>
       <div class="dialog-text" id="dialog-text"></div>
       <div class="inner-thought" id="inner-thought" style="display:none"></div>
-      <div class="dialog-next" id="dialog-next" onclick="nextBeat()">▸ タップして続ける</div>
+      <div class="dialog-next" id="dialog-next">▸ 画面をタップして続ける</div>
     </div>
   </div>
 </div>
