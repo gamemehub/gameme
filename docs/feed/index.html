@@ -184,9 +184,13 @@ button{cursor:pointer;font-family:inherit}
         <div class="flag-text" id="c-flag"></div>
       </div>
       <div class="card-clue-btn" id="clue-btn" onclick="toggleClue()">▸ 詳細ログを確認する</div>
-      <div class="card-hint">← スワイプで REMOVE　　ALLOW でスワイプ →</div>
+      <div class="card-hint">← スワイプまたはボタンで判断 →</div>
     </div>
-    <button id="escalate-btn" onclick="decide('E')">ESCALATE（上申）</button>
+    <div style="display:flex;gap:8px;margin-top:12px;width:100%;max-width:440px">
+  <button onclick="decide('R')" style="flex:1;padding:11px 4px;background:rgba(228,60,60,0.1);border:1px solid rgba(228,60,60,0.4);border-radius:8px;color:#e74c3c;font-size:10px;letter-spacing:.14em;font-weight:700;font-family:inherit">REMOVE</button>
+  <button onclick="decide('E')" style="flex:1;padding:11px 4px;background:rgba(240,160,48,0.1);border:1px solid rgba(240,160,48,0.4);border-radius:8px;color:#f0a030;font-size:10px;letter-spacing:.14em;font-weight:700;font-family:inherit">ESCALATE</button>
+  <button onclick="decide('A')" style="flex:1;padding:11px 4px;background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.4);border-radius:8px;color:#2ecc71;font-size:10px;letter-spacing:.14em;font-weight:700;font-family:inherit">ALLOW</button>
+</div>
   </div>
   <div id="dot-row"></div>
 </div>
