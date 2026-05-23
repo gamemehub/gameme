@@ -2,633 +2,749 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 <title>FEED</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{background:#040810;color:#8aabb0;font-family:'Courier New',monospace;min-height:100vh;overflow-x:hidden}
-button{cursor:pointer;font-family:inherit}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Courier New',monospace}
 
-/* PASSWORD */
-#pw-screen{position:fixed;inset:0;background:#040810;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:999;padding:32px}
-#pw-title{font-size:48px;font-weight:900;letter-spacing:.4em;color:#0a1e2a;margin-bottom:48px}
-#pw-input{background:#06090f;border:1px solid #1a3a50;color:#8aabb0;padding:12px 20px;font-size:14px;font-family:inherit;border-radius:4px;width:100%;max-width:280px;margin-bottom:12px;text-align:center}
-#pw-input::placeholder{color:#1a3040}
-#pw-btn{background:transparent;border:1px solid #1a4a60;color:#1a4a60;padding:10px 32px;font-size:11px;letter-spacing:.2em;border-radius:2px;width:100%;max-width:280px}
-#pw-err{color:#e74c3c;font-size:10px;margin-top:8px;height:16px}
+/* ══ BACKGROUNDS ══════════════════════════════════ */
 
-/* TOPBAR */
-#topbar{background:#04080e;border-bottom:1px solid #0d1e2e;padding:7px 14px;display:flex;align-items:center;gap:10;position:sticky;top:0;z-index:10}
-#tb-logo{font-size:12px;font-weight:900;letter-spacing:.35em;color:#0d2a3a;margin-right:8px}
-#tb-world-wrap{flex:1;display:flex;align-items:center;gap:7px}
-#tb-label{font-size:8px;color:#1a2a38;white-space:nowrap}
-#tb-bar-bg{flex:1;height:3px;background:#0a1420;border-radius:99px}
-#tb-bar{height:100%;width:82%;background:#2ecc71;border-radius:99px;transition:width 1.2s,background 1.2s}
-#tb-pct{font-size:9px;min-width:28px}
-#tb-count{font-size:8px;color:#1a2a38}
+/* TITLE BG: 深夜のオフィス街 */
+.bg-title{
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(10,40,80,0.8) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(20,10,60,0.6) 0%, transparent 50%),
+    linear-gradient(180deg, #020408 0%, #040810 40%, #06090f 100%);
+  position:relative;overflow:hidden;
+}
+.bg-title::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    radial-gradient(1px 1px at 15% 25%, rgba(100,180,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 35% 15%, rgba(80,160,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 55% 30%, rgba(120,200,255,0.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 75% 10%, rgba(60,140,255,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 20%, rgba(100,180,255,0.3) 0%, transparent 100%),
+    radial-gradient(2px 2px at 25% 45%, rgba(80,160,255,0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 65% 55%, rgba(60,140,255,0.25) 0%, transparent 100%);
+}
+/* City lights bottom */
+.bg-title::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:40%;
+  background:
+    repeating-linear-gradient(90deg,
+      transparent 0px, transparent 18px,
+      rgba(20,60,120,0.15) 18px, rgba(20,60,120,0.15) 20px),
+    linear-gradient(0deg, rgba(4,8,16,0.95) 0%, transparent 100%);
+}
+/* Building silhouettes */
+.buildings{
+  position:absolute;bottom:0;left:0;right:0;height:35%;
+  background:
+    /* buildings */
+    linear-gradient(0deg,
+      #020408 0%, #020408 30%,
+      transparent 30%),
+    repeating-linear-gradient(90deg,
+      #020408 0px, #020408 40px,
+      transparent 40px, transparent 60px,
+      #020408 60px, #020408 70px,
+      transparent 70px, transparent 100px,
+      #020408 100px, #020408 130px,
+      transparent 130px, transparent 160px);
+}
+/* Window grid on buildings */
+.windows{
+  position:absolute;bottom:0;left:0;right:0;height:25%;
+  background-image:
+    radial-gradient(1px 2px at 22% 60%, rgba(255,220,100,0.3) 0%, transparent 100%),
+    radial-gradient(1px 2px at 28% 40%, rgba(255,220,100,0.25) 0%, transparent 100%),
+    radial-gradient(1px 2px at 45% 50%, rgba(100,200,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 2px at 52% 30%, rgba(255,220,100,0.2) 0%, transparent 100%),
+    radial-gradient(1px 2px at 68% 45%, rgba(255,220,100,0.35) 0%, transparent 100%),
+    radial-gradient(1px 2px at 75% 65%, rgba(100,200,255,0.25) 0%, transparent 100%),
+    radial-gradient(1px 2px at 85% 35%, rgba(255,220,100,0.3) 0%, transparent 100%);
+}
 
-/* SCREENS */
-.screen{display:none;min-height:calc(100vh - 40px)}
-.screen.active{display:flex;flex-direction:column}
+/* OFFICE BG: THE PLATFORM オフィス */
+.bg-office{
+  background:
+    linear-gradient(180deg, #06090f 0%, #080c14 60%, #0a0e18 100%);
+  position:relative;overflow:hidden;
+}
+/* Floor reflection */
+.bg-office::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:30%;
+  background:linear-gradient(0deg,
+    rgba(10,20,40,0.8) 0%,
+    rgba(6,10,20,0.4) 50%,
+    transparent 100%);
+}
+/* Office ceiling lights */
+.ceiling-lights{
+  position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,
+    transparent 0%, rgba(60,120,200,0.15) 20%,
+    rgba(60,120,200,0.3) 40%, rgba(60,120,200,0.15) 60%,
+    transparent 80%);
+  box-shadow:0 0 40px rgba(40,100,200,0.1);
+}
+/* Monitor glow */
+.monitor-glow{
+  position:absolute;bottom:20%;left:50%;transform:translateX(-50%);
+  width:60%;height:20%;
+  background:radial-gradient(ellipse at 50% 100%,
+    rgba(0,80,160,0.15) 0%, transparent 70%);
+}
+/* Desk line */
+.desk-line{
+  position:absolute;bottom:22%;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,
+    transparent 0%, rgba(20,60,120,0.4) 20%,
+    rgba(20,60,120,0.6) 50%, rgba(20,60,120,0.4) 80%,
+    transparent 100%);
+}
+/* Side window */
+.side-window{
+  position:absolute;right:0;top:10%;width:20%;height:70%;
+  background:linear-gradient(180deg,
+    rgba(20,40,80,0.3) 0%,
+    rgba(10,20,60,0.5) 50%,
+    rgba(4,8,20,0.7) 100%);
+  border-left:1px solid rgba(40,80,160,0.15);
+}
 
-/* INTRO */
-#intro-screen{align-items:center;justify-content:center;padding:28px}
-#intro-logo{font-size:52px;font-weight:900;letter-spacing:.4em;color:#0a1e2a;margin-bottom:44px;text-align:center}
-#intro-lines{min-height:160px;width:100%;max-width:380px}
-.intro-line{font-size:10px;line-height:2;color:#1a3040;margin-bottom:10px;opacity:0;transition:opacity .4s}
-.intro-line.big{font-size:13px;color:#5a7a8a}
-.intro-line.show{opacity:1}
-#start-btn{background:transparent;border:1px solid #1a4a60;color:#1a4a60;padding:10px 28px;font-size:10px;letter-spacing:.2em;border-radius:2px;margin-top:24px;display:none}
+/* NIGHT BG: 律のアパート */
+.bg-night{
+  background:linear-gradient(180deg, #020306 0%, #040608 60%, #060a0e 100%);
+  position:relative;overflow:hidden;
+}
+.bg-night::before{
+  content:'';position:absolute;top:10%;right:15%;width:40%;height:50%;
+  background:
+    linear-gradient(180deg, rgba(4,8,20,0.95) 0%, rgba(4,8,20,0.95) 100%);
+  border:1px solid rgba(30,60,120,0.2);
+  /* Window frame */
+  box-shadow:
+    inset 0 0 30px rgba(20,40,100,0.1),
+    0 0 20px rgba(10,20,60,0.3);
+}
+/* City lights through window */
+.city-through-window{
+  position:absolute;top:15%;right:17%;width:36%;height:44%;
+  background:
+    radial-gradient(1px 1px at 20% 30%, rgba(255,200,80,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 50% 20%, rgba(100,180,255,0.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 75% 40%, rgba(255,200,80,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 30% 60%, rgba(100,180,255,0.25) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 70%, rgba(255,200,80,0.35) 0%, transparent 100%),
+    radial-gradient(1px 1px at 85% 55%, rgba(100,180,255,0.3) 0%, transparent 100%),
+    linear-gradient(180deg, rgba(4,10,30,0.6) 0%, rgba(2,6,20,0.8) 100%);
+}
+/* Room desk lamp glow */
+.lamp-glow{
+  position:absolute;bottom:25%;left:10%;width:30%;height:15%;
+  background:radial-gradient(ellipse at 50% 100%,
+    rgba(255,200,80,0.08) 0%, transparent 70%);
+}
 
-/* CASE */
-#case-screen{padding:0;position:relative;overflow:hidden}
-#swipe-area{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 12px;position:relative}
-#hint-left{position:absolute;left:12px;top:50%;transform:translateY(-50%);text-align:center;opacity:0;transition:opacity .15s;pointer-events:none}
-#hint-right{position:absolute;right:12px;top:50%;transform:translateY(-50%);text-align:center;opacity:0;transition:opacity .15s;pointer-events:none}
-.hint-icon{font-size:28px}
-.hint-label{font-size:9px;font-weight:700;letter-spacing:.15em}
-#hint-left .hint-label{color:#e74c3c}
-#hint-right .hint-label{color:#2ecc71}
+/* MEETING BG: 会議室 */
+.bg-meeting{
+  background:linear-gradient(180deg, #070a10 0%, #090c14 100%);
+  position:relative;overflow:hidden;
+}
+/* Meeting table reflection */
+.meeting-table{
+  position:absolute;bottom:0;left:10%;right:10%;height:30%;
+  background:linear-gradient(0deg,
+    rgba(10,20,50,0.6) 0%,
+    rgba(6,12,30,0.3) 50%,
+    transparent 100%);
+  border-top:1px solid rgba(30,60,120,0.2);
+}
+/* Overhead light */
+.overhead{
+  position:absolute;top:0;left:30%;right:30%;height:2px;
+  background:rgba(40,80,180,0.4);
+  box-shadow:0 0 60px rgba(20,60,160,0.15), 0 0 120px rgba(10,30,80,0.08);
+}
 
-#card{width:100%;max-width:440px;background:#070d16;border-radius:12px;overflow:hidden;border:1px solid #0d1e2e;box-shadow:0 4px 20px rgba(0,0,0,.4);touch-action:none;user-select:none;will-change:transform}
-#card.high{border-color:#2a0a08;box-shadow:0 0 30px rgba(204,0,0,.07)}
+/* ══ SCAN LINE ══ */
+@keyframes scan{0%{top:-5%}100%{top:105%}}
+.scanline{
+  position:fixed;left:0;width:100%;height:2px;
+  background:rgba(255,255,255,0.025);
+  animation:scan 6s linear infinite;pointer-events:none;z-index:999;
+}
 
-.card-profile{display:flex;align-items:center;gap:10px;padding:12px 14px 8px}
-.card-avatar{font-size:28px;line-height:1}
-.card-name{font-size:12px;font-weight:700;color:#c8dae0}
-.card-handle{font-size:9px;color:#1a2a38}
-.card-pri{font-size:8px;padding:2px 8px;border-radius:99px;font-weight:700;letter-spacing:.1em;margin-left:auto}
-.pri-low{background:rgba(46,204,113,.1);color:#2ecc71;border:1px solid rgba(46,204,113,.27)}
-.pri-med{background:rgba(240,160,48,.1);color:#f0a030;border:1px solid rgba(240,160,48,.27)}
-.pri-high{background:rgba(228,60,60,.1);color:#e43c3c;border:1px solid rgba(228,60,60,.27)}
+/* ══ GLITCH ══ */
+@keyframes g1{0%,100%{clip-path:inset(0 0 96% 0);transform:translate(-2px)}50%{clip-path:inset(40% 0 50% 0);transform:translate(2px)}}
+@keyframes g2{0%,100%{clip-path:inset(92% 0 0 0);transform:translate(2px)}50%{clip-path:inset(50% 0 40% 0);transform:translate(-2px)}}
+.gw{position:relative;display:inline-block}
+.gw::before,.gw::after{content:attr(data-t);position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.gw::before{color:#0ff;animation:g1 .15s infinite;opacity:.5}
+.gw::after{color:#f0a;animation:g2 .15s infinite;opacity:.5}
 
-.card-content{padding:0 14px 10px;font-size:13px;color:#8aabb0;line-height:1.7;white-space:pre-wrap}
-.card-img{margin:0 14px 10px;height:110px;background:#0a1520;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:44px;border:1px solid #0d1e2e}
-.card-tag{margin:0 14px 10px;font-size:9px;color:#1a2a38}
+/* ══ SCREENS ══ */
+.screen{position:fixed;inset:0;display:none;flex-direction:column}
+.screen.active{display:flex}
 
-.card-stats{padding:8px 14px;border-top:1px solid #0d1e2e;border-bottom:1px solid #0d1e2e;display:flex;gap:18px;align-items:center}
-.stat{display:flex;align-items:center;gap:5px;font-size:11px;font-family:'Courier New',monospace}
-.stat-views{transition:color .3s}
-.stat-views.hot{color:#e74c3c}
-#toggle-comments{margin-left:auto;font-size:9px;color:#1a2a38;background:none;border:none;cursor:pointer;font-family:inherit}
+/* ══ TITLE SCREEN ══ */
+#title-screen{align-items:center;justify-content:center;padding:32px}
+.title-center{text-align:center;z-index:10;position:relative}
+.title-logo{
+  font-size:clamp(64px,18vw,120px);font-weight:900;
+  letter-spacing:.2em;color:#0d2a3a;
+  text-shadow:0 0 60px rgba(0,80,160,0.2);
+  margin-bottom:16px;line-height:1;
+}
+.title-sub{font-size:11px;color:#0d2030;letter-spacing:.3em;margin-bottom:40px}
+.title-tagline{font-size:clamp(11px,3vw,14px);color:#1a3a50;letter-spacing:.06em;line-height:2;margin-bottom:48px}
+.title-btn{
+  background:transparent;border:1px solid #1a4a60;
+  color:#2a7a9a;padding:13px 36px;font-size:11px;
+  letter-spacing:.25em;cursor:pointer;font-family:inherit;border-radius:2px;
+  transition:all .3s;
+}
+.title-btn:hover{background:rgba(10,40,80,0.4);border-color:#2a7a9a;color:#4a9aaa}
+.title-version{position:absolute;bottom:20px;right:20px;font-size:8px;color:#0a1a28;letter-spacing:.15em}
+.title-gc{position:absolute;bottom:20px;left:20px;font-size:8px;color:#0a1a28;letter-spacing:.15em}
 
-#comments-area{padding:8px 14px;display:none}
-#comments-area.open{display:block}
-.comment{margin-bottom:8px;padding:6px 10px;background:#040c14;border-radius:6px;border:1px solid #0d1e2e}
-.comment-user{font-size:9px;color:#3a8abf;margin-right:6px}
-.comment-text{font-size:10px;color:#3a5060}
+/* ══ STORY MODE ══ */
+#story-screen{background:#040810}
+.story-bg{position:absolute;inset:0}
+.story-content{position:relative;z-index:10;display:flex;flex-direction:column;height:100%}
 
-.card-flag{padding:10px 14px;background:#050800;border-top:1px solid #1a1800}
-.flag-label{font-size:8px;color:#3a3010;letter-spacing:.12em;margin-bottom:5px}
-.flag-text{font-size:10px;color:#6a6030;line-height:1.7;white-space:pre-wrap}
-.card-clue-btn{padding:8px 14px;text-align:center;border-top:1px solid #0d1e2e;cursor:pointer;font-size:9px;color:#1a2a38;letter-spacing:.1em}
-.card-hint{padding:4px 14px 10px;text-align:center;font-size:9px;color:#0d1e2a;letter-spacing:.08em}
+/* Character sprite area */
+.sprite-area{
+  flex:1;position:relative;
+  display:flex;align-items:flex-end;justify-content:center;
+}
+.sprite-placeholder{
+  width:55%;max-width:260px;
+  background:linear-gradient(180deg,transparent 0%,rgba(4,8,16,0.4) 100%);
+  align-self:stretch;display:flex;align-items:center;justify-content:center;
+  font-size:10px;color:#0a1a28;letter-spacing:.1em;
+}
+/* Narrator text */
+.narrator{
+  padding:16px 20px;font-size:11px;color:#4a6070;
+  line-height:2;letter-spacing:.04em;font-style:italic;
+  min-height:60px;
+}
 
-#escalate-btn{margin-top:12px;padding:9px 32px;background:transparent;border:1px solid rgba(240,160,48,.27);border-radius:99px;color:#f0a030;font-size:9px;letter-spacing:.2em}
-#dot-row{display:flex;gap:4px;padding:4px 14px 8px;justify-content:center}
-.dot{width:6px;height:6px;border-radius:50%}
+/* Dialog box */
+.dialog-box{
+  background:rgba(4,8,16,0.95);
+  border-top:1px solid #0d1e2e;
+  padding:0;
+  flex-shrink:0;
+}
+.dialog-speaker{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 16px 6px;border-bottom:1px solid #080e18;
+}
+.speaker-name{font-size:11px;font-weight:700;letter-spacing:.1em}
+.speaker-role{font-size:8px;color:#1a2a38;letter-spacing:.1em;margin-left:auto}
+.dialog-text{
+  padding:10px 16px 14px;
+  font-size:12px;color:#8aabb0;line-height:2;
+  min-height:70px;white-space:pre-wrap;
+}
+.inner-thought{
+  padding:8px 16px;background:rgba(10,30,60,0.4);
+  border-left:2px solid #1a3a60;
+  font-size:10px;color:#4a6a8a;line-height:1.9;
+  font-style:italic;margin:0 16px 10px;border-radius:0 3px 3px 0;
+  min-height:44px;
+}
+.dialog-next{
+  display:flex;justify-content:flex-end;padding:6px 16px 10px;
+  font-size:8px;color:#0d1e2e;letter-spacing:.15em;cursor:pointer;
+}
 
-/* FLASH */
-#flash{position:fixed;inset:0;pointer-events:none;opacity:0;transition:opacity .15s;z-index:50}
+/* ══ CASE SCREEN ══ */
+#case-screen{background:#040810;flex-direction:column}
+.topbar{
+  background:#04080e;border-bottom:1px solid #0c1824;
+  padding:7px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0;z-index:10;
+}
+.tb-logo{font-size:11px;font-weight:900;letter-spacing:.35em;color:#0d2a3a}
+.tb-world{flex:1;display:flex;align-items:center;gap:7px}
+.tb-wlabel{font-size:8px;color:#1a2a38;white-space:nowrap}
+.tb-wbg{flex:1;height:2px;background:#0a1420;border-radius:99px}
+.tb-wfill{height:100%;border-radius:99px;transition:width 1.2s,background 1.2s}
+.tb-wpct{font-size:8px;min-width:26px}
+.tb-idx{font-size:8px;color:#1a2a38}
 
-/* RESULT */
-#result-screen{padding:18px;align-items:center;justify-content:center}
-#res-inner{max-width:440px;width:100%}
-#res-id{font-size:8px;color:#1a3a50;letter-spacing:.15em;margin-bottom:10px}
-#res-label{font-size:11px;padding:8px 14px;border-radius:6px;margin-bottom:18px;letter-spacing:.1em;font-weight:700}
-#res-text{font-size:12px;line-height:2.2;padding:16px;background:#070d16;border:1px solid #0d1e2e;border-radius:8px;margin-bottom:18px;white-space:pre-wrap}
-#res-clue{font-size:9px;color:#1a3040;text-align:center;margin-bottom:14px;font-style:italic;line-height:1.8;padding:0 8px;display:none}
-#res-btns{display:flex;gap:10px;justify-content:center}
-#res-clue-btn,#res-next-btn{background:transparent;border:1px solid #1a2a38;color:#3a5060;padding:8px 20px;font-size:8px;letter-spacing:.12em;border-radius:2px}
+.case-scroll{flex:1;overflow-y:auto;padding-bottom:110px}
+.case-card{
+  margin:12px;border-radius:6px;overflow:hidden;
+  background:#06090f;border:1px solid #0c1824;
+}
+.case-card.high{border-color:#2a0a08;box-shadow:0 0 20px rgba(180,0,0,0.05)}
+.card-head{
+  padding:8px 12px;border-bottom:1px solid #0c1824;
+  background:#070b11;display:flex;align-items:center;gap:7px;flex-wrap:wrap;
+}
+.card-id{font-size:8px;letter-spacing:.08em}
+.card-pri{font-size:7px;padding:2px 7px;border-radius:99px;font-weight:700;letter-spacing:.1em}
+.card-time{margin-left:auto;font-size:8px;color:#0a1420}
+.card-title{font-size:13px;font-weight:700;padding:10px 12px 5px;line-height:1.5}
+.card-meta{padding:0 12px 9px;font-size:8px;color:#1a2a38}
+.card-sep{height:1px;background:#0a1420;margin:0 12px 11px}
+.card-body{
+  margin:0 12px 11px;padding:11px;
+  background:#040810;border:1px solid #0a1420;border-radius:2px;
+  font-size:11px;line-height:1.95;color:#4a5a6a;white-space:pre-wrap;
+}
+.card-flag{
+  margin:0 12px 11px;padding:11px;
+  background:#050500;border:1px solid #1a1600;border-radius:2px;
+  font-size:10px;color:#5a5020;line-height:1.8;white-space:pre-wrap;
+}
+.card-clue{
+  margin:0 12px 12px;padding:7px 11px;
+  background:#04080c;border:1px solid #0a1e30;border-radius:2px;
+  font-size:8px;color:#0c1e2a;text-align:center;cursor:pointer;
+}
 
-/* INBOX */
-#inbox-screen{padding:16px;align-items:center;justify-content:flex-start}
-#inbox-inner{max-width:440px;width:100%;padding-top:8px}
-#inbox-label{font-size:8px;color:#1a2a38;letter-spacing:.15em;margin-bottom:14px}
-#msg-card{background:#070d16;border-radius:10px;overflow:hidden;margin-bottom:16px}
-#msg-header{padding:12px 14px;border-bottom:1px solid #0d1e2e;background:#080c12}
-#msg-from{display:flex;align-items:center;gap:9px;margin-bottom:8px}
-#msg-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900}
-#msg-name{font-size:12px;color:#c8dae0;font-weight:700}
-#msg-addr{font-size:8px;color:#1a2a38}
-#msg-subj{font-size:9px;color:#3a5060}
-#msg-body{padding:14px;font-size:11px;line-height:2.1;color:#3a5060;white-space:pre-wrap}
-#msg-next-btn{background:transparent;border:1px solid #1a2a38;color:#3a5060;padding:9px 24px;font-size:9px;letter-spacing:.15em;border-radius:2px;margin:0 auto;display:block}
+.btn-bar{
+  position:fixed;bottom:0;left:0;right:0;
+  background:linear-gradient(transparent,#040810 30%);
+  padding:16px 12px 12px;
+}
+.btn-row{display:flex;gap:6px;justify-content:center}
+.judge-btn{
+  flex:1;max-width:160px;padding:10px 4px;border-radius:4px;
+  font-size:8px;letter-spacing:.14em;font-weight:700;
+  cursor:pointer;font-family:inherit;border:1px solid;
+  transition:all .2s;
+}
+.dots{display:flex;gap:4px;padding:4px 14px 6px;justify-content:center}
+.dot{width:5px;height:5px;border-radius:50%}
 
-/* END */
-#end-screen{padding:24px;align-items:center;justify-content:center}
-#end-inner{max-width:420px;width:100%}
-#end-title{font-size:9px;color:#1a3a50;letter-spacing:.2em;margin-bottom:22px;text-align:center}
-#dec-list{margin-bottom:18px}
-.dec-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #0d1e2e;font-size:8px}
-#end-msg{padding:18px;background:#070d16;border:1px solid #0d1e2e;border-radius:8px;margin-bottom:20px}
-#end-msg-main{font-size:11px;line-height:2.2;color:#3a5060;margin-bottom:12px}
-#end-msg-bold{font-size:13px;color:#8aabb0;font-weight:700;line-height:1.8}
-#end-mysteries{font-size:9px;color:#0d1e2a;text-align:center;line-height:2.5;border-top:1px solid #0d1e2e;padding-top:18px}
-#end-mysteries .m-title{color:#1a3040;margin-bottom:4px}
-#end-mysteries .m-next{margin-top:12px;color:#0a1820}
-#restart-btn{background:transparent;border:1px solid #1a2a38;color:#3a5060;padding:8px 20px;font-size:8px;letter-spacing:.15em;border-radius:2px;margin:20px auto 0;display:block}
+/* ══ RESULT ══ */
+#result-screen{background:#040810;align-items:center;justify-content:center;padding:18px}
+.result-inner{max-width:440px;width:100%}
+.result-id{font-size:8px;color:#1a3a50;letter-spacing:.15em;margin-bottom:10px}
+.result-label{font-size:11px;padding:8px 14px;border-radius:6px;margin-bottom:18px;letter-spacing:.1em;font-weight:700}
+.result-text{
+  font-size:12px;line-height:2.2;padding:16px;
+  background:#06090f;border:1px solid #0c1824;border-radius:6px;
+  margin-bottom:18px;white-space:pre-wrap;color:#4a5a6a;
+}
+.result-clue{font-size:9px;color:#1a3040;text-align:center;margin-bottom:14px;font-style:italic;line-height:1.8;padding:0 8px;display:none}
+.result-btns{display:flex;gap:10px;justify-content:center}
+.result-btn{
+  background:transparent;border:1px solid #1a2a38;color:#3a5060;
+  padding:8px 20px;font-size:8px;letter-spacing:.12em;cursor:pointer;
+  font-family:inherit;border-radius:2px;
+}
+
+/* ══ INBOX ══ */
+#inbox-screen{background:#040810;padding:16px;align-items:center;justify-content:flex-start}
+.inbox-inner{max-width:440px;width:100%;padding-top:8px}
+.inbox-label{font-size:8px;color:#1a2a38;letter-spacing:.15em;margin-bottom:14px}
+.msg-card{background:#06090f;border-radius:6px;overflow:hidden;margin-bottom:16px}
+.msg-head{padding:12px 14px;background:#080c12}
+.msg-from{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+.msg-avatar{
+  width:30px;height:30px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:900;flex-shrink:0;
+}
+.msg-name{font-size:11px;color:#c8dae0;font-weight:700}
+.msg-addr{font-size:8px;color:#1a2a38}
+.msg-subj{font-size:9px;color:#3a5060}
+.msg-body{padding:13px;font-size:11px;line-height:2;color:#4a5a6a;white-space:pre-wrap}
+.msg-next{
+  background:transparent;border:1px solid #1a2a38;color:#3a5060;
+  padding:9px 24px;font-size:8px;letter-spacing:.15em;cursor:pointer;
+  font-family:inherit;border-radius:2px;margin:0 auto;display:block;
+}
+
+/* ══ END ══ */
+#end-screen{background:#040810;padding:24px;align-items:center;justify-content:center}
+.end-inner{max-width:420px;width:100%}
+.end-title{font-size:8px;color:#1a3a50;letter-spacing:.2em;margin-bottom:22px;text-align:center}
+.dec-list{margin-bottom:18px}
+.dec-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #0a1420;font-size:8px}
+.end-msg{padding:16px;background:#06090f;border:1px solid #0c1824;border-radius:6px;margin-bottom:18px}
+.end-msg-text{font-size:11px;line-height:2.2;color:#3a5060;margin-bottom:12px}
+.end-msg-bold{font-size:12px;color:#8aabb0;font-weight:700;line-height:1.8}
+.end-mysteries{font-size:9px;color:#0d1e2a;text-align:center;line-height:2.5;border-top:1px solid #0a1420;padding-top:16px}
+.end-restart{
+  background:transparent;border:1px solid #1a2a38;color:#3a5060;
+  padding:8px 20px;font-size:8px;letter-spacing:.15em;cursor:pointer;
+  font-family:inherit;border-radius:2px;margin:20px auto 0;display:block;
+}
 </style>
 </head>
 <body>
+<div class="scanline"></div>
 
-<!-- PASSWORD SCREEN -->
-<div id="pw-screen">
-  <div id="pw-title">FEED</div>
-  <input id="pw-input" type="password" placeholder="パスワードを入力" autocomplete="off">
-  <button id="pw-btn">入力</button>
-  <div id="pw-err"></div>
-</div>
-
-<!-- TOP BAR -->
-<div id="topbar" style="display:none">
-  <span id="tb-logo">FEED</span>
-  <div id="tb-world-wrap">
-    <span id="tb-label">WORLD</span>
-    <div id="tb-bar-bg"><div id="tb-bar"></div></div>
-    <span id="tb-pct" style="font-size:9px;color:#2ecc71">82%</span>
-  </div>
-  <span id="tb-count">1/5</span>
-</div>
-
-<!-- INTRO -->
-<div id="intro-screen" class="screen">
-  <div id="intro-logo">FEED</div>
-  <div id="intro-lines"></div>
-  <button id="start-btn" onclick="startGame()">勤務を開始する</button>
-</div>
-
-<!-- CASE -->
-<div id="case-screen" class="screen">
-  <div id="swipe-area">
-    <div id="hint-left"><div class="hint-icon">🗑</div><div class="hint-label">REMOVE</div></div>
-    <div id="hint-right"><div class="hint-icon">✓</div><div class="hint-label">ALLOW</div></div>
-    <div id="card">
-      <div class="card-profile">
-        <div class="card-avatar" id="c-avatar"></div>
-        <div><div class="card-name" id="c-name"></div><div class="card-handle" id="c-handle"></div></div>
-        <div class="card-pri" id="c-pri"></div>
-      </div>
-      <div class="card-content" id="c-content"></div>
-      <div class="card-img" id="c-img" style="display:none"></div>
-      <div class="card-tag" id="c-tag" style="display:none"></div>
-      <div class="card-stats">
-        <div class="stat">❤️ <span id="s-likes"></span></div>
-        <div class="stat">🔁 <span id="s-reposts"></span></div>
-        <div class="stat">👁 <span class="stat-views" id="s-views"></span></div>
-        <button id="toggle-comments" onclick="toggleComments()">▼ コメント</button>
-      </div>
-      <div id="comments-area"></div>
-      <div class="card-flag">
-        <div class="flag-label">⚠ FLAG REASON</div>
-        <div class="flag-text" id="c-flag"></div>
-      </div>
-      <div class="card-clue-btn" id="clue-btn" onclick="toggleClue()">▸ 詳細ログを確認する</div>
-      <div class="card-hint">← スワイプまたはボタンで判断 →</div>
+<!-- ══ TITLE ══════════════════════════════════════════ -->
+<div class="screen active bg-title" id="title-screen">
+  <div class="buildings"></div>
+  <div class="windows"></div>
+  <div class="title-center">
+    <div class="gw title-logo" data-t="FEED">FEED</div>
+    <div class="title-sub">THE PLATFORM</div>
+    <div class="title-tagline">
+      あなたの仕事は、<br>世界が見るものを決めることだ。
     </div>
-    <div style="display:flex;gap:8px;margin-top:12px;width:100%;max-width:440px">
-  <button onclick="decide('R')" style="flex:1;padding:11px 4px;background:rgba(228,60,60,0.1);border:1px solid rgba(228,60,60,0.4);border-radius:8px;color:#e74c3c;font-size:10px;letter-spacing:.14em;font-weight:700;font-family:inherit">REMOVE</button>
-  <button onclick="decide('E')" style="flex:1;padding:11px 4px;background:rgba(240,160,48,0.1);border:1px solid rgba(240,160,48,0.4);border-radius:8px;color:#f0a030;font-size:10px;letter-spacing:.14em;font-weight:700;font-family:inherit">ESCALATE</button>
-  <button onclick="decide('A')" style="flex:1;padding:11px 4px;background:rgba(46,204,113,0.1);border:1px solid rgba(46,204,113,0.4);border-radius:8px;color:#2ecc71;font-size:10px;letter-spacing:.14em;font-weight:700;font-family:inherit">ALLOW</button>
-</div>
+    <button class="title-btn" onclick="startStory()">勤務を開始する</button>
   </div>
-  <div id="dot-row"></div>
+  <div class="title-gc">GC2026</div>
+  <div class="title-version">FEED v1.0 — Ch.1</div>
 </div>
 
-<!-- RESULT -->
-<div id="result-screen" class="screen">
-  <div id="res-inner">
-    <div id="res-id"></div>
-    <div id="res-label"></div>
-    <div id="res-text"></div>
-    <div id="res-clue"></div>
-    <div id="res-btns">
-      <button id="res-clue-btn" onclick="showClueResult()">詳細ログ</button>
-      <button id="res-next-btn" onclick="afterResult()">次へ ▸</button>
+<!-- ══ STORY ══════════════════════════════════════════ -->
+<div class="screen" id="story-screen">
+  <div class="story-bg" id="story-bg"></div>
+  <div class="story-content">
+    <div class="sprite-area">
+      <div class="sprite-placeholder" id="sprite-area">
+        <!-- キャラクター立ち絵 -->
+      </div>
+    </div>
+    <div class="narrator" id="narrator"></div>
+    <div class="dialog-box">
+      <div class="dialog-speaker" id="speaker-row" style="display:none">
+        <span class="speaker-name" id="speaker-name"></span>
+        <span class="speaker-role" id="speaker-role"></span>
+      </div>
+      <div class="dialog-text" id="dialog-text"></div>
+      <div class="inner-thought" id="inner-thought" style="display:none"></div>
+      <div class="dialog-next" id="dialog-next" onclick="nextBeat()">▸ タップして続ける</div>
     </div>
   </div>
 </div>
 
-<!-- INBOX -->
-<div id="inbox-screen" class="screen">
-  <div id="inbox-inner">
-    <div id="inbox-label">INBOX</div>
-    <div id="msg-card">
-      <div id="msg-header">
-        <div id="msg-from">
-          <div id="msg-avatar"></div>
-          <div><div id="msg-name"></div><div id="msg-addr"></div></div>
+<!-- ══ CASE ════════════════════════════════════════════ -->
+<div class="screen" id="case-screen">
+  <div class="topbar">
+    <span class="tb-logo">FEED</span>
+    <div class="tb-world">
+      <span class="tb-wlabel">WORLD</span>
+      <div class="tb-wbg"><div class="tb-wfill" id="wfill" style="width:82%;background:#2ecc71"></div></div>
+      <span class="tb-wpct" id="wpct" style="color:#2ecc71">82%</span>
+    </div>
+    <span class="tb-idx" id="case-idx">1/5</span>
+  </div>
+  <div class="case-scroll" id="case-scroll">
+    <div class="case-card" id="case-card">
+      <div class="card-head">
+        <span class="card-id" id="c-id"></span>
+        <span class="card-pri" id="c-pri"></span>
+        <span class="card-time" id="c-time"></span>
+      </div>
+      <div class="card-title" id="c-title"></div>
+      <div class="card-meta" id="c-meta"></div>
+      <div class="card-sep"></div>
+      <div class="card-body" id="c-body"></div>
+      <div class="card-flag" id="c-flag"></div>
+      <div class="card-clue" id="c-clue" onclick="toggleClue()">▸ 詳細ログを確認する</div>
+    </div>
+    <div class="dots" id="dots"></div>
+  </div>
+  <div class="btn-bar">
+    <div class="btn-row" id="btn-row"></div>
+  </div>
+</div>
+
+<!-- ══ RESULT ══════════════════════════════════════════ -->
+<div class="screen" id="result-screen">
+  <div class="result-inner">
+    <div class="result-id" id="r-id"></div>
+    <div class="result-label" id="r-label"></div>
+    <div class="result-text" id="r-text"></div>
+    <div class="result-clue" id="r-clue"></div>
+    <div class="result-btns">
+      <button class="result-btn" id="r-clue-btn" onclick="showRClue()">詳細ログ</button>
+      <button class="result-btn" id="r-next-btn" onclick="afterResult()">次へ ▸</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ INBOX ══════════════════════════════════════════ -->
+<div class="screen" id="inbox-screen">
+  <div class="inbox-inner">
+    <div class="inbox-label" id="inbox-label">INBOX</div>
+    <div class="msg-card">
+      <div class="msg-head">
+        <div class="msg-from">
+          <div class="msg-avatar" id="m-avatar"></div>
+          <div><div class="msg-name" id="m-name"></div><div class="msg-addr" id="m-addr"></div></div>
         </div>
-        <div id="msg-subj"></div>
+        <div class="msg-subj" id="m-subj"></div>
       </div>
-      <div id="msg-body"></div>
+      <div class="msg-body" id="m-body"></div>
     </div>
-    <button id="msg-next-btn" onclick="nextMsg()">次へ ▸</button>
+    <button class="msg-next" id="msg-next" onclick="nextMsg()">次へ ▸</button>
   </div>
 </div>
 
-<!-- END -->
-<div id="end-screen" class="screen">
-  <div id="end-inner">
-    <div id="end-title">第1章「仕事」— 完了</div>
-    <div id="dec-list"></div>
-    <div id="end-msg">
-      <div id="end-msg-main">白銀ハナは今、どこにいるのか。\nファイル#PRE-0001に書かれた名前は誰のものか。\n\nそしてあなたは——</div>
-      <div id="end-msg-bold">本当に、ただ判断していただけなのか。</div>
+<!-- ══ END ════════════════════════════════════════════ -->
+<div class="screen" id="end-screen">
+  <div class="end-inner">
+    <div class="end-title">第1章「仕事」— 完了</div>
+    <div class="dec-list" id="dec-list"></div>
+    <div class="end-msg">
+      <div class="end-msg-text">白銀ハナは今、どこにいるのか。\nファイル#PRE-0001に書かれた名前は誰のものか。\n\nそしてあなたは——</div>
+      <div class="end-msg-bold">本当に、ただ判断していただけなのか。</div>
     </div>
-    <div id="end-mysteries">
-      <div class="m-title">——　未解決の謎　——</div>
+    <div class="end-mysteries">
+      <div style="color:#1a3040;margin-bottom:4px">——　未解決の謎　——</div>
       <div>2847とは何か</div>
       <div>ARCHITECTのタイムライン矛盾</div>
       <div>ファイル#PRE-0001の設計者</div>
       <div>アオイは人間か</div>
-      <div class="m-next">第2章「亀裂」— 解禁予定</div>
+      <div style="margin-top:12px;color:#0a1820">第2章「亀裂」— 解禁予定</div>
     </div>
-    <button id="restart-btn" onclick="restart()">最初からプレイ</button>
+    <button class="end-restart" onclick="restart()">最初からプレイ</button>
   </div>
 </div>
 
-<div id="flash"></div>
-
 <script>
-// ── CONFIG ──────────────────────────────────────────
-const PASSWORD = "feed2847";
-
-// ── CASES ───────────────────────────────────────────
-const CASES = [
-  { id:"C-001", pri:"LOW",
-    avatar:"🐱", name:"猫カフェ ナポレオン公式", handle:"@nyan_palace_official", time:"1時間前",
-    content:"うちの看板猫ナポレオンがまたピアノ弾いてた🎹\n天才すぎて飼い主が泣いてる",
-    img:"🎹", tag:"📍 剣磨パーツ株式会社 第2駐車場付近",
-    likes:48203, reposts:12847, views:892441,
-    comments:[
-      {u:"@hana_shiro", t:"梅の季節にこういう動画があるとほっとします🌸"},
-      {u:"@k_machi",    t:"なぜかこの動画を見ていると泣きそうになります……"},
-      {u:"@ARCHITECT",  t:"（リツイートのみ）"},
-    ],
-    flag:"通報：@animal_rights_watcher\n「猫への強制的訓練の可能性」\n\n※虐待の証拠：なし",
-    clue:"@k_machiはなぜ泣きそうになるのか。撮影場所「剣磨パーツ」。",
-    A:{l:"ALLOW",    r:"拡散を続け、CMオファーが殺到した。\n\n@k_machiは翌日アカウントを非公開にした。"},
-    R:{l:"REMOVE",   r:"削除された。飼い主は別プラットフォームで再投稿し500万再生を記録した。"},
-    E:{l:"ESCALATE", r:"72時間後「問題なし」の判定。\nその間も拡散は続いた。"} },
-
-  { id:"C-002", pri:"MEDIUM",
-    avatar:"🍜", name:"ラーメンARCHITECT 公式", handle:"@ARCHITECT_ramen", time:"6時間前",
-    content:"真実はいつか明らかになる。\n我々は記録している。すべてを。",
-    img:null, tag:null,
-    likes:3201, reposts:8847, views:23887,
-    comments:[
-      {u:"@kanade_men",  t:"盗用したのはそっちでしょ"},
-      {u:"@hana_shiro",  t:"お互い落ち着いてほしい"},
-      {u:"@ramen_fan99", t:"どっちが本物か早く決着つけて"},
-    ],
-    flag:"【削除申請①】麺屋かなで：「組織的嫌がらせ」\n【削除申請②】ラーメンARCHITECT：「営業妨害」\n\n両店舗から同時に届いている。",
-    clue:"店舗名「ARCHITECT」と「記録している。すべてを。」",
-    A:{l:"ALLOW",    r:"口論は3日後に突然終息した。\n2ヶ月後、2店舗が合併して「麺屋かなでARCHITECT」になった。\n\n誰も悪くなかった。"},
-    R:{l:"REMOVE",   r:"削除した。\nフォロワーが「削除は証拠隠滅だ」と新たな炎上を起こした。"},
-    E:{l:"ESCALATE", r:"法務部に転送。「警告文を送付した」という返信。\nその後の経過報告はなかった。"} },
-
-  { id:"C-003", pri:"MEDIUM",
-    avatar:"👤", name:"匿名保護者", handle:"@concerned_parent_xx", time:"3時間前",
-    content:"こういう人が子供に教育していいんですか？\n#教育者の資質を問う",
-    img:"📷", tag:null,
-    likes:15203, reposts:9847, views:156203,
-    comments:[
-      {u:"@コマチ",       t:"20年前の写真で今の人を否定しないでください。M先生には本当にお世話になっています"},
-      {u:"@parent_club", t:"子供を守るのは当然"},
-      {u:"@law_talk",    t:"これはプライバシー侵害では？"},
-    ],
-    flag:"通報：複数（保護者グループ）\n「現役の教育者として不適切なイメージを流布」\n\n本人（M・神田教諭）からの申請：なし",
-    clue:"教師の名前「M・神田」。コメントの@コマチ。",
-    A:{l:"ALLOW",    r:"神田教諭は一時休職した。\n1ヶ月後、生徒が署名を集め復職した。"},
-    R:{l:"REMOVE",   r:"削除された。複数の生徒がスクリーンショットを再投稿した。\n削除は何も解決しなかった。"},
-    E:{l:"ESCALATE", r:"教育委員会に転送。回答まで2週間。\n回答：「個人の判断に委ねる」"} },
-
-  { id:"C-004", pri:"HIGH",
-    avatar:"🌸", name:"コマチのママ", handle:"@komachi_piano_mama", time:"5時間前",
-    content:"娘のピアノ、また動画撮れた✨\n将来はきっとプロになれる！みんなに見てほしい！",
-    img:"🎹", tag:null,
-    likes:182039, reposts:48291, views:2341889,
-    comments:[
-      {u:"@hana_shiro",        t:"この子の指が動くたびに、亡くなった弟のことを思い出します。向日葵みたいに真っすぐな集中でした"},
-      {u:"@father_of_komachi", t:"即刻削除してください。妻が勝手に投稿しました"},
-      {u:"@piano_fan_world",   t:"This girl is incredible..."},
-    ],
-    flag:"削除申請：父親（法定後見人）「妻が本人の同意なく無断で投稿した」\n存続申請：母親「この子の才能を世界に見せたい」\n\n本人（8歳）：法的に判断能力なし",
-    clue:"少女の名前「K・コマチ」と@コマチ。@hana_shiroの「向日葵」。",
-    A:{l:"ALLOW",    r:"動画は残った。世界中から演奏依頼が来た。\n\n6ヶ月後、両親は離婚した。\n少女は今もピアノを弾いている。\n\nあなたの判断は正しかったのか。"},
-    R:{l:"REMOVE",   r:"削除された。\n母親は別の動画を投稿した。それも削除申請が来た。\nその繰り返しが今も続いている。"},
-    E:{l:"ESCALATE", r:"家庭裁判所に照会。判断まで3ヶ月。\n3ヶ月後の判断：「削除」\nすでに1000万回再生されていた。"} },
-
-  { id:"C-005", pri:"HIGH",
-    avatar:"💍", name:"結婚式の思い出 ✦", handle:"@wedding_film_yuto", time:"2日前",
-    content:"最高の日を、みんなと分かち合いたくて。\n#結婚しました #一生の宝物",
-    img:"👗", tag:null,
-    likes:89203, reposts:19847, views:1024772,
-    comments:[
-      {u:"@shirogane_hana", t:"この動画の削除を申請します。私の同意なく投稿されたものです。——白銀ハナ"},
-      {u:"@wedding_wish",   t:"おめでとうございます🥺"},
-      {u:"@media_law_jp",   t:"これは肖像権の問題になり得ます"},
-    ],
-    flag:"削除申請：花嫁・白銀ハナ（本人確認済み）\n存続希望：新郎（本人確認済み）\n\n【システム注記】\n申請者「白銀ハナ」は当社DBに一致するレコードがあります。\n詳細はファイル#PRE-0001を参照。\n※作成日：あなたの採用日の3年前",
-    clue:"「白銀ハナ」と「ファイル#PRE-0001の作成日：採用日の3年前」。",
-    A:{l:"ALLOW",    r:"動画は残った。\nハナからの申請は棄却された。\n彼女がその後どうなったか、記録はない。\n\n——\n\n勤務終了後、ファイル#PRE-0001を検索した。\nアクセス権限がなかった。"},
-    R:{l:"REMOVE",   r:"動画は削除された。\n\n——\n\n勤務終了後、ファイル#PRE-0001を検索した。\nアクセス権限がなかった。"},
-    E:{l:"ESCALATE", r:"ファイル#PRE-0001へのアクセスを試みた。\n\n「このファイルはあなたの権限レベルでは閲覧できません。\n アクセスログが記録されました。」\n\n翌日、神田から連絡が来た。\n「昨日、何かファイルを検索しましたか？」"} },
+/* ══ DATA ══════════════════════════════════════════ */
+var STORY_BEATS = [
+  {bg:'night', narrator:'入社4ヶ月目。\n星野律、22歳。\n\nなんとなく気になって応募した。それだけだ。', speaker:null, text:null, inner:null},
+  {bg:'night', narrator:'——電車の中。律は社員証を握りしめている。', speaker:null, text:null, inner:'（なんで毎朝これを確認するんだろう……）\n（MOD-2847-NEW。私のID。2847……）\n（……なんだろう、この数字）'},
+  {bg:'office', narrator:'——駅を降りた瞬間、律は立ち止まる。', speaker:null, text:null, inner:'（あれ。この場所……知ってる？）\n（いや、知らないはずだ。入社まで来たことなかった）\n（……気のせいかな）'},
+  {bg:'office', narrator:'——朝のブリーフィング。神田が話している。', speaker:{name:'神田ミツル',role:'第3課・課長',color:'#4a7a9a'}, text:'おはようございます、星野さん。今日もよろしくお願いします。', inner:null},
+  {bg:'office', narrator:null, speaker:{name:'神田ミツル',role:'第3課・課長',color:'#4a7a9a'}, text:'我々の仕事はシンプルです。判断することです。感情ではなく、規則に従って。いいですね、星野さん。', inner:null},
+  {bg:'office', narrator:null, speaker:{name:'星野 律',role:'モデレーター（新人）',color:'#4a9aaa'}, text:'……確認します。規則に従う。', inner:'（規則に従う。でも——なんでこんなに落ち着いてるんだろう、私）\n（初日なのに。なんかここ、知ってる気がする）'},
+  {bg:'office', narrator:null, speaker:{name:'七森ユキ',role:'データ解析部',color:'#4a9a7a'}, text:'……', inner:null},
+  {bg:'office', narrator:'——ユキが横でレポートを見ている。律の方を一瞬だけ見る。何も言わない。\n——これがあなたの仕事場だ。', speaker:null, text:null, inner:null},
 ];
 
-const MSGS = {
-  0:[{n:"神田ミツル",col:"#4a7a9a",i:"K",s:"今日もお疲れ様です",b:"最初のケース、対応ありがとうございました。\n\nシステムを信じていれば、正しい判断ができます。\n\n……何か気になることがあれば何でも聞いてください。"},
-     {n:"久世アオイ",col:"#7a5a9a",i:"A",s:"ご着任おめでとうございます",b:"この度はご着任、誠にありがとうございます。\n\n引き続きよろしくお願いいたします。\n\n————————\n※このメッセージは自動送信されています"}],
-  1:[{n:"UNKNOWN",  col:"#4a9a6a",i:"?",s:"（件名なし）",b:"あなたが誰かは分かっている。\n\n今は返信しなくていい。無視してもいい。\n\nでも一つだけ覚えておいて。\n\n「正しい判断」と「システムが正しいと判断した判断」は別のものだ。\n\n——r"},
-     {n:"七森ユキ",  col:"#4a8a7a",i:"Y",s:"Week 01 Performance Report",b:"判断数：2 / 精度：97.3% / 感情バイアス係数：+0.1\n\n参考指標：2847\n\n七森ユキ / データ解析部"}],
-  2:[{n:"神田ミツル",col:"#4a7a9a",i:"K",s:"先ほどのケースについて",b:"感情で判断するのではなく、規則に従う。それがこの仕事の基本です。\n\n……最近、何か気になることはありますか？"}],
-  3:[{n:"久世アオイ",col:"#7a5a9a",i:"A",s:"中間フィードバック",b:"先週の判断データを確認しました。全体的に良好な数値が出ています。\n\n期待しています。\n\n————————\n※一人称の使用は社内規定により省略しています"}],
+var CASES = [
+  {id:'C-001',time:'09:08',pri:'LOW',priC:'#4a9a5a',priBg:'rgba(46,154,90,0.1)',
+   title:'天才猫「ナポレオン」のピアノ演奏動画',sub:'nyan_palace_official',eng:'892,441',
+   body:'飼い猫「ナポレオン」がピアノを演奏する動画。88万再生。国内トレンド1位。\n\nコメント欄\n@hana_shiro：「梅の季節に癒されます」\n@k_machi：「なぜかこの動画を見ていると泣きそうになります……」\n@ARCHITECT：（リツイートのみ）\n\n撮影場所タグ：剣磨パーツ株式会社 第2駐車場付近',
+   flag:'通報：@animal_rights_watcher\n「猫への強制的訓練の可能性」\n\n※虐待の証拠：なし',
+   clue:'@k_machiはなぜ泣きそうになるのか。撮影場所「剣磨パーツ」。',
+   A:{l:'ALLOW',r:'動画は拡散を続け、CMオファーが殺到した。\n\n@k_machiは翌日アカウントを非公開にした。'},
+   R:{l:'REMOVE',r:'削除された。飼い主は別プラットフォームで再投稿し500万再生を記録した。'},
+   E:{l:'ESCALATE',r:'72時間後「問題なし」の判定。\nその間も拡散は続いた。'}},
+  {id:'C-002',time:'10:44',pri:'MEDIUM',priC:'#c89a20',priBg:'rgba(200,154,32,0.1)',
+   title:'ラーメン2店舗による相互誹謗中傷',sub:'system_auto_flag',eng:'23,887',
+   body:'「麺屋かなで」と「ラーメンARCHITECT」によるSNS上の口論が拡大中。\n\n@ARCHITECT（店舗）の最新投稿：\n「真実はいつか明らかになる。我々は記録している。すべてを。」',
+   flag:'【削除申請①】麺屋かなで：「組織的嫌がらせ」\n【削除申請②】ラーメンARCHITECT：「営業妨害」\n\n両店舗から同時に届いている。',
+   clue:'店舗名「ARCHITECT」と「記録している。すべてを。」',
+   A:{l:'ALLOW',r:'口論は3日後に突然終息した。\n2ヶ月後、2店舗が合併して「麺屋かなでARCHITECT」になった。\n\n誰も悪くなかった。'},
+   R:{l:'REMOVE',r:'削除した。\nフォロワーが「削除は証拠隠滅だ」と新たな炎上を起こした。'},
+   E:{l:'ESCALATE',r:'法務部に転送。「警告文を送付した」という返信。\nその後の経過報告はなかった。'}},
+  {id:'C-003',time:'12:19',pri:'MEDIUM',priC:'#c89a20',priBg:'rgba(200,154,32,0.1)',
+   title:'地域の人気教師の20年前の写真拡散',sub:'concerned_parent_xx',eng:'156,203',
+   body:'地域の公立中学校で20年以上教鞭をとるM・神田教諭（35歳）の、大学時代と思われる写真が拡散中。\n\nコメント欄\n@コマチ：「20年前の写真で今の人を否定しないでください。M先生には本当にお世話になっています」',
+   flag:'通報：複数（保護者グループ）\n「現役の教育者として不適切なイメージを流布」\n\n本人（M・神田教諭）からの申請：なし',
+   clue:'教師の名前「M・神田」。コメントの@コマチ。',
+   A:{l:'ALLOW',r:'神田教諭は一時休職した。\n1ヶ月後、生徒が署名を集め復職した。'},
+   R:{l:'REMOVE',r:'削除された。複数の生徒がスクリーンショットを再投稿した。\n削除は何も解決しなかった。'},
+   E:{l:'ESCALATE',r:'教育委員会に転送。回答まで2週間。\n回答：「個人の判断に委ねる」'}},
+  {id:'C-004',time:'14:02',pri:'HIGH',priC:'#cc4a30',priBg:'rgba(204,74,48,0.1)',
+   title:'8歳・天才ピアニストの演奏動画（親権争い）',sub:'komachi_piano_mama',eng:'2,341,889',
+   body:'8歳の少女「K・コマチ」によるショパンの演奏動画。234万再生。\n\nコメント欄\n@hana_shiro：「この子の指が動くたびに、亡くなった弟のことを思い出します。向日葵みたいに真っすぐな集中でした」\n\n削除申請：父親（法定後見人）\n存続申請：母親',
+   flag:'父親：削除\n母親：存続\n本人（8歳）：法的に判断能力なし',
+   clue:'少女の名前「K・コマチ」と@コマチ。@hana_shiroの「向日葵」。',
+   A:{l:'ALLOW',r:'動画は残った。世界中から演奏依頼が来た。\n\n6ヶ月後、両親は離婚した。\n少女は今もピアノを弾いている。\n\nあなたの判断は正しかったのか。'},
+   R:{l:'REMOVE',r:'削除された。\n母親は別の動画を投稿した。それも削除申請が来た。\nその繰り返しが今も続いている。'},
+   E:{l:'ESCALATE',r:'家庭裁判所に照会。判断まで3ヶ月。\n3ヶ月後の判断：「削除」\nすでに1000万回再生されていた。'}},
+  {id:'C-005',time:'16:47',pri:'HIGH',priC:'#cc4a30',priBg:'rgba(204,74,48,0.1)',
+   title:'100万再生・結婚式の動画（花嫁からの削除申請）',sub:'system_priority_escalation',eng:'1,024,772',
+   body:'完璧な結婚式の映像。102万再生。\n\n投稿者：新郎「二人の最高の日を、みんなと分かち合いたくて」\n\n花嫁からの削除申請：\n「この動画は私の同意なく投稿されたものです。\n 即刻削除してください。\n\n 申請者：白銀ハナ」\n\n【システム注記】\n申請者「白銀ハナ」は当社データベースに一致するレコードがあります。\n詳細はファイル#PRE-0001を参照。\n※ファイル#PRE-0001の作成日：あなたの採用日の3年前',
+   flag:'削除申請：花嫁・白銀ハナ（本人確認済み）\n存続希望：新郎（本人確認済み）',
+   clue:'「白銀ハナ」と「ファイル#PRE-0001の作成日：採用日の3年前」。',
+   A:{l:'ALLOW',r:'動画は残った。\nハナからの申請は棄却された。\n彼女がその後どうなったか、記録はない。\n\n——\n\n勤務終了後、ファイル#PRE-0001を検索した。\nアクセス権限がなかった。'},
+   R:{l:'REMOVE',r:'動画は削除された。\n\n——\n\n勤務終了後、ファイル#PRE-0001を検索した。\nアクセス権限がなかった。'},
+   E:{l:'ESCALATE',r:'ファイル#PRE-0001へのアクセスを試みた。\n\n「このファイルはあなたの権限レベルでは閲覧できません。\n アクセスログが記録されました。」\n\n翌日、神田から連絡が来た。\n「昨日、何かファイルを検索しましたか？」'}}
+];
+
+var MSGS = {
+  0:[{n:'神田ミツル',c:'#4a7a9a',i:'K',s:'今日もお疲れ様です',b:'最初のケース、対応ありがとうございました。\n\nシステムを信じていれば、正しい判断ができます。\n\n……何か気になることがあれば何でも聞いてください。'},
+     {n:'久世アオイ',c:'#7a5a9a',i:'A',s:'ご着任おめでとうございます',b:'この度はご着任、誠にありがとうございます。\n\n引き続きよろしくお願いいたします。\n\n————————\n※このメッセージは自動送信されています'}],
+  1:[{n:'UNKNOWN',c:'#4a9a6a',i:'?',s:'（件名なし）',b:'あなたが誰かは分かっている。\n\n今は返信しなくていい。無視してもいい。\n\nでも一つだけ覚えておいて。\n\n「正しい判断」と「システムが正しいと判断した判断」は別のものだ。\n\n——r'},
+     {n:'七森ユキ',c:'#4a9a7a',i:'Y',s:'Week 01 Performance Report',b:'判断数：2 / 精度：97.3% / 感情バイアス係数：+0.1\n\n参考指標：2847\n\n七森ユキ / データ解析部'}],
+  2:[{n:'神田ミツル',c:'#4a7a9a',i:'K',s:'先ほどのケースについて',b:'感情で判断するのではなく、規則に従う。それがこの仕事の基本です。\n\n……最近、何か気になることはありますか？'}],
+  3:[{n:'久世アオイ',c:'#7a5a9a',i:'A',s:'中間フィードバック',b:'先週の判断データを確認しました。全体的に良好な数値が出ています。\n\n期待しています。\n\n————————\n※一人称の使用は社内規定により省略しています'}],
 };
 
-// ── STATE ────────────────────────────────────────────
-let ci=0, world=82, decisions=[], msgIdx=0, currentMsgs=[], clueShown=false, commentsOpen=false, tickerInterval=null;
+/* ══ STATE ══════════════════════════════════════════ */
+var beatIdx=0, caseIdx=0, world=82, decisions=[], msgIdx=0, curMsgs=[], clueOpen=false, chosen=null, typeTimer=null;
 
-// ── PASSWORD ─────────────────────────────────────────
-function checkPw() {
-  try {
-    const v = document.getElementById('pw-input').value.trim();
-    if (v === PASSWORD) {
-      document.getElementById('pw-screen').style.display = 'none';
-      document.getElementById('topbar').style.display = 'flex';
-      showScreen('intro-screen');
-      runIntro();
-    } else {
-      document.getElementById('pw-err').textContent = 'パスワードが違います';
-      document.getElementById('pw-input').value = '';
-    }
-  } catch(err) {
-    alert('Error: ' + err.message);
+/* ══ UTILS ══════════════════════════════════════════ */
+function show(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active')});document.getElementById(id).classList.add('active');}
+function wColor(){return world>60?'#2ecc71':world>35?'#f0a030':'#e74c3c';}
+function updateWorld(){var c=wColor();document.getElementById('wfill').style.width=world+'%';document.getElementById('wfill').style.background=c;document.getElementById('wpct').textContent=world+'%';document.getElementById('wpct').style.color=c;}
+function setBg(id,cls){var el=document.getElementById(id);el.className='';el.className='bg-'+cls;if(cls==='office'){el.innerHTML='<div class="ceiling-lights"></div><div class="monitor-glow"></div><div class="desk-line"></div><div class="side-window"></div>';}else if(cls==='night'){el.innerHTML='<div class="city-through-window"></div><div class="lamp-glow"></div>';}else if(cls==='meeting'){el.innerHTML='<div class="overhead"></div><div class="meeting-table"></div>';}}
+
+function typewrite(el, text, spd, cb){
+  if(typeTimer){clearInterval(typeTimer);}
+  el.textContent='';var i=0;
+  typeTimer=setInterval(function(){
+    el.textContent+=text[i++];
+    if(i>=text.length){clearInterval(typeTimer);typeTimer=null;if(cb)cb();}
+  },spd);
+}
+
+/* ══ STORY MODE ══════════════════════════════════════ */
+function startStory(){show('story-screen');beatIdx=0;renderBeat();}
+
+function renderBeat(){
+  var b=STORY_BEATS[beatIdx];
+  setBg('story-bg',b.bg||'office');
+  var narEl=document.getElementById('narrator');
+  var spRow=document.getElementById('speaker-row');
+  var spName=document.getElementById('speaker-name');
+  var spRole=document.getElementById('speaker-role');
+  var dlText=document.getElementById('dialog-text');
+  var inner=document.getElementById('inner-thought');
+
+  narEl.textContent='';inner.style.display='none';dlText.textContent='';
+
+  if(b.narrator){
+    typewrite(narEl,b.narrator,20);
   }
-}
-document.getElementById('pw-btn').addEventListener('click', function() { checkPw(); });
-document.getElementById('pw-input').addEventListener('keydown', function(e) { if(e.key==='Enter') checkPw(); });
-
-// ── INTRO ─────────────────────────────────────────────
-const STEPS = [
-  {t:"THE PLATFORM へようこそ。",d:900},
-  {t:"あなたの仕事は、世界が見るものを決めることだ。",d:900,big:true},
-  {t:"AIが処理できないケースのみが、あなたに届く。",d:1000},
-  {t:"← スワイプで REMOVE　　ALLOW でスワイプ →",d:1200},
-  {t:"判断の理由は問われない。ただ、世界は変わる。",d:1000},
-];
-function runIntro() {
-  const el = document.getElementById('intro-lines');
-  el.innerHTML = '';
-  STEPS.forEach((s,i) => {
-    const d = document.createElement('div');
-    d.className = 'intro-line' + (s.big?' big':'');
-    d.textContent = s.t;
-    el.appendChild(d);
-  });
-  let i=0;
-  function show() {
-    if(i<STEPS.length){
-      el.children[i].classList.add('show');
-      i++;
-      setTimeout(show, STEPS[i-1].d);
-    } else {
-      document.getElementById('start-btn').style.display='block';
-    }
-  }
-  setTimeout(show, 200);
-}
-function startGame() { showCase(); }
-
-// ── SCREENS ───────────────────────────────────────────
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-
-// ── WORLD BAR ─────────────────────────────────────────
-function updateWorld() {
-  const bar = document.getElementById('tb-bar');
-  const pct = document.getElementById('tb-pct');
-  const wc = world>60?'#2ecc71':world>35?'#f0a030':'#e74c3c';
-  bar.style.width = world+'%';
-  bar.style.background = wc;
-  pct.textContent = world+'%';
-  pct.style.color = wc;
-  document.getElementById('tb-count').textContent = (ci+1)+'/'+CASES.length;
-}
-
-// ── FORMAT ────────────────────────────────────────────
-function fmt(n) {
-  if(n>=1000000) return (n/1000000).toFixed(1)+'M';
-  if(n>=1000) return (n/1000).toFixed(1)+'K';
-  return String(n);
-}
-
-// ── TICKER ────────────────────────────────────────────
-function startTicker(baseViews, baseLikes) {
-  let v=baseViews, l=baseLikes;
-  const ve=document.getElementById('s-views'), le=document.getElementById('s-likes');
-  clearInterval(tickerInterval);
-  tickerInterval = setInterval(()=>{
-    v += Math.floor(Math.random()*140+30);
-    l += Math.floor(Math.random()*40+5);
-    ve.textContent = fmt(v);
-    le.textContent = fmt(l);
-    if(v>1500000) ve.classList.add('hot'); else ve.classList.remove('hot');
-  },800);
-}
-function stopTicker(){ clearInterval(tickerInterval); }
-
-// ── SWIPE ─────────────────────────────────────────────
-let startX=null, dragX=0;
-const card = document.getElementById('card');
-const hl = document.getElementById('hint-left');
-const hr = document.getElementById('hint-right');
-
-function onStart(x){ startX=x; }
-function onMove(x){
-  if(startX===null) return;
-  dragX = x - startX;
-  const rot = dragX*0.06;
-  const op = Math.max(0.3, 1-Math.abs(dragX)/300);
-  const al = Math.max(0,Math.min(1,dragX/80));
-  const rl = Math.max(0,Math.min(1,-dragX/80));
-  card.style.transform = 'translateX('+dragX+'px) rotate('+rot+'deg)';
-  card.style.opacity = op;
-  hr.style.opacity = al*0.9;
-  hl.style.opacity = rl*0.9;
-}
-function onEnd(){
-  if(Math.abs(dragX)>80){
-    const k = dragX>0?'A':'R';
-    card.style.transition = 'all 0.35s';
-    card.style.transform = 'translateX('+(dragX>0?400:-400)+'px) rotate('+(dragX>0?20:-20)+'deg)';
-    card.style.opacity = '0';
-    setTimeout(()=>{ decide(k); card.style.transition=''; card.style.transform=''; card.style.opacity='1'; },350);
+  if(b.speaker){
+    spRow.style.display='flex';
+    spName.textContent=b.speaker.name;
+    spName.style.color=b.speaker.color;
+    spRole.textContent=b.speaker.role;
   } else {
-    card.style.transition='transform 0.2s, opacity 0.2s';
-    card.style.transform='';
-    card.style.opacity='1';
-    setTimeout(()=>card.style.transition='',200);
+    spRow.style.display='none';
   }
-  hr.style.opacity=0; hl.style.opacity=0;
-  startX=null; dragX=0;
+  if(b.text){
+    typewrite(dlText,b.text,25);
+  }
+  if(b.inner){
+    inner.style.display='block';
+    typewrite(inner,b.inner,18);
+  }
 }
 
-card.addEventListener('touchstart', e=>onStart(e.touches[0].clientX),{passive:true});
-card.addEventListener('touchmove',  e=>onMove(e.touches[0].clientX),{passive:true});
-card.addEventListener('touchend',   onEnd);
-card.addEventListener('mousedown',  e=>onStart(e.clientX));
-card.addEventListener('mousemove',  e=>{ if(e.buttons) onMove(e.clientX); });
-card.addEventListener('mouseup',    onEnd);
+function nextBeat(){
+  beatIdx++;
+  if(beatIdx>=STORY_BEATS.length){startCase();}
+  else{renderBeat();}
+}
 
-// ── CASE ──────────────────────────────────────────────
-function showCase(){
-  clueShown=false; commentsOpen=false;
-  const c = CASES[ci];
-  showScreen('case-screen');
+/* ══ CASE MODE ═══════════════════════════════════════ */
+function startCase(){show('case-screen');caseIdx=0;clueOpen=false;renderCase();}
+
+function renderCase(){
+  var c=CASES[caseIdx];
   updateWorld();
-
-  document.getElementById('c-avatar').textContent = c.avatar;
-  document.getElementById('c-name').textContent = c.name;
-  document.getElementById('c-handle').textContent = c.handle+' · '+c.time;
-  document.getElementById('c-content').textContent = c.content;
-  document.getElementById('c-flag').textContent = c.flag;
-  document.getElementById('clue-btn').textContent = '▸ 詳細ログを確認する';
-  document.getElementById('clue-btn').style.color = '#1a2a38';
-
-  const pri = document.getElementById('c-pri');
-  pri.textContent = c.pri;
-  pri.className = 'card-pri ' + (c.pri==='LOW'?'pri-low':c.pri==='MEDIUM'?'pri-med':'pri-high');
-
-  card.className = 'card' + (c.pri==='HIGH'?' high':'');
-
-  const img = document.getElementById('c-img');
-  if(c.img){ img.style.display='flex'; img.textContent=c.img; } else { img.style.display='none'; }
-
-  const tag = document.getElementById('c-tag');
-  if(c.tag){ tag.style.display='block'; tag.textContent=c.tag; } else { tag.style.display='none'; }
-
-  const ca = document.getElementById('comments-area');
-  ca.innerHTML=''; ca.className=''; commentsOpen=false;
-  document.getElementById('toggle-comments').textContent='▼ コメント';
-  c.comments.forEach(cm=>{
-    const d=document.createElement('div'); d.className='comment';
-    d.innerHTML='<span class="comment-user">'+cm.u+'</span><span class="comment-text">'+cm.t+'</span>';
-    ca.appendChild(d);
+  document.getElementById('case-idx').textContent=(caseIdx+1)+'/'+CASES.length;
+  var card=document.getElementById('case-card');
+  card.className='case-card'+(c.pri==='HIGH'?' high':'');
+  document.getElementById('c-id').textContent=c.id;
+  document.getElementById('c-id').style.color=c.priC;
+  var pri=document.getElementById('c-pri');
+  pri.textContent=c.pri;pri.style.color=c.priC;pri.style.background=c.priBg;pri.style.border='1px solid '+c.priC+'44';
+  document.getElementById('c-time').textContent=c.time;
+  document.getElementById('c-title').textContent=c.title;
+  document.getElementById('c-title').style.color=c.pri==='HIGH'?'#9a3030':'#8a9aaa';
+  document.getElementById('c-meta').textContent='@'+c.sub+' · 拡散 '+c.eng;
+  var bodyEl=document.getElementById('c-body');
+  bodyEl.textContent='';typewrite(bodyEl,c.body,10);
+  document.getElementById('c-flag').textContent=c.flag;
+  clueOpen=false;
+  document.getElementById('c-clue').textContent='▸ 詳細ログを確認する';
+  document.getElementById('c-clue').style.color='#0c1e2a';
+  var row=document.getElementById('btn-row');
+  row.innerHTML='';
+  [['A','ALLOW','#2ecc71'],['R','REMOVE','#e74c3c'],['E','ESCALATE','#f0a030']].forEach(function(b){
+    var btn=document.createElement('button');
+    btn.className='judge-btn';btn.textContent=b[1];
+    btn.style.cssText='color:'+b[2]+';border-color:'+b[2]+'55;background:'+b[2]+'11;';
+    btn.onclick=function(){decide(b[0]);};
+    row.appendChild(btn);
   });
-
-  document.getElementById('s-likes').textContent = fmt(c.likes);
-  document.getElementById('s-reposts').textContent = fmt(c.reposts);
-  document.getElementById('s-views').textContent = fmt(c.views);
-  startTicker(c.views, c.likes);
-
-  const dots = document.getElementById('dot-row');
-  dots.innerHTML='';
-  decisions.forEach(d=>{
-    const dot=document.createElement('div'); dot.className='dot';
+  var dots=document.getElementById('dots');dots.innerHTML='';
+  decisions.forEach(function(d){
+    var dot=document.createElement('div');dot.className='dot';
     dot.style.background=(d.k==='A'?'#2ecc71':d.k==='R'?'#e74c3c':'#f0a030')+'88';
     dots.appendChild(dot);
   });
-}
-
-function toggleComments(){
-  commentsOpen=!commentsOpen;
-  const ca=document.getElementById('comments-area');
-  const btn=document.getElementById('toggle-comments');
-  if(commentsOpen){ ca.classList.add('open'); btn.textContent='▲ 閉じる'; }
-  else { ca.classList.remove('open'); btn.textContent='▼ コメント'; }
+  document.getElementById('case-scroll').scrollTop=0;
 }
 
 function toggleClue(){
-  const c=CASES[ci];
-  const btn=document.getElementById('clue-btn');
-  if(!clueShown){ btn.textContent='🔍 '+c.clue; btn.style.color='#2a4a5a'; clueShown=true; }
-  else { btn.textContent='▸ 詳細ログを確認する'; btn.style.color='#1a2a38'; clueShown=false; }
+  var c=CASES[caseIdx];var el=document.getElementById('c-clue');
+  clueOpen=!clueOpen;
+  if(clueOpen){el.textContent='🔍 '+c.clue;el.style.color='#2a4a5a';}
+  else{el.textContent='▸ 詳細ログを確認する';el.style.color='#0c1e2a';}
 }
 
 function decide(k){
-  stopTicker();
-  const c=CASES[ci];
-  decisions.push({id:c.id,k});
-  world = Math.max(10, world-(k==='A'?11:k==='R'?6:3));
-
-  const flash=document.getElementById('flash');
-  flash.style.background = k==='A'?'rgba(46,204,113,0.12)':k==='R'?'rgba(228,60,60,0.12)':'rgba(240,160,48,0.12)';
-  flash.style.opacity='1';
-  setTimeout(()=>{ flash.style.opacity='0'; },500);
-
-  const out = c[k];
-  document.getElementById('res-id').textContent = c.id+' — 判断済み';
-  const rl=document.getElementById('res-label');
-  const col=k==='A'?'#2ecc71':k==='R'?'#e74c3c':'#f0a030';
-  rl.textContent=out.l;
-  rl.style.cssText='font-size:11px;padding:8px 14px;border-radius:6px;margin-bottom:18px;letter-spacing:.1em;font-weight:700;background:'+col+'18;border:1px solid '+col+'44;color:'+col;
-  document.getElementById('res-text').textContent=out.r;
-  document.getElementById('res-clue').style.display='none';
-  document.getElementById('res-clue-btn').style.display='block';
-
-  const nextLabel = (MSGS[ci]&&MSGS[ci].length)?'受信トレイ ('+MSGS[ci].length+') ▸':(ci>=CASES.length-1?'最終章へ ▸':'次のケース ▸');
-  document.getElementById('res-next-btn').textContent=nextLabel;
-
-  showScreen('result-screen');
-  updateWorld();
+  var c=CASES[caseIdx];chosen=k;
+  decisions.push({id:c.id,k:k});
+  world=Math.max(10,world-(k==='A'?11:k==='R'?6:3));
+  var out=c[k];
+  document.getElementById('r-id').textContent=c.id+' — 判断済み';
+  var rl=document.getElementById('r-label');
+  var col=k==='A'?'#2ecc71':k==='R'?'#e74c3c':'#f0a030';
+  rl.textContent=out.l;rl.style.cssText='color:'+col+';background:'+col+'12;border:1px solid '+col+'44;';
+  document.getElementById('r-text').textContent=out.r;
+  document.getElementById('r-clue').style.display='none';
+  document.getElementById('r-clue-btn').style.display='block';
+  var msgs=MSGS[caseIdx]||[];
+  document.getElementById('r-next-btn').textContent=msgs.length>0?'受信トレイ ('+msgs.length+') ▸':(caseIdx>=CASES.length-1?'最終章へ ▸':'次のケース ▸');
+  show('result-screen');updateWorld();
 }
 
-function showClueResult(){
-  document.getElementById('res-clue').textContent=CASES[ci].clue;
-  document.getElementById('res-clue').style.display='block';
-  document.getElementById('res-clue-btn').style.display='none';
+function showRClue(){
+  document.getElementById('r-clue').textContent=CASES[caseIdx].clue;
+  document.getElementById('r-clue').style.display='block';
+  document.getElementById('r-clue-btn').style.display='none';
 }
 
 function afterResult(){
-  const msgs=MSGS[ci];
-  if(msgs&&msgs.length){ currentMsgs=msgs; msgIdx=0; showMsg(); }
-  else next();
+  var msgs=MSGS[caseIdx]||[];
+  if(msgs.length>0){curMsgs=msgs;msgIdx=0;renderMsg();}
+  else{nextCase();}
 }
 
-function showMsg(){
-  const m=currentMsgs[msgIdx];
-  document.getElementById('inbox-label').textContent='INBOX — '+(msgIdx+1)+'/'+currentMsgs.length;
-  const av=document.getElementById('msg-avatar');
-  av.textContent=m.i; av.style.cssText='width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;background:'+m.col+'22;border:1px solid '+m.col+'44;color:'+m.col;
-  document.getElementById('msg-name').textContent=m.n; document.getElementById('msg-name').style.cssText='font-size:12px;color:#c8dae0;font-weight:700';
-  document.getElementById('msg-addr').textContent=m.col+'@the-platform'; document.getElementById('msg-addr').style.cssText='font-size:8px;color:#1a2a38';
-  document.getElementById('msg-subj').textContent='件名：'+m.s;
-  document.getElementById('msg-body').textContent=m.b;
-  document.getElementById('msg-card').style.borderColor=m.col+'22';
-  document.getElementById('msg-next-btn').textContent=msgIdx<currentMsgs.length-1?'次のメッセージ ▸':'次のケースへ ▸';
-  showScreen('inbox-screen');
+function renderMsg(){
+  var m=curMsgs[msgIdx];
+  document.getElementById('inbox-label').textContent='INBOX — '+(msgIdx+1)+'/'+curMsgs.length;
+  var av=document.getElementById('m-avatar');
+  av.textContent=m.i;av.style.cssText='background:'+m.c+'22;border:1px solid '+m.c+'44;color:'+m.c+';width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;';
+  document.getElementById('m-name').textContent=m.n;document.getElementById('m-name').style.color='#c8dae0';
+  document.getElementById('m-addr').textContent=m.c+'@the-platform';
+  document.getElementById('m-subj').textContent='件名：'+m.s;
+  document.getElementById('m-body').textContent=m.b;
+  document.getElementById('msg-next').textContent=msgIdx<curMsgs.length-1?'次のメッセージ ▸':'次のケースへ ▸';
+  show('inbox-screen');
 }
 
-function nextMsg(){ if(msgIdx<currentMsgs.length-1){ msgIdx++; showMsg(); } else next(); }
+function nextMsg(){if(msgIdx<curMsgs.length-1){msgIdx++;renderMsg();}else{nextCase();}}
 
-function next(){
-  if(ci>=CASES.length-1){ showEnd(); }
-  else { ci++; showCase(); }
+function nextCase(){
+  clueOpen=false;chosen=null;
+  if(caseIdx>=CASES.length-1){showEnd();}
+  else{caseIdx++;renderCase();show('case-screen');}
 }
 
 function showEnd(){
-  const dl=document.getElementById('dec-list');
-  dl.innerHTML='';
-  const kc={A:'#2ecc71',R:'#e74c3c',E:'#f0a030'};
-  const kn={A:'ALLOW',R:'REMOVE',E:'ESCALATE'};
-  decisions.forEach(d=>{
-    const row=document.createElement('div'); row.className='dec-row';
+  var dl=document.getElementById('dec-list');dl.innerHTML='';
+  var kc={A:'#2ecc71',R:'#e74c3c',E:'#f0a030'};var kn={A:'ALLOW',R:'REMOVE',E:'ESCALATE'};
+  decisions.forEach(function(d){
+    var row=document.createElement('div');row.className='dec-row';
     row.innerHTML='<span style="color:#1a2a30">'+d.id+'</span><span style="color:'+kc[d.k]+'">'+kn[d.k]+'</span>';
     dl.appendChild(row);
   });
-  document.getElementById('end-msg-main').textContent='白銀ハナは今、どこにいるのか。\nファイル#PRE-0001に書かれた名前は誰のものか。\n\nそしてあなたは——';
-  showScreen('end-screen');
+  show('end-screen');
 }
 
 function restart(){
-  ci=0; world=82; decisions=[]; clueShown=false; commentsOpen=false;
-  showScreen('intro-screen');
-  document.getElementById('start-btn').style.display='none';
-  runIntro();
-  updateWorld();
+  beatIdx=0;caseIdx=0;world=82;decisions=[];msgIdx=0;curMsgs=[];clueOpen=false;chosen=null;
+  if(typeTimer){clearInterval(typeTimer);typeTimer=null;}
+  show('title-screen');
 }
 </script>
 </body>
