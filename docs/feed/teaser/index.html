@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>FEED — Teaser</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;background:#000;overflow:hidden;font-family:'Courier New',monospace;color:#fff}
+
+#stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+
+.scene{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 32px;opacity:0;pointer-events:none;text-align:center}
+
+/* GLITCH */
+@keyframes glitch1{
+  0%,100%{clip-path:inset(0 0 98% 0);transform:translate(-3px,0)}
+  20%{clip-path:inset(40% 0 50% 0);transform:translate(3px,0)}
+  40%{clip-path:inset(70% 0 20% 0);transform:translate(-2px,0)}
+  60%{clip-path:inset(20% 0 70% 0);transform:translate(2px,0)}
+  80%{clip-path:inset(90% 0 5% 0);transform:translate(-1px,0)}
+}
+@keyframes glitch2{
+  0%,100%{clip-path:inset(96% 0 0 0);transform:translate(3px,0)}
+  20%{clip-path:inset(50% 0 40% 0);transform:translate(-3px,0)}
+  40%{clip-path:inset(20% 0 70% 0);transform:translate(2px,0)}
+  60%{clip-path:inset(75% 0 15% 0);transform:translate(-2px,0)}
+  80%{clip-path:inset(5% 0 88% 0);transform:translate(1px,0)}
+}
+.glitch-wrap{position:relative;display:inline-block}
+.glitch-wrap::before,.glitch-wrap::after{content:attr(data-text);position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.glitch-wrap::before{color:#0ff;animation:glitch1 .15s infinite;opacity:.7}
+.glitch-wrap::after{color:#f0a;animation:glitch2 .15s infinite;opacity:.7}
+
+/* SCAN LINE */
+@keyframes scan{0%{top:-100%}100%{top:200%}}
+.scanline{position:fixed;left:0;width:100%;height:3px;background:rgba(255,255,255,0.03);animation:scan 4s linear infinite;pointer-events:none;z-index:1000}
+
+/* NOISE */
+@keyframes noise{
+  0%,100%{transform:translate(0,0)}
+  10%{transform:translate(-1%,-1%)}
+  20%{transform:translate(1%,1%)}
+  30%{transform:translate(-1%,1%)}
+  40%{transform:translate(1%,-1%)}
+  50%{transform:translate(0,0)}
+}
+#noise{position:fixed;inset:-20%;width:140%;height:140%;opacity:0.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");animation:noise 0.5s infinite;pointer-events:none;z-index:999}
+
+/* FACTION COLORS */
+.c-arch{color:#00eeff}
+.c-guard{color:#4466ff}
+.c-merch{color:#ffaa00}
+.c-wit{color:#ffcc66}
+.c-disc{color:#884444}
+.c-feed{color:#aabbcc}
+.c-red{color:#ff3344}
+.c-dim{color:#334455}
+
+/* SCENE TEXT SIZES */
+.t-huge{font-size:clamp(36px,10vw,72px);font-weight:900;letter-spacing:.05em;line-height:1.1}
+.t-big{font-size:clamp(18px,5vw,36px);font-weight:700;letter-spacing:.06em;line-height:1.4}
+.t-mid{font-size:clamp(13px,3.5vw,22px);font-weight:400;letter-spacing:.08em;line-height:1.8}
+.t-sm{font-size:clamp(10px,2.5vw,14px);letter-spacing:.15em;line-height:2;color:#445566}
+.t-tag{font-size:clamp(8px,2vw,11px);letter-spacing:.25em;color:#223344;margin-bottom:16px}
+
+/* DIVIDER */
+.div-line{width:60px;height:1px;background:#223344;margin:20px auto}
+
+/* FACTION PILL */
+.pill{display:inline-block;padding:4px 14px;border-radius:99px;font-size:clamp(8px,2vw,10px);letter-spacing:.2em;font-weight:700;margin:6px 4px;border:1px solid currentColor;opacity:.7}
+
+/* CASE FLASH */
+.case-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:340px;margin:16px auto}
+.case-card{padding:10px 12px;border:1px solid #112233;border-radius:6px;text-align:left;font-size:10px;line-height:1.6;color:#334455}
+.case-card.active{border-color:#224455;color:#778899}
+
+/* WORLD BAR */
+.world-wrap{width:200px;margin:16px auto}
+.world-bar-bg{height:2px;background:#0a1520;border-radius:99px}
+.world-bar-fill{height:100%;border-radius:99px;transition:width 2s}
+
+/* CHARACTER ROW */
+.char-row{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin:20px 0}
+.char-item{text-align:center;opacity:0}
+.char-icon{font-size:36px;margin-bottom:6px}
+.char-name{font-size:9px;letter-spacing:.15em;color:#334455}
+
+/* SKIP */
+#skip{position:fixed;bottom:24px;right:24px;font-size:9px;color:#223344;letter-spacing:.15em;cursor:pointer;z-index:998;border:1px solid #1a2a38;padding:6px 14px;border-radius:2px;background:transparent}
+
+/* REPLAY */
+#replay{position:fixed;bottom:24px;right:24px;font-size:9px;color:#2a4a60;letter-spacing:.15em;cursor:pointer;z-index:998;border:1px solid #1a3a50;padding:6px 14px;border-radius:2px;background:transparent;display:none}
+#replay:hover{color:#4a8aaa;border-color:#2a5a70}
+</style>
+</head>
+<body>
+<div id="noise"></div>
+<div class="scanline"></div>
+<div id="stage">
+
+<!-- S0: Black -->
+<div class="scene" id="s0">
+  <div class="t-sm c-dim">GC2026</div>
+</div>
+
+<!-- S1: THE PLATFORM -->
+<div class="scene" id="s1">
+  <div class="t-sm" style="color:#112233;margin-bottom:20px;letter-spacing:.3em">THE PLATFORM</div>
+  <div class="glitch-wrap t-huge" data-text="FEED" style="color:#0a1e2a">FEED</div>
+</div>
+
+<!-- S2: Opening question -->
+<div class="scene" id="s2">
+  <div class="t-sm" style="margin-bottom:24px">毎日</div>
+  <div class="t-big c-feed" id="s2-text"></div>
+</div>
+
+<!-- S3: The job -->
+<div class="scene" id="s3">
+  <div class="t-sm" style="margin-bottom:16px;color:#1a3040">あなたの仕事は</div>
+  <div class="div-line"></div>
+  <div class="t-big" style="color:#4a7a9a;margin:12px 0">残す</div>
+  <div class="t-big" style="color:#cc4a30;margin:12px 0">消す</div>
+  <div class="t-big" style="color:#c89a20;margin:12px 0">上申する</div>
+  <div class="div-line"></div>
+  <div class="t-sm" style="margin-top:8px">それだけだ</div>
+</div>
+
+<!-- S4: Cases flash -->
+<div class="scene" id="s4">
+  <div class="t-sm" style="margin-bottom:12px;color:#1a2a38">今日、届いたケース</div>
+  <div class="case-grid">
+    <div class="case-card active">🐱 天才猫の<br>ピアノ動画</div>
+    <div class="case-card active">🍜 ラーメン店の<br>相互誹謗中傷</div>
+    <div class="case-card active">🎹 8歳の少女<br>親権争い</div>
+    <div class="case-card active">💍 結婚式の動画<br>花嫁からの申請</div>
+  </div>
+  <div class="t-sm" style="margin-top:16px;color:#2ecc71;font-size:10px" id="views-counter">👁 892,441</div>
+</div>
+
+<!-- S5: Ideology conflict -->
+<div class="scene" id="s5">
+  <div class="t-sm" style="margin-bottom:20px">世界には5つの思想がある</div>
+  <div class="pill c-arch">情報解放主義</div>
+  <div class="pill c-guard">情報保護主義</div>
+  <div class="pill c-merch">情報資本主義</div>
+  <div class="pill c-wit">情報記録主義</div>
+  <div class="pill c-disc">情報断絶主義</div>
+  <div class="div-line"></div>
+  <div class="t-sm" style="margin-top:8px">そのどれもが</div>
+  <div class="t-mid" style="margin-top:6px;color:#6a8a9a">正義を名乗っている</div>
+</div>
+
+<!-- S6: The contradiction -->
+<div class="scene" id="s6">
+  <div class="t-mid c-arch" style="margin-bottom:16px">「情報は自由に流れるべきだ」</div>
+  <div class="t-mid c-guard" style="margin-bottom:16px">「情報は守られるべきだ」</div>
+  <div class="t-mid c-merch" style="margin-bottom:16px">「情報は価値を持つ」</div>
+  <div class="div-line"></div>
+  <div class="t-sm" style="margin-top:16px;line-height:2.2">誰も間違っていない<br>だから<br><span class="c-red">誰も止められない</span></div>
+</div>
+
+<!-- S7: Characters -->
+<div class="scene" id="s7">
+  <div class="t-sm" style="margin-bottom:4px">あなたの周りにいる人たち</div>
+  <div class="div-line"></div>
+  <div class="char-row" id="char-row">
+    <div class="char-item" id="ch1"><div class="char-icon">👤</div><div class="char-name" style="color:#4a7a9a">神田ミツル<br><span style="color:#1a2a38">課長</span></div></div>
+    <div class="char-item" id="ch2"><div class="char-icon">📊</div><div class="char-name" style="color:#4a8a7a">七森ユキ<br><span style="color:#1a2a38">解析部</span></div></div>
+    <div class="char-item" id="ch3"><div class="char-icon">🔐</div><div class="char-name" style="color:#4a9a6a">UNKNOWN<br><span style="color:#1a2a38">enc://channel-7</span></div></div>
+    <div class="char-item" id="ch4"><div class="char-icon">💍</div><div class="char-name" style="color:#8a9aaa">白銀ハナ<br><span style="color:#1a2a38">ユーザー</span></div></div>
+    <div class="char-item" id="ch5"><div class="char-icon">🌸</div><div class="char-name" style="color:#7a6a9a">久世アオイ<br><span style="color:#1a2a38">代表取締役</span></div></div>
+  </div>
+  <div class="t-sm" style="margin-top:8px;color:#112233">全員が、正しかった</div>
+</div>
+
+<!-- S8: World state -->
+<div class="scene" id="s8">
+  <div class="t-sm" style="margin-bottom:24px;color:#1a2a38">WORLD STATE</div>
+  <div class="world-wrap">
+    <div style="display:flex;justify-content:space-between;font-size:9px;color:#1a3040;margin-bottom:6px">
+      <span>▓▓▓▓▓▓▓▓▓▓</span><span id="wpct">82%</span>
+    </div>
+    <div class="world-bar-bg"><div class="world-bar-fill" id="wbar" style="width:82%;background:#2ecc71"></div></div>
+  </div>
+  <div class="t-sm" style="margin-top:24px;line-height:2.4;color:#2a4050">
+    あなたが判断するたびに<br>世界は変わる<br><br>
+    <span class="c-red">でも——誰も教えてくれない</span><br>
+    <span style="color:#1a2a38">何が変わったか</span>
+  </div>
+</div>
+
+<!-- S9: The mystery -->
+<div class="scene" id="s9">
+  <div class="t-sm" style="margin-bottom:20px;color:#1a3040">解かれていない謎</div>
+  <div style="text-align:left;max-width:280px">
+    <div class="t-sm" style="margin-bottom:12px;color:#2a3a48">— 2847 とは何か</div>
+    <div class="t-sm" style="margin-bottom:12px;color:#2a3a48">— ファイル#PRE-0001の設計者</div>
+    <div class="t-sm" style="margin-bottom:12px;color:#2a3a48">— ARCHITECTのタイムライン矛盾</div>
+    <div class="t-sm" style="margin-bottom:12px;color:#2a3a48">— アオイは人間か</div>
+    <div class="t-sm" style="color:#1a2a30">— そして、7つ目のエンディング</div>
+  </div>
+</div>
+
+<!-- S10: The core question -->
+<div class="scene" id="s10">
+  <div class="t-sm" style="margin-bottom:24px;color:#1a2a38" id="s10a"></div>
+  <div class="t-big" style="color:#4a6a7a;line-height:1.6" id="s10b"></div>
+  <div class="div-line"></div>
+  <div class="t-sm" style="margin-top:16px" id="s10c"></div>
+</div>
+
+<!-- S11: The twist hint -->
+<div class="scene" id="s11">
+  <div class="t-mid" style="line-height:2.2;color:#334455">
+    悪人はいない<br>でも世界は壊れていく<br><br>
+    <span style="color:#4a6070">あなたは毎日、その歯車を回していた</span><br><br>
+    <span class="c-red" id="twist-text"></span>
+  </div>
+</div>
+
+<!-- S12: 2847 flash -->
+<div class="scene" id="s12">
+  <div class="glitch-wrap t-huge" data-text="2847" style="color:#0a1e2a;letter-spacing:.2em">2847</div>
+  <div class="t-sm" style="margin-top:20px;color:#0a1520">PROJECT_INITIALIZED</div>
+</div>
+
+<!-- S13: LOGO -->
+<div class="scene" id="s13">
+  <div class="t-sm" style="color:#0a1a24;margin-bottom:24px;letter-spacing:.3em">THE PLATFORM PRESENTS</div>
+  <div class="glitch-wrap t-huge" data-text="FEED" style="color:#1a3a50;font-size:clamp(60px,18vw,120px);letter-spacing:.2em">FEED</div>
+  <div class="div-line" style="margin-top:24px"></div>
+  <div class="t-sm" style="margin-top:16px;color:#0a1a24">あなたの仕事は、世界が見るものを決めることだ。</div>
+  <div class="t-sm" style="margin-top:24px;color:#0a1420;font-size:9px">GC2026</div>
+</div>
+
+<!-- S14: End / Play -->
+<div class="scene" id="s14">
+  <div style="text-align:center">
+    <div class="t-huge" style="color:#0d2a3a;margin-bottom:32px;letter-spacing:.3em">FEED</div>
+    <div class="t-sm" style="color:#1a3040;margin-bottom:32px">あなたの仕事は、世界が見るものを決めることだ。</div>
+    <button onclick="location.href='../feed/'" style="background:transparent;border:1px solid #1a4a60;color:#2a6a80;padding:12px 32px;font-size:10px;letter-spacing:.2em;cursor:pointer;font-family:inherit;border-radius:2px;margin-bottom:12px;display:block;margin:0 auto 12px">勤務を開始する →</button>
+  </div>
+</div>
+
+</div><!-- /stage -->
+
+<div id="skip" onclick="skipToEnd()">SKIP ▸</div>
+<div id="replay" onclick="replay()">▶ REPLAY</div>
+
+<script>
+// ── TYPEWRITER ──────────────────────────────────────
+function typewrite(el, text, speed, cb) {
+  if (!el) return cb && cb();
+  el.textContent = '';
+  let i = 0;
+  const t = setInterval(() => {
+    el.textContent += text[i++];
+    if (i >= text.length) { clearInterval(t); cb && setTimeout(cb, 300); }
+  }, speed);
+  return t;
+}
+
+// ── FADE ────────────────────────────────────────────
+function fadeIn(id, dur, cb) {
+  const el = document.getElementById(id);
+  if (!el) return cb && cb();
+  el.style.transition = `opacity ${dur}ms`;
+  el.style.opacity = 1;
+  setTimeout(() => cb && cb(), dur + 100);
+}
+function fadeOut(id, dur, cb) {
+  const el = document.getElementById(id);
+  if (!el) return cb && cb();
+  el.style.transition = `opacity ${dur}ms`;
+  el.style.opacity = 0;
+  setTimeout(() => cb && cb(), dur + 100);
+}
+function hold(ms, cb) { setTimeout(cb, ms); }
+
+// ── VIEWS COUNTER ───────────────────────────────────
+let viewsRunning = false, viewsVal = 892441, viewsEl, viewsTimer;
+function startViews() {
+  viewsEl = document.getElementById('views-counter');
+  viewsTimer = setInterval(() => {
+    viewsVal += Math.floor(Math.random()*200+80);
+    if (viewsEl) viewsEl.textContent = '👁 ' + viewsVal.toLocaleString();
+  }, 600);
+}
+function stopViews() { clearInterval(viewsTimer); }
+
+// ── CHAR REVEAL ─────────────────────────────────────
+function revealChars(cb) {
+  const ids = ['ch1','ch2','ch3','ch4','ch5'];
+  ids.forEach((id, i) => {
+    setTimeout(() => {
+      const el = document.getElementById(id);
+      if (el) { el.style.transition = 'opacity 0.6s'; el.style.opacity = 1; }
+    }, i * 400);
+  });
+  setTimeout(cb, ids.length * 400 + 800);
+}
+
+// ── WORLD DRAIN ─────────────────────────────────────
+function drainWorld(cb) {
+  const bar = document.getElementById('wbar');
+  const pct = document.getElementById('wpct');
+  let w = 82;
+  const t = setInterval(() => {
+    w -= 2;
+    if (bar) { bar.style.width = w + '%'; bar.style.background = w > 50 ? '#2ecc71' : w > 25 ? '#f0a030' : '#e74c3c'; }
+    if (pct) pct.textContent = w + '%';
+    if (w <= 14) { clearInterval(t); cb && setTimeout(cb, 500); }
+  }, 120);
+}
+
+// ── SCENE SEQUENCE ──────────────────────────────────
+let aborted = false;
+function run() {
+  aborted = false;
+  document.getElementById('skip').style.display = 'block';
+  document.getElementById('replay').style.display = 'none';
+
+  // Reset all
+  document.querySelectorAll('.scene').forEach(s => { s.style.opacity = 0; s.style.transition = ''; });
+  document.querySelectorAll('.char-item').forEach(c => { c.style.opacity = 0; });
+
+  const F = (fn) => !aborted && fn();
+
+  // S0: 黒画面 0-1.5s
+  F(() => fadeIn('s0', 800, () => F(() => hold(600, () => F(() => fadeOut('s0', 600, () => {
+
+  // S1: FEED logo 1.5-4s
+  F(() => fadeIn('s1', 1000, () => F(() => hold(1500, () => F(() => fadeOut('s1', 600, () => {
+
+  // S2: Opening 4-9s
+  F(() => fadeIn('s2', 600, () => {
+    const el = document.getElementById('s2-text');
+    F(() => typewrite(el, '誰かの人生があなたの画面に届く', 60, () => {
+      F(() => hold(2000, () => F(() => fadeOut('s2', 600, () => {
+
+  // S3: The job 9-14s
+  F(() => fadeIn('s3', 600, () => F(() => hold(3500, () => F(() => fadeOut('s3', 600, () => {
+
+  // S4: Cases 14-19s
+  F(() => fadeIn('s4', 600, () => {
+    startViews();
+    F(() => hold(3500, () => { stopViews(); F(() => fadeOut('s4', 600, () => {
+
+  // S5: Ideology 19-24s
+  F(() => fadeIn('s5', 600, () => F(() => hold(3500, () => F(() => fadeOut('s5', 600, () => {
+
+  // S6: Contradiction 24-29s
+  F(() => fadeIn('s6', 600, () => F(() => hold(3800, () => F(() => fadeOut('s6', 600, () => {
+
+  // S7: Characters 29-35s
+  F(() => fadeIn('s7', 600, () => {
+    F(() => revealChars(() => {
+      F(() => hold(1200, () => F(() => fadeOut('s7', 600, () => {
+
+  // S8: World state 35-41s
+  F(() => fadeIn('s8', 800, () => {
+    F(() => hold(800, () => {
+      F(() => drainWorld(() => {
+        F(() => hold(1000, () => F(() => fadeOut('s8', 600, () => {
+
+  // S9: Mysteries 41-46s
+  F(() => fadeIn('s9', 600, () => F(() => hold(3800, () => F(() => fadeOut('s9', 600, () => {
+
+  // S10: Core question 46-52s
+  F(() => fadeIn('s10', 600, () => {
+    const a = document.getElementById('s10a');
+    const b = document.getElementById('s10b');
+    const c = document.getElementById('s10c');
+    F(() => typewrite(a, 'そしてゲームが終わった後に気づく', 50, () => {
+      F(() => typewrite(b, 'このシステムを\n最初に作ったのは\n誰だったのか', 55, () => {
+        F(() => hold(1200, () => F(() => fadeOut('s10', 700, () => {
+
+  // S11: Twist hint 52-58s
+  F(() => fadeIn('s11', 700, () => {
+    const tw = document.getElementById('twist-text');
+    F(() => hold(1500, () => {
+      F(() => typewrite(tw, 'そしてその歯車を最初に設計したのは——', 60, () => {
+        F(() => hold(1200, () => F(() => fadeOut('s11', 600, () => {
+
+  // S12: 2847 58-61s
+  F(() => fadeIn('s12', 300, () => F(() => hold(1800, () => F(() => fadeOut('s12', 500, () => {
+
+  // S13: Logo 61-67s
+  F(() => fadeIn('s13', 1200, () => F(() => hold(4000, () => F(() => fadeOut('s13', 800, () => {
+
+  // S14: End
+  F(() => {
+    document.getElementById('skip').style.display = 'none';
+    document.getElementById('replay').style.display = 'block';
+    fadeIn('s14', 1000);
+  });
+
+  })))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))));
+}
+
+function skipToEnd() {
+  aborted = true;
+  stopViews();
+  document.querySelectorAll('.scene').forEach(s => { s.style.opacity = 0; s.style.transition = ''; });
+  document.getElementById('skip').style.display = 'none';
+  document.getElementById('replay').style.display = 'block';
+  document.querySelectorAll('.char-item').forEach(c => c.style.opacity = 1);
+  document.getElementById('s14').style.opacity = 1;
+}
+
+function replay() {
+  document.getElementById('replay').style.display = 'none';
+  run();
+}
+
+// Auto-start
+window.addEventListener('load', () => setTimeout(run, 500));
+</script>
+</body>
+</html>
