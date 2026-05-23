@@ -136,7 +136,7 @@ button{cursor:pointer;font-family:inherit}
 <div id="pw-screen">
   <div id="pw-title">FEED</div>
   <input id="pw-input" type="password" placeholder="パスワードを入力" autocomplete="off">
-  <button id="pw-btn" onclick="checkPw()">入力</button>
+  <button id="pw-btn">入力</button>
   <div id="pw-err"></div>
 </div>
 
@@ -347,18 +347,23 @@ let ci=0, world=82, decisions=[], msgIdx=0, currentMsgs=[], clueShown=false, com
 
 // ── PASSWORD ─────────────────────────────────────────
 function checkPw() {
-  const v = document.getElementById('pw-input').value;
-  if (v === PASSWORD) {
-    document.getElementById('pw-screen').style.display = 'none';
-    document.getElementById('topbar').style.display = 'flex';
-    showScreen('intro-screen');
-    runIntro();
-  } else {
-    document.getElementById('pw-err').textContent = 'パスワードが違います';
-    document.getElementById('pw-input').value = '';
+  try {
+    const v = document.getElementById('pw-input').value.trim();
+    if (v === PASSWORD) {
+      document.getElementById('pw-screen').style.display = 'none';
+      document.getElementById('topbar').style.display = 'flex';
+      showScreen('intro-screen');
+      runIntro();
+    } else {
+      document.getElementById('pw-err').textContent = 'パスワードが違います';
+      document.getElementById('pw-input').value = '';
+    }
+  } catch(err) {
+    alert('Error: ' + err.message);
   }
 }
-document.getElementById('pw-input').addEventListener('keydown', e => { if(e.key==='Enter') checkPw(); });
+document.getElementById('pw-btn').addEventListener('click', function() { checkPw(); });
+document.getElementById('pw-input').addEventListener('keydown', function(e) { if(e.key==='Enter') checkPw(); });
 
 // ── INTRO ─────────────────────────────────────────────
 const STEPS = [
