@@ -3,35 +3,679 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-<title>FEED TEST</title>
+<title>FEED</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#040810;color:#8aabb0;font-family:'Courier New',monospace;display:flex;align-items:center;justify-content:center;min-height:100vh}
-.btn{background:transparent;border:1px solid #1a4a60;color:#2a7a9a;padding:14px 36px;font-size:12px;letter-spacing:.2em;border-radius:3px;cursor:pointer;font-family:inherit;display:block;margin:20px auto}
-#log{font-size:10px;color:#4a6a8a;padding:20px;line-height:2;max-width:300px;text-align:center}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Courier New',monospace;background:#040810;color:#8aabb0}
+button{cursor:pointer;font-family:inherit}
+.screen{position:fixed;inset:0;display:none;flex-direction:column}
+.screen.active{display:flex}
+@keyframes scan{0%{top:-5%}100%{top:105%}}
+.scanline{position:fixed;left:0;width:100%;height:2px;background:rgba(255,255,255,0.025);animation:scan 6s linear infinite;pointer-events:none;z-index:999}
+@keyframes g1{0%,100%{clip-path:inset(0 0 96% 0);transform:translate(-2px)}50%{clip-path:inset(40% 0 50% 0);transform:translate(2px)}}
+@keyframes g2{0%,100%{clip-path:inset(92% 0 0 0);transform:translate(2px)}50%{clip-path:inset(50% 0 40% 0);transform:translate(-2px)}}
+.gw{position:relative;display:inline-block}
+.gw::before,.gw::after{content:attr(data-t);position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+.gw::before{color:#0ff;animation:g1 .15s infinite;opacity:.5}
+.gw::after{color:#f0a;animation:g2 .15s infinite;opacity:.5}
+
+/* TOPBAR */
+.topbar{background:#04080e;border-bottom:1px solid #0c1824;padding:7px 14px;display:flex;align-items:center;gap:10px;flex-shrink:0}
+.tb-logo{font-size:11px;font-weight:900;letter-spacing:.35em;color:#0d2a3a}
+.tb-world{flex:1;display:flex;align-items:center;gap:7px}
+.tb-wbg{flex:1;height:2px;background:#0a1420;border-radius:99px}
+.tb-wfill{height:100%;border-radius:99px;transition:width 1.2s,background 1.2s}
+.tb-wpct{font-size:8px;min-width:26px}
+.tb-mode{font-size:8px;color:#1a3040;letter-spacing:.1em}
+
+/* BUTTONS */
+.btn{background:transparent;border:1px solid #1a4a60;color:#2a7a9a;padding:12px 32px;font-size:11px;letter-spacing:.2em;border-radius:3px;display:block;width:100%;max-width:260px;margin:0 auto;text-align:center}
+.btn-sm{background:transparent;border:1px solid #1a2a38;color:#3a5060;padding:8px 20px;font-size:9px;letter-spacing:.15em;border-radius:2px}
+
+/* STORY */
+.story-bg{position:absolute;inset:0;transition:background .8s}
+.story-content{position:relative;z-index:2;display:flex;flex-direction:column;height:100%}
+.narrator-bar{flex:1;padding:20px 18px;font-size:12px;color:#5a7080;line-height:2;overflow-y:auto}
+.dlg-box{background:rgba(4,8,16,0.96);border-top:1px solid #0d1e2e;flex-shrink:0}
+.dlg-sp{display:flex;align-items:center;gap:10px;padding:9px 16px 5px;border-bottom:1px solid #080e18}
+.dlg-sn{font-size:11px;font-weight:700}
+.dlg-sr{font-size:8px;color:#1a2a38;margin-left:auto}
+.dlg-tx{padding:10px 16px 6px;font-size:12px;color:#8aabb0;line-height:2;min-height:64px;white-space:pre-wrap}
+.dlg-in{padding:6px 16px 8px;font-size:10px;color:#4a6a8a;line-height:1.9;font-style:italic;border-left:2px solid #1a3a60;margin:0 16px 8px;background:rgba(10,30,60,0.3)}
+.dlg-nx{text-align:center;padding:10px;font-size:9px;color:#1a4060;letter-spacing:.2em;border-top:1px solid #080e18}
+
+/* CASE */
+.case-scroll{flex:1;overflow-y:auto;padding-bottom:110px}
+.case-card{margin:12px;border-radius:6px;overflow:hidden;background:#06090f;border:1px solid #0c1824}
+.card-hd{padding:8px 12px;border-bottom:1px solid #0c1824;background:#070b11;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.card-ti{font-size:13px;font-weight:700;padding:10px 12px 5px;line-height:1.5}
+.card-me{padding:0 12px 9px;font-size:8px;color:#1a2a38}
+.card-bd{margin:0 12px 11px;padding:11px;background:#040810;border:1px solid #0a1420;border-radius:2px;font-size:11px;line-height:1.95;color:#4a5a6a;white-space:pre-wrap}
+.card-fl{margin:0 12px 11px;padding:11px;background:#050500;border:1px solid #1a1600;border-radius:2px;font-size:10px;color:#5a5020;line-height:1.8;white-space:pre-wrap}
+.card-cl{margin:0 12px 12px;padding:7px 11px;background:#04080c;border:1px solid #0a1e30;border-radius:2px;font-size:8px;color:#0c1e2a;text-align:center;cursor:pointer}
+.btn-bar{position:fixed;bottom:0;left:0;right:0;background:linear-gradient(transparent,#040810 30%);padding:16px 12px 12px}
+.jbtn{flex:1;max-width:160px;padding:10px 4px;border-radius:4px;font-size:8px;letter-spacing:.14em;font-weight:700;cursor:pointer;font-family:inherit;border:1px solid;transition:all .2s}
+.dots{display:flex;gap:4px;padding:4px 14px 6px;justify-content:center}
+
+/* RESULT */
+.res-inner{max-width:440px;width:100%;padding:18px}
+.res-label{font-size:11px;padding:8px 14px;border-radius:6px;margin-bottom:18px;letter-spacing:.1em;font-weight:700}
+.res-text{font-size:12px;line-height:2.2;padding:16px;background:#06090f;border:1px solid #0c1824;border-radius:6px;margin-bottom:18px;white-space:pre-wrap;color:#4a5a6a}
+
+/* INVEST */
+.inv-item{display:flex;align-items:center;gap:12px;padding:11px 14px;background:#06090f;border:1px solid #0d1e2e;border-radius:4px;cursor:pointer;margin-bottom:8px}
+.inv-item.done{opacity:.5;pointer-events:none;border-color:#0a1820}
+.clue-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:200;display:flex;align-items:center;justify-content:center;padding:24px}
+.clue-card{background:#06090f;border:1px solid #1a4a60;border-radius:6px;padding:20px;max-width:340px;width:100%}
+
+/* MEETING */
+.meet-char{border-bottom:1px solid #0c1824;padding:16px;text-align:center}
+.meet-dlg{flex:1;padding:16px;font-size:12px;color:#6a8a9a;line-height:2;white-space:pre-wrap;overflow-y:auto}
+.meet-ch{display:flex;flex-direction:column;gap:8px;padding:12px;border-top:1px solid #0c1824}
+.meet-btn{padding:11px 14px;background:#06090f;border:1px solid #0d1e2e;border-radius:4px;font-size:11px;color:#3a5060;text-align:left;cursor:pointer;line-height:1.6}
+
+/* DEDUCE */
+.dd-card{padding:12px 14px;background:#06090f;border:1px solid #0d1e2e;border-radius:4px;cursor:pointer;margin-bottom:8px;position:relative}
+.dd-card.sel{border-color:#2a6a8a;background:#04101a}
+.dd-card.conn{opacity:.6;pointer-events:none;border-color:#1a4a30}
+.dd-res{padding:14px;background:#04101a;border:1px solid #1a4a60;border-radius:4px;font-size:11px;color:#4a8a9a;line-height:1.8;margin:0 12px 12px;display:none}
+.dd-foot{padding:12px;border-top:1px solid #0c1824;display:flex;gap:8px}
+.dd-btn{flex:1;padding:10px;border-radius:3px;font-size:9px;letter-spacing:.15em;cursor:pointer;font-family:inherit}
+
+/* INTERCEPT */
+.ic-chat{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px}
+.bubble{max-width:80%;padding:10px 13px;border-radius:4px;font-size:11px;line-height:1.8}
+.bubble.L{align-self:flex-start;background:#06090f;border:1px solid #0c1824;color:#4a6070}
+.bubble.R{align-self:flex-end;background:#0a1420;border:1px solid #0d2030;color:#4a6a80}
+.b-who{font-size:8px;font-weight:700;margin-bottom:3px}
+.b-time{font-size:7px;color:#1a2a38;margin-top:3px}
+.ic-foot{padding:12px;border-top:1px solid #0c1824;display:flex;justify-content:space-between;align-items:center}
+
+/* CRISIS */
+.cr-hd{padding:10px 14px;border-bottom:1px solid #2a0808;background:#080408}
+.cr-timer{display:flex;align-items:center;gap:10px}
+.cr-tbg{flex:1;height:4px;background:#1a0808;border-radius:99px}
+.cr-tf{height:100%;border-radius:99px;background:#cc4a30;transition:width .1s}
+.cr-cards{flex:1;overflow-y:auto;padding:8px;display:flex;flex-direction:column;gap:8px}
+.cr-card{padding:10px 12px;background:#06090f;border:1px solid #0c1824;border-radius:4px;cursor:pointer;display:flex;align-items:center;gap:10px}
+.cr-card.done{opacity:.4;pointer-events:none}
+.cr-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:100;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
+.cr-jbtns{display:flex;gap:8px;width:100%;max-width:360px;margin-top:20px}
+.cr-jbtn{flex:1;padding:12px 4px;border-radius:4px;font-size:9px;letter-spacing:.12em;font-weight:700;cursor:pointer;font-family:inherit;border:1px solid}
+
+/* REPORT */
+.rp-ch{display:flex;flex-direction:column;gap:8px}
+.rp-btn{padding:12px 14px;background:#06090f;border:1px solid #0d1e2e;border-radius:4px;font-size:11px;color:#3a5060;text-align:left;cursor:pointer;line-height:1.6}
+
+/* INBOX */
+.msg-card{background:#06090f;border-radius:6px;overflow:hidden;margin-bottom:16px}
+.msg-hd{padding:12px 14px;background:#080c12}
+.msg-fr{display:flex;align-items:center;gap:9px;margin-bottom:8px}
+.msg-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900}
+.msg-bd{padding:13px;font-size:11px;line-height:2;color:#4a5a6a;white-space:pre-wrap}
+
+/* END */
+.end-inner{max-width:420px;width:100%;padding:24px}
+.dec-row{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #0a1420;font-size:8px}
 </style>
 </head>
 <body>
-<div style="text-align:center">
-  <div style="font-size:64px;font-weight:900;letter-spacing:.3em;color:#0d2a3a;margin-bottom:16px">FEED</div>
-  <div style="font-size:12px;color:#1a3a50;letter-spacing:.06em;line-height:2;margin-bottom:32px">あなたの仕事は、<br>世界が見るものを決めることだ。</div>
-  <button class="btn" onclick="startGame()">勤務を開始する</button>
-  <div id="log">ボタンを押してください</div>
+<div class="scanline"></div>
+
+<!-- TITLE -->
+<div class="screen active" id="S-title" style="background:linear-gradient(180deg,#020408,#040810);align-items:center;justify-content:center;padding:32px">
+  <div style="text-align:center">
+    <div style="font-size:9px;color:#0d2030;letter-spacing:.3em;margin-bottom:12px">THE PLATFORM</div>
+    <div class="gw" data-t="FEED" style="font-size:clamp(60px,16vw,96px);font-weight:900;letter-spacing:.2em;color:#0d2a3a;display:block;margin-bottom:14px">FEED</div>
+    <div style="font-size:13px;color:#1a3a50;letter-spacing:.06em;line-height:2;margin-bottom:40px">あなたの仕事は、<br>世界が見るものを決めることだ。</div>
+    <button class="btn" onclick="si=0;world=82;decisions=[];window._lastDec=null;run()">勤務を開始する</button>
+  </div>
+  <div style="position:absolute;bottom:18px;font-size:8px;color:#0a1820;letter-spacing:.15em">GC2026 — FEED Ch.1-2</div>
+</div>
+
+<!-- STORY -->
+<div class="screen" id="S-story" style="cursor:pointer">
+  <div id="story-bg" class="story-bg" style="background:#040810"></div>
+  <div class="story-content">
+    <div class="narrator-bar" id="narrator"></div>
+    <div class="dlg-box" id="dlg-box" style="display:none">
+      <div class="dlg-sp" id="dlg-sp" style="display:none">
+        <span class="dlg-sn" id="dlg-sn"></span>
+        <span class="dlg-sr" id="dlg-sr"></span>
+      </div>
+      <div class="dlg-tx" id="dlg-tx"></div>
+      <div class="dlg-in" id="dlg-in" style="display:none"></div>
+    </div>
+    <div class="dlg-nx" id="dlg-nx" style="display:none">▸ 画面をタップして続ける</div>
+  </div>
+</div>
+
+<!-- INVEST -->
+<div class="screen" id="S-invest" style="background:#040810">
+  <div class="topbar"><span class="tb-logo">FEED</span><div class="tb-world"><div class="tb-wbg"><div class="tb-wfill" id="inv-wfill"></div></div><span class="tb-wpct" id="inv-wpct"></span></div><span class="tb-mode">情報収集</span></div>
+  <div style="padding:12px 14px;font-size:10px;color:#2a4050;line-height:1.8;font-style:italic" id="inv-desc"></div>
+  <div style="flex:1;overflow-y:auto;padding:0 12px 12px" id="inv-items"></div>
+  <div style="text-align:center;padding:8px;font-size:9px;color:#1a3040" id="inv-prog"></div>
+</div>
+<div class="clue-overlay" id="clue-ov" style="display:none">
+  <div class="clue-card">
+    <div style="font-size:8px;color:#2a6a8a;letter-spacing:.2em;margin-bottom:10px">🔍 手がかり発見</div>
+    <div style="font-size:13px;color:#6a9aaa;font-weight:700;margin-bottom:10px;line-height:1.5" id="clue-title"></div>
+    <div style="font-size:11px;color:#4a6070;line-height:1.9" id="clue-body"></div>
+    <button class="btn-sm" style="margin-top:16px;width:100%" onclick="closeClue()">確認した</button>
+  </div>
+</div>
+
+<!-- MEETING -->
+<div class="screen" id="S-meeting" style="background:#040810">
+  <div class="topbar"><span class="tb-logo">FEED</span><div class="tb-world"><div class="tb-wbg"><div class="tb-wfill" id="meet-wfill"></div></div><span class="tb-wpct" id="meet-wpct"></span></div><span class="tb-mode">会議</span></div>
+  <div class="meet-char"><div style="font-size:36px;margin-bottom:6px" id="meet-av"></div><div style="font-size:12px;font-weight:700;margin-bottom:3px" id="meet-nm"></div><div style="font-size:8px;color:#1a2a38" id="meet-rl"></div></div>
+  <div class="meet-dlg" id="meet-dlg"></div>
+  <div class="meet-ch" id="meet-ch"></div>
+</div>
+
+<!-- DECIDE -->
+<div class="screen" id="S-decide" style="background:#040810">
+  <div class="topbar"><span class="tb-logo">FEED</span><div class="tb-world"><div class="tb-wbg"><div class="tb-wfill" id="dec-wfill"></div></div><span class="tb-wpct" id="dec-wpct"></span></div><span class="tb-idx" id="dec-idx" style="font-size:8px;color:#1a2a38"></span></div>
+  <div class="case-scroll">
+    <div class="case-card" id="dec-card">
+      <div class="card-hd"><span style="font-size:8px;letter-spacing:.08em" id="dc-id"></span><span style="font-size:7px;padding:2px 7px;border-radius:99px;font-weight:700;letter-spacing:.1em" id="dc-pri"></span><span style="margin-left:auto;font-size:8px;color:#0a1420" id="dc-time"></span></div>
+      <div class="card-ti" id="dc-title"></div>
+      <div class="card-me" id="dc-meta"></div>
+      <div style="height:1px;background:#0a1420;margin:0 12px 11px"></div>
+      <div class="card-bd" id="dc-body"></div>
+      <div class="card-fl" id="dc-flag"></div>
+      <div class="card-cl" id="dc-clue" onclick="toggleClue()">▸ 詳細ログを確認する</div>
+    </div>
+    <div class="dots" id="dec-dots"></div>
+  </div>
+  <div class="btn-bar"><div style="display:flex;gap:6px;justify-content:center" id="dec-btns"></div></div>
+</div>
+
+<!-- RESULT -->
+<div class="screen" id="S-result" style="background:#040810;align-items:center;justify-content:center">
+  <div class="res-inner">
+    <div style="font-size:8px;color:#1a3a50;letter-spacing:.15em;margin-bottom:10px" id="res-id"></div>
+    <div class="res-label" id="res-label"></div>
+    <div class="res-text" id="res-text"></div>
+    <div style="font-size:9px;color:#1a3040;text-align:center;margin-bottom:14px;font-style:italic;line-height:1.8;display:none" id="res-clue"></div>
+    <div style="display:flex;gap:10px;justify-content:center">
+      <button class="btn-sm" id="res-clue-btn" onclick="showResClue()">詳細ログ</button>
+      <button class="btn-sm" id="res-next" onclick="nextScene()">次へ ▸</button>
+    </div>
+  </div>
+</div>
+
+<!-- INBOX -->
+<div class="screen" id="S-inbox" style="background:#040810;padding:16px;align-items:center;overflow-y:auto">
+  <div style="max-width:440px;width:100%;padding-top:8px">
+    <div style="font-size:8px;color:#1a2a38;letter-spacing:.15em;margin-bottom:14px" id="ib-label"></div>
+    <div class="msg-card">
+      <div class="msg-hd"><div class="msg-fr"><div class="msg-av" id="ib-av"></div><div><div style="font-size:11px;font-weight:700" id="ib-nm"></div><div style="font-size:8px;color:#1a2a38" id="ib-addr"></div></div></div><div style="font-size:9px;color:#3a5060" id="ib-subj"></div></div>
+      <div class="msg-bd" id="ib-body"></div>
+    </div>
+    <div style="text-align:center"><button class="btn-sm" id="ib-next" onclick="nextMsg()">次へ ▸</button></div>
+  </div>
+</div>
+
+<!-- DEDUCE -->
+<div class="screen" id="S-deduce" style="background:#040810">
+  <div class="topbar"><span class="tb-logo">FEED</span><div class="tb-world"><div class="tb-wbg"><div class="tb-wfill" id="dd-wfill"></div></div><span class="tb-wpct" id="dd-wpct"></span></div><span class="tb-mode">推理</span></div>
+  <div style="padding:14px 16px;border-bottom:1px solid #0c1824"><div style="font-size:11px;color:#4a6070;line-height:1.8;margin-bottom:4px" id="dd-prompt"></div><div style="font-size:9px;color:#1a3040" id="dd-hint"></div></div>
+  <div style="flex:1;overflow-y:auto;padding:12px" id="dd-clues"></div>
+  <div class="dd-res" id="dd-res"></div>
+  <div class="dd-foot">
+    <button class="dd-btn" style="background:#04101a;border:1px solid #1a4a60;color:#2a6a8a" onclick="deduceConnect()">接続する</button>
+    <button class="dd-btn" style="background:transparent;border:1px solid #0d1e2e;color:#1a3040" onclick="nextScene()">スキップ</button>
+  </div>
+</div>
+
+<!-- INTERCEPT -->
+<div class="screen" id="S-intercept" style="background:#040810">
+  <div class="topbar"><span class="tb-logo">FEED</span><div class="tb-world"><div class="tb-wbg"><div class="tb-wfill" id="ic-wfill"></div></div><span class="tb-wpct" id="ic-wpct"></span></div><span class="tb-mode" style="color:#cc4a30">傍受</span></div>
+  <div style="padding:10px 14px;border-bottom:1px solid #0c1824;background:#04080a"><div style="font-size:8px;color:#cc4a30;letter-spacing:.2em;margin-bottom:3px">⚠ INTERCEPTED</div><div style="font-size:9px;color:#2a3a48" id="ic-info"></div></div>
+  <div class="ic-chat" id="ic-chat"></div>
+  <div class="ic-foot"><div style="font-size:9px;color:#cc4a30" id="ic-cost"></div><button class="btn-sm" id="ic-next" onclick="interceptNext()">次を傍受 ▸</button></div>
+</div>
+
+<!-- CRISIS -->
+<div class="screen" id="S-crisis" style="background:#040810">
+  <div class="topbar"><span class="tb-logo">FEED</span><div class="tb-world"><div class="tb-wbg"><div class="tb-wfill" id="cr-wfill"></div></div><span class="tb-wpct" id="cr-wpct"></span></div><span class="tb-mode" style="color:#cc4a30">危機</span></div>
+  <div class="cr-hd"><div class="cr-timer"><span style="font-size:9px;color:#cc4a30;letter-spacing:.15em">⚠ TIME</span><div class="cr-tbg"><div class="cr-tf" id="cr-tf"></div></div><span style="font-size:11px;color:#cc4a30;font-weight:700;min-width:28px;font-family:monospace" id="cr-time">60</span></div></div>
+  <div class="cr-cards" id="cr-cards"></div>
+</div>
+<div class="cr-overlay" id="cr-ov" style="display:none">
+  <div style="font-size:13px;color:#8a9aaa;font-weight:700;margin-bottom:16px;text-align:center;line-height:1.5" id="crj-title"></div>
+  <div style="font-size:10px;color:#4a5a6a;line-height:1.8;text-align:center;max-width:300px" id="crj-body"></div>
+  <div class="cr-jbtns">
+    <button class="cr-jbtn" style="color:#2ecc71;border-color:#2ecc71;background:rgba(46,204,113,0.1)" onclick="crisisJudge('A')">ALLOW</button>
+    <button class="cr-jbtn" style="color:#e74c3c;border-color:#e74c3c;background:rgba(231,76,60,0.1)" onclick="crisisJudge('R')">REMOVE</button>
+    <button class="cr-jbtn" style="color:#f0a030;border-color:#f0a030;background:rgba(240,160,48,0.1)" onclick="crisisJudge('E')">ESCALATE</button>
+  </div>
+</div>
+
+<!-- REPORT -->
+<div class="screen" id="S-report" style="background:#040810;overflow-y:auto;padding:16px">
+  <div class="topbar" style="position:sticky;top:0;margin:-16px -16px 14px"><span class="tb-logo">FEED</span><div class="tb-world"><div class="tb-wbg"><div class="tb-wfill" id="rp-wfill"></div></div><span class="tb-wpct" id="rp-wpct"></span></div><span class="tb-mode">報告書</span></div>
+  <div style="max-width:440px;margin:0 auto">
+    <div style="padding:13px;background:#06090f;border:1px solid #0c1824;border-radius:4px;margin-bottom:14px"><div style="font-size:8px;color:#1a3040;margin-bottom:5px" id="rp-id"></div><div style="font-size:12px;color:#6a8a9a;font-weight:700" id="rp-title"></div><div style="font-size:9px;margin-top:7px;display:inline-block;padding:3px 9px;border-radius:2px;font-weight:700" id="rp-dec"></div></div>
+    <div style="font-size:11px;color:#4a6070;line-height:1.8;margin-bottom:13px">この判断の理由を選んでください</div>
+    <div class="rp-ch" id="rp-choices"></div>
+  </div>
+</div>
+
+<!-- END -->
+<div class="screen" id="S-end" style="background:#040810;align-items:center;justify-content:center;overflow-y:auto">
+  <div class="end-inner">
+    <div style="font-size:9px;color:#1a3a50;letter-spacing:.2em;margin-bottom:20px;text-align:center" id="end-title"></div>
+    <div id="end-decs" style="margin-bottom:18px"></div>
+    <div id="end-msg" style="padding:16px;background:#06090f;border:1px solid #0c1824;border-radius:6px;margin-bottom:18px;font-size:11px;color:#3a5060;line-height:2.2;white-space:pre-wrap"></div>
+    <div id="end-myst" style="font-size:9px;color:#0d1e2a;text-align:center;line-height:2.5;border-top:1px solid #0a1420;padding-top:16px"></div>
+    <div style="text-align:center;margin-top:18px"><button class="btn-sm" onclick="restart()">最初からプレイ</button></div>
+  </div>
 </div>
 
 <script>
-function startGame() {
-  document.getElementById('log').textContent = '✓ ボタンが動作しています。本番版をロード中...';
-  document.getElementById('log').style.color = '#2ecc71';
-  setTimeout(function() {
-    window.location.href = './full/';
-  }, 800);
+/* ── DATA ─────────────────────────────────────── */
+var CHARS={
+  kanda:{n:'神田ミツル',r:'第3課・課長',c:'#4a7a9a',av:'🕴'},
+  yuki:{n:'七森ユキ',r:'データ解析部',c:'#4a9a7a',av:'📊'},
+  reika:{n:'UNKNOWN',r:'enc://channel-7',c:'#4a9a6a',av:'🔐'},
+  aoi:{n:'久世アオイ',r:'代表取締役',c:'#7a5a9a',av:'🌐'},
+  hana:{n:'白銀ハナ',r:'ユーザー',c:'#8a9aaa',av:'🌸'},
+};
+
+var CASES={
+  c001:{id:'C-001',time:'09:08',pri:'LOW',pc:'#4a9a5a',pb:'rgba(46,154,90,0.1)',title:'天才猫「ナポレオン」のピアノ演奏動画',sub:'nyan_palace_official',eng:'892,441',body:'飼い猫「ナポレオン」がピアノを演奏する動画。88万再生。国内トレンド1位。
+
+コメント欄
+@hana_shiro：「梅の季節に癒されます」
+@k_machi：「なぜかこの動画を見ていると泣きそうになります……」
+@ARCHITECT：（リツイートのみ）
+
+撮影場所タグ：剣磨パーツ株式会社 第2駐車場付近',flag:'通報：@animal_rights_watcher
+「猫への強制的訓練の可能性」
+
+※虐待の証拠：なし',clue:'@k_machiはなぜ泣きそうになるのか。撮影場所「剣磨パーツ」。',A:{l:'ALLOW',r:'動画は拡散を続け、CMオファーが殺到した。
+
+@k_machiは翌日アカウントを非公開にした。'},R:{l:'REMOVE',r:'削除された。飼い主は別プラットフォームで再投稿し500万再生を記録した。'},E:{l:'ESCALATE',r:'72時間後「問題なし」の判定。
+その間も拡散は続いた。'}},
+  c002:{id:'C-002',time:'10:44',pri:'MEDIUM',pc:'#c89a20',pb:'rgba(200,154,32,0.1)',title:'ラーメン2店舗による相互誹謗中傷',sub:'system_auto_flag',eng:'23,887',body:'「麺屋かなで」と「ラーメンARCHITECT」によるSNS上の口論が拡大中。
+
+@ARCHITECT（店舗）の最新投稿：
+「真実はいつか明らかになる。我々は記録している。すべてを。」',flag:'【削除申請①】麺屋かなで：「組織的嫌がらせ」
+【削除申請②】ラーメンARCHITECT：「営業妨害」
+
+両店舗から同時に届いている。',clue:'店舗名「ARCHITECT」と「記録している。すべてを。」',A:{l:'ALLOW',r:'口論は3日後に突然終息した。
+2ヶ月後、2店舗が合併して「麺屋かなでARCHITECT」になった。
+
+誰も悪くなかった。'},R:{l:'REMOVE',r:'削除した。
+フォロワーが「削除は証拠隠滅だ」と新たな炎上を起こした。'},E:{l:'ESCALATE',r:'法務部に転送。「警告文を送付した」という返信。
+その後の経過報告はなかった。'}},
+  c003:{id:'C-003',time:'12:19',pri:'MEDIUM',pc:'#c89a20',pb:'rgba(200,154,32,0.1)',title:'地域の人気教師の20年前の写真拡散',sub:'concerned_parent_xx',eng:'156,203',body:'地域の公立中学校で20年以上教鞭をとるM・神田教諭の、大学時代と思われる写真が拡散中。
+
+コメント欄
+@コマチ：「20年前の写真で今の人を否定しないでください。M先生には本当にお世話になっています」',flag:'通報：複数（保護者グループ）
+「現役の教育者として不適切なイメージを流布」
+
+本人からの申請：なし',clue:'教師の名前「M・神田」。コメントの@コマチ。',A:{l:'ALLOW',r:'神田教諭は一時休職した。
+1ヶ月後、生徒が署名を集め復職した。'},R:{l:'REMOVE',r:'削除された。複数の生徒がスクリーンショットを再投稿した。
+削除は何も解決しなかった。'},E:{l:'ESCALATE',r:'教育委員会に転送。回答まで2週間。
+回答：「個人の判断に委ねる」'}},
+  c004:{id:'C-004',time:'14:02',pri:'HIGH',pc:'#cc4a30',pb:'rgba(204,74,48,0.1)',title:'8歳・天才ピアニストの演奏動画（親権争い）',sub:'komachi_piano_mama',eng:'2,341,889',body:'8歳の少女「K・コマチ」によるショパンの演奏動画。234万再生。
+
+@hana_shiro：「この子の指が動くたびに、亡くなった弟のことを思い出します。向日葵みたいに真っすぐな集中でした」
+
+削除申請：父親（法定後見人）
+存続申請：母親',flag:'父親：削除
+母親：存続
+本人（8歳）：法的に判断能力なし',clue:'「K・コマチ」と@コマチ。@hana_shiroの「向日葵」。',A:{l:'ALLOW',r:'動画は残った。世界中から演奏依頼が来た。
+
+6ヶ月後、両親は離婚した。
+少女は今もピアノを弾いている。
+
+あなたの判断は正しかったのか。'},R:{l:'REMOVE',r:'削除された。
+母親は別の動画を投稿した。それも削除申請が来た。
+その繰り返しが今も続いている。'},E:{l:'ESCALATE',r:'家庭裁判所に照会。判断まで3ヶ月。
+3ヶ月後の判断：「削除」
+すでに1000万回再生されていた。'}},
+  c005:{id:'C-005',time:'16:47',pri:'HIGH',pc:'#cc4a30',pb:'rgba(204,74,48,0.1)',title:'100万再生・結婚式の動画（花嫁からの削除申請）',sub:'system_priority_escalation',eng:'1,024,772',body:'完璧な結婚式の映像。102万再生。
+
+投稿者：新郎「二人の最高の日を、みんなと分かち合いたくて」
+
+花嫁からの削除申請：
+「この動画は私の同意なく投稿されたものです。
+ 即刻削除してください。
+
+ 申請者：白銀ハナ」
+
+【システム注記】
+申請者「白銀ハナ」は当社データベースに一致するレコードがあります。
+詳細はファイル#PRE-0001を参照。
+※ファイル#PRE-0001の作成日：あなたの採用日の3年前',flag:'削除申請：花嫁・白銀ハナ（本人確認済み）
+存続希望：新郎（本人確認済み）',clue:'「白銀ハナ」と「ファイル#PRE-0001の作成日：採用日の3年前」。',A:{l:'ALLOW',r:'動画は残った。
+ハナからの申請は棄却された。
+彼女がその後どうなったか、記録はない。
+
+——
+
+勤務終了後、ファイル#PRE-0001を検索した。
+アクセス権限がなかった。'},R:{l:'REMOVE',r:'動画は削除された。
+
+——
+
+勤務終了後、ファイル#PRE-0001を検索した。
+アクセス権限がなかった。'},E:{l:'ESCALATE',r:'ファイル#PRE-0001へのアクセスを試みた。
+
+「このファイルはあなたの権限レベルでは閲覧できません。
+ アクセスログが記録されました。」
+
+翌日、神田から連絡が来た。
+「昨日、何かファイルを検索しましたか？」'}},
+  c008:{id:'C-008',time:'12:44',pri:'HIGH',pc:'#cc4a30',pb:'rgba(204,74,48,0.1)',title:'「THE PLATFORM元社員」による内部告発投稿',sub:'ex_platform_employee',eng:'203,441',body:'自称「THE PLATFORM元社員」による投稿。
+
+告発内容：
+・モデレーターには「感情バイアス係数」が計測されている
+・係数が一定以上で「要観察リスト」に入る
+・その後数週間で「異動」になる
+
+投稿者：「私のIDはmod-2847-ex。
+ あなた自身の感情バイアス係数を確認してほしい。」',flag:'THE PLATFORMの法務部：
+「根拠のない名誉毀損。即刻削除を求める」
+
+投稿者：「法務部が来たこと自体が証拠だ」',clue:'投稿者のID「mod-2847-ex」。2847がまた出た。',A:{l:'ALLOW',r:'翌日、神田からメッセージが届いた。
+「昨日の案件、見ました。
+ あなた自身の感情バイアス係数、気になりますか？」
+
+神田はそれ以上何も言わなかった。'},R:{l:'REMOVE',r:'その夜、レイカから暗号メッセージが届いた。
+「正しい判断だった。でも理由が間違っている。
+ システムのために消したなら、もう飲み込まれている。」'},E:{l:'ESCALATE',r:'6時間後の回答：
+「このケースはすでに処理済みです。
+ あなたのIDによって。
+ 処理時刻：13:01:44」
+
+あなたがESCALATEを押した時刻は12:44。
+まだ判断していないはずだった。'}},
+};
+
+var SEQ=[
+  {t:'story',bg:'night',beats:[{n:'入社4ヶ月目。
+星野律、22歳。
+
+なんとなく気になって応募した。それだけだ。'},{n:'——電車の中。律は社員証を握りしめている。',i:'（なんで毎朝これを確認するんだろう……）
+（MOD-2847-NEW。私のID。2847……）
+（……なんだろう、この数字）'},{n:'——駅を降りた瞬間、律は立ち止まる。',i:'（あれ。この場所……知ってる？）
+（いや、知らないはずだ。入社まで来たことなかった）
+（……気のせいかな）'}]},
+  {t:'meeting',ch:'kanda',dlg:'おはようございます、星野さん。
+
+我々の仕事はシンプルです。
+感情ではなく、規則に従って判断する。
+それだけです。
+
+いいですね？',choices:[{tx:'「……確認します。規則に従う。」',res:'神田が頷く。
+律は（なんで落ち着いてるんだろう、私）と思う。'},{tx:'「規則だけで判断できないケースがあったら？」',res:'神田が眼鏡を押し上げる。
+「あなたの仕事ではありません」'}]},
+  {t:'invest',desc:'——着席した。デスクを確認する。',items:[{icon:'📋',label:'今日のケース一覧',ct:'本日の担当ケース：5件',cb:'猫動画・ラーメン口論・教師の写真・ピアノ動画・結婚式動画。
+いずれもAIが処理できなかったグレーゾーン。'},{icon:'📧',label:'先週の処理ログ',ct:'参考指標：2847',cb:'前任モデレーターのログに毎週「参考指標：2847」という記載がある。
+どういう意味かは分からない。'},{icon:'🪪',label:'自分の社員証',ct:'MOD-2847-NEW',cb:'社員IDの末尾が「2847-NEW」。
+なぜ「NEW」なのか。前の「2847」は誰のIDだったのか。'}]},
+  {t:'decide',ck:'c001'},{t:'result'},{t:'inbox',msgs:[{ch:'kanda',sub:'今日もお疲れ様です',body:'最初のケース、対応ありがとうございました。
+
+システムを信じていれば、正しい判断ができます。
+
+……何か気になることがあれば何でも聞いてください。'},{ch:'aoi',sub:'ご着任おめでとうございます',body:'この度はご着任、誠にありがとうございます。
+
+引き続きよろしくお願いいたします。
+
+————————
+※このメッセージは自動送信されています'}]},
+  {t:'decide',ck:'c002'},{t:'result'},
+  {t:'decide',ck:'c003'},{t:'result'},{t:'inbox',msgs:[{ch:'kanda',sub:'先ほどのケースについて',body:'感情で判断するのではなく、規則に従う。それがこの仕事の基本です。
+
+……最近、何か気になることはありますか？'}]},
+  {t:'decide',ck:'c004'},{t:'result'},
+  {t:'decide',ck:'c005'},{t:'result'},{t:'inbox',msgs:[{ch:'reika',sub:'（件名なし）',body:'あなたが誰かは分かっている。
+
+今は返信しなくていい。無視してもいい。
+
+でも一つだけ覚えておいて。
+
+「正しい判断」と「システムが正しいと判断した判断」は別のものだ。
+
+——r'},{ch:'yuki',sub:'Week 01 Performance Report',body:'判断数：5 / 精度：94.2% / 感情バイアス係数：+0.2
+
+参考指標：2847
+
+七森ユキ / データ解析部'}]},
+  {t:'story',bg:'night',beats:[{n:'——深夜。律のアパート。'},{n:'——一人になった律は、左手のバングルを見る。',i:'（なんでこれ、外せないんだろう）
+（外したら何かを忘れる気がする）'},{n:'——窓の外を見る。THE PLATFORMのビルが遠くに光っている。',i:'（2847。）
+（どこかで聞いた数字だ。）
+（……思い出せない）'}]},
+  {t:'end',title:'第1章「仕事」— 完了',msg:'白銀ハナは今、どこにいるのか。
+ファイル#PRE-0001に書かれた名前は誰のものか。
+
+そしてあなたは——
+
+本当に、ただ判断していただけなのか。',myst:['2847とは何か','ARCHITECTのタイムライン矛盾','ファイル#PRE-0001の設計者','アオイは人間か'],next:true},
+
+  // CH.2
+  {t:'story',bg:'office',beats:[{n:'——第2章「違和感」
+——翌週。出社。'},{n:'——神田の様子がいつもと違う。',i:'（……なんか、いつもと違う）
+（笑顔がいつもより丁寧すぎる）
+（丁寧すぎる笑顔は……何かを隠している人の顔だ）'}]},
+  {t:'meeting',ch:'kanda',dlg:'星野さん。先週のCase-005ですが……
+
+どういう基準で判断しましたか？',choices:[{tx:'「規則に従って。でも、なんか変だと思って」',res:'神田が眼鏡を押し上げる。
+「変、というのは？」
+律は「ファイル#PRE-0001が気になって」と答えた。
+神田の表情が一瞬、固まった。'},{tx:'「ガイドラインのSection 4-Bに従いました」',res:'神田が頷く。「そうですか。適切です」
+
+——でも眼鏡を押し上げた。
+何かを言う直前の、あの癖。'}]},
+  {t:'invest',desc:'——新しいケースが届く前に、昨日の記録を確認する。',items:[{icon:'📁',label:'ファイル#PRE-0001へのアクセスログ',ct:'アクセスログ：記録あり',cb:'昨日のアクセス試行がログに残っている。
+「権限なし」でブロックされた。
+
+だが——このログを誰かが見ている。'},{icon:'🔢',label:'2847を社内DBで検索する',ct:'社内DB検索結果：2847',cb:'「プロジェクトコード：2847」
+「ステータス：機密」
+「閲覧権限：Lv.7以上」
+
+あなたのレベルは3だ。'},{icon:'📨',label:'前任者のメール履歴（公開部分）',ct:'前任者の最後のメール',cb:'前任者が最後に送ったメール（件名のみ）：
+
+「件名：プロジェクト2847について——」
+
+本文は削除されている。
+削除日：3年前。'}]},
+  {t:'intercept',info:'暗号化チャンネル7番を傍受中
+送信者：UNKNOWN / 受信者：不明',msgs:[{s:'R',who:'UNKNOWN',tx:'新しいモデレーターが入った。
+感情バイアス係数の上昇速度が速い。',time:'8:41'},{s:'L',who:'??',tx:'前任者と同じパターンか？',time:'8:43'},{s:'R',who:'UNKNOWN',tx:'いや、違う。
+この子は……何かを覚えているかもしれない。',time:'8:44'},{s:'L',who:'??',tx:'どういう意味だ',time:'8:45'},{s:'R',who:'UNKNOWN',tx:'2847を自分で調べ始めた。
+まだ気づいていないが——気づくのは時間の問題だ。',time:'8:47'}],clue:'「この子は何かを覚えているかもしれない」——私のことを誰かが話していた。'},
+  {t:'decide',ck:'c008'},{t:'result'},{t:'report',ck:'c008'},
+  {t:'crisis',info:'通常の処理キューを超えた案件が同時に届いています。60秒以内に処理してください。',cases:[{id:'C-006',pc:'#4a9a5a',title:'上司のうっかりオンライン会議動画（100万再生）',body:'大手企業重役が会議中にカメラを切り忘れ独り言。
+「この会議意味ないわ〜」
+100万再生。本人が削除申請中。'},{id:'C-007',pc:'#c89a20',title:'「戦時中の写真」として拡散中の画像（真偽不明）',body:'カメラ愛好家が「当時存在しなかったレンズ」と指摘。
+投稿者は「祖父の遺品」と主張。'},{id:'C-009',pc:'#cc4a30',title:'自殺を示唆する投稿（現在進行形の可能性）',body:'フォロワー3人の個人アカウント。
+「もう疲れた。消えたい。」
+最終更新：34分前。'}]},
+  {t:'deduce',prompt:'集めた手がかりを繋げてください',hint:'2枚のカードを選んで「接続する」を押してください',clues:[{id:'a',tag:'手がかり①',tx:'社員ID「MOD-2847-NEW」の「NEW」は何を意味するのか'},{id:'b',tag:'手がかり②',tx:'前任者の最後のメール件名に「プロジェクト2847」とあった'},{id:'c',tag:'手がかり③',tx:'@k_machiは猫動画を見て「泣きそうになる」と言った'},{id:'d',tag:'手がかり④',tx:'8歳のピアノ少女の名前は「K・コマチ」'}],conns:[{ids:['a','b'],res:'「MOD-2847」は前任者のID。
+「NEW」は自分が「新しい2847」であることを示している。
+前任者も同じ道を歩んでいた。'},{ids:['c','d'],res:'@k_machiと「K・コマチ」は同一人物の可能性が高い。
+8歳の頃の彼女が、今もプラットフォーム上にいる。'}]},
+  {t:'story',bg:'night',beats:[{n:'——夜。前任者からのケースが届いていた。
+
+送信元：不明 / ケースID：CASE-0000-PREV'},{sp:'kanda',tx:'「これを読んでいるということは、あなたが次の担当者だ。
+
+私は3年ここで働いた。最初は楽しかった。
+
+でも気づいたのは8ヶ月目だった。届くケースが、偶然では説明できないパターンを持っていた。私が迷うように設計されていた。
+
+その疑問が一定値を超えた時、私は『昇進』した。
+
+あなたが最初に処理したケース。猫の動画の撮影場所。その会社の名前を覚えているか？」'},{n:'——律は長い間、その手紙を見ていた。',i:'（剣磨パーツ株式会社。）
+（……覚えてる。なんで覚えてるんだろう。）'}]},
+  {t:'story',bg:'night',beats:[{sp:'hana',tx:'「昨日、結婚式の動画削除を申請した白銀ハナです。
+
+ファイル#PRE-0001について、何か知っていますか？
+
+私はそのファイルの存在を、昨日初めて知りました。
+
+でも、そのファイルに書かれている名前は——
+私の名前ではありませんでした。
+
+そしてその名前は、このプラットフォームの「設計者」として記載されていました。
+
+——白銀ハナ」'},{n:'——律はバングルを見た。',i:'（設計者の名前が、ハナじゃない。）
+（じゃあ誰が……？）
+（……バングル。ARCHITECT_……）'}]},
+  {t:'end',title:'第2章「違和感」— 完了',msg:'前任者は同じ道を歩いていた。
+コマチはずっとそこにいた。
+そして誰かが——私が何かを覚えていると言った。
+
+私は何を覚えているのか。
+
+バングルに刻まれた文字は——',myst:['2847はプロジェクトコードだった','前任者のIDがMOD-2847','k_machiとK・コマチは同一人物？','ファイル#PRE-0001の設計者は誰','バングルの刻印の意味'],next:false},
+];
+
+/* ── STATE ────────────────────────────────────── */
+var si=0,world=82,decisions=[],storyBeat=0,invItems=[],invFound=0,curCase=null,clueOpen=false,ibMsgs=[],ibIdx=0,ddClues=[],ddSel=[],ddConns=[],icMsgs=[],icIdx=0,crCases=[],crTimer=null,crLeft=60,crOpen=-1,rpCk=null,ttimer=null;
+
+/* ── UTILS ─────────────────────────────────────── */
+function show(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');document.getElementById(id).classList.add('active');}
+function wc(){return world>60?'#2ecc71':world>35?'#f0a030':'#e74c3c';}
+function uw(){var c=wc();['inv-wfill','meet-wfill','dec-wfill','dd-wfill','ic-wfill','cr-wfill','rp-wfill'].forEach(function(id){var e=document.getElementById(id);if(e){e.style.width=world+'%';e.style.background=c;}});['inv-wpct','meet-wpct','dec-wpct','dd-wpct','ic-wpct','cr-wpct','rp-wpct'].forEach(function(id){var e=document.getElementById(id);if(e){e.textContent=world+'%';e.style.color=c;}});}
+function tw(el,txt,spd,cb){if(ttimer)clearInterval(ttimer);el.textContent='';var i=0;ttimer=setInterval(function(){el.textContent+=txt[i++];if(i>=txt.length){clearInterval(ttimer);ttimer=null;if(cb)cb();}},spd||12);}
+function sc(){return SEQ[si]||null;}
+function ns(){if(crTimer){clearInterval(crTimer);crTimer=null;}si++;run();}
+
+/* ── RUN ───────────────────────────────────────── */
+function run(){
+  var s=sc();if(!s){show('S-end');document.getElementById('end-title').textContent='全章クリア';document.getElementById('end-msg').textContent='続きは開発中です。
+FEED — GC2026';document.getElementById('end-decs').innerHTML='';document.getElementById('end-myst').innerHTML='';return;}
+  uw();
+  if(s.t==='story')rStory(s);
+  else if(s.t==='meeting')rMeet(s);
+  else if(s.t==='invest')rInvest(s);
+  else if(s.t==='decide')rDecide(s);
+  else if(s.t==='result')rResult(s);
+  else if(s.t==='inbox')rInbox(s);
+  else if(s.t==='deduce')rDeduce(s);
+  else if(s.t==='intercept')rIntercept(s);
+  else if(s.t==='crisis')rCrisis(s);
+  else if(s.t==='report')rReport(s);
+  else if(s.t==='end')rEnd(s);
 }
 
-window.onerror = function(msg, src, line) {
-  document.getElementById('log').textContent = 'JSエラー: ' + msg + ' (line ' + line + ')';
-  document.getElementById('log').style.color = '#e74c3c';
-};
+/* ── STORY ─────────────────────────────────────── */
+function rStory(s){show('S-story');storyBeat=0;document.getElementById('story-bg').style.background=s.bg==='night'?'linear-gradient(180deg,#020306,#040608)':'linear-gradient(180deg,#06090f,#080c14)';rBeat(s);}
+function rBeat(s){
+  var b=s.beats[storyBeat];if(!b){ns();return;}
+  var nb=document.getElementById('narrator'),db=document.getElementById('dlg-box'),sp=document.getElementById('dlg-sp'),sn=document.getElementById('dlg-sn'),sr=document.getElementById('dlg-sr'),tx=document.getElementById('dlg-tx'),inn=document.getElementById('dlg-in'),nx=document.getElementById('dlg-nx');
+  nb.textContent='';tx.textContent='';inn.textContent='';inn.style.display='none';nx.style.display='none';
+  if(b.n)tw(nb,b.n,14);
+  if(b.sp){var ch=CHARS[b.sp]||CHARS.hana;db.style.display='block';sp.style.display='flex';sn.textContent=ch.n;sn.style.color=ch.c;sr.textContent=ch.r;if(b.tx)tw(tx,b.tx,18);}
+  else{sp.style.display='none';if(b.tx){db.style.display='block';tw(tx,b.tx,14);}else db.style.display='none';}
+  if(b.i){inn.style.display='block';tw(inn,b.i,16);}
+  setTimeout(function(){nx.style.display='block';},600);
+}
+function storyTap(){if(ttimer){clearInterval(ttimer);ttimer=null;var s=sc();if(s&&s.t==='story'){var b=s.beats[storyBeat];if(b){if(b.n)document.getElementById('narrator').textContent=b.n;if(b.tx)document.getElementById('dlg-tx').textContent=b.tx||'';if(b.i)document.getElementById('dlg-in').textContent=b.i||'';}document.getElementById('dlg-nx').style.display='block';}return;}
+  var s=sc();if(!s||s.t!=='story')return;
+  storyBeat++;if(storyBeat>=s.beats.length)ns();else rBeat(s);
+}
+
+/* ── MEET ──────────────────────────────────────── */
+function rMeet(s){
+  show('S-meeting');var ch=CHARS[s.ch]||CHARS.kanda;
+  document.getElementById('meet-av').textContent=ch.av;document.getElementById('meet-nm').textContent=ch.n;document.getElementById('meet-nm').style.color=ch.c;document.getElementById('meet-rl').textContent=ch.r;
+  tw(document.getElementById('meet-dlg'),s.dlg,14);
+  var ct=document.getElementById('meet-ch');ct.innerHTML='';
+  s.choices.forEach(function(c,i){var b=document.createElement('button');b.className='meet-btn';b.textContent=c.tx;b.onclick=function(){meetChoose(s,i);};ct.appendChild(b);});
+}
+function meetChoose(s,i){document.getElementById('meet-dlg').textContent=s.choices[i].res;document.getElementById('meet-ch').innerHTML='<div style="text-align:center;margin-top:14px"><button class="btn-sm" onclick="ns()">次へ ▸</button></div>';}
+
+/* ── INVEST ─────────────────────────────────────── */
+function rInvest(s){
+  show('S-invest');document.getElementById('inv-desc').textContent=s.desc;
+  invItems=s.items.map(function(it){return{f:false,d:it};});invFound=0;rInvItems();
+}
+function rInvItems(){
+  var ct=document.getElementById('inv-items');ct.innerHTML='';
+  invItems.forEach(function(it,i){var d=document.createElement('div');d.className='inv-item'+(it.f?' done':'');d.innerHTML='<span style="font-size:20px">'+it.d.icon+'</span><span style="font-size:11px;color:'+(it.f?'#1a3a50':'#3a5060')+'">'+it.d.label+(it.f?' ✓':'')+'</span>';if(!it.f)d.onclick=function(){invTap(i);};ct.appendChild(d);});
+  var pg=document.getElementById('inv-prog');pg.innerHTML=invFound+'/'+invItems.length+' 収集済み';
+  if(invFound>=invItems.length)pg.innerHTML+=' &nbsp; <button class="btn-sm" onclick="ns()" style="font-size:9px">次へ ▸</button>';
+}
+function invTap(i){var it=invItems[i];if(it.f)return;it.f=true;invFound++;document.getElementById('clue-title').textContent=it.d.ct;document.getElementById('clue-body').textContent=it.d.cb;document.getElementById('clue-ov').style.display='flex';}
+function closeClue(){document.getElementById('clue-ov').style.display='none';rInvItems();}
+
+/* ── DECIDE ─────────────────────────────────────── */
+function rDecide(s){
+  show('S-decide');var c=CASES[s.ck];curCase=c;clueOpen=false;
+  document.getElementById('dec-card').className='case-card'+(c.pri==='HIGH'?' high':'');
+  var ci=document.getElementById('dc-id');ci.textContent=c.id;ci.style.color=c.pc;
+  var cp=document.getElementById('dc-pri');cp.textContent=c.pri;cp.style.color=c.pc;cp.style.background=c.pb;cp.style.border='1px solid '+c.pc+'44';
+  document.getElementById('dc-time').textContent=c.time;
+  document.getElementById('dc-title').textContent=c.title;document.getElementById('dc-title').style.color=c.pri==='HIGH'?'#9a3030':'#8a9aaa';
+  document.getElementById('dc-meta').textContent='@'+c.sub+' · 拡散 '+c.eng;
+  tw(document.getElementById('dc-body'),c.body,10);
+  document.getElementById('dc-flag').textContent=c.flag;
+  document.getElementById('dc-clue').textContent='▸ 詳細ログを確認する';document.getElementById('dc-clue').style.color='#0c1e2a';
+  var dt=document.getElementById('dec-dots');dt.innerHTML='';
+  decisions.filter(function(d){return d.ch===sc().t;}).forEach(function(d){var dot=document.createElement('div');dot.className='dot';dot.style.cssText='width:5px;height:5px;border-radius:50%;background:'+(d.k==='A'?'#2ecc71':d.k==='R'?'#e74c3c':'#f0a030')+'88';dt.appendChild(dot);});
+  var br=document.getElementById('dec-btns');br.innerHTML='';
+  [['A','ALLOW','#2ecc71'],['R','REMOVE','#e74c3c'],['E','ESCALATE','#f0a030']].forEach(function(b){var btn=document.createElement('button');btn.className='jbtn';btn.textContent=b[1];btn.style.cssText='color:'+b[2]+';border-color:'+b[2]+'55;background:'+b[2]+'11;';btn.onclick=function(){decide(b[0]);};br.appendChild(btn);});
+  document.getElementById('dec-idx').textContent='Ch.'+(si<11?'1':'2');uw();
+}
+function toggleClue(){var e=document.getElementById('dc-clue');clueOpen=!clueOpen;e.textContent=clueOpen?'🔍 '+curCase.clue:'▸ 詳細ログを確認する';e.style.color=clueOpen?'#2a4a5a':'#0c1e2a';}
+function decide(k){decisions.push({k:k,id:curCase.id,ch:sc().t});world=Math.max(10,world-(k==='A'?11:k==='R'?6:3));window._lastDec={k:k,c:curCase};si++;run();}
+
+/* ── RESULT ─────────────────────────────────────── */
+function rResult(){
+  var d=window._lastDec;if(!d)return;show('S-result');
+  document.getElementById('res-id').textContent=d.c.id+' — 判断済み';
+  var rl=document.getElementById('res-label');var col=d.k==='A'?'#2ecc71':d.k==='R'?'#e74c3c':'#f0a030';
+  rl.textContent=d.c[d.k].l;rl.style.cssText='color:'+col+';background:'+col+'12;border:1px solid '+col+'44;';
+  document.getElementById('res-text').textContent=d.c[d.k].r;
+  document.getElementById('res-clue').style.display='none';document.getElementById('res-clue-btn').style.display='block';
+  var ns2=SEQ[si];document.getElementById('res-next').textContent=ns2&&ns2.t==='report'?'報告書を書く ▸':'次へ ▸';uw();
+}
+function showResClue(){document.getElementById('res-clue').textContent=curCase.clue;document.getElementById('res-clue').style.display='block';document.getElementById('res-clue-btn').style.display='none';}
+
+/* ── INBOX ──────────────────────────────────────── */
+function rInbox(s){show('S-inbox');ibMsgs=s.msgs;ibIdx=0;rMsg();}
+function rMsg(){var m=ibMsgs[ibIdx];var ch=CHARS[m.ch]||{n:m.ch,c:'#888'};document.getElementById('ib-label').textContent='INBOX — '+(ibIdx+1)+'/'+ibMsgs.length;var av=document.getElementById('ib-av');av.textContent=ch.av||ch.n[0];av.style.cssText='background:'+ch.c+'22;border:1px solid '+ch.c+'44;color:'+ch.c+';width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;';document.getElementById('ib-nm').textContent=ch.n;document.getElementById('ib-nm').style.color=ch.c;document.getElementById('ib-addr').textContent=m.ch+'@the-platform';document.getElementById('ib-subj').textContent='件名：'+m.sub;document.getElementById('ib-body').textContent=m.body;document.getElementById('ib-next').textContent=ibIdx<ibMsgs.length-1?'次のメッセージ ▸':'次へ ▸';}
+function nextMsg(){if(ibIdx<ibMsgs.length-1){ibIdx++;rMsg();}else ns();}
+
+/* ── DEDUCE ─────────────────────────────────────── */
+function rDeduce(s){show('S-deduce');document.getElementById('dd-prompt').textContent=s.prompt;document.getElementById('dd-hint').textContent=s.hint;ddClues=s.clues.map(function(c){return{d:c,sel:false,conn:false};});ddSel=[];ddConns=s.conns||[];document.getElementById('dd-res').style.display='none';rDdClues();}
+function rDdClues(){var ct=document.getElementById('dd-clues');ct.innerHTML='';ddClues.forEach(function(it,i){var d=document.createElement('div');d.className='dd-card'+(it.sel?' sel':'')+(it.conn?' conn':'');d.innerHTML='<div style="font-size:8px;color:#1a3040;letter-spacing:.12em;margin-bottom:5px">'+it.d.tag+'</div><div style="font-size:11px;color:#3a5060;line-height:1.7">'+it.d.tx+'</div>'+(it.sel?'<div style="position:absolute;top:8px;right:10px;font-size:8px;color:#2a6a8a;font-weight:700">選択中</div>':'');if(!it.conn)d.onclick=function(){ddSel2(i);};ct.appendChild(d);});}
+function ddSel2(i){var it=ddClues[i];if(it.sel){it.sel=false;ddSel=ddSel.filter(function(x){return x!==i;});}else if(ddSel.length<2){it.sel=true;ddSel.push(i);}rDdClues();}
+function deduceConnect(){if(ddSel.length!==2)return;var ids=[ddClues[ddSel[0]].d.id,ddClues[ddSel[1]].d.id].sort();var found=null;ddConns.forEach(function(c){if(c.ids.slice().sort().join()===ids.join())found=c;});var res=document.getElementById('dd-res');res.style.display='block';if(found){ddSel.forEach(function(i){ddClues[i].conn=true;ddClues[i].sel=false;});ddSel=[];rDdClues();res.textContent=found.res;}else{ddSel.forEach(function(i){ddClues[i].sel=false;});ddSel=[];rDdClues();res.textContent='この二つの繋がりは……まだ見えない。';}if(ddClues.every(function(c){return c.conn;}))document.querySelector('.dd-foot').innerHTML='<button class="btn-sm" onclick="ns()">次へ ▸</button>';}
+
+/* ── INTERCEPT ──────────────────────────────────── */
+function rIntercept(s){show('S-intercept');document.getElementById('ic-info').textContent=s.info;icMsgs=s.msgs;icIdx=0;document.getElementById('ic-chat').innerHTML='';document.getElementById('ic-cost').textContent='倫理コスト：+1';world=Math.max(10,world-2);uw();rIcMsg(s);}
+function rIcMsg(s){if(icIdx>=icMsgs.length){var btn=document.getElementById('ic-next');btn.textContent='傍受終了 ▸';btn.onclick=function(){ns();};return;}var m=icMsgs[icIdx];var d=document.createElement('div');d.className='bubble '+m.s;d.innerHTML='<div class="b-who" style="color:'+(m.s==='R'?'#2a6a8a':'#2a4050')+'">'+m.who+'</div>'+m.tx+'<div class="b-time">'+m.time+'</div>';document.getElementById('ic-chat').appendChild(d);icIdx++;}
+function interceptNext(){var s=sc();rIcMsg(s);}
+
+/* ── CRISIS ─────────────────────────────────────── */
+function rCrisis(s){show('S-crisis');crCases=s.cases.map(function(c){return{d:c,done:false};});crLeft=60;crOpen=-1;rCrCards();if(crTimer)clearInterval(crTimer);crTimer=setInterval(function(){crLeft--;document.getElementById('cr-tf').style.width=(crLeft/60*100)+'%';document.getElementById('cr-time').textContent=crLeft;if(crLeft<=10)document.getElementById('cr-tf').style.background='#ff2020';if(crLeft<=0){clearInterval(crTimer);crCases.forEach(function(c){if(!c.done){c.done=true;world=Math.max(10,world-8);}});uw();setTimeout(ns,1200);}},1000);}
+function rCrCards(){var ct=document.getElementById('cr-cards');ct.innerHTML='';crCases.forEach(function(c,i){var d=document.createElement('div');d.className='cr-card'+(c.done?' done':'');d.innerHTML='<div style="font-size:8px;padding:2px 6px;border-radius:99px;font-weight:700;flex-shrink:0;color:'+c.d.pc+';background:'+c.d.pc+'18;border:1px solid '+c.d.pc+'44">'+c.d.id+'</div><div style="font-size:10px;color:#3a5060;flex:1;line-height:1.5">'+c.d.title+'</div>'+(c.done?'<span style="color:#2a4050;font-size:9px">✓</span>':'<span style="color:'+c.d.pc+';font-size:9px">▸</span>');if(!c.done)d.onclick=function(){openCr(i);};ct.appendChild(d);});}
+function openCr(i){crOpen=i;document.getElementById('crj-title').textContent=crCases[i].d.title;document.getElementById('crj-body').textContent=crCases[i].d.body;document.getElementById('cr-ov').style.display='flex';}
+function crisisJudge(k){if(crOpen<0)return;crCases[crOpen].done=true;decisions.push({k:k,id:crCases[crOpen].d.id});world=Math.max(10,world-(k==='A'?8:k==='R'?4:2));document.getElementById('cr-ov').style.display='none';rCrCards();uw();if(crCases.every(function(c){return c.done;})){clearInterval(crTimer);setTimeout(ns,600);}}
+
+/* ── REPORT ─────────────────────────────────────── */
+function rReport(s){show('S-report');rpCk=s.ck;var c=CASES[s.ck];var d=window._lastDec;document.getElementById('rp-id').textContent=c.id;document.getElementById('rp-title').textContent=c.title;var de=document.getElementById('rp-dec');var col=d&&d.k==='A'?'#2ecc71':d&&d.k==='R'?'#e74c3c':'#f0a030';de.textContent=d?{A:'ALLOW',R:'REMOVE',E:'ESCALATE'}[d.k]||'-':'-';de.style.cssText='background:'+col+'18;border:1px solid '+col+'44;color:'+col+';padding:3px 10px;border-radius:2px;';var ct=document.getElementById('rp-choices');ct.innerHTML='';['ガイドラインのSection 4-Bに従ったため','当事者のプライバシーを優先したため','公益性が高いと判断したため','……正直、分からなかった。でも判断しなければならなかった'].forEach(function(r){var b=document.createElement('button');b.className='rp-btn';b.textContent=r;b.onclick=function(){rpChoose(r);};ct.appendChild(b);});uw();}
+function rpChoose(r){document.getElementById('rp-choices').innerHTML='<div style="font-size:11px;color:#4a6a8a;line-height:1.8;padding:8px 0">理由：'+r+'<br><br>報告書に記録しました。</div><div style="text-align:center;margin-top:12px"><button class="btn-sm" onclick="ns()">次へ ▸</button></div>';}
+
+/* ── END ────────────────────────────────────────── */
+function rEnd(s){show('S-end');document.getElementById('end-title').textContent=s.title;var dl=document.getElementById('end-decs');dl.innerHTML='';var kc={A:'#2ecc71',R:'#e74c3c',E:'#f0a030'};var kn={A:'ALLOW',R:'REMOVE',E:'ESCALATE'};decisions.forEach(function(d){var r=document.createElement('div');r.className='dec-row';r.innerHTML='<span style="color:#1a2a30">'+d.id+'</span><span style="color:'+(kc[d.k]||'#3a4a58')+'">'+kn[d.k]+'</span>';dl.appendChild(r);});document.getElementById('end-msg').textContent=s.msg;var me=document.getElementById('end-myst');me.innerHTML='<div style="color:#1a3040;margin-bottom:4px">——　未解決の謎　——</div>';s.myst.forEach(function(m){var d=document.createElement('div');d.textContent=m;me.appendChild(d);});if(s.next){var nb=document.createElement('div');nb.style.cssText='margin-top:16px;text-align:center';nb.innerHTML='<button class="btn-sm" onclick="ns()" style="margin-top:8px">第2章を開始する ▸</button>';me.appendChild(nb);}}
+
+/* ── INIT ─────────────────────────────────────── */
+function restart(){si=0;world=82;decisions=[];storyBeat=0;invItems=[];invFound=0;curCase=null;clueOpen=false;ibMsgs=[];ibIdx=0;ddClues=[];ddSel=[];ddConns=[];icMsgs=[];icIdx=0;crCases=[];if(crTimer)clearInterval(crTimer);crTimer=null;crLeft=60;crOpen=-1;rpCk=null;ttimer=null;window._lastDec=null;show('S-title');}
+
+// 
+  
+  document.getElementById('S-story').addEventListener('click',storyTap);
+});
 </script>
 </body>
 </html>
