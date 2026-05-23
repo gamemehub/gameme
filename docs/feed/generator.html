@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FEED キャラクター生成ツール</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#040810;color:#8aabb0;font-family:'Courier New',monospace;padding:20px;min-height:100vh}
+h1{font-size:20px;color:#1a4a60;letter-spacing:.3em;margin-bottom:4px}
+.sub{font-size:10px;color:#1a2a38;letter-spacing:.15em;margin-bottom:24px}
+label{font-size:10px;color:#2a4050;letter-spacing:.15em;display:block;margin-bottom:6px}
+input,select{width:100%;padding:10px 14px;background:#06090f;border:1px solid #0d1e2e;color:#8aabb0;font-family:inherit;font-size:12px;border-radius:4px;margin-bottom:16px}
+input:focus,select:focus{outline:none;border-color:#1a4a60}
+input[type=password]{letter-spacing:.1em}
+.btn{width:100%;padding:12px;background:transparent;border:1px solid #1a4a60;color:#2a6a80;font-size:11px;letter-spacing:.2em;cursor:pointer;font-family:inherit;border-radius:4px;margin-bottom:8px;transition:all .2s}
+.btn:hover{background:#0a1e2e;color:#4a9ab0}
+.btn:disabled{border-color:#0a1420;color:#1a2a38;cursor:not-allowed}
+.btn-dl{border-color:#1a5a30;color:#2a8a50;margin-top:8px}
+.btn-dl:hover{background:#0a2010}
+.status{font-size:11px;line-height:1.8;padding:12px 14px;background:#04080c;border:1px solid #0a1420;border-radius:4px;margin-bottom:16px;min-height:44px;white-space:pre-wrap}
+.status.ok{border-color:#1a4a30;color:#4a9a5a}
+.status.err{border-color:#4a1a1a;color:#9a4a4a}
+.status.loading{border-color:#1a3a4a;color:#4a7a9a}
+.img-wrap{margin-top:16px;display:none}
+.img-wrap img{width:100%;border-radius:6px;border:1px solid #0d1e2e;display:block}
+.char-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.char-tag{padding:4px 10px;border:1px solid #0d1e2e;border-radius:99px;font-size:9px;color:#1a3040;cursor:pointer;letter-spacing:.1em;transition:all .2s}
+.char-tag.active{border-color:#1a4a60;color:#2a7a9a;background:#04101a}
+.prompt-box{padding:12px;background:#04080c;border:1px solid #0a1420;border-radius:4px;font-size:10px;color:#2a4050;line-height:1.7;margin-bottom:16px;word-break:break-all}
+.note{font-size:9px;color:#1a2a38;line-height:1.8;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.grid-item{text-align:center}
+.grid-item img{width:100%;border-radius:6px;border:1px solid #0d1e2e}
+.grid-item .name{font-size:9px;color:#2a4050;margin-top:4px;letter-spacing:.1em}
+section{margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid #0a1420}
+</style>
+</head>
+<body>
+<h1>FEED</h1>
+<div class="sub">CHARACTER GENERATOR — Leonardo AI API</div>
+
+<section>
+<label>① LEONARDO AI APIキー</label>
+<input type="password" id="apikey" placeholder="xxxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx">
+<div class="note">取得方法：leonardo.ai → ログイン → 右上アイコン → API Keys → Create New Key<br>無料プランで1日150クレジット（約15〜30枚生成可能）</div>
+<button class="btn" onclick="testKey()">APIキーを確認する</button>
+<div class="status" id="key-status">— APIキーを入力してください</div>
+</section>
+
+<section>
+<label>② キャラクターを選択</label>
+<div class="char-row" id="char-row"></div>
+<label>プロンプト（編集可）</label>
+<div class="prompt-box" id="prompt-display">キャラクターを選択するとプロンプトが表示されます</div>
+<label>モデル選択</label>
+<select id="model-select">
+  <option value="1aa0f478-ccbe-4de2-ac75-ff4d4b15c1f3">Anime Pastel Dream（アニメ風・推奨）</option>
+  <option value="6b645e3a-d64f-4341-a6d8-7a3690fbf042">Leonardo Anime XL（高品質アニメ）</option>
+  <option value="aa77f04e-3eec-4034-9c07-d0f619684628">Leonardo Kino XL（シネマティック）</option>
+  <option value="2067ae52-33fd-4a82-bb92-c273d080da42">AlbedoBase XL（セミリアル）</option>
+</select>
+<button class="btn" id="gen-btn" onclick="generate()" disabled>▶ このキャラクターを生成する</button>
+<div class="status" id="gen-status">— キャラクターを選択してください</div>
+<div class="img-wrap" id="img-wrap">
+  <img id="result-img" src="">
+  <button class="btn btn-dl" id="dl-btn" onclick="downloadImg()">↓ 画像をダウンロード</button>
+</div>
+</section>
+
+<section>
+<label>③ 全キャラクター一括生成</label>
+<div class="note">全7キャラクターを順番に生成します。約5〜7分かかります。</div>
+<button class="btn" id="all-btn" onclick="generateAll()" disabled>▶▶ 全キャラクター生成（7枚）</button>
+<div class="status" id="all-status">— APIキーを確認してから使用してください</div>
+<div class="grid" id="all-grid"></div>
+</section>
+
+<script>
+var CHARS = [
+  {name:'神田ミツル',color:'#4a7a9a',
+   prompt:'visual novel character standing pose, anime style, clean lineart, soft cel shading, white background, Japanese middle-aged businessman 52 years old, short dark gray hair neatly styled, thin black-framed glasses, deep navy blue suit, white dress shirt, dark blue tie, tired eyes with slight warm smile, trustworthy but hiding something, professional corporate atmosphere, detailed face, high quality'},
+  {name:'七森ユキ',color:'#4a9a7a',
+   prompt:'visual novel character standing pose, anime style, clean lineart, soft cel shading, white background, young Japanese woman 28 years old, black short bob hair, large black-framed glasses, dark green turtleneck sweater, completely expressionless stoic face, intelligent deep focused eyes, minimalist appearance no accessories, data analyst, cool and composed, quiet sadness, high quality'},
+  {name:'レイカ',color:'#4a9a5a',
+   prompt:'visual novel character standing pose, anime style, clean lineart, soft cel shading, white background, Japanese woman early 30s, dark brown long hair tied loosely, dark gray hooded jacket, black pants, sharp observant green eyes, stoic cold expression, slight scar, urban underground aesthetic, complex morality, trustworthy yet dangerous, high quality'},
+  {name:'久世アオイ',color:'#7a5a9a',
+   prompt:'visual novel character standing pose, anime style, clean lineart, soft cel shading, white background, Japanese woman 30s, perfectly neat black medium-length hair no strands out of place, lavender purple business suit, pale almost translucent skin, violet eyes slightly artificial looking, perfect flawless smile that doesnt reach eyes, uncanny valley beautiful, AI aesthetic, too perfect, eerie elegance, high quality'},
+  {name:'白銀ハナ',color:'#8a9aaa',
+   prompt:'visual novel character standing pose, anime style, clean lineart, soft cel shading, white background, young Japanese woman 27 years old, long natural black hair flowing softly, simple white or light gray dress, large expressive dark eyes, tired but quietly determined expression, small cherry blossom hairpin, gentle resilience, survivor aesthetic, inner strength, high quality'},
+  {name:'コマチ',color:'#6a8aaa',
+   prompt:'visual novel character standing pose, anime style, clean lineart, soft cel shading, white background, young Japanese woman 19 years old, medium brown hair casual natural style, casual hoodie and jeans everyday clothes, ordinary appearance at first glance, but sharp knowing eyes hiding secrets, coming of age energy, quiet determination growing inside, youth with hidden strength, high quality'},
+  {name:'No.7',color:'#636e72',
+   prompt:'visual novel character standing pose, anime style, clean lineart, soft cel shading, white background, androgynous Japanese person 30s, perfectly neat light gray suit, blank completely expressionless face, eyes like a computer processing information, hair perfectly styled but no personality, small numbered badge on lapel, system-optimized human, uncanny professionalism, devoid of individuality, high quality'},
+];
+
+var selected = null;
+var allImages = {};
+
+// Build char tags
+var row = document.getElementById('char-row');
+CHARS.forEach(function(ch, i) {
+  var tag = document.createElement('div');
+  tag.className = 'char-tag';
+  tag.textContent = ch.name;
+  tag.style.borderColor = ch.color + '44';
+  tag.onclick = function() {
+    document.querySelectorAll('.char-tag').forEach(function(t){t.className='char-tag';});
+    tag.className = 'char-tag active';
+    tag.style.borderColor = ch.color;
+    selected = i;
+    document.getElementById('prompt-display').textContent = ch.prompt;
+    document.getElementById('gen-btn').disabled = !document.getElementById('apikey').value.trim();
+    document.getElementById('gen-status').textContent = ch.name + ' を生成します';
+    document.getElementById('gen-status').className = 'status';
+    document.getElementById('img-wrap').style.display = 'none';
+  };
+  row.appendChild(tag);
+});
+
+function testKey() {
+  var key = document.getElementById('apikey').value.trim();
+  if (!key) { setStatus('key-status','APIキーを入力してください',''); return; }
+  setStatus('key-status','確認中...','loading');
+  fetch('https://cloud.leonardo.ai/api/rest/v1/me', {
+    headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json'}
+  }).then(function(r){return r.json();}).then(function(d){
+    if (d.user_details && d.user_details[0]) {
+      var u = d.user_details[0];
+      var credits = u.tokenRenewalDate ? '残クレジット: '+u.apiConcurrencySlots : '';
+      setStatus('key-status','✓ 認証成功\n'+credits,'ok');
+      document.getElementById('gen-btn').disabled = selected === null;
+      document.getElementById('all-btn').disabled = false;
+    } else {
+      setStatus('key-status','✗ 認証失敗: '+JSON.stringify(d).slice(0,100),'err');
+    }
+  }).catch(function(e){
+    setStatus('key-status','✗ エラー: '+e.message+'\n(CORSエラーの場合はブラウザ拡張でCORSを無効化するか、別の方法をお試しください)','err');
+  });
+}
+
+function generate() {
+  if (selected === null) return;
+  var key = document.getElementById('apikey').value.trim();
+  var ch = CHARS[selected];
+  var model = document.getElementById('model-select').value;
+  setStatus('gen-status','⟳ 生成中... (通常30〜60秒かかります)','loading');
+  document.getElementById('gen-btn').disabled = true;
+  document.getElementById('img-wrap').style.display = 'none';
+  startGen(key, ch.prompt, model).then(function(url) {
+    document.getElementById('result-img').src = url;
+    document.getElementById('img-wrap').style.display = 'block';
+    setStatus('gen-status','✓ '+ch.name+' の生成完了','ok');
+    document.getElementById('gen-btn').disabled = false;
+    allImages[ch.name] = url;
+  }).catch(function(e){
+    setStatus('gen-status','✗ エラー: '+e.message,'err');
+    document.getElementById('gen-btn').disabled = false;
+  });
+}
+
+function startGen(key, prompt, model) {
+  return fetch('https://cloud.leonardo.ai/api/rest/v1/generations', {
+    method:'POST',
+    headers:{'Authorization':'Bearer '+key,'Content-Type':'application/json'},
+    body:JSON.stringify({
+      prompt: prompt,
+      modelId: model,
+      width: 512,
+      height: 768,
+      num_images: 1,
+      guidance_scale: 7,
+      presetStyle: 'ANIME',
+    })
+  }).then(function(r){return r.json();}).then(function(d){
+    if (!d.sdGenerationJob) throw new Error(JSON.stringify(d).slice(0,200));
+    var id = d.sdGenerationJob.generationId;
+    return pollGen(key, id);
+  });
+}
+
+function pollGen(key, id) {
+  return new Promise(function(res, rej) {
+    var tries = 0;
+    var t = setInterval(function() {
+      tries++;
+      if (tries > 60) { clearInterval(t); rej(new Error('タイムアウト')); return; }
+      fetch('https://cloud.leonardo.ai/api/rest/v1/generations/'+id, {
+        headers:{'Authorization':'Bearer '+key}
+      }).then(function(r){return r.json();}).then(function(d){
+        var gen = d.generations_by_pk;
+        if (!gen) return;
+        if (gen.status === 'COMPLETE' && gen.generated_images && gen.generated_images[0]) {
+          clearInterval(t);
+          res(gen.generated_images[0].url);
+        } else if (gen.status === 'FAILED') {
+          clearInterval(t);
+          rej(new Error('生成失敗'));
+        }
+      }).catch(function(){});
+    }, 3000);
+  });
+}
+
+async function generateAll() {
+  var key = document.getElementById('apikey').value.trim();
+  if (!key) return;
+  var model = document.getElementById('model-select').value;
+  document.getElementById('all-btn').disabled = true;
+  document.getElementById('all-grid').innerHTML = '';
+  
+  for (var i = 0; i < CHARS.length; i++) {
+    var ch = CHARS[i];
+    setStatus('all-status','⟳ 生成中 ('+( i+1)+'/'+CHARS.length+'): '+ch.name,'loading');
+    try {
+      var url = await startGen(key, ch.prompt, model);
+      allImages[ch.name] = url;
+      var div = document.createElement('div');
+      div.className = 'grid-item';
+      div.innerHTML = '<img src="'+url+'"><div class="name">'+ch.name+'</div>';
+      document.getElementById('all-grid').appendChild(div);
+    } catch(e) {
+      var div = document.createElement('div');
+      div.className = 'grid-item';
+      div.innerHTML = '<div style="padding:20px;border:1px solid #1a2a38;border-radius:6px;font-size:9px;color:#4a3040">'+ch.name+'<br>エラー</div>';
+      document.getElementById('all-grid').appendChild(div);
+    }
+  }
+  setStatus('all-status','✓ 全キャラクター生成完了','ok');
+  document.getElementById('all-btn').disabled = false;
+}
+
+function downloadImg() {
+  var img = document.getElementById('result-img').src;
+  if (!img) return;
+  var a = document.createElement('a');
+  a.href = img;
+  a.download = 'FEED_character.png';
+  a.target = '_blank';
+  a.click();
+}
+
+function setStatus(id, msg, cls) {
+  var el = document.getElementById(id);
+  el.textContent = msg;
+  el.className = 'status' + (cls ? ' '+cls : '');
+}
+</script>
+</body>
+</html>
