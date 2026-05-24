@@ -323,7 +323,7 @@ var SEQ=[
 var si=0,world=82,decisions=[],storyBeat=0,invItems=[],invFound=0,curCase=null,clueOpen=false,ibMsgs=[],ibIdx=0,ddClues=[],ddSel=[],ddConns=[],icMsgs=[],icIdx=0,crCases=[],crTimer=null,crLeft=60,crOpen=-1,rpCk=null,ttimer=null;
 
 /* ── UTILS ─────────────────────────────────────── */
-function show(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');document.getElementById(id).classList.add('active');}
+function show(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});document.getElementById(id).classList.add('active');
 function wc(){return world>60?'#2ecc71':world>35?'#f0a030':'#e74c3c';}
 function uw(){var c=wc();['inv-wfill','meet-wfill','dec-wfill','dd-wfill','ic-wfill','cr-wfill','rp-wfill'].forEach(function(id){var e=document.getElementById(id);if(e){e.style.width=world+'%';e.style.background=c;}});['inv-wpct','meet-wpct','dec-wpct','dd-wpct','ic-wpct','cr-wpct','rp-wpct'].forEach(function(id){var e=document.getElementById(id);if(e){e.textContent=world+'%';e.style.color=c;}});}
 function tw(el,txt,spd,cb){if(ttimer)clearInterval(ttimer);el.textContent='';var i=0;ttimer=setInterval(function(){el.textContent+=txt[i++];if(i>=txt.length){clearInterval(ttimer);ttimer=null;if(cb)cb();}},spd||12);}
