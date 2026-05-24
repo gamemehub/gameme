@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-23T13:32:24.420180+09:00",
+  "updated_at": "2026-05-24T13:56:38.413761+09:00",
   "entries": [
     {
       "rank": 1,
@@ -19,7 +19,7 @@
       "rank": 2,
       "igdb_id": "141114",
       "name": "007 First Light",
-      "hypes": 277,
+      "hypes": 279,
       "publisher": "IO Interactive",
       "is_major": false,
       "is_released": false,
@@ -255,6 +255,20 @@
     },
     {
       "rank": 19,
+      "igdb_id": "76883",
+      "name": "In the Valley of Gods",
+      "hypes": 63,
+      "publisher": "Campo Santo",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2029-12-01",
+      "platforms": "Linux, PC, Mac",
+      "summary": "In the Valley of Gods is a single-player first person video game set in Egypt in the 1920s. You play as an explorer and filmmaker who, along with your old partner, has traveled to the middle of the de",
+      "url": "https://www.igdb.com/games/in-the-valley-of-gods",
+      "source": "igdb"
+    },
+    {
+      "rank": 20,
       "igdb_id": "67195",
       "name": "Witchbrook",
       "hypes": 63,
@@ -265,20 +279,6 @@
       "platforms": "Series X|S, Switch 2, PC, XONE, Switch",
       "summary": "Experience the thrills and pitfalls of school-life in Witchbrook! Discover a spellbinding isometric pixel art world full of charm and intrigue in this richly detailed magical school and town life simu",
       "url": "https://www.igdb.com/games/witchbrook",
-      "source": "igdb"
-    },
-    {
-      "rank": 20,
-      "igdb_id": "76883",
-      "name": "In the Valley of Gods",
-      "hypes": 62,
-      "publisher": "Campo Santo",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2029-12-01",
-      "platforms": "Linux, PC, Mac",
-      "summary": "In the Valley of Gods is a single-player first person video game set in Egypt in the 1920s. You play as an explorer and filmmaker who, along with your old partner, has traveled to the middle of the de",
-      "url": "https://www.igdb.com/games/in-the-valley-of-gods",
       "source": "igdb"
     },
     {
@@ -439,7 +439,7 @@
       "rank": 32,
       "igdb_id": "337738",
       "name": "Assassin's Creed Black Flag Resynced",
-      "hypes": 48,
+      "hypes": 49,
       "publisher": "Ubisoft Entertainment",
       "is_major": false,
       "is_released": false,
@@ -467,7 +467,7 @@
       "rank": 34,
       "igdb_id": "398225",
       "name": "Metro 2039",
-      "hypes": 42,
+      "hypes": 43,
       "publisher": "Deep Silver",
       "is_major": false,
       "is_released": false,
