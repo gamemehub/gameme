@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-24T13:56:38.413761+09:00",
+  "updated_at": "2026-05-25T14:13:55.261529+09:00",
   "entries": [
     {
       "rank": 1,
@@ -19,7 +19,7 @@
       "rank": 2,
       "igdb_id": "141114",
       "name": "007 First Light",
-      "hypes": 279,
+      "hypes": 280,
       "publisher": "IO Interactive",
       "is_major": false,
       "is_released": false,
@@ -33,7 +33,7 @@
       "rank": 3,
       "igdb_id": "282831",
       "name": "The Blood of Dawnwalker",
-      "hypes": 174,
+      "hypes": 175,
       "publisher": "Bandai Namco Entertainment",
       "is_major": true,
       "is_released": false,
@@ -89,7 +89,7 @@
       "rank": 7,
       "igdb_id": "279621",
       "name": "Exodus",
-      "hypes": 99,
+      "hypes": 100,
       "publisher": "Wizards of the Coast",
       "is_major": false,
       "is_released": false,
@@ -103,7 +103,7 @@
       "rank": 8,
       "igdb_id": "381234",
       "name": "Tomb Raider: Catalyst",
-      "hypes": 88,
+      "hypes": 89,
       "publisher": "Amazon Games",
       "is_major": false,
       "is_released": false,
@@ -129,6 +129,20 @@
     },
     {
       "rank": 10,
+      "igdb_id": "347869",
+      "name": "The Expanse: Osiris Reborn",
+      "hypes": 88,
+      "publisher": "Owlcat Games",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2027-06-30",
+      "platforms": "Series X|S, PC, PS5",
+      "summary": "The Expanse: Osiris Reborn is a third-person Action RPG set in The Expanse universe. You’re no hero — just a merc caught in the wrong place at the wrong time, trying to hold your crew together and kee",
+      "url": "https://www.igdb.com/games/the-expanse-osiris-reborn",
+      "source": "igdb"
+    },
+    {
+      "rank": 11,
       "igdb_id": "325599",
       "name": "Stranger Than Heaven",
       "hypes": 88,
@@ -139,20 +153,6 @@
       "platforms": "Series X|S, PC, PS5",
       "summary": "A fifty-year, action-adventure saga of men with nowhere to go and their desperate struggle to find a home. Use extreme violence to survive, and musical talent to thrive as a showman across five cities",
       "url": "https://www.igdb.com/games/stranger-than-heaven",
-      "source": "igdb"
-    },
-    {
-      "rank": 11,
-      "igdb_id": "347869",
-      "name": "The Expanse: Osiris Reborn",
-      "hypes": 86,
-      "publisher": "Owlcat Games",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2027-06-30",
-      "platforms": "Series X|S, PC, PS5",
-      "summary": "The Expanse: Osiris Reborn is a third-person Action RPG set in The Expanse universe. You’re no hero — just a merc caught in the wrong place at the wrong time, trying to hold your crew together and kee",
-      "url": "https://www.igdb.com/games/the-expanse-osiris-reborn",
       "source": "igdb"
     },
     {
@@ -201,7 +201,7 @@
       "rank": 15,
       "igdb_id": "347637",
       "name": "End of Abyss",
-      "hypes": 69,
+      "hypes": 70,
       "publisher": "Epic Games Publishing",
       "is_major": false,
       "is_released": false,
@@ -215,7 +215,7 @@
       "rank": 16,
       "igdb_id": "305160",
       "name": "Gears of War: E-Day",
-      "hypes": 67,
+      "hypes": 68,
       "publisher": "Xbox Game Studios",
       "is_major": true,
       "is_released": false,
@@ -229,7 +229,7 @@
       "rank": 17,
       "igdb_id": "347645",
       "name": "Out of Words",
-      "hypes": 66,
+      "hypes": 67,
       "publisher": "Epic Games Publishing",
       "is_major": false,
       "is_released": false,
@@ -285,7 +285,7 @@
       "rank": 21,
       "igdb_id": "222342",
       "name": "Silent Hill: Townfall",
-      "hypes": 61,
+      "hypes": 62,
       "publisher": "Annapurna Interactive",
       "is_major": false,
       "is_released": false,
@@ -423,6 +423,20 @@
     },
     {
       "rank": 31,
+      "igdb_id": "337738",
+      "name": "Assassin's Creed Black Flag Resynced",
+      "hypes": 50,
+      "publisher": "Ubisoft Entertainment",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-07-09",
+      "platforms": "Series X|S, PC, PS5",
+      "summary": "The iconic solo pirate adventure returns with Assassin's Creed Black Flag Resynced, launching on July 9, 2026. Sail the Caribbean as Edward Kenway during the Golden Age of Piracy in this faithfully en",
+      "url": "https://www.igdb.com/games/assassins-creed-black-flag-resynced",
+      "source": "igdb"
+    },
+    {
+      "rank": 32,
       "igdb_id": "381248",
       "name": "Star Wars: Galactic Racer",
       "hypes": 49,
@@ -433,20 +447,6 @@
       "platforms": "Series X|S, PC, PS5",
       "summary": "STAR WARS: Galactic Racer is a runs-based, high-stakes reinvention of racing born in the lawless Outer Rim. With the Empire gone and the galaxy rebuilding, The Galactic League is created: an undergrou",
       "url": "https://www.igdb.com/games/star-wars-galactic-racer",
-      "source": "igdb"
-    },
-    {
-      "rank": 32,
-      "igdb_id": "337738",
-      "name": "Assassin's Creed Black Flag Resynced",
-      "hypes": 49,
-      "publisher": "Ubisoft Entertainment",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-07-09",
-      "platforms": "Series X|S, PC, PS5",
-      "summary": "The iconic solo pirate adventure returns with Assassin's Creed Black Flag Resynced, launching on July 9, 2026. Sail the Caribbean as Edward Kenway during the Golden Age of Piracy in this faithfully en",
-      "url": "https://www.igdb.com/games/assassins-creed-black-flag-resynced",
       "source": "igdb"
     },
     {
@@ -481,7 +481,7 @@
       "rank": 35,
       "igdb_id": "189781",
       "name": "Mina the Hollower",
-      "hypes": 42,
+      "hypes": 43,
       "publisher": "Yacht Club Games",
       "is_major": false,
       "is_released": false,
@@ -523,7 +523,7 @@
       "rank": 38,
       "igdb_id": "339608",
       "name": "Neverway",
-      "hypes": 37,
+      "hypes": 38,
       "publisher": "Outersloth",
       "is_major": false,
       "is_released": false,
@@ -663,7 +663,7 @@
       "rank": 48,
       "igdb_id": "347841",
       "name": "There Are No Ghosts at the Grand",
-      "hypes": 32,
+      "hypes": 33,
       "publisher": "Friday Sundae",
       "is_major": false,
       "is_released": false,
@@ -731,6 +731,20 @@
     },
     {
       "rank": 53,
+      "igdb_id": "314449",
+      "name": "Hela: Of Mice & Magic",
+      "hypes": 30,
+      "publisher": "Knights Peak",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-12-31",
+      "platforms": "Series X|S, Switch 2, PC, PS5",
+      "summary": "See the world through the eyes of a brave little mouse in this enchanting 3D co-op adventure. Explore breathtaking landscapes inspired by Northern Sweden, solve puzzles, and be a force for good in a l",
+      "url": "https://www.igdb.com/games/hela-of-mice-and-magic",
+      "source": "igdb"
+    },
+    {
+      "rank": 54,
       "igdb_id": "381223",
       "name": "Warlock",
       "hypes": 29,
@@ -744,21 +758,21 @@
       "source": "igdb"
     },
     {
-      "rank": 54,
-      "igdb_id": "314449",
-      "name": "Hela: Of Mice & Magic",
+      "rank": 55,
+      "igdb_id": "375232",
+      "name": "Halo: Campaign Evolved",
       "hypes": 29,
-      "publisher": "Knights Peak",
-      "is_major": false,
+      "publisher": "Xbox Game Studios",
+      "is_major": true,
       "is_released": false,
       "release_date": "2026-12-31",
-      "platforms": "Series X|S, Switch 2, PC, PS5",
-      "summary": "See the world through the eyes of a brave little mouse in this enchanting 3D co-op adventure. Explore breathtaking landscapes inspired by Northern Sweden, solve puzzles, and be a force for good in a l",
-      "url": "https://www.igdb.com/games/hela-of-mice-and-magic",
+      "platforms": "Series X|S, PC, PS5",
+      "summary": "Experience Where the Legend Begins\n\nHalo: Campaign Evolved is a faithful yet modernized remake of Halo: Combat Evolved’s campaign. Experience the original story rebuilt with high-definition visuals, u",
+      "url": "https://www.igdb.com/games/halo-campaign-evolved",
       "source": "igdb"
     },
     {
-      "rank": 55,
+      "rank": 56,
       "igdb_id": "307368",
       "name": "PVKK: Planetenverteidigungskanonenkommandant",
       "hypes": 29,
@@ -769,20 +783,6 @@
       "platforms": "PC, Mac",
       "summary": "Operate your planetary defense cannon to fend off an interplanetary invasion from the comfort of your cozy bunker. You’re here to stay, so obey your superiors, press the right buttons, and sip your da",
       "url": "https://www.igdb.com/games/pvkk-planetenverteidigungskanonenkommandant",
-      "source": "igdb"
-    },
-    {
-      "rank": 56,
-      "igdb_id": "375232",
-      "name": "Halo: Campaign Evolved",
-      "hypes": 28,
-      "publisher": "Xbox Game Studios",
-      "is_major": true,
-      "is_released": false,
-      "release_date": "2026-12-31",
-      "platforms": "Series X|S, PC, PS5",
-      "summary": "Experience Where the Legend Begins\n\nHalo: Campaign Evolved is a faithful yet modernized remake of Halo: Combat Evolved’s campaign. Experience the original story rebuilt with high-definition visuals, u",
-      "url": "https://www.igdb.com/games/halo-campaign-evolved",
       "source": "igdb"
     },
     {
@@ -899,6 +899,20 @@
     },
     {
       "rank": 65,
+      "igdb_id": "186613",
+      "name": "Showa American Story",
+      "hypes": 26,
+      "publisher": "2P Games",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-12-31",
+      "platforms": "PC, PS5",
+      "summary": "Showa American Story is a brand new RPG and an enthusiastic love letter to the 80s' pop culture that features a strong taste of B-Movies. Follow Choko's journey of truth and revenge across North Ameri",
+      "url": "https://www.igdb.com/games/showa-american-story",
+      "source": "igdb"
+    },
+    {
+      "rank": 66,
       "igdb_id": "165397",
       "name": "The Relic: First Guardian",
       "hypes": 26,
@@ -912,7 +926,7 @@
       "source": "igdb"
     },
     {
-      "rank": 66,
+      "rank": 67,
       "igdb_id": "347662",
       "name": "Blighted",
       "hypes": 25,
@@ -923,20 +937,6 @@
       "platforms": "Switch 2, PC",
       "summary": "Battle your way through a psychedelic western nightmare to reclaim the memories of your people in this action RPG from the creators of Guacamelee! Harness the power of the deadly, reality-altering Bli",
       "url": "https://www.igdb.com/games/blighted",
-      "source": "igdb"
-    },
-    {
-      "rank": 67,
-      "igdb_id": "186613",
-      "name": "Showa American Story",
-      "hypes": 25,
-      "publisher": "2P Games",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-12-31",
-      "platforms": "PC, PS5",
-      "summary": "Showa American Story is a brand new RPG and an enthusiastic love letter to the 80s' pop culture that features a strong taste of B-Movies. Follow Choko's journey of truth and revenge across North Ameri",
-      "url": "https://www.igdb.com/games/showa-american-story",
       "source": "igdb"
     },
     {
@@ -1095,6 +1095,20 @@
     },
     {
       "rank": 79,
+      "igdb_id": "373021",
+      "name": "Avatar Legends: The Fighting Game",
+      "hypes": 20,
+      "publisher": "PM Studios",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-07-02",
+      "platforms": "Series X|S, Switch 2, PC, PS5, Switch",
+      "summary": "Avatar Legends: The Fighting Game is a fast-paced 1v1 fighter where you battle as your favorite characters from the Avatar franchise. Featuring hand-drawn 2D animation true to the series’ roots, propr",
+      "url": "https://www.igdb.com/games/avatar-legends-the-fighting-game",
+      "source": "igdb"
+    },
+    {
+      "rank": 80,
       "igdb_id": "362096",
       "name": "Halloween",
       "hypes": 20,
@@ -1108,7 +1122,7 @@
       "source": "igdb"
     },
     {
-      "rank": 80,
+      "rank": 81,
       "igdb_id": "336164",
       "name": "Dark Mass",
       "hypes": 20,
@@ -1122,7 +1136,7 @@
       "source": "igdb"
     },
     {
-      "rank": 81,
+      "rank": 82,
       "igdb_id": "305039",
       "name": "Tenjutsu",
       "hypes": 20,
@@ -1136,7 +1150,7 @@
       "source": "igdb"
     },
     {
-      "rank": 82,
+      "rank": 83,
       "igdb_id": "305011",
       "name": "Tears of Metal",
       "hypes": 20,
@@ -1150,7 +1164,7 @@
       "source": "igdb"
     },
     {
-      "rank": 83,
+      "rank": 84,
       "igdb_id": "259874",
       "name": "The God Slayer",
       "hypes": 20,
@@ -1164,7 +1178,7 @@
       "source": "igdb"
     },
     {
-      "rank": 84,
+      "rank": 85,
       "igdb_id": "124209",
       "name": "Shadow of the Road",
       "hypes": 20,
@@ -1178,7 +1192,7 @@
       "source": "igdb"
     },
     {
-      "rank": 85,
+      "rank": 86,
       "igdb_id": "381222",
       "name": "Order of the Sinking Star",
       "hypes": 19,
@@ -1192,7 +1206,7 @@
       "source": "igdb"
     },
     {
-      "rank": 86,
+      "rank": 87,
       "igdb_id": "381212",
       "name": "Stupid Never Dies",
       "hypes": 19,
@@ -1206,7 +1220,7 @@
       "source": "igdb"
     },
     {
-      "rank": 87,
+      "rank": 88,
       "igdb_id": "381203",
       "name": "Decrepit",
       "hypes": 19,
@@ -1220,7 +1234,7 @@
       "source": "igdb"
     },
     {
-      "rank": 88,
+      "rank": 89,
       "igdb_id": "375111",
       "name": "Project Tal",
       "hypes": 19,
@@ -1234,21 +1248,21 @@
       "source": "igdb"
     },
     {
-      "rank": 89,
-      "igdb_id": "373021",
-      "name": "Avatar Legends: The Fighting Game",
+      "rank": 90,
+      "igdb_id": "344669",
+      "name": "Warhammer 40,000: Boltgun 2",
       "hypes": 19,
-      "publisher": "PM Studios",
+      "publisher": "Big Fan Games",
       "is_major": false,
       "is_released": false,
-      "release_date": "2026-07-02",
-      "platforms": "Series X|S, Switch 2, PC, PS5, Switch",
-      "summary": "Avatar Legends: The Fighting Game is a fast-paced 1v1 fighter where you battle as your favorite characters from the Avatar franchise. Featuring hand-drawn 2D animation true to the series’ roots, propr",
-      "url": "https://www.igdb.com/games/avatar-legends-the-fighting-game",
+      "release_date": "2026-12-31",
+      "platforms": "Series X|S, PC, PS5",
+      "summary": "Obliterate heretics in the name of the Emperor in Warhammer 40,000: Boltgun 2! Play as Ultramarine Malum Caedo or Sister of Battle Nyra Veyrath in this sequel to retro FPS Warhammer 40,000: Boltgun wi",
+      "url": "https://www.igdb.com/games/warhammer-40000-boltgun-2",
       "source": "igdb"
     },
     {
-      "rank": 90,
+      "rank": 91,
       "igdb_id": "216692",
       "name": "Tenebris Somnia",
       "hypes": 19,
@@ -1262,7 +1276,7 @@
       "source": "igdb"
     },
     {
-      "rank": 91,
+      "rank": 92,
       "igdb_id": "396030",
       "name": "Artificial Detective",
       "hypes": 18,
@@ -1276,7 +1290,7 @@
       "source": "igdb"
     },
     {
-      "rank": 92,
+      "rank": 93,
       "igdb_id": "348205",
       "name": "At Fate's End",
       "hypes": 18,
@@ -1290,21 +1304,21 @@
       "source": "igdb"
     },
     {
-      "rank": 93,
-      "igdb_id": "344669",
-      "name": "Warhammer 40,000: Boltgun 2",
+      "rank": 94,
+      "igdb_id": "348047",
+      "name": "Wanderburg",
       "hypes": 18,
-      "publisher": "Big Fan Games",
+      "publisher": "Randwerk",
       "is_major": false,
       "is_released": false,
       "release_date": "2026-12-31",
-      "platforms": "Series X|S, PC, PS5",
-      "summary": "Obliterate heretics in the name of the Emperor in Warhammer 40,000: Boltgun 2! Play as Ultramarine Malum Caedo or Sister of Battle Nyra Veyrath in this sequel to retro FPS Warhammer 40,000: Boltgun wi",
-      "url": "https://www.igdb.com/games/warhammer-40000-boltgun-2",
+      "platforms": "PC",
+      "summary": "Wanderburg is a minimalist open-world roguelike in an ecosystem of Castles on Wheels. Consume, grow bigger, upgrade your modules, and survive! Unlock new weapons, build your castle, and discover the p",
+      "url": "https://www.igdb.com/games/wanderburg",
       "source": "igdb"
     },
     {
-      "rank": 94,
+      "rank": 95,
       "igdb_id": "330566",
       "name": "Liminal Point",
       "hypes": 18,
@@ -1318,7 +1332,7 @@
       "source": "igdb"
     },
     {
-      "rank": 95,
+      "rank": 96,
       "igdb_id": "194950",
       "name": "Solarpunk",
       "hypes": 18,
@@ -1332,7 +1346,7 @@
       "source": "igdb"
     },
     {
-      "rank": 96,
+      "rank": 97,
       "igdb_id": "194855",
       "name": "The Bornless",
       "hypes": 18,
@@ -1346,7 +1360,7 @@
       "source": "igdb"
     },
     {
-      "rank": 97,
+      "rank": 98,
       "igdb_id": "367776",
       "name": "The Lift",
       "hypes": 17,
@@ -1360,21 +1374,21 @@
       "source": "igdb"
     },
     {
-      "rank": 98,
-      "igdb_id": "348047",
-      "name": "Wanderburg",
+      "rank": 99,
+      "igdb_id": "323536",
+      "name": "Light of Motiram",
       "hypes": 17,
-      "publisher": "Randwerk",
+      "publisher": "Tencent Games",
       "is_major": false,
       "is_released": false,
-      "release_date": "2026-12-31",
-      "platforms": "PC",
-      "summary": "Wanderburg is a minimalist open-world roguelike in an ecosystem of Castles on Wheels. Consume, grow bigger, upgrade your modules, and survive! Unlock new weapons, build your castle, and discover the p",
-      "url": "https://www.igdb.com/games/wanderburg",
+      "release_date": "2027-12-31",
+      "platforms": "Android, PC, iOS, PS5",
+      "summary": "Light of Motiram is an open-world survival game where you explore a world overrun by colossal machines, explore the vast open world, build your base of operations, advance technology, train Mechanimal",
+      "url": "https://www.igdb.com/games/light-of-motiram--1",
       "source": "igdb"
     },
     {
-      "rank": 99,
+      "rank": 100,
       "igdb_id": "309799",
       "name": "Truckful",
       "hypes": 17,
@@ -1385,20 +1399,6 @@
       "platforms": "PS4, Linux, PC, PS5, Mac",
       "summary": "Drive your pickup truck through seemingly peaceful countryside valleys, deliver much-needed goods to local townsfolk and unravel the small town mystery. Beware, the old forest is watching.",
       "url": "https://www.igdb.com/games/truckful",
-      "source": "igdb"
-    },
-    {
-      "rank": 100,
-      "igdb_id": "291446",
-      "name": "Outward 2",
-      "hypes": 17,
-      "publisher": "Nine Dots Publishing",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-07-07",
-      "platforms": "PC",
-      "summary": "Outward 2 is a challenging action RPG with survival elements focusing on a believable and relatable experience. There is no hand holding, no leveled encounters, no divine gift making you tower over yo",
-      "url": "https://www.igdb.com/games/outward-2",
       "source": "igdb"
     }
   ]
