@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-25T14:13:55.261529+09:00",
+  "updated_at": "2026-05-26T13:56:05.008474+09:00",
   "entries": [
     {
       "rank": 1,
@@ -19,7 +19,7 @@
       "rank": 2,
       "igdb_id": "141114",
       "name": "007 First Light",
-      "hypes": 280,
+      "hypes": 281,
       "publisher": "IO Interactive",
       "is_major": false,
       "is_released": false,
@@ -535,6 +535,20 @@
     },
     {
       "rank": 39,
+      "igdb_id": "372154",
+      "name": "Bellum",
+      "hypes": 37,
+      "publisher": "Astarte Industries",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-12-31",
+      "platforms": "PC",
+      "summary": "Bellum is the next evolution of platoon-scale tactical shooters, built in Unreal Engine 5 and shaped by die-hard fans who demanded more from the genre. Set in a fractured Africa of the 2030s, players ",
+      "url": "https://www.igdb.com/games/bellum",
+      "source": "igdb"
+    },
+    {
+      "rank": 40,
       "igdb_id": "322158",
       "name": "Active Matter",
       "hypes": 37,
@@ -548,7 +562,7 @@
       "source": "igdb"
     },
     {
-      "rank": 40,
+      "rank": 41,
       "igdb_id": "289696",
       "name": "The Sinking City 2",
       "hypes": 37,
@@ -562,7 +576,7 @@
       "source": "igdb"
     },
     {
-      "rank": 41,
+      "rank": 42,
       "igdb_id": "26200",
       "name": "Infinitesimals",
       "hypes": 37,
@@ -576,7 +590,7 @@
       "source": "igdb"
     },
     {
-      "rank": 42,
+      "rank": 43,
       "igdb_id": "389434",
       "name": "Castlevania: Belmont's Curse",
       "hypes": 36,
@@ -587,20 +601,6 @@
       "platforms": "Series X|S, PC, PS5, Switch",
       "summary": "Crimson Curse —Will Your Fate Bloom in Despair or Salvation. Set 23 years after Castlevania Dracula's Curse - follow a young Belmont's journey in an all new 2D Action-Exploration title from KONAMI, Ev",
       "url": "https://www.igdb.com/games/castlevania-belmonts-curse",
-      "source": "igdb"
-    },
-    {
-      "rank": 43,
-      "igdb_id": "372154",
-      "name": "Bellum",
-      "hypes": 36,
-      "publisher": "Astarte Industries",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-12-31",
-      "platforms": "PC",
-      "summary": "Bellum is the next evolution of platoon-scale tactical shooters, built in Unreal Engine 5 and shaped by die-hard fans who demanded more from the genre. Set in a fractured Africa of the 2030s, players ",
-      "url": "https://www.igdb.com/games/bellum",
       "source": "igdb"
     },
     {
@@ -717,6 +717,20 @@
     },
     {
       "rank": 52,
+      "igdb_id": "314449",
+      "name": "Hela: Of Mice & Magic",
+      "hypes": 31,
+      "publisher": "Knights Peak",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-12-31",
+      "platforms": "Series X|S, Switch 2, PC, PS5",
+      "summary": "See the world through the eyes of a brave little mouse in this enchanting 3D co-op adventure. Explore breathtaking landscapes inspired by Northern Sweden, solve puzzles, and be a force for good in a l",
+      "url": "https://www.igdb.com/games/hela-of-mice-and-magic",
+      "source": "igdb"
+    },
+    {
+      "rank": 53,
       "igdb_id": "340113",
       "name": "Star Wars Zero Company",
       "hypes": 30,
@@ -727,20 +741,6 @@
       "platforms": "Series X|S, PC, PS5",
       "summary": "Command an elite squad through a gritty and authentic story in Star Wars Zero Company, a single-player turn-based tactics game.",
       "url": "https://www.igdb.com/games/star-wars-zero-company",
-      "source": "igdb"
-    },
-    {
-      "rank": 53,
-      "igdb_id": "314449",
-      "name": "Hela: Of Mice & Magic",
-      "hypes": 30,
-      "publisher": "Knights Peak",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-12-31",
-      "platforms": "Series X|S, Switch 2, PC, PS5",
-      "summary": "See the world through the eyes of a brave little mouse in this enchanting 3D co-op adventure. Explore breathtaking landscapes inspired by Northern Sweden, solve puzzles, and be a force for good in a l",
-      "url": "https://www.igdb.com/games/hela-of-mice-and-magic",
       "source": "igdb"
     },
     {
@@ -773,6 +773,20 @@
     },
     {
       "rank": 56,
+      "igdb_id": "344218",
+      "name": "Sea of Remnants",
+      "hypes": 29,
+      "publisher": "NetEase Games",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-12-31",
+      "platforms": "PC, PS5",
+      "summary": "Sea of Remnants is an original ocean adventure RPG developed by Joker Studio. Your journey begins as a puppetfolk sailor who has lost their memory. Alongside a mysterious girl, you’ll set sail on a ch",
+      "url": "https://www.igdb.com/games/sea-of-remnants",
+      "source": "igdb"
+    },
+    {
+      "rank": 57,
       "igdb_id": "307368",
       "name": "PVKK: Planetenverteidigungskanonenkommandant",
       "hypes": 29,
@@ -783,20 +797,6 @@
       "platforms": "PC, Mac",
       "summary": "Operate your planetary defense cannon to fend off an interplanetary invasion from the comfort of your cozy bunker. You’re here to stay, so obey your superiors, press the right buttons, and sip your da",
       "url": "https://www.igdb.com/games/pvkk-planetenverteidigungskanonenkommandant",
-      "source": "igdb"
-    },
-    {
-      "rank": 57,
-      "igdb_id": "344218",
-      "name": "Sea of Remnants",
-      "hypes": 28,
-      "publisher": "NetEase Games",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-12-31",
-      "platforms": "PC, PS5",
-      "summary": "Sea of Remnants is an original ocean adventure RPG developed by Joker Studio. Your journey begins as a puppetfolk sailor who has lost their memory. Alongside a mysterious girl, you’ll set sail on a ch",
-      "url": "https://www.igdb.com/games/sea-of-remnants",
       "source": "igdb"
     },
     {
