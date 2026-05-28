@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-27T14:08:24.641675+09:00",
+  "updated_at": "2026-05-28T14:02:53.666347+09:00",
   "entries": [
     {
       "rank": 1,
@@ -19,7 +19,7 @@
       "rank": 2,
       "igdb_id": "282831",
       "name": "The Blood of Dawnwalker",
-      "hypes": 176,
+      "hypes": 177,
       "publisher": "Bandai Namco Entertainment",
       "is_major": true,
       "is_released": false,
@@ -89,7 +89,7 @@
       "rank": 7,
       "igdb_id": "381234",
       "name": "Tomb Raider: Catalyst",
-      "hypes": 89,
+      "hypes": 90,
       "publisher": "Amazon Games",
       "is_major": false,
       "is_released": false,
@@ -103,7 +103,7 @@
       "rank": 8,
       "igdb_id": "348180",
       "name": "Beast of Reincarnation",
-      "hypes": 88,
+      "hypes": 89,
       "publisher": "Fictions",
       "is_major": false,
       "is_released": false,
@@ -117,7 +117,7 @@
       "rank": 9,
       "igdb_id": "347869",
       "name": "The Expanse: Osiris Reborn",
-      "hypes": 88,
+      "hypes": 89,
       "publisher": "Owlcat Games",
       "is_major": false,
       "is_released": false,
@@ -131,7 +131,7 @@
       "rank": 10,
       "igdb_id": "325599",
       "name": "Stranger Than Heaven",
-      "hypes": 88,
+      "hypes": 87,
       "publisher": "Sega",
       "is_major": true,
       "is_released": false,
@@ -145,7 +145,7 @@
       "rank": 11,
       "igdb_id": "216315",
       "name": "Marvel 1943: Rise of Hydra",
-      "hypes": 82,
+      "hypes": 83,
       "publisher": "Skydance New Media",
       "is_major": false,
       "is_released": false,
@@ -173,7 +173,7 @@
       "rank": 13,
       "igdb_id": "381235",
       "name": "Tomb Raider: Legacy of Atlantis",
-      "hypes": 74,
+      "hypes": 75,
       "publisher": "Amazon Games",
       "is_major": false,
       "is_released": false,
@@ -201,7 +201,7 @@
       "rank": 15,
       "igdb_id": "305160",
       "name": "Gears of War: E-Day",
-      "hypes": 68,
+      "hypes": 69,
       "publisher": "Xbox Game Studios",
       "is_major": true,
       "is_released": false,
@@ -383,7 +383,7 @@
       "rank": 28,
       "igdb_id": "337738",
       "name": "Assassin's Creed Black Flag Resynced",
-      "hypes": 53,
+      "hypes": 54,
       "publisher": "Ubisoft Entertainment",
       "is_major": false,
       "is_released": false,
@@ -425,7 +425,7 @@
       "rank": 31,
       "igdb_id": "381248",
       "name": "Star Wars: Galactic Racer",
-      "hypes": 49,
+      "hypes": 50,
       "publisher": "Secret Mode",
       "is_major": false,
       "is_released": false,
@@ -451,6 +451,20 @@
     },
     {
       "rank": 33,
+      "igdb_id": "189781",
+      "name": "Mina the Hollower",
+      "hypes": 46,
+      "publisher": "Yacht Club Games",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-05-29",
+      "platforms": "Series X|S, Linux, Switch 2, PC, PS5, Mac, Switch",
+      "summary": "Mina the Hollower is a bone-chilling action-adventure game featuring classic gameplay and an 8-bit aesthetic in the style of Game Boy Color, refined for the modern era.\n\nQuick and deliberate 60fps act",
+      "url": "https://www.igdb.com/games/mina-the-hollower",
+      "source": "igdb"
+    },
+    {
+      "rank": 34,
       "igdb_id": "398225",
       "name": "Metro 2039",
       "hypes": 43,
@@ -464,24 +478,10 @@
       "source": "igdb"
     },
     {
-      "rank": 34,
-      "igdb_id": "189781",
-      "name": "Mina the Hollower",
-      "hypes": 43,
-      "publisher": "Yacht Club Games",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-05-29",
-      "platforms": "Series X|S, Linux, Switch 2, PC, PS5, Mac, Switch",
-      "summary": "Mina the Hollower is a bone-chilling action-adventure game featuring classic gameplay and an 8-bit aesthetic in the style of Game Boy Color, refined for the modern era.\n\nQuick and deliberate 60fps act",
-      "url": "https://www.igdb.com/games/mina-the-hollower",
-      "source": "igdb"
-    },
-    {
       "rank": 35,
       "igdb_id": "347132",
       "name": "Marvel Tokon: Fighting Souls",
-      "hypes": 39,
+      "hypes": 40,
       "publisher": "PlayStation Studios",
       "is_major": false,
       "is_released": false,
@@ -495,7 +495,7 @@
       "rank": 36,
       "igdb_id": "356552",
       "name": "Clive Barker's Hellraiser: Revival",
-      "hypes": 38,
+      "hypes": 39,
       "publisher": "Saber Interactive",
       "is_major": false,
       "is_released": false,
@@ -717,6 +717,20 @@
     },
     {
       "rank": 52,
+      "igdb_id": "375232",
+      "name": "Halo: Campaign Evolved",
+      "hypes": 30,
+      "publisher": "Xbox Game Studios",
+      "is_major": true,
+      "is_released": false,
+      "release_date": "2026-12-31",
+      "platforms": "Series X|S, PC, PS5",
+      "summary": "Experience Where the Legend Begins\n\nHalo: Campaign Evolved is a faithful yet modernized remake of Halo: Combat Evolved’s campaign. Experience the original story rebuilt with high-definition visuals, u",
+      "url": "https://www.igdb.com/games/halo-campaign-evolved",
+      "source": "igdb"
+    },
+    {
+      "rank": 53,
       "igdb_id": "340113",
       "name": "Star Wars Zero Company",
       "hypes": 30,
@@ -730,7 +744,7 @@
       "source": "igdb"
     },
     {
-      "rank": 53,
+      "rank": 54,
       "igdb_id": "381223",
       "name": "Warlock",
       "hypes": 29,
@@ -741,20 +755,6 @@
       "platforms": "Series X|S, PC, PS5",
       "summary": "In Warlock, you take on the role of Kaatri, a veteran warrior, in a new third-person action-adventure set in a dark fantasy open world inspired by Dungeons & Dragons. Make a pact to wield forbidden ma",
       "url": "https://www.igdb.com/games/warlock--2",
-      "source": "igdb"
-    },
-    {
-      "rank": 54,
-      "igdb_id": "375232",
-      "name": "Halo: Campaign Evolved",
-      "hypes": 29,
-      "publisher": "Xbox Game Studios",
-      "is_major": true,
-      "is_released": false,
-      "release_date": "2026-12-31",
-      "platforms": "Series X|S, PC, PS5",
-      "summary": "Experience Where the Legend Begins\n\nHalo: Campaign Evolved is a faithful yet modernized remake of Halo: Combat Evolved’s campaign. Experience the original story rebuilt with high-definition visuals, u",
-      "url": "https://www.igdb.com/games/halo-campaign-evolved",
       "source": "igdb"
     },
     {
@@ -975,7 +975,7 @@
       "publisher": "Lifeline Entertainment",
       "is_major": false,
       "is_released": false,
-      "release_date": "2026-12-31",
+      "release_date": "2026-06-01",
       "platforms": "Series X|S, PC, PS5, Switch",
       "summary": "A Cinematic Platformer who you follow the journey of a boy who, during his flight will meet an unexpected companion. Together they will overcome many obstacles that will change their lives forever.",
       "url": "https://www.igdb.com/games/deer-and-boy",
@@ -1319,20 +1319,6 @@
     },
     {
       "rank": 95,
-      "igdb_id": "291446",
-      "name": "Outward 2",
-      "hypes": 18,
-      "publisher": "Nine Dots Publishing",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-07-07",
-      "platforms": "PC",
-      "summary": "Outward 2 is a challenging action RPG with survival elements focusing on a believable and relatable experience. There is no hand holding, no leveled encounters, no divine gift making you tower over yo",
-      "url": "https://www.igdb.com/games/outward-2",
-      "source": "igdb"
-    },
-    {
-      "rank": 96,
       "igdb_id": "194950",
       "name": "Solarpunk",
       "hypes": 18,
@@ -1346,7 +1332,7 @@
       "source": "igdb"
     },
     {
-      "rank": 97,
+      "rank": 96,
       "igdb_id": "194855",
       "name": "The Bornless",
       "hypes": 18,
@@ -1360,7 +1346,7 @@
       "source": "igdb"
     },
     {
-      "rank": 98,
+      "rank": 97,
       "igdb_id": "367776",
       "name": "The Lift",
       "hypes": 17,
@@ -1374,7 +1360,7 @@
       "source": "igdb"
     },
     {
-      "rank": 99,
+      "rank": 98,
       "igdb_id": "323536",
       "name": "Light of Motiram",
       "hypes": 17,
@@ -1388,7 +1374,7 @@
       "source": "igdb"
     },
     {
-      "rank": 100,
+      "rank": 99,
       "igdb_id": "309799",
       "name": "Truckful",
       "hypes": 17,
@@ -1399,6 +1385,20 @@
       "platforms": "PS4, Linux, PC, PS5, Mac",
       "summary": "Drive your pickup truck through seemingly peaceful countryside valleys, deliver much-needed goods to local townsfolk and unravel the small town mystery. Beware, the old forest is watching.",
       "url": "https://www.igdb.com/games/truckful",
+      "source": "igdb"
+    },
+    {
+      "rank": 100,
+      "igdb_id": "396020",
+      "name": "Hunter: The Reckoning - Deathwish",
+      "hypes": 16,
+      "publisher": "Nacon",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2027-09-30",
+      "platforms": "Series X|S, PC, PS5",
+      "summary": "Vampires, Werewolves, Witches. What if I told you that the things that go bump in the night are real? What if I told you that you could see them?\n\nAwaken to the truth you’re now a Hunter. Build your c",
+      "url": "https://www.igdb.com/games/hunter-the-reckoning-deathwish",
       "source": "igdb"
     }
   ]
