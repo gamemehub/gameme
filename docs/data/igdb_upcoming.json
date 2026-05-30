@@ -1,15 +1,15 @@
 {
-  "updated_at": "2026-05-29T14:04:19.434558+09:00",
+  "updated_at": "2026-05-30T13:43:44.478955+09:00",
   "entries": [
     {
       "rank": 1,
       "igdb_id": "92550",
       "name": "Fable",
-      "hypes": 329,
+      "hypes": 331,
       "publisher": "Xbox Game Studios",
       "is_major": true,
       "is_released": false,
-      "release_date": "2026-12-31",
+      "release_date": "2027-02-01",
       "platforms": "Series X|S, PC, PS5",
       "summary": "Become the Hero you want to be in an immersive open-world action-RPG where each choice shapes your journey, reputation is everything, and fairytale endings are never guaranteed.",
       "url": "https://www.igdb.com/games/fable--1",
@@ -23,7 +23,7 @@
       "publisher": "Bandai Namco Entertainment",
       "is_major": true,
       "is_released": false,
-      "release_date": "2026-09-02",
+      "release_date": "2026-09-03",
       "platforms": "Series X|S, PC, PS5",
       "summary": "The Blood of Dawnwalker is an open-world dark fantasy action RPG set in 14th-century Europe. You play as Coen, human by day and vampire by night, fighting to save your family in a story shaped by your",
       "url": "https://www.igdb.com/games/the-blood-of-dawnwalker",
@@ -75,7 +75,7 @@
       "rank": 6,
       "igdb_id": "279621",
       "name": "Exodus",
-      "hypes": 100,
+      "hypes": 101,
       "publisher": "Wizards of the Coast",
       "is_major": false,
       "is_released": false,
@@ -89,7 +89,7 @@
       "rank": 7,
       "igdb_id": "381234",
       "name": "Tomb Raider: Catalyst",
-      "hypes": 90,
+      "hypes": 93,
       "publisher": "Amazon Games",
       "is_major": false,
       "is_released": false,
@@ -173,7 +173,7 @@
       "rank": 13,
       "igdb_id": "381235",
       "name": "Tomb Raider: Legacy of Atlantis",
-      "hypes": 75,
+      "hypes": 76,
       "publisher": "Amazon Games",
       "is_major": false,
       "is_released": false,
@@ -215,7 +215,7 @@
       "rank": 16,
       "igdb_id": "347645",
       "name": "Out of Words",
-      "hypes": 67,
+      "hypes": 68,
       "publisher": "Epic Games Publishing",
       "is_major": false,
       "is_released": false,
@@ -297,16 +297,16 @@
     },
     {
       "rank": 22,
-      "igdb_id": "381219",
-      "name": "Ontos",
+      "igdb_id": "361833",
+      "name": "Valor Mortis",
       "hypes": 56,
-      "publisher": "Frictional Games",
+      "publisher": "One More Level",
       "is_major": false,
       "is_released": false,
       "release_date": "2026-12-31",
       "platforms": "Series X|S, PC, PS5",
-      "summary": "A sci-fi mystery set on the repurposed moon hotel Samsara. Uncover cryptic experiments, face unsettling encounters, and piece together a mind-bending narrative. The deeper you go, the more the truth u",
-      "url": "https://www.igdb.com/games/ontos",
+      "summary": "Valor Mortis is a first-person action soulslike from the creators of Ghostrunner. Rise from death as a former soldier of Napoleon’s army. Wield supernatural powers, battle horrifying monsters, and unr",
+      "url": "https://www.igdb.com/games/valor-mortis",
       "source": "igdb"
     },
     {
@@ -325,6 +325,20 @@
     },
     {
       "rank": 24,
+      "igdb_id": "337738",
+      "name": "Assassin's Creed Black Flag Resynced",
+      "hypes": 56,
+      "publisher": "Ubisoft Entertainment",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-07-09",
+      "platforms": "Series X|S, PC, PS5",
+      "summary": "The iconic solo pirate adventure returns with Assassin's Creed Black Flag Resynced, launching on July 9, 2026. Sail the Caribbean as Edward Kenway during the Golden Age of Piracy in this faithfully en",
+      "url": "https://www.igdb.com/games/assassins-creed-black-flag-resynced",
+      "source": "igdb"
+    },
+    {
+      "rank": 25,
       "igdb_id": "318503",
       "name": "Lords of the Fallen II",
       "hypes": 56,
@@ -338,7 +352,7 @@
       "source": "igdb"
     },
     {
-      "rank": 25,
+      "rank": 26,
       "igdb_id": "148227",
       "name": "Gothic 1 Remake",
       "hypes": 56,
@@ -352,21 +366,21 @@
       "source": "igdb"
     },
     {
-      "rank": 26,
-      "igdb_id": "361833",
-      "name": "Valor Mortis",
+      "rank": 27,
+      "igdb_id": "381219",
+      "name": "Ontos",
       "hypes": 55,
-      "publisher": "One More Level",
+      "publisher": "Frictional Games",
       "is_major": false,
       "is_released": false,
       "release_date": "2026-12-31",
       "platforms": "Series X|S, PC, PS5",
-      "summary": "Valor Mortis is a first-person action soulslike from the creators of Ghostrunner. Rise from death as a former soldier of Napoleon’s army. Wield supernatural powers, battle horrifying monsters, and unr",
-      "url": "https://www.igdb.com/games/valor-mortis",
+      "summary": "A sci-fi mystery set on the repurposed moon hotel Samsara. Uncover cryptic experiments, face unsettling encounters, and piece together a mind-bending narrative. The deeper you go, the more the truth u",
+      "url": "https://www.igdb.com/games/ontos",
       "source": "igdb"
     },
     {
-      "rank": 27,
+      "rank": 28,
       "igdb_id": "348199",
       "name": "Mudang: Two Hearts",
       "hypes": 55,
@@ -377,20 +391,6 @@
       "platforms": "Series X|S, PC, PS5",
       "summary": "MUDANG: Two Hearts is a narrative-driven, third-person action adventure that blends tactical stealth, visceral combat, and cinematic storytelling set on a politically volatile Korean peninsula.",
       "url": "https://www.igdb.com/games/mudang-two-hearts",
-      "source": "igdb"
-    },
-    {
-      "rank": 28,
-      "igdb_id": "337738",
-      "name": "Assassin's Creed Black Flag Resynced",
-      "hypes": 55,
-      "publisher": "Ubisoft Entertainment",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-07-09",
-      "platforms": "Series X|S, PC, PS5",
-      "summary": "The iconic solo pirate adventure returns with Assassin's Creed Black Flag Resynced, launching on July 9, 2026. Sail the Caribbean as Edward Kenway during the Golden Age of Piracy in this faithfully en",
-      "url": "https://www.igdb.com/games/assassins-creed-black-flag-resynced",
       "source": "igdb"
     },
     {
@@ -467,7 +467,7 @@
       "rank": 34,
       "igdb_id": "347132",
       "name": "Marvel Tokon: Fighting Souls",
-      "hypes": 40,
+      "hypes": 41,
       "publisher": "PlayStation Studios",
       "is_major": false,
       "is_released": false,
@@ -481,7 +481,7 @@
       "rank": 35,
       "igdb_id": "356552",
       "name": "Clive Barker's Hellraiser: Revival",
-      "hypes": 39,
+      "hypes": 40,
       "publisher": "Saber Interactive",
       "is_major": false,
       "is_released": false,
@@ -493,6 +493,20 @@
     },
     {
       "rank": 36,
+      "igdb_id": "289696",
+      "name": "The Sinking City 2",
+      "hypes": 38,
+      "publisher": "Frogwares",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-12-31",
+      "platforms": "Series X|S, PC, PS5",
+      "summary": "The Sinking City 2 is a terrifying Lovecraftian journey, powered by Unreal Engine 5. Experience a heart-pounding survival horror as you explore the flooded city of Arkham and fight eldritch monsters b",
+      "url": "https://www.igdb.com/games/the-sinking-city-2",
+      "source": "igdb"
+    },
+    {
+      "rank": 37,
       "igdb_id": "26200",
       "name": "Infinitesimals",
       "hypes": 38,
@@ -506,7 +520,7 @@
       "source": "igdb"
     },
     {
-      "rank": 37,
+      "rank": 38,
       "igdb_id": "372154",
       "name": "Bellum",
       "hypes": 37,
@@ -520,7 +534,7 @@
       "source": "igdb"
     },
     {
-      "rank": 38,
+      "rank": 39,
       "igdb_id": "339608",
       "name": "Neverway",
       "hypes": 37,
@@ -534,7 +548,7 @@
       "source": "igdb"
     },
     {
-      "rank": 39,
+      "rank": 40,
       "igdb_id": "322158",
       "name": "Active Matter",
       "hypes": 37,
@@ -545,20 +559,6 @@
       "platforms": "Series X|S, PC, PS5",
       "summary": "You’re an operative stuck in a time loop, always brought back from the dead to the same point.\n\nChoose your loadout and enter quantum unstable zones rich with active matter — a substance capable of wa",
       "url": "https://www.igdb.com/games/active-matter",
-      "source": "igdb"
-    },
-    {
-      "rank": 40,
-      "igdb_id": "289696",
-      "name": "The Sinking City 2",
-      "hypes": 37,
-      "publisher": "Frogwares",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-12-31",
-      "platforms": "Series X|S, PC, PS5",
-      "summary": "The Sinking City 2 is a terrifying Lovecraftian journey, powered by Unreal Engine 5. Experience a heart-pounding survival horror as you explore the flooded city of Arkham and fight eldritch monsters b",
-      "url": "https://www.igdb.com/games/the-sinking-city-2",
       "source": "igdb"
     },
     {
@@ -773,6 +773,20 @@
     },
     {
       "rank": 56,
+      "igdb_id": "216609",
+      "name": "Long Gone",
+      "hypes": 29,
+      "publisher": "Hillfort Games",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2027-12-31",
+      "platforms": "PC, Mac",
+      "summary": "Decades after the outbreak, you play as a survivor stranded in an old-world suburban neighborhood. Explore the lives of people Long Gone through their forgotten belongings and uncover secrets as you s",
+      "url": "https://www.igdb.com/games/long-gone",
+      "source": "igdb"
+    },
+    {
+      "rank": 57,
       "igdb_id": "329124",
       "name": "Over the Hill",
       "hypes": 28,
@@ -786,7 +800,7 @@
       "source": "igdb"
     },
     {
-      "rank": 57,
+      "rank": 58,
       "igdb_id": "320141",
       "name": "Mistfall Hunter",
       "hypes": 28,
@@ -800,7 +814,7 @@
       "source": "igdb"
     },
     {
-      "rank": 58,
+      "rank": 59,
       "igdb_id": "317622",
       "name": "ArcheAge Chronicles",
       "hypes": 28,
@@ -811,20 +825,6 @@
       "platforms": "Series X|S, PC, PS5",
       "summary": "Explore Auroria, a vast and vibrant world brimming with rich lore and thrilling action. ArcheAge Chronicles delivers an immersive experience that will capture players' hearts, whether they are newcome",
       "url": "https://www.igdb.com/games/archeage-chronicles",
-      "source": "igdb"
-    },
-    {
-      "rank": 59,
-      "igdb_id": "216609",
-      "name": "Long Gone",
-      "hypes": 28,
-      "publisher": "Hillfort Games",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2027-12-31",
-      "platforms": "PC, Mac",
-      "summary": "Decades after the outbreak, you play as a survivor stranded in an old-world suburban neighborhood. Explore the lives of people Long Gone through their forgotten belongings and uncover secrets as you s",
-      "url": "https://www.igdb.com/games/long-gone",
       "source": "igdb"
     },
     {
@@ -913,6 +913,20 @@
     },
     {
       "rank": 66,
+      "igdb_id": "389433",
+      "name": "Metal Gear Solid Master Collection: Volume 2",
+      "hypes": 25,
+      "publisher": "Konami",
+      "is_major": true,
+      "is_released": false,
+      "release_date": "2026-08-27",
+      "platforms": "Series X|S, Switch 2, PC, PS5, Switch",
+      "summary": "This second installment to the collection features “Metal Gear Solid 4: Guns of the Patriots” and “Metal Gear Solid: Peace Walker (HD Collection version),” and also a digital soundtrack and \"Metal Gea",
+      "url": "https://www.igdb.com/games/metal-gear-solid-master-collection-volume-2--1",
+      "source": "igdb"
+    },
+    {
+      "rank": 67,
       "igdb_id": "313597",
       "name": "Silver Pines",
       "hypes": 25,
@@ -923,20 +937,6 @@
       "platforms": "Series X|S, Switch 2, PC, PS5, Switch",
       "summary": "Silver Pines is a survival horror metroidvania. Fight nightmarish terrors and solve puzzles, while carefully managing your scarce resources as you uncover the mysteries of a case that could hold the k",
       "url": "https://www.igdb.com/games/silver-pines",
-      "source": "igdb"
-    },
-    {
-      "rank": 67,
-      "igdb_id": "389433",
-      "name": "Metal Gear Solid Master Collection: Volume 2",
-      "hypes": 24,
-      "publisher": "Konami",
-      "is_major": true,
-      "is_released": false,
-      "release_date": "2026-08-27",
-      "platforms": "Series X|S, Switch 2, PC, PS5, Switch",
-      "summary": "This second installment to the collection features “Metal Gear Solid 4: Guns of the Patriots” and “Metal Gear Solid: Peace Walker (HD Collection version),” and also a digital soundtrack and \"Metal Gea",
-      "url": "https://www.igdb.com/games/metal-gear-solid-master-collection-volume-2--1",
       "source": "igdb"
     },
     {
@@ -1165,6 +1165,20 @@
     },
     {
       "rank": 84,
+      "igdb_id": "194950",
+      "name": "Solarpunk",
+      "hypes": 20,
+      "publisher": "rokaplay",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-06-08",
+      "platforms": "Series X|S, Switch 2, PC, PS5",
+      "summary": "Solarpunk is a survival game in a technically advanced world of floating islands. Alone or together with your friends, you can construct buildings, grow food, craft gadgets and explore distant islands",
+      "url": "https://www.igdb.com/games/solarpunk",
+      "source": "igdb"
+    },
+    {
+      "rank": 85,
       "igdb_id": "124209",
       "name": "Shadow of the Road",
       "hypes": 20,
@@ -1178,7 +1192,7 @@
       "source": "igdb"
     },
     {
-      "rank": 85,
+      "rank": 86,
       "igdb_id": "396030",
       "name": "Artificial Detective",
       "hypes": 19,
@@ -1192,7 +1206,7 @@
       "source": "igdb"
     },
     {
-      "rank": 86,
+      "rank": 87,
       "igdb_id": "383882",
       "name": "Burglin' Gnomes",
       "hypes": 19,
@@ -1206,7 +1220,7 @@
       "source": "igdb"
     },
     {
-      "rank": 87,
+      "rank": 88,
       "igdb_id": "381222",
       "name": "Order of the Sinking Star",
       "hypes": 19,
@@ -1220,7 +1234,7 @@
       "source": "igdb"
     },
     {
-      "rank": 88,
+      "rank": 89,
       "igdb_id": "381212",
       "name": "Stupid Never Dies",
       "hypes": 19,
@@ -1234,7 +1248,7 @@
       "source": "igdb"
     },
     {
-      "rank": 89,
+      "rank": 90,
       "igdb_id": "381203",
       "name": "Decrepit",
       "hypes": 19,
@@ -1248,7 +1262,7 @@
       "source": "igdb"
     },
     {
-      "rank": 90,
+      "rank": 91,
       "igdb_id": "375111",
       "name": "Project Tal",
       "hypes": 19,
@@ -1262,7 +1276,7 @@
       "source": "igdb"
     },
     {
-      "rank": 91,
+      "rank": 92,
       "igdb_id": "348205",
       "name": "At Fate's End",
       "hypes": 19,
@@ -1276,7 +1290,7 @@
       "source": "igdb"
     },
     {
-      "rank": 92,
+      "rank": 93,
       "igdb_id": "344669",
       "name": "Warhammer 40,000: Boltgun 2",
       "hypes": 19,
@@ -1290,24 +1304,10 @@
       "source": "igdb"
     },
     {
-      "rank": 93,
-      "igdb_id": "348047",
-      "name": "Wanderburg",
-      "hypes": 18,
-      "publisher": "Randwerk",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-12-31",
-      "platforms": "PC",
-      "summary": "Wanderburg is a minimalist open-world roguelike in an ecosystem of Castles on Wheels. Consume, grow bigger, upgrade your modules, and survive! Unlock new weapons, build your castle, and discover the p",
-      "url": "https://www.igdb.com/games/wanderburg",
-      "source": "igdb"
-    },
-    {
       "rank": 94,
       "igdb_id": "330566",
       "name": "Liminal Point",
-      "hypes": 18,
+      "hypes": 19,
       "publisher": "HideWorks",
       "is_major": false,
       "is_released": false,
@@ -1319,16 +1319,16 @@
     },
     {
       "rank": 95,
-      "igdb_id": "194950",
-      "name": "Solarpunk",
+      "igdb_id": "348047",
+      "name": "Wanderburg",
       "hypes": 18,
-      "publisher": "rokaplay",
+      "publisher": "Randwerk",
       "is_major": false,
       "is_released": false,
-      "release_date": "2026-06-08",
-      "platforms": "Series X|S, Switch 2, PC, PS5",
-      "summary": "Solarpunk is a survival game in a technically advanced world of floating islands. Alone or together with your friends, you can construct buildings, grow food, craft gadgets and explore distant islands",
-      "url": "https://www.igdb.com/games/solarpunk",
+      "release_date": "2026-12-31",
+      "platforms": "PC",
+      "summary": "Wanderburg is a minimalist open-world roguelike in an ecosystem of Castles on Wheels. Consume, grow bigger, upgrade your modules, and survive! Unlock new weapons, build your castle, and discover the p",
+      "url": "https://www.igdb.com/games/wanderburg",
       "source": "igdb"
     },
     {
