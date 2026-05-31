@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-30T13:43:44.478955+09:00",
+  "updated_at": "2026-05-31T14:12:00.173827+09:00",
   "entries": [
     {
       "rank": 1,
@@ -33,7 +33,7 @@
       "rank": 3,
       "igdb_id": "250618",
       "name": "Phantom Blade 0",
-      "hypes": 154,
+      "hypes": 155,
       "publisher": "S-Game",
       "is_major": false,
       "is_released": false,
@@ -173,7 +173,7 @@
       "rank": 13,
       "igdb_id": "381235",
       "name": "Tomb Raider: Legacy of Atlantis",
-      "hypes": 76,
+      "hypes": 77,
       "publisher": "Amazon Games",
       "is_major": false,
       "is_released": false,
@@ -283,9 +283,23 @@
     },
     {
       "rank": 21,
+      "igdb_id": "337738",
+      "name": "Assassin's Creed Black Flag Resynced",
+      "hypes": 59,
+      "publisher": "Ubisoft Entertainment",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-07-09",
+      "platforms": "Series X|S, PC, PS5",
+      "summary": "The iconic solo pirate adventure returns with Assassin's Creed Black Flag Resynced, launching on July 9, 2026. Sail the Caribbean as Edward Kenway during the Golden Age of Piracy in this faithfully en",
+      "url": "https://www.igdb.com/games/assassins-creed-black-flag-resynced",
+      "source": "igdb"
+    },
+    {
+      "rank": 22,
       "igdb_id": "389419",
       "name": "Kena: Scars of Kosmora",
-      "hypes": 57,
+      "hypes": 58,
       "publisher": "Sony Interactive Entertainment",
       "is_major": true,
       "is_released": false,
@@ -296,7 +310,21 @@
       "source": "igdb"
     },
     {
-      "rank": 22,
+      "rank": 23,
+      "igdb_id": "381219",
+      "name": "Ontos",
+      "hypes": 56,
+      "publisher": "Frictional Games",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-12-31",
+      "platforms": "Series X|S, PC, PS5",
+      "summary": "A sci-fi mystery set on the repurposed moon hotel Samsara. Uncover cryptic experiments, face unsettling encounters, and piece together a mind-bending narrative. The deeper you go, the more the truth u",
+      "url": "https://www.igdb.com/games/ontos",
+      "source": "igdb"
+    },
+    {
+      "rank": 24,
       "igdb_id": "361833",
       "name": "Valor Mortis",
       "hypes": 56,
@@ -310,7 +338,7 @@
       "source": "igdb"
     },
     {
-      "rank": 23,
+      "rank": 25,
       "igdb_id": "347633",
       "name": "Mortal Shell II",
       "hypes": 56,
@@ -324,21 +352,7 @@
       "source": "igdb"
     },
     {
-      "rank": 24,
-      "igdb_id": "337738",
-      "name": "Assassin's Creed Black Flag Resynced",
-      "hypes": 56,
-      "publisher": "Ubisoft Entertainment",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-07-09",
-      "platforms": "Series X|S, PC, PS5",
-      "summary": "The iconic solo pirate adventure returns with Assassin's Creed Black Flag Resynced, launching on July 9, 2026. Sail the Caribbean as Edward Kenway during the Golden Age of Piracy in this faithfully en",
-      "url": "https://www.igdb.com/games/assassins-creed-black-flag-resynced",
-      "source": "igdb"
-    },
-    {
-      "rank": 25,
+      "rank": 26,
       "igdb_id": "318503",
       "name": "Lords of the Fallen II",
       "hypes": 56,
@@ -352,7 +366,7 @@
       "source": "igdb"
     },
     {
-      "rank": 26,
+      "rank": 27,
       "igdb_id": "148227",
       "name": "Gothic 1 Remake",
       "hypes": 56,
@@ -363,20 +377,6 @@
       "platforms": "Series X|S, PC, PS5",
       "summary": "The Legend is Back - Return to the Valley of the Mines in this faithful remake of the genre-defining classic RPG. Explore a hand-crafted, organic open world that reacts dynamically to your actions in ",
       "url": "https://www.igdb.com/games/gothic-1-remake",
-      "source": "igdb"
-    },
-    {
-      "rank": 27,
-      "igdb_id": "381219",
-      "name": "Ontos",
-      "hypes": 55,
-      "publisher": "Frictional Games",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-12-31",
-      "platforms": "Series X|S, PC, PS5",
-      "summary": "A sci-fi mystery set on the repurposed moon hotel Samsara. Uncover cryptic experiments, face unsettling encounters, and piece together a mind-bending narrative. The deeper you go, the more the truth u",
-      "url": "https://www.igdb.com/games/ontos",
       "source": "igdb"
     },
     {
@@ -941,6 +941,20 @@
     },
     {
       "rank": 68,
+      "igdb_id": "202138",
+      "name": "Deer & Boy",
+      "hypes": 25,
+      "publisher": "Lifeline Entertainment",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-06-01",
+      "platforms": "Series X|S, PC, PS5, Switch",
+      "summary": "A Cinematic Platformer who you follow the journey of a boy who, during his flight will meet an unexpected companion. Together they will overcome many obstacles that will change their lives forever.",
+      "url": "https://www.igdb.com/games/deer-and-boy",
+      "source": "igdb"
+    },
+    {
+      "rank": 69,
       "igdb_id": "361859",
       "name": "Warhammer 40,000: Dawn of War IV",
       "hypes": 24,
@@ -951,20 +965,6 @@
       "platforms": "PC",
       "summary": "Return to the RTS series’ roots with deeply satisfying strategy gameplay. Take command of four unique Warhammer 40,000 factions, including the Adeptus Mechanicus in their series debut! Fight through 7",
       "url": "https://www.igdb.com/games/warhammer-40000-dawn-of-war-iv",
-      "source": "igdb"
-    },
-    {
-      "rank": 69,
-      "igdb_id": "202138",
-      "name": "Deer & Boy",
-      "hypes": 24,
-      "publisher": "Lifeline Entertainment",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-06-01",
-      "platforms": "Series X|S, PC, PS5, Switch",
-      "summary": "A Cinematic Platformer who you follow the journey of a boy who, during his flight will meet an unexpected companion. Together they will overcome many obstacles that will change their lives forever.",
-      "url": "https://www.igdb.com/games/deer-and-boy",
       "source": "igdb"
     },
     {
@@ -1067,6 +1067,20 @@
     },
     {
       "rank": 77,
+      "igdb_id": "194950",
+      "name": "Solarpunk",
+      "hypes": 21,
+      "publisher": "rokaplay",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-06-08",
+      "platforms": "Series X|S, Switch 2, PC, PS5",
+      "summary": "Solarpunk is a survival game in a technically advanced world of floating islands. Alone or together with your friends, you can construct buildings, grow food, craft gadgets and explore distant islands",
+      "url": "https://www.igdb.com/games/solarpunk",
+      "source": "igdb"
+    },
+    {
+      "rank": 78,
       "igdb_id": "373021",
       "name": "Avatar Legends: The Fighting Game",
       "hypes": 20,
@@ -1080,7 +1094,7 @@
       "source": "igdb"
     },
     {
-      "rank": 78,
+      "rank": 79,
       "igdb_id": "362096",
       "name": "Halloween",
       "hypes": 20,
@@ -1094,7 +1108,7 @@
       "source": "igdb"
     },
     {
-      "rank": 79,
+      "rank": 80,
       "igdb_id": "336164",
       "name": "Dark Mass",
       "hypes": 20,
@@ -1108,7 +1122,7 @@
       "source": "igdb"
     },
     {
-      "rank": 80,
+      "rank": 81,
       "igdb_id": "305039",
       "name": "Tenjutsu",
       "hypes": 20,
@@ -1122,7 +1136,7 @@
       "source": "igdb"
     },
     {
-      "rank": 81,
+      "rank": 82,
       "igdb_id": "305011",
       "name": "Tears of Metal",
       "hypes": 20,
@@ -1136,7 +1150,7 @@
       "source": "igdb"
     },
     {
-      "rank": 82,
+      "rank": 83,
       "igdb_id": "259874",
       "name": "The God Slayer",
       "hypes": 20,
@@ -1150,7 +1164,7 @@
       "source": "igdb"
     },
     {
-      "rank": 83,
+      "rank": 84,
       "igdb_id": "216692",
       "name": "Tenebris Somnia",
       "hypes": 20,
@@ -1161,20 +1175,6 @@
       "platforms": "Series X|S, Switch 2, PC, PS5, Switch",
       "summary": "Tenebris Somnia is a horror adventure in the same vein as survival horror classics like Silent Hill or Resident Evil, but transferred to a retro 2D environment more typical of the N.E.S. or Famicom.\n\n",
       "url": "https://www.igdb.com/games/tenebris-somnia",
-      "source": "igdb"
-    },
-    {
-      "rank": 84,
-      "igdb_id": "194950",
-      "name": "Solarpunk",
-      "hypes": 20,
-      "publisher": "rokaplay",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-06-08",
-      "platforms": "Series X|S, Switch 2, PC, PS5",
-      "summary": "Solarpunk is a survival game in a technically advanced world of floating islands. Alone or together with your friends, you can construct buildings, grow food, craft gadgets and explore distant islands",
-      "url": "https://www.igdb.com/games/solarpunk",
       "source": "igdb"
     },
     {
@@ -1361,6 +1361,20 @@
     },
     {
       "rank": 98,
+      "igdb_id": "338089",
+      "name": "Starseeker: Astroneer Expeditions",
+      "hypes": 17,
+      "publisher": "Devolver Digital",
+      "is_major": true,
+      "is_released": false,
+      "release_date": "2026-12-31",
+      "platforms": "Series X|S, Switch 2, PC, PS5, Switch",
+      "summary": "STARSEEKER is a new game set within the Astroneer universe with a focus on discovery, cooperative expeditions, and camaraderie. Exploring deep space on the ESS Starseeker, players will need to work to",
+      "url": "https://www.igdb.com/games/starseeker-astroneer-expeditions",
+      "source": "igdb"
+    },
+    {
+      "rank": 99,
       "igdb_id": "323536",
       "name": "Light of Motiram",
       "hypes": 17,
@@ -1374,7 +1388,7 @@
       "source": "igdb"
     },
     {
-      "rank": 99,
+      "rank": 100,
       "igdb_id": "309799",
       "name": "Truckful",
       "hypes": 17,
@@ -1385,20 +1399,6 @@
       "platforms": "PS4, Linux, PC, PS5, Mac",
       "summary": "Drive your pickup truck through seemingly peaceful countryside valleys, deliver much-needed goods to local townsfolk and unravel the small town mystery. Beware, the old forest is watching.",
       "url": "https://www.igdb.com/games/truckful",
-      "source": "igdb"
-    },
-    {
-      "rank": 100,
-      "igdb_id": "396020",
-      "name": "Hunter: The Reckoning - Deathwish",
-      "hypes": 16,
-      "publisher": "Nacon",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2027-09-30",
-      "platforms": "Series X|S, PC, PS5",
-      "summary": "Vampires, Werewolves, Witches. What if I told you that the things that go bump in the night are real? What if I told you that you could see them?\n\nAwaken to the truth you’re now a Hunter. Build your c",
-      "url": "https://www.igdb.com/games/hunter-the-reckoning-deathwish",
       "source": "igdb"
     }
   ]
