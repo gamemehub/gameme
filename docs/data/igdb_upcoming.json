@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-31T14:12:00.173827+09:00",
+  "updated_at": "2026-06-01T14:52:32.679621+09:00",
   "entries": [
     {
       "rank": 1,
@@ -65,7 +65,7 @@
       "publisher": "Remedy Entertainment",
       "is_major": false,
       "is_released": false,
-      "release_date": "2026-06-30",
+      "release_date": "2026-12-31",
       "platforms": "Series X|S, PC, PS5, Mac",
       "summary": "Explore a warped Manhattan on the brink of paranatural annihilation in this thrilling action-adventure RPG. Unleash the extraordinary powers of Dylan Faden as he fights for his humanity and survival a",
       "url": "https://www.igdb.com/games/control-resonant--1",
@@ -257,7 +257,7 @@
       "rank": 19,
       "igdb_id": "222342",
       "name": "Silent Hill: Townfall",
-      "hypes": 62,
+      "hypes": 63,
       "publisher": "Annapurna Interactive",
       "is_major": false,
       "is_released": false,
@@ -285,7 +285,7 @@
       "rank": 21,
       "igdb_id": "337738",
       "name": "Assassin's Creed Black Flag Resynced",
-      "hypes": 59,
+      "hypes": 60,
       "publisher": "Ubisoft Entertainment",
       "is_major": false,
       "is_released": false,
@@ -313,7 +313,7 @@
       "rank": 23,
       "igdb_id": "381219",
       "name": "Ontos",
-      "hypes": 56,
+      "hypes": 57,
       "publisher": "Frictional Games",
       "is_major": false,
       "is_released": false,
@@ -325,6 +325,20 @@
     },
     {
       "rank": 24,
+      "igdb_id": "148227",
+      "name": "Gothic 1 Remake",
+      "hypes": 57,
+      "publisher": "THQ Nordic",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-06-05",
+      "platforms": "Series X|S, PC, PS5",
+      "summary": "The Legend is Back - Return to the Valley of the Mines in this faithful remake of the genre-defining classic RPG. Explore a hand-crafted, organic open world that reacts dynamically to your actions in ",
+      "url": "https://www.igdb.com/games/gothic-1-remake",
+      "source": "igdb"
+    },
+    {
+      "rank": 25,
       "igdb_id": "361833",
       "name": "Valor Mortis",
       "hypes": 56,
@@ -338,7 +352,7 @@
       "source": "igdb"
     },
     {
-      "rank": 25,
+      "rank": 26,
       "igdb_id": "347633",
       "name": "Mortal Shell II",
       "hypes": 56,
@@ -352,7 +366,7 @@
       "source": "igdb"
     },
     {
-      "rank": 26,
+      "rank": 27,
       "igdb_id": "318503",
       "name": "Lords of the Fallen II",
       "hypes": 56,
@@ -363,20 +377,6 @@
       "platforms": "Series X|S, PC, PS5",
       "summary": "Lords of the Fallen 2, the highly anticipated sequel to the game released in 2023, is set to arrive in 2026. The team at Hexworks aims to create a sequel incorporating more commercial elements, partic",
       "url": "https://www.igdb.com/games/lords-of-the-fallen-ii",
-      "source": "igdb"
-    },
-    {
-      "rank": 27,
-      "igdb_id": "148227",
-      "name": "Gothic 1 Remake",
-      "hypes": 56,
-      "publisher": "THQ Nordic",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-06-05",
-      "platforms": "Series X|S, PC, PS5",
-      "summary": "The Legend is Back - Return to the Valley of the Mines in this faithful remake of the genre-defining classic RPG. Explore a hand-crafted, organic open world that reacts dynamically to your actions in ",
-      "url": "https://www.igdb.com/games/gothic-1-remake",
       "source": "igdb"
     },
     {
@@ -941,20 +941,6 @@
     },
     {
       "rank": 68,
-      "igdb_id": "202138",
-      "name": "Deer & Boy",
-      "hypes": 25,
-      "publisher": "Lifeline Entertainment",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-06-01",
-      "platforms": "Series X|S, PC, PS5, Switch",
-      "summary": "A Cinematic Platformer who you follow the journey of a boy who, during his flight will meet an unexpected companion. Together they will overcome many obstacles that will change their lives forever.",
-      "url": "https://www.igdb.com/games/deer-and-boy",
-      "source": "igdb"
-    },
-    {
-      "rank": 69,
       "igdb_id": "361859",
       "name": "Warhammer 40,000: Dawn of War IV",
       "hypes": 24,
@@ -965,6 +951,20 @@
       "platforms": "PC",
       "summary": "Return to the RTS series’ roots with deeply satisfying strategy gameplay. Take command of four unique Warhammer 40,000 factions, including the Adeptus Mechanicus in their series debut! Fight through 7",
       "url": "https://www.igdb.com/games/warhammer-40000-dawn-of-war-iv",
+      "source": "igdb"
+    },
+    {
+      "rank": 69,
+      "igdb_id": "152268",
+      "name": "SacriFire",
+      "hypes": 23,
+      "publisher": "Pixelated Milk",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2026-12-31",
+      "platforms": "Series X|S, PS4, PC, PS5, XONE, Switch",
+      "summary": "A modern JRPG-inspired game with a unique battle system, rich story, fantastic visuals and music by Motoi Sakuraba.",
+      "url": "https://www.igdb.com/games/sacrifire",
       "source": "igdb"
     },
     {
@@ -1011,20 +1011,6 @@
     },
     {
       "rank": 73,
-      "igdb_id": "152268",
-      "name": "SacriFire",
-      "hypes": 22,
-      "publisher": "Pixelated Milk",
-      "is_major": false,
-      "is_released": false,
-      "release_date": "2026-12-31",
-      "platforms": "Series X|S, PS4, PC, PS5, XONE, Switch",
-      "summary": "A modern JRPG-inspired game with a unique battle system, rich story, fantastic visuals and music by Motoi Sakuraba.",
-      "url": "https://www.igdb.com/games/sacrifire",
-      "source": "igdb"
-    },
-    {
-      "rank": 74,
       "igdb_id": "381208",
       "name": "TankRat",
       "hypes": 21,
@@ -1038,7 +1024,7 @@
       "source": "igdb"
     },
     {
-      "rank": 75,
+      "rank": 74,
       "igdb_id": "339619",
       "name": "Ikuma: The Frozen Compass",
       "hypes": 21,
@@ -1052,7 +1038,7 @@
       "source": "igdb"
     },
     {
-      "rank": 76,
+      "rank": 75,
       "igdb_id": "252852",
       "name": "Mariachi Legends",
       "hypes": 21,
@@ -1066,7 +1052,7 @@
       "source": "igdb"
     },
     {
-      "rank": 77,
+      "rank": 76,
       "igdb_id": "194950",
       "name": "Solarpunk",
       "hypes": 21,
@@ -1080,7 +1066,7 @@
       "source": "igdb"
     },
     {
-      "rank": 78,
+      "rank": 77,
       "igdb_id": "373021",
       "name": "Avatar Legends: The Fighting Game",
       "hypes": 20,
@@ -1094,7 +1080,7 @@
       "source": "igdb"
     },
     {
-      "rank": 79,
+      "rank": 78,
       "igdb_id": "362096",
       "name": "Halloween",
       "hypes": 20,
@@ -1108,7 +1094,7 @@
       "source": "igdb"
     },
     {
-      "rank": 80,
+      "rank": 79,
       "igdb_id": "336164",
       "name": "Dark Mass",
       "hypes": 20,
@@ -1122,7 +1108,7 @@
       "source": "igdb"
     },
     {
-      "rank": 81,
+      "rank": 80,
       "igdb_id": "305039",
       "name": "Tenjutsu",
       "hypes": 20,
@@ -1136,7 +1122,7 @@
       "source": "igdb"
     },
     {
-      "rank": 82,
+      "rank": 81,
       "igdb_id": "305011",
       "name": "Tears of Metal",
       "hypes": 20,
@@ -1150,7 +1136,7 @@
       "source": "igdb"
     },
     {
-      "rank": 83,
+      "rank": 82,
       "igdb_id": "259874",
       "name": "The God Slayer",
       "hypes": 20,
@@ -1164,7 +1150,7 @@
       "source": "igdb"
     },
     {
-      "rank": 84,
+      "rank": 83,
       "igdb_id": "216692",
       "name": "Tenebris Somnia",
       "hypes": 20,
@@ -1178,7 +1164,7 @@
       "source": "igdb"
     },
     {
-      "rank": 85,
+      "rank": 84,
       "igdb_id": "124209",
       "name": "Shadow of the Road",
       "hypes": 20,
@@ -1192,7 +1178,7 @@
       "source": "igdb"
     },
     {
-      "rank": 86,
+      "rank": 85,
       "igdb_id": "396030",
       "name": "Artificial Detective",
       "hypes": 19,
@@ -1206,7 +1192,7 @@
       "source": "igdb"
     },
     {
-      "rank": 87,
+      "rank": 86,
       "igdb_id": "383882",
       "name": "Burglin' Gnomes",
       "hypes": 19,
@@ -1220,7 +1206,7 @@
       "source": "igdb"
     },
     {
-      "rank": 88,
+      "rank": 87,
       "igdb_id": "381222",
       "name": "Order of the Sinking Star",
       "hypes": 19,
@@ -1234,7 +1220,7 @@
       "source": "igdb"
     },
     {
-      "rank": 89,
+      "rank": 88,
       "igdb_id": "381212",
       "name": "Stupid Never Dies",
       "hypes": 19,
@@ -1248,7 +1234,7 @@
       "source": "igdb"
     },
     {
-      "rank": 90,
+      "rank": 89,
       "igdb_id": "381203",
       "name": "Decrepit",
       "hypes": 19,
@@ -1262,7 +1248,7 @@
       "source": "igdb"
     },
     {
-      "rank": 91,
+      "rank": 90,
       "igdb_id": "375111",
       "name": "Project Tal",
       "hypes": 19,
@@ -1276,7 +1262,7 @@
       "source": "igdb"
     },
     {
-      "rank": 92,
+      "rank": 91,
       "igdb_id": "348205",
       "name": "At Fate's End",
       "hypes": 19,
@@ -1290,7 +1276,7 @@
       "source": "igdb"
     },
     {
-      "rank": 93,
+      "rank": 92,
       "igdb_id": "344669",
       "name": "Warhammer 40,000: Boltgun 2",
       "hypes": 19,
@@ -1304,7 +1290,7 @@
       "source": "igdb"
     },
     {
-      "rank": 94,
+      "rank": 93,
       "igdb_id": "330566",
       "name": "Liminal Point",
       "hypes": 19,
@@ -1318,7 +1304,7 @@
       "source": "igdb"
     },
     {
-      "rank": 95,
+      "rank": 94,
       "igdb_id": "348047",
       "name": "Wanderburg",
       "hypes": 18,
@@ -1332,7 +1318,7 @@
       "source": "igdb"
     },
     {
-      "rank": 96,
+      "rank": 95,
       "igdb_id": "194855",
       "name": "The Bornless",
       "hypes": 18,
@@ -1346,7 +1332,7 @@
       "source": "igdb"
     },
     {
-      "rank": 97,
+      "rank": 96,
       "igdb_id": "367776",
       "name": "The Lift",
       "hypes": 17,
@@ -1360,7 +1346,7 @@
       "source": "igdb"
     },
     {
-      "rank": 98,
+      "rank": 97,
       "igdb_id": "338089",
       "name": "Starseeker: Astroneer Expeditions",
       "hypes": 17,
@@ -1374,7 +1360,7 @@
       "source": "igdb"
     },
     {
-      "rank": 99,
+      "rank": 98,
       "igdb_id": "323536",
       "name": "Light of Motiram",
       "hypes": 17,
@@ -1388,7 +1374,7 @@
       "source": "igdb"
     },
     {
-      "rank": 100,
+      "rank": 99,
       "igdb_id": "309799",
       "name": "Truckful",
       "hypes": 17,
@@ -1399,6 +1385,20 @@
       "platforms": "PS4, Linux, PC, PS5, Mac",
       "summary": "Drive your pickup truck through seemingly peaceful countryside valleys, deliver much-needed goods to local townsfolk and unravel the small town mystery. Beware, the old forest is watching.",
       "url": "https://www.igdb.com/games/truckful",
+      "source": "igdb"
+    },
+    {
+      "rank": 100,
+      "igdb_id": "396020",
+      "name": "Hunter: The Reckoning - Deathwish",
+      "hypes": 16,
+      "publisher": "Nacon",
+      "is_major": false,
+      "is_released": false,
+      "release_date": "2027-09-30",
+      "platforms": "Series X|S, PC, PS5",
+      "summary": "Vampires, Werewolves, Witches. What if I told you that the things that go bump in the night are real? What if I told you that you could see them?\n\nAwaken to the truth you’re now a Hunter. Build your c",
+      "url": "https://www.igdb.com/games/hunter-the-reckoning-deathwish",
       "source": "igdb"
     }
   ]
