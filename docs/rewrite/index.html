@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+<title>RewriteMemory</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{width:100%;height:100%;overflow:hidden;background:#0a0a12;color:#e0e0e8;font-family:'Courier New',monospace}
+button{cursor:pointer;font-family:inherit}
+.screen{position:fixed;inset:0;display:none;flex-direction:column}
+.screen.active{display:flex}
+
+/* TITLE */
+#S-title{align-items:center;justify-content:center;background:#0a0a12}
+.title-logo{font-size:clamp(32px,8vw,56px);font-weight:900;letter-spacing:.15em;color:#c8d0e8;text-align:center;margin-bottom:8px}
+.title-sub{font-size:12px;color:#4a5068;letter-spacing:.3em;text-align:center;margin-bottom:48px}
+.start-btn{background:transparent;border:1px solid #3a4060;color:#8090b8;padding:14px 40px;font-size:11px;letter-spacing:.25em;border-radius:2px}
+
+/* SCENE / VN */
+#S-scene{background:#0a0a12;cursor:pointer}
+.scene-bg{position:absolute;inset:0;background:#0a0a12;transition:background 1s}
+.scene-sprites{position:absolute;bottom:180px;left:0;right:0;display:flex;justify-content:center;gap:24px;align-items:flex-end}
+.sprite-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;transition:opacity .4s}
+.sprite-name{font-size:9px;color:#4a5068;letter-spacing:.1em}
+.sprite-img{image-rendering:pixelated;image-rendering:crisp-edges;filter:drop-shadow(0 4px 12px rgba(0,0,0,.7))}
+.dialogue-box{position:absolute;bottom:0;left:0;right:0;background:rgba(8,8,18,.95);border-top:1px solid #1e2035;padding:0 0 8px}
+.dlg-speaker{display:flex;align-items:center;gap:10px;padding:10px 16px 6px;border-bottom:1px solid #12141e}
+.dlg-name{font-size:11px;font-weight:700}
+.dlg-role{font-size:8px;color:#2a2e48;margin-left:auto}
+.dlg-text{padding:10px 16px 6px;font-size:12px;color:#c8d0e8;line-height:2;min-height:68px;white-space:pre-wrap}
+.dlg-inner{padding:4px 16px 8px;font-size:10px;color:#4a5878;line-height:1.9;font-style:italic;border-left:2px solid #1e2840;margin:0 16px 6px;background:rgba(10,20,40,.4);display:none;white-space:pre-wrap}
+.dlg-next{text-align:center;padding:8px;font-size:9px;color:#1e2840;letter-spacing:.2em;border-top:1px solid #10121e;display:none}
+
+/* MEMORY (書き換え画面) */
+#S-memory{background:#06060e;align-items:center;justify-content:center;padding:20px}
+.memory-title{font-size:10px;color:#3a4060;letter-spacing:.3em;margin-bottom:20px;text-align:center}
+.memory-cards{width:100%;max-width:360px;display:flex;flex-direction:column;gap:10px}
+.memory-card{padding:12px 14px;background:#0c0e1a;border:1px solid #1e2035;border-radius:3px;cursor:pointer;transition:border-color .2s}
+.memory-card.selected{border-color:#4a60a0;background:#0e1228}
+.memory-card-label{font-size:8px;color:#2a3050;letter-spacing:.15em;margin-bottom:4px}
+.memory-card-text{font-size:12px;color:#8090b0;line-height:1.7}
+.memory-confirm{margin-top:16px;width:100%;max-width:360px;padding:12px;background:transparent;border:1px solid #2a3050;color:#4a5878;font-size:10px;letter-spacing:.2em;border-radius:2px;display:none}
+</style>
+</head>
+<body>
+
+<!-- TITLE -->
+<div class="screen active" id="S-title">
+  <div style="text-align:center">
+    <div class="title-logo">RewriteMemory</div>
+    <div class="title-sub">記憶は、書き換えられる。</div>
+    <button class="start-btn" id="start-btn">はじめる</button>
+  </div>
+  <div style="position:absolute;bottom:16px;width:100%;text-align:center;font-size:8px;color:#1e2030;letter-spacing:.15em">GC2026 — Chapter 01</div>
+</div>
+
+<!-- SCENE / VN -->
+<div class="screen" id="S-scene">
+  <div class="scene-bg" id="scene-bg"></div>
+  <div class="scene-sprites" id="scene-sprites"></div>
+  <div class="dialogue-box">
+    <div class="dlg-speaker" id="dlg-speaker" style="display:none">
+      <span class="dlg-name" id="dlg-name"></span>
+      <span class="dlg-role" id="dlg-role"></span>
+    </div>
+    <div class="dlg-text" id="dlg-text"></div>
+    <div class="dlg-inner" id="dlg-inner"></div>
+    <div class="dlg-next" id="dlg-next">▸ タップして続ける</div>
+  </div>
+</div>
+
+<!-- MEMORY REWRITE -->
+<div class="screen" id="S-memory">
+  <div class="memory-title">── 記憶の書き換え ──</div>
+  <div class="memory-cards" id="memory-cards"></div>
+  <button class="memory-confirm" id="memory-confirm">この記憶を書き換える</button>
+</div>
+
+<script>
+/* ═══ SPRITE SYSTEM ═══════════════════════════════════════ */
+var SPRITES = {};
+var _SC = {};
+
+function mkSprite(id) {
+  var d = SPRITES[id]; if (!d) return null;
+  var s = 5, h = d.px.length, w = d.px[0].length;
+  var c = document.createElement('canvas');
+  c.width = w*s; c.height = h*s;
+  var x = c.getContext('2d');
+  for (var y=0;y<h;y++) for (var i=0;i<w;i++) {
+    var ci = d.px[y][i];
+    if (ci > 0 && d.pal[ci]) { x.fillStyle=d.pal[ci]; x.fillRect(i*s,y*s,s,s); }
+  }
+  return c.toDataURL();
+}
+function getSprite(id) { if(!_SC[id])_SC[id]=mkSprite(id); return _SC[id]||''; }
+
+/* ═══ SCENE ENGINE ═══════════════════════════════════════ */
+var si=0, beat=0, tTimer=null;
+var SCENES = []; /* ← シナリオデータはここに入る */
+
+function sc() { return SCENES[si]||null; }
+function ns() { si++; runScene(); }
+
+function runScene() {
+  var s = sc(); if (!s) { showEnd(); return; }
+  if (s.type === 'vn')     showVN(s);
+  else if (s.type === 'memory') showMemory(s);
+}
+
+function showVN(s) {
+  show('S-scene');
+  beat = 0;
+  var bg = document.getElementById('scene-bg');
+  bg.style.background = s.bg || '#0a0a12';
+  showBeat(s);
+}
+
+function showBeat(s) {
+  var b = s.beats[beat]; if (!b) { ns(); return; }
+  var sp = document.getElementById('dlg-speaker');
+  var nm = document.getElementById('dlg-name');
+  var rl = document.getElementById('dlg-role');
+  var tx = document.getElementById('dlg-text');
+  var inn = document.getElementById('dlg-inner');
+  var nx = document.getElementById('dlg-next');
+  tx.textContent=''; inn.textContent=''; inn.style.display='none'; nx.style.display='none';
+
+  /* スプライト更新 */
+  updateSprites(b.sprites);
+
+  if (b.speaker) {
+    sp.style.display='flex';
+    nm.textContent=b.speaker.name; nm.style.color=b.speaker.color||'#c8d0e8';
+    rl.textContent=b.speaker.role||'';
+  } else {
+    sp.style.display='none';
+  }
+
+  if (b.text) typewrite(tx, b.text, 16);
+  if (b.inner) { inn.style.display='block'; typewrite(inn, b.inner, 14); }
+  setTimeout(function(){ nx.style.display='block'; }, 400);
+}
+
+function updateSprites(list) {
+  var zone = document.getElementById('scene-sprites');
+  zone.innerHTML = '';
+  if (!list) return;
+  list.forEach(function(sp) {
+    var wrap = document.createElement('div'); wrap.className='sprite-wrap';
+    var src = getSprite(sp.id);
+    if (src) {
+      var img = document.createElement('img');
+      img.src=src; img.className='sprite-img';
+      img.style.height = (sp.height||96)+'px';
+      if (sp.flip) img.style.transform='scaleX(-1)';
+      wrap.appendChild(img);
+    }
+    if (sp.label) {
+      var lbl = document.createElement('div'); lbl.className='sprite-name';
+      lbl.textContent=sp.label; wrap.appendChild(lbl);
+    }
+    zone.appendChild(wrap);
+  });
+}
+
+function typewrite(el, txt, spd) {
+  if(tTimer)clearInterval(tTimer);
+  el.textContent=''; var i=0;
+  tTimer=setInterval(function(){
+    el.textContent+=txt[i++];
+    if(i>=txt.length){clearInterval(tTimer);tTimer=null;}
+  }, spd||14);
+}
+
+document.getElementById('S-scene').addEventListener('click', function() {
+  if (tTimer) { clearInterval(tTimer); tTimer=null;
+    var s=sc(); if(s&&s.beats&&s.beats[beat]) {
+      var b=s.beats[beat];
+      document.getElementById('dlg-text').textContent=b.text||'';
+      if(b.inner)document.getElementById('dlg-inner').textContent=b.inner;
+    }
+    document.getElementById('dlg-next').style.display='block'; return;
+  }
+  beat++;
+  var s=sc();
+  if(s&&s.beats&&beat<s.beats.length) showBeat(s);
+  else ns();
+});
+
+/* ═══ MEMORY REWRITE ═══════════════════════════════════ */
+var selectedMemory = null;
+
+function showMemory(s) {
+  show('S-memory');
+  selectedMemory = null;
+  var ct = document.getElementById('memory-cards');
+  var btn = document.getElementById('memory-confirm');
+  ct.innerHTML=''; btn.style.display='none';
+
+  s.options.forEach(function(opt, i) {
+    var card = document.createElement('div'); card.className='memory-card';
+    card.innerHTML='<div class="memory-card-label">記憶 '+(i+1)+'</div>'
+      +'<div class="memory-card-text">'+opt.text+'</div>';
+    card.onclick = function() {
+      document.querySelectorAll('.memory-card').forEach(function(c){c.classList.remove('selected');});
+      card.classList.add('selected');
+      selectedMemory = opt;
+      btn.style.display='block';
+    };
+    ct.appendChild(card);
+  });
+
+  btn.onclick = function() {
+    if (!selectedMemory) return;
+    if (selectedMemory.next) { si = selectedMemory.next; runScene(); }
+    else ns();
+  };
+}
+
+/* ═══ UTILS ═══════════════════════════════════════════ */
+function show(id) {
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+  document.getElementById(id).classList.add('active');
+}
+function showEnd() {
+  show('S-title');
+}
+
+/* ═══ START ═══════════════════════════════════════════ */
+document.getElementById('start-btn').addEventListener('click', function() {
+  si=0; beat=0; runScene();
+});
+
+/* ═══ PLACEHOLDER SCENE (構想が届いたら差し替え) ══════ */
+SCENES = [
+  {
+    type: 'vn',
+    bg: 'linear-gradient(180deg,#08080f,#0c0e18)',
+    beats: [
+      {
+        text: '——夕暮れの広場。
+
+あたたかいはずの橙色が、今日はどこか冷たく見える。',
+        inner: null, speaker: null, sprites: []
+      },
+      {
+        text: '（ここに来たのは何度目だろう。
+　でも——何かが、違う。）',
+        inner: null, speaker: null, sprites: []
+      },
+      {
+        text: '構想を入力してください。
+このシーンはプレースホルダーです。',
+        speaker: {name:'システム', role:'RewriteMemory', color:'#4a60a0'},
+        sprites: [], inner: 'Chapter01の構想をClaudeに渡すと
+ここが実際のシナリオに置き換わります。'
+      }
+    ]
+  },
+  {
+    type: 'memory',
+    options: [
+      {text: '広場に来たのは初めてだった。', next: null},
+      {text: '広場には何度も来たことがある。でも——椅子の数が違う。', next: null},
+    ]
+  }
+];
+
+/* ゲームエンジンの準備完了 */
+console.log('[RewriteMemory] Engine ready. Waiting for scenario data.');
+</script>
+</body>
+</html>
