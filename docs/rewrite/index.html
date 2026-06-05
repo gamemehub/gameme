@@ -15,21 +15,20 @@ button{cursor:pointer;font-family:inherit}
 .title-sub{font-size:11px;color:#4a5068;letter-spacing:.3em;text-align:center;margin-bottom:48px}
 .start-btn{background:transparent;border:1px solid #3a4060;color:#8090b8;padding:14px 40px;font-size:11px;letter-spacing:.25em;border-radius:2px}
 #S-scene{background:#0a0a12;cursor:pointer}
-.scene-bg{position:absolute;inset:0;background:#0a0a12;transition:background 1s}
+.scene-bg{position:absolute;inset:0;transition:background 1s}
+.scene-sprites{position:absolute;bottom:180px;left:0;right:0;display:flex;justify-content:center;gap:24px;align-items:flex-end}
+.sprite-img{image-rendering:pixelated;filter:drop-shadow(0 4px 12px rgba(0,0,0,.7))}
 .dialogue-box{position:absolute;bottom:0;left:0;right:0;background:rgba(8,8,18,.95);border-top:1px solid #1e2035;padding:0 0 8px}
 .dlg-speaker{display:flex;align-items:center;gap:10px;padding:10px 16px 6px;border-bottom:1px solid #12141e}
 .dlg-name{font-size:11px;font-weight:700}
 .dlg-role{font-size:8px;color:#2a2e48;margin-left:auto}
-.dlg-text{padding:10px 16px 6px;font-size:12px;color:#c8d0e8;line-height:2;min-height:68px;white-space:pre-wrap}
-.dlg-inner{padding:4px 16px 8px;font-size:10px;color:#4a5878;line-height:1.9;font-style:italic;border-left:2px solid #1e2840;margin:0 16px 6px;background:rgba(10,20,40,.4);display:none;white-space:pre-wrap}
+.dlg-text{padding:10px 16px 6px;font-size:13px;color:#c8d0e8;line-height:2;min-height:72px;white-space:pre-wrap}
 .dlg-next{text-align:center;padding:8px;font-size:9px;color:#3a4858;letter-spacing:.2em;border-top:1px solid #10121e;display:none}
 #S-memory{background:#06060e;align-items:center;justify-content:center;padding:20px}
-.memory-title{font-size:10px;color:#3a4060;letter-spacing:.3em;margin-bottom:20px;text-align:center}
+.memory-prompt{font-size:13px;color:#8090b0;letter-spacing:.1em;margin-bottom:16px;text-align:center}
 .memory-cards{width:100%;max-width:360px;display:flex;flex-direction:column;gap:10px}
-.memory-card{padding:14px 16px;background:#0c0e1a;border:1px solid #1e2035;border-radius:3px;cursor:pointer;transition:all .15s}
-.memory-card:hover{border-color:#3a5080;background:#0e1228}
-.memory-card-label{font-size:8px;color:#2a3050;letter-spacing:.15em;margin-bottom:4px}
-.memory-card-text{font-size:13px;color:#8090b0;line-height:1.7}
+.memory-card{padding:14px 16px;background:#0c0e1a;border:1px solid #1e2035;border-radius:3px;cursor:pointer;transition:all .15s;font-size:13px;color:#a0b0c8;text-align:center}
+.memory-card:active,.memory-card:hover{border-color:#4a60a0;background:#0e1228;color:#c8d8f0}
 </style>
 </head>
 <body>
@@ -43,23 +42,23 @@ button{cursor:pointer;font-family:inherit}
 </div>
 <div class="screen" id="S-scene">
   <div class="scene-bg" id="scene-bg"></div>
+  <div class="scene-sprites" id="scene-sprites"></div>
   <div class="dialogue-box">
     <div class="dlg-speaker" id="dlg-speaker" style="display:none">
       <span class="dlg-name" id="dlg-name"></span>
       <span class="dlg-role" id="dlg-role"></span>
     </div>
     <div class="dlg-text" id="dlg-text"></div>
-    <div class="dlg-inner" id="dlg-inner"></div>
     <div class="dlg-next" id="dlg-next">▸ タップして続ける</div>
   </div>
 </div>
 <div class="screen" id="S-memory">
-  <div class="memory-title">── 選択 ──</div>
+  <div class="memory-prompt" id="memory-prompt">どうする？</div>
   <div class="memory-cards" id="memory-cards"></div>
 </div>
 <script>
 var si=0, beat=0, tTimer=null;
-var SCENES = [{"type": "vn", "bg": "linear-gradient(180deg,#f0f0f8,#e0e0ec)", "beats": [{"text": "白い広場。\n時計塔。\n椅子。", "speaker": null, "sprites": []}, {"text": "ミオ。", "speaker": null, "sprites": []}, {"text": "「ごめんなさい」", "speaker": {"name": "ミオ", "color": "#8090c8", "role": ""}, "sprites": []}, {"text": "「あなたは、誰ですか？」", "speaker": {"name": "ミオ", "color": "#8090c8", "role": ""}, "sprites": []}, {"text": "「これは、最後の日の記憶だから」", "speaker": {"name": "???", "color": "#606070", "role": ""}, "sprites": []}, {"text": "――3日前へ――", "speaker": null, "sprites": []}]}, {"type": "vn", "bg": "linear-gradient(180deg,#080810,#0c1020)", "beats": [{"text": "広場で会う約束のメッセージが届いた。", "speaker": null, "sprites": []}, {"text": "ミオはいつもより明るく振る舞っていた。\nでも――少しだけ、不安そうだった。", "speaker": null, "sprites": []}, {"text": "「遅れた？」", "speaker": {"name": "ミオ", "color": "#8090c8", "role": ""}, "sprites": []}, {"text": "広場の中央に、昔からあるはずの椅子がない。\n地面には跡だけが残っている。", "speaker": null, "sprites": []}, {"text": "周囲の人に聞いても、誰も椅子を覚えていない。", "speaker": null, "sprites": []}, {"text": "「……これ、おかしくない？」", "speaker": {"name": "ミオ", "color": "#8090c8", "role": ""}, "sprites": []}]}, {"type": "memory", "options": [{"text": "観測する", "next": null}, {"text": "見ない", "next": null}, {"text": "ミオに聴く", "next": null}, {"text": "待つ", "next": null}]}, {"type": "vn", "bg": "linear-gradient(180deg,#080810,#08080f)", "beats": [{"text": "――椅子そのものが消えたのではない。", "speaker": null, "sprites": []}, {"text": "椅子に結びついていた「記憶」「関係」「意味」が\n白く抜け始めている。", "speaker": null, "sprites": []}, {"text": "スマホにメッセージが届いた。", "speaker": null, "sprites": []}, {"text": "送信者名が――白く抜けている。", "speaker": null, "sprites": []}, {"text": "To be continued...", "speaker": null, "sprites": []}]}];
+var SCENES = [{"type": "vn", "bg": "linear-gradient(180deg,#ffffff,#e8e8f0)", "beats": [{"text": "白い広場。時計塔。椅子。", "speaker": null, "sprites": []}, {"text": "ミオ。", "speaker": null, "sprites": []}, {"text": "「ごめんなさい」", "speaker": {"name": "ミオ", "color": "#8090c8", "role": "RewriteMemory"}, "sprites": []}, {"text": "「あなたは、誰ですか？」", "speaker": {"name": "ミオ", "color": "#8090c8", "role": ""}, "sprites": []}, {"text": "「これは、最後の日の記憶だから」", "speaker": {"name": "???", "color": "#606070", "role": ""}, "sprites": []}, {"text": "——プロローグ終わり。3日前へ——", "speaker": null, "sprites": []}]}, {"type": "vn", "bg": "linear-gradient(180deg,#08080f,#0c1020)", "beats": [{"text": "広場で会う約束のメッセージが届いた。", "speaker": null, "sprites": []}, {"text": "ミオはいつもより明るく振る舞っていた。でも——少しだけ、不安そうに見えた。", "speaker": null, "sprites": []}, {"text": "「遅れた？」", "speaker": {"name": "ミオ", "color": "#8090c8", "role": ""}, "sprites": []}, {"text": "広場の中央に、昔からあるはずの椅子がない。", "speaker": null, "sprites": []}, {"text": "地面には跡だけが残っている。", "speaker": null, "sprites": []}, {"text": "「……これ、おかしくない？」", "speaker": {"name": "ミオ", "color": "#8090c8", "role": ""}, "sprites": []}]}, {"type": "memory", "prompt": "どうする？", "options": [{"text": "観測する", "next": null}, {"text": "見ない", "next": null}, {"text": "ミオに聴く", "next": null}, {"text": "待つ", "next": null}]}, {"type": "vn", "bg": "linear-gradient(180deg,#08080f,#0a0818)", "beats": [{"text": "——椅子そのものが消えたのではない。", "speaker": null, "sprites": []}, {"text": "椅子に結びついていた「記憶」「関係」「意味」が白く抜け始めている。", "speaker": null, "sprites": []}, {"text": "スマホにメッセージが届いた。", "speaker": null, "sprites": []}, {"text": "送信者名が——白く抜けている。", "speaker": null, "sprites": []}, {"text": "To be continued...", "speaker": null, "sprites": []}]}];
 
 function sc(){ return SCENES[si]||null; }
 function ns(){ si++; runScene(); }
@@ -85,19 +84,27 @@ function showBeat(s){
   var nm=document.getElementById('dlg-name');
   var rl=document.getElementById('dlg-role');
   var tx=document.getElementById('dlg-text');
-  var inn=document.getElementById('dlg-inner');
   var nx=document.getElementById('dlg-next');
-  tx.textContent=''; inn.textContent=''; inn.style.display='none'; nx.style.display='none';
-  if(b.speaker){
-    sp.style.display='flex';
-    nm.textContent=b.speaker.name;
-    nm.style.color=b.speaker.color||'#c8d0e8';
-    rl.textContent=b.speaker.role||'';
-  } else {
-    sp.style.display='none';
-  }
-  if(b.text) typewrite(tx, b.text, 16);
-  setTimeout(function(){ nx.style.display='block'; }, 400);
+  tx.textContent=''; nx.style.display='none';
+  if(b.sprites) updateSprites(b.sprites);
+  if(b.speaker){ sp.style.display='flex'; nm.textContent=b.speaker.name; nm.style.color=b.speaker.color||'#c8d0e8'; rl.textContent=b.speaker.role||''; }
+  else sp.style.display='none';
+  if(b.text) typewrite(tx, b.text, 30);
+  setTimeout(function(){ nx.style.display='block'; }, 300);
+}
+
+function updateSprites(list){
+  var zone=document.getElementById('scene-sprites');
+  zone.innerHTML='';
+  if(!list) return;
+  list.forEach(function(sp){
+    if(sp.src){
+      var img=document.createElement('img');
+      img.src=sp.src; img.className='sprite-img';
+      img.style.height=(sp.height||96)+'px';
+      zone.appendChild(img);
+    }
+  });
 }
 
 function typewrite(el, txt, spd){
@@ -106,16 +113,14 @@ function typewrite(el, txt, spd){
   tTimer=setInterval(function(){
     el.textContent+=txt[i++];
     if(i>=txt.length){ clearInterval(tTimer); tTimer=null; }
-  }, spd||16);
+  }, spd||30);
 }
 
 document.getElementById('S-scene').addEventListener('click', function(){
   if(tTimer){
     clearInterval(tTimer); tTimer=null;
     var s=sc();
-    if(s&&s.beats&&s.beats[beat]){
-      document.getElementById('dlg-text').textContent=s.beats[beat].text||'';
-    }
+    if(s&&s.beats&&s.beats[beat]) document.getElementById('dlg-text').textContent=s.beats[beat].text||'';
     document.getElementById('dlg-next').style.display='block';
     return;
   }
@@ -125,21 +130,16 @@ document.getElementById('S-scene').addEventListener('click', function(){
   else ns();
 });
 
-document.addEventListener('keydown', function(e){
-  if(e.key==='Enter'||e.key===' '){
-    var scene=document.getElementById('S-scene');
-    if(scene.classList.contains('active')) scene.click();
-  }
-});
-
 function showMemory(s){
   show('S-memory');
   var ct=document.getElementById('memory-cards');
+  var pm=document.getElementById('memory-prompt');
   ct.innerHTML='';
-  s.options.forEach(function(opt,i){
+  pm.textContent = s.prompt||'どうする？';
+  s.options.forEach(function(opt){
     var card=document.createElement('div');
     card.className='memory-card';
-    card.innerHTML='<div class="memory-card-label">選択 '+(i+1)+'</div><div class="memory-card-text">'+opt.text+'</div>';
+    card.textContent=opt.text;
     card.addEventListener('click', function(){
       if(opt.next!=null){ si=opt.next; runScene(); }
       else ns();
