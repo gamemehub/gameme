@@ -10,28 +10,64 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0a0a12;color:#e0e0e
 button{cursor:pointer;font-family:inherit}
 .screen{position:fixed;inset:0;display:none;flex-direction:column}
 .screen.active{display:flex}
+
+/* TITLE */
 #S-title{align-items:center;justify-content:center;background:#0a0a12}
-.title-logo{font-size:clamp(28px,7vw,48px);font-weight:900;letter-spacing:.15em;color:#c8d0e8;text-align:center;margin-bottom:8px}
-.title-sub{font-size:11px;color:#4a5068;letter-spacing:.3em;text-align:center;margin-bottom:48px}
+.title-logo{font-size:clamp(32px,8vw,56px);font-weight:900;letter-spacing:.15em;color:#c8d0e8;text-align:center;margin-bottom:8px}
+.title-sub{font-size:12px;color:#4a5068;letter-spacing:.3em;text-align:center;margin-bottom:48px}
 .start-btn{background:transparent;border:1px solid #3a4060;color:#8090b8;padding:14px 40px;font-size:11px;letter-spacing:.25em;border-radius:2px}
+
+/* SCENE / VN */
 #S-scene{background:#0a0a12;cursor:pointer}
-.scene-bg{position:absolute;inset:0;transition:background 1s}
+.scene-bg{position:absolute;inset:0;background:#0a0a12;transition:background 1s}
 .scene-sprites{position:absolute;bottom:180px;left:0;right:0;display:flex;justify-content:center;gap:24px;align-items:flex-end}
-.sprite-img{image-rendering:pixelated;filter:drop-shadow(0 4px 12px rgba(0,0,0,.7))}
+.sprite-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;transition:opacity .4s}
+.sprite-name{font-size:9px;color:#4a5068;letter-spacing:.1em}
+.sprite-img{image-rendering:pixelated;image-rendering:crisp-edges;filter:drop-shadow(0 4px 12px rgba(0,0,0,.7))}
 .dialogue-box{position:absolute;bottom:0;left:0;right:0;background:rgba(8,8,18,.95);border-top:1px solid #1e2035;padding:0 0 8px}
 .dlg-speaker{display:flex;align-items:center;gap:10px;padding:10px 16px 6px;border-bottom:1px solid #12141e}
 .dlg-name{font-size:11px;font-weight:700}
 .dlg-role{font-size:8px;color:#2a2e48;margin-left:auto}
-.dlg-text{padding:10px 16px 6px;font-size:13px;color:#c8d0e8;line-height:2;min-height:72px;white-space:pre-wrap}
-.dlg-next{text-align:center;padding:8px;font-size:9px;color:#3a4858;letter-spacing:.2em;border-top:1px solid #10121e;display:none}
+.dlg-text{padding:10px 16px 6px;font-size:12px;color:#c8d0e8;line-height:2;min-height:68px;white-space:pre-wrap}
+.dlg-inner{padding:4px 16px 8px;font-size:10px;color:#4a5878;line-height:1.9;font-style:italic;border-left:2px solid #1e2840;margin:0 16px 6px;background:rgba(10,20,40,.4);display:none;white-space:pre-wrap}
+.dlg-next{text-align:center;padding:8px;font-size:9px;color:#1e2840;letter-spacing:.2em;border-top:1px solid #10121e;display:none}
+
+/* MEMORY (書き換え画面) */
 #S-memory{background:#06060e;align-items:center;justify-content:center;padding:20px}
-.memory-prompt{font-size:13px;color:#8090b0;letter-spacing:.1em;margin-bottom:16px;text-align:center}
+.memory-title{font-size:10px;color:#3a4060;letter-spacing:.3em;margin-bottom:20px;text-align:center}
 .memory-cards{width:100%;max-width:360px;display:flex;flex-direction:column;gap:10px}
-.memory-card{padding:14px 16px;background:#0c0e1a;border:1px solid #1e2035;border-radius:3px;cursor:pointer;transition:all .15s;font-size:13px;color:#a0b0c8;text-align:center}
-.memory-card:active,.memory-card:hover{border-color:#4a60a0;background:#0e1228;color:#c8d8f0}
+.memory-card{padding:12px 14px;background:#0c0e1a;border:1px solid #1e2035;border-radius:3px;cursor:pointer;transition:border-color .2s}
+.memory-card.selected{border-color:#4a60a0;background:#0e1228}
+.memory-card-label{font-size:8px;color:#2a3050;letter-spacing:.15em;margin-bottom:4px}
+.memory-card-text{font-size:12px;color:#8090b0;line-height:1.7}
+.memory-confirm{margin-top:16px;width:100%;max-width:360px;padding:12px;background:transparent;border:1px solid #2a3050;color:#4a5878;font-size:10px;letter-spacing:.2em;border-radius:2px;display:none}
+
+/* PHONE (章末・空白メッセージ) */
+#S-phone{background:#05060c;align-items:center;justify-content:center;padding:24px}
+.phone-frame{width:100%;max-width:340px;height:70%;max-height:560px;background:#0a0c16;border:1px solid #1e2035;border-radius:16px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 8px 40px rgba(0,0,0,.6)}
+.phone-header{padding:14px;font-size:11px;letter-spacing:.2em;color:#6a78a0;text-align:center;border-bottom:1px solid #161826;background:#0c0e1a}
+.phone-thread{flex:1;padding:16px;display:flex;flex-direction:column;gap:14px;overflow-y:auto}
+.msg{max-width:82%;display:flex;flex-direction:column;gap:4px;align-self:flex-start;animation:msgIn .35s ease both}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.msg-from{font-size:9px;color:#4a5068;letter-spacing:.1em;padding-left:4px}
+.msg-bubble{padding:10px 12px;font-size:12px;line-height:1.8;border-radius:12px;background:#141828;color:#c8d0e8;word-break:break-word}
+.msg.unknown .msg-bubble{background:#0e1020;color:#9aa6c8}
+.blank{display:inline-block;background:#e8ecf8;color:transparent;border-radius:2px;box-shadow:0 0 10px rgba(232,236,248,.55);animation:blankPulse 2.8s ease-in-out infinite;vertical-align:middle}
+@keyframes blankPulse{0%,100%{opacity:.5}50%{opacity:.95}}
+.phone-next{margin-top:18px;font-size:9px;color:#2a3050;letter-spacing:.2em;text-align:center}
+
+/* CHAPTER END / To be continued */
+#S-continued{background:#05060c;align-items:center;justify-content:center}
+.cont-wrap{text-align:center;animation:msgIn .8s ease both}
+.cont-chapter{font-size:9px;color:#3a4060;letter-spacing:.35em;margin-bottom:18px}
+.cont-title{font-size:clamp(24px,7vw,40px);font-weight:900;letter-spacing:.12em;color:#c8d0e8;margin-bottom:14px}
+.cont-sub{font-size:10px;color:#4a5068;letter-spacing:.25em;margin-bottom:40px}
+.cont-btn{background:transparent;border:1px solid #2a3050;color:#6a78a0;padding:12px 32px;font-size:10px;letter-spacing:.2em;border-radius:2px}
 </style>
 </head>
 <body>
+
+<!-- TITLE -->
 <div class="screen active" id="S-title">
   <div style="text-align:center">
     <div class="title-logo">RewriteMemory</div>
@@ -40,6 +76,8 @@ button{cursor:pointer;font-family:inherit}
   </div>
   <div style="position:absolute;bottom:16px;width:100%;text-align:center;font-size:8px;color:#1e2030;letter-spacing:.15em">GC2026 — Chapter 01</div>
 </div>
+
+<!-- SCENE / VN -->
 <div class="screen" id="S-scene">
   <div class="scene-bg" id="scene-bg"></div>
   <div class="scene-sprites" id="scene-sprites"></div>
@@ -49,80 +87,144 @@ button{cursor:pointer;font-family:inherit}
       <span class="dlg-role" id="dlg-role"></span>
     </div>
     <div class="dlg-text" id="dlg-text"></div>
+    <div class="dlg-inner" id="dlg-inner"></div>
     <div class="dlg-next" id="dlg-next">▸ タップして続ける</div>
   </div>
 </div>
+
+<!-- MEMORY REWRITE -->
 <div class="screen" id="S-memory">
-  <div class="memory-prompt" id="memory-prompt">どうする？</div>
+  <div class="memory-title">── 記憶の書き換え ──</div>
   <div class="memory-cards" id="memory-cards"></div>
+  <button class="memory-confirm" id="memory-confirm">この記憶を書き換える</button>
 </div>
+
+<!-- PHONE / 章末メッセージ -->
+<div class="screen" id="S-phone">
+  <div class="phone-frame">
+    <div class="phone-header" id="phone-header">メッセージ</div>
+    <div class="phone-thread" id="phone-thread"></div>
+  </div>
+  <div class="phone-next" id="phone-next">▸ タップして続ける</div>
+</div>
+
+<!-- CHAPTER END / To be continued -->
+<div class="screen" id="S-continued">
+  <div class="cont-wrap">
+    <div class="cont-chapter">CHAPTER 01 — END</div>
+    <div class="cont-title">To be continued</div>
+    <div class="cont-sub">Chapter 02 ── coming soon</div>
+    <button class="cont-btn" id="cont-btn">タイトルへ戻る</button>
+  </div>
+</div>
+
 <script>
+/* ═══ SPRITE SYSTEM ═══════════════════════════════════════ */
+var SPRITES = {};
+var _SC = {};
+
+function mkSprite(id) {
+  var d = SPRITES[id]; if (!d) return null;
+  var s = 5, h = d.px.length, w = d.px[0].length;
+  var c = document.createElement('canvas');
+  c.width = w*s; c.height = h*s;
+  var x = c.getContext('2d');
+  for (var y=0;y<h;y++) for (var i=0;i<w;i++) {
+    var ci = d.px[y][i];
+    if (ci > 0 && d.pal[ci]) { x.fillStyle=d.pal[ci]; x.fillRect(i*s,y*s,s,s); }
+  }
+  return c.toDataURL();
+}
+function getSprite(id) { if(!_SC[id])_SC[id]=mkSprite(id); return _SC[id]||''; }
+
+/* ═══ SCENE ENGINE ═══════════════════════════════════════ */
 var si=0, beat=0, tTimer=null;
-var SCENES = [{"type": "vn", "bg": "linear-gradient(180deg,#ffffff,#e8e8f0)", "beats": [{"text": "白い広場。時計塔。椅子。", "speaker": null, "sprites": []}, {"text": "ミオ。", "speaker": null, "sprites": []}, {"text": "「ごめんなさい」", "speaker": {"name": "ミオ", "color": "#8090c8", "role": "RewriteMemory"}, "sprites": []}, {"text": "「あなたは、誰ですか？」", "speaker": {"name": "ミオ", "color": "#8090c8", "role": ""}, "sprites": []}, {"text": "「これは、最後の日の記憶だから」", "speaker": {"name": "???", "color": "#606070", "role": ""}, "sprites": []}, {"text": "——プロローグ終わり。3日前へ——", "speaker": null, "sprites": []}]}, {"type": "vn", "bg": "linear-gradient(180deg,#08080f,#0c1020)", "beats": [{"text": "広場で会う約束のメッセージが届いた。", "speaker": null, "sprites": []}, {"text": "ミオはいつもより明るく振る舞っていた。でも——少しだけ、不安そうに見えた。", "speaker": null, "sprites": []}, {"text": "「遅れた？」", "speaker": {"name": "ミオ", "color": "#8090c8", "role": ""}, "sprites": []}, {"text": "広場の中央に、昔からあるはずの椅子がない。", "speaker": null, "sprites": []}, {"text": "地面には跡だけが残っている。", "speaker": null, "sprites": []}, {"text": "「……これ、おかしくない？」", "speaker": {"name": "ミオ", "color": "#8090c8", "role": ""}, "sprites": []}]}, {"type": "memory", "prompt": "どうする？", "options": [{"text": "観測する", "next": null}, {"text": "見ない", "next": null}, {"text": "ミオに聴く", "next": null}, {"text": "待つ", "next": null}]}, {"type": "vn", "bg": "linear-gradient(180deg,#08080f,#0a0818)", "beats": [{"text": "——椅子そのものが消えたのではない。", "speaker": null, "sprites": []}, {"text": "椅子に結びついていた「記憶」「関係」「意味」が白く抜け始めている。", "speaker": null, "sprites": []}, {"text": "スマホにメッセージが届いた。", "speaker": null, "sprites": []}, {"text": "送信者名が——白く抜けている。", "speaker": null, "sprites": []}, {"text": "To be continued...", "speaker": null, "sprites": []}]}];
+var SCENES = []; /* ← シナリオデータはここに入る */
 
-function sc(){ return SCENES[si]||null; }
-function ns(){ si++; runScene(); }
+function sc() { return SCENES[si]||null; }
+function ns() { si++; runScene(); }
 
-function runScene(){
-  var s=sc();
-  if(!s){ show('S-title'); return; }
-  if(s.type==='vn') showVN(s);
-  else if(s.type==='memory') showMemory(s);
+function runScene() {
+  var s = sc(); if (!s) { showEnd(); return; }
+  if (s.type === 'vn')     showVN(s);
+  else if (s.type === 'memory') showMemory(s);
+  else if (s.type === 'phone') showPhone(s);
+  else if (s.type === 'continued') showContinued(s);
 }
 
-function showVN(s){
+function showVN(s) {
   show('S-scene');
-  beat=0;
-  document.getElementById('scene-bg').style.background = s.bg||'#0a0a12';
+  beat = 0;
+  var bg = document.getElementById('scene-bg');
+  bg.style.background = s.bg || '#0a0a12';
   showBeat(s);
 }
 
-function showBeat(s){
-  var b=s.beats[beat];
-  if(!b){ ns(); return; }
-  var sp=document.getElementById('dlg-speaker');
-  var nm=document.getElementById('dlg-name');
-  var rl=document.getElementById('dlg-role');
-  var tx=document.getElementById('dlg-text');
-  var nx=document.getElementById('dlg-next');
-  tx.textContent=''; nx.style.display='none';
-  if(b.sprites) updateSprites(b.sprites);
-  if(b.speaker){ sp.style.display='flex'; nm.textContent=b.speaker.name; nm.style.color=b.speaker.color||'#c8d0e8'; rl.textContent=b.speaker.role||''; }
-  else sp.style.display='none';
-  if(b.text) typewrite(tx, b.text, 30);
-  setTimeout(function(){ nx.style.display='block'; }, 300);
+function showBeat(s) {
+  var b = s.beats[beat]; if (!b) { ns(); return; }
+  var sp = document.getElementById('dlg-speaker');
+  var nm = document.getElementById('dlg-name');
+  var rl = document.getElementById('dlg-role');
+  var tx = document.getElementById('dlg-text');
+  var inn = document.getElementById('dlg-inner');
+  var nx = document.getElementById('dlg-next');
+  tx.textContent=''; inn.textContent=''; inn.style.display='none'; nx.style.display='none';
+
+  /* スプライト更新 */
+  updateSprites(b.sprites);
+
+  if (b.speaker) {
+    sp.style.display='flex';
+    nm.textContent=b.speaker.name; nm.style.color=b.speaker.color||'#c8d0e8';
+    rl.textContent=b.speaker.role||'';
+  } else {
+    sp.style.display='none';
+  }
+
+  if (b.text) typewrite(tx, b.text, 16);
+  if (b.inner) { inn.style.display='block'; typewrite(inn, b.inner, 14); }
+  setTimeout(function(){ nx.style.display='block'; }, 400);
 }
 
-function updateSprites(list){
-  var zone=document.getElementById('scene-sprites');
-  zone.innerHTML='';
-  if(!list) return;
-  list.forEach(function(sp){
-    if(sp.src){
-      var img=document.createElement('img');
-      img.src=sp.src; img.className='sprite-img';
-      img.style.height=(sp.height||96)+'px';
-      zone.appendChild(img);
+function updateSprites(list) {
+  var zone = document.getElementById('scene-sprites');
+  zone.innerHTML = '';
+  if (!list) return;
+  list.forEach(function(sp) {
+    var wrap = document.createElement('div'); wrap.className='sprite-wrap';
+    var src = getSprite(sp.id);
+    if (src) {
+      var img = document.createElement('img');
+      img.src=src; img.className='sprite-img';
+      img.style.height = (sp.height||96)+'px';
+      if (sp.flip) img.style.transform='scaleX(-1)';
+      wrap.appendChild(img);
     }
+    if (sp.label) {
+      var lbl = document.createElement('div'); lbl.className='sprite-name';
+      lbl.textContent=sp.label; wrap.appendChild(lbl);
+    }
+    zone.appendChild(wrap);
   });
 }
 
-function typewrite(el, txt, spd){
-  if(tTimer) clearInterval(tTimer);
+function typewrite(el, txt, spd) {
+  if(tTimer)clearInterval(tTimer);
   el.textContent=''; var i=0;
   tTimer=setInterval(function(){
     el.textContent+=txt[i++];
-    if(i>=txt.length){ clearInterval(tTimer); tTimer=null; }
-  }, spd||30);
+    if(i>=txt.length){clearInterval(tTimer);tTimer=null;}
+  }, spd||14);
 }
 
-document.getElementById('S-scene').addEventListener('click', function(){
-  if(tTimer){
-    clearInterval(tTimer); tTimer=null;
-    var s=sc();
-    if(s&&s.beats&&s.beats[beat]) document.getElementById('dlg-text').textContent=s.beats[beat].text||'';
-    document.getElementById('dlg-next').style.display='block';
-    return;
+document.getElementById('S-scene').addEventListener('click', function() {
+  if (tTimer) { clearInterval(tTimer); tTimer=null;
+    var s=sc(); if(s&&s.beats&&s.beats[beat]) {
+      var b=s.beats[beat];
+      document.getElementById('dlg-text').textContent=b.text||'';
+      if(b.inner)document.getElementById('dlg-inner').textContent=b.inner;
+    }
+    document.getElementById('dlg-next').style.display='block'; return;
   }
   beat++;
   var s=sc();
@@ -130,32 +232,122 @@ document.getElementById('S-scene').addEventListener('click', function(){
   else ns();
 });
 
-function showMemory(s){
+/* ═══ MEMORY REWRITE ═══════════════════════════════════ */
+var selectedMemory = null;
+
+function showMemory(s) {
   show('S-memory');
-  var ct=document.getElementById('memory-cards');
-  var pm=document.getElementById('memory-prompt');
-  ct.innerHTML='';
-  pm.textContent = s.prompt||'どうする？';
-  s.options.forEach(function(opt){
-    var card=document.createElement('div');
-    card.className='memory-card';
-    card.textContent=opt.text;
-    card.addEventListener('click', function(){
-      if(opt.next!=null){ si=opt.next; runScene(); }
-      else ns();
-    });
+  selectedMemory = null;
+  var ct = document.getElementById('memory-cards');
+  var btn = document.getElementById('memory-confirm');
+  ct.innerHTML=''; btn.style.display='none';
+
+  s.options.forEach(function(opt, i) {
+    var card = document.createElement('div'); card.className='memory-card';
+    card.innerHTML='<div class="memory-card-label">記憶 '+(i+1)+'</div>'
+      +'<div class="memory-card-text">'+opt.text+'</div>';
+    card.onclick = function() {
+      document.querySelectorAll('.memory-card').forEach(function(c){c.classList.remove('selected');});
+      card.classList.add('selected');
+      selectedMemory = opt;
+      btn.style.display='block';
+    };
     ct.appendChild(card);
   });
+
+  btn.onclick = function() {
+    if (!selectedMemory) return;
+    if (selectedMemory.next) { si = selectedMemory.next; runScene(); }
+    else ns();
+  };
 }
 
-function show(id){
-  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+/* ═══ PHONE / 章末・空白メッセージ ════════════════════ */
+var phone = { msgs: [], idx: 0, done: false, timer: null };
+
+function escapeHtml(t) {
+  return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+/* 文字列、または [{t:'通常'},{b:'　　'}] 形式（b=白く抜ける部分）を描画 */
+function renderSeg(seg) {
+  if (seg == null) return '';
+  if (typeof seg === 'string') return escapeHtml(seg);
+  return seg.map(function(p) {
+    if (p.b != null) return '<span class="blank">' + escapeHtml(p.b) + '</span>';
+    return escapeHtml(p.t || '');
+  }).join('');
+}
+
+function addPhoneMsg(m) {
+  var thread = document.getElementById('phone-thread');
+  var wrap = document.createElement('div');
+  wrap.className = 'msg' + (m.unknown ? ' unknown' : '');
+  var from = document.createElement('div'); from.className = 'msg-from';
+  from.innerHTML = renderSeg(m.from);
+  var bub = document.createElement('div'); bub.className = 'msg-bubble';
+  bub.innerHTML = renderSeg(m.text);
+  wrap.appendChild(from); wrap.appendChild(bub);
+  thread.appendChild(wrap);
+  thread.scrollTop = thread.scrollHeight;
+}
+
+function phoneStep() {
+  if (phone.idx >= phone.msgs.length) {
+    phone.done = true;
+    document.getElementById('phone-next').style.display = 'block';
+    return;
+  }
+  var m = phone.msgs[phone.idx++];
+  addPhoneMsg(m);
+  phone.timer = setTimeout(phoneStep, m.delay || 900);
+}
+
+function showPhone(s) {
+  show('S-phone');
+  if (phone.timer) { clearTimeout(phone.timer); phone.timer = null; }
+  phone.msgs = s.messages || [];
+  phone.idx = 0; phone.done = false;
+  document.getElementById('phone-header').textContent = s.header || 'メッセージ';
+  document.getElementById('phone-thread').innerHTML = '';
+  document.getElementById('phone-next').style.display = 'none';
+  phoneStep();
+}
+
+document.getElementById('S-phone').addEventListener('click', function() {
+  if (!phone.done) {
+    /* 残りメッセージを一括表示 */
+    if (phone.timer) { clearTimeout(phone.timer); phone.timer = null; }
+    while (phone.idx < phone.msgs.length) addPhoneMsg(phone.msgs[phone.idx++]);
+    phone.done = true;
+    document.getElementById('phone-next').style.display = 'block';
+    return;
+  }
+  ns();
+});
+
+/* ═══ CHAPTER END ═════════════════════════════════════ */
+function showContinued() { show('S-continued'); }
+document.getElementById('cont-btn').addEventListener('click', function() { showEnd(); });
+
+/* ═══ UTILS ═══════════════════════════════════════════ */
+function show(id) {
+  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
   document.getElementById(id).classList.add('active');
 }
+function showEnd() {
+  show('S-title');
+}
 
-document.getElementById('start-btn').addEventListener('click', function(){
+/* ═══ START ═══════════════════════════════════════════ */
+document.getElementById('start-btn').addEventListener('click', function() {
   si=0; beat=0; runScene();
 });
+
+/* ═══ PLACEHOLDER SCENE (構想が届いたら差し替え) ══════ */
+SCENES = [{"id": "ch01_000_prologue", "type": "vn", "bg": "linear-gradient(180deg,#f8f8f8,#e8e8f0)", "beats": [{"text": "白い広場。時計塔。椅子。", "speaker": null, "sprites": []}, {"text": "ミオ。", "speaker": null, "sprites": []}, {"text": "「ごめんなさい」", "speaker": {"name": "ミオ", "color": "#8090c8", "role": ""}, "sprites": []}, {"text": "「あなたは、誰ですか？」", "speaker": {"name": "ミオ", "color": "#8090c8", "role": ""}, "sprites": []}, {"text": "「これは、最後の日の記憶だから」", "speaker": {"name": "???", "color": "#606070", "role": ""}, "sprites": []}, {"text": "——3日前。", "speaker": null, "sprites": []}]}, {"id": "ch01_010_message", "type": "vn", "bg": "linear-gradient(180deg,#08080f,#0c1020)", "beats": [{"text": "スマホに通知が届く。", "speaker": null, "sprites": []}, {"text": "「広場にいるよ。いつもの場所。」", "speaker": {"name": "ミオ", "color": "#8090c8", "role": ""}, "sprites": []}, {"text": "（いつもの場所——あの椅子のそばだ。）", "speaker": null, "sprites": []}]}, {"id": "ch01_020_plaza_meet", "type": "vn", "bg": "linear-gradient(180deg,#0a100a,#0c1810)", "beats": [{"text": "夕暮れの広場。\nミオはベンチの近くに立っていた。", "speaker": null, "sprites": []}, {"text": "「遅い。」", "speaker": {"name": "ミオ", "color": "#8090c8", "role": ""}, "sprites": []}, {"text": "（笑っている。でも——怖い時ほど笑う、あの笑い方だ。）", "speaker": null, "sprites": []}, {"text": "「……ねえ。あそこ、見て。」", "speaker": {"name": "ミオ", "color": "#8090c8", "role": ""}, "sprites": []}]}, {"id": "ch01_030_missing_chair", "type": "vn", "bg": "linear-gradient(180deg,#06060e,#080814)", "beats": [{"text": "広場の中央。昔からあるはずの椅子が——ない。", "speaker": null, "sprites": []}, {"text": "地面には、四角い跡だけが残っている。", "speaker": null, "sprites": []}, {"text": "「消えてる。」", "speaker": {"name": "ミオ", "color": "#8090c8", "role": ""}, "sprites": []}, {"text": "通りかかった人に尋ねた。\n「椅子？ そんなもの、あったっけ？」", "speaker": null, "sprites": []}, {"text": "誰も覚えていない。", "speaker": null, "sprites": []}, {"text": "「……わたしたち、あそこに座ったよね？　ね？」", "speaker": {"name": "ミオ", "color": "#8090c8", "role": ""}, "sprites": []}]}, {"id": "ch01_060_choice", "type": "memory", "prompt": "どうする？", "options": [{"text": "観測する", "next": "ch01_070a_observe"}, {"text": "見ない", "next": "ch01_070b_dont_look"}, {"text": "ミオに聴く", "next": "ch01_070c_listen"}, {"text": "待つ", "next": "ch01_070d_wait"}]}, {"id": "ch01_070a_observe", "type": "vn", "bg": "linear-gradient(180deg,#060610,#080818)", "beats": [{"text": "（見る——それが正しいと思った。\n知れば、救えると思った。）", "speaker": null, "sprites": []}, {"text": "でも、ミオはわずかに身を引いた。", "speaker": null, "sprites": []}, {"text": "「……見すぎないで。」", "speaker": {"name": "ミオ", "color": "#8090c8", "role": ""}, "sprites": []}], "next": "ch01_070_reconstruction"}, {"id": "ch01_070b_dont_look", "type": "vn", "bg": "linear-gradient(180deg,#060610,#080818)", "beats": [{"text": "目を逸らした。", "speaker": null, "sprites": []}, {"text": "ミオが、小さく息を吐いた。", "speaker": null, "sprites": []}, {"text": "「……ありがとう。」", "speaker": {"name": "ミオ", "color": "#8090c8", "role": ""}, "sprites": []}], "next": "ch01_070_reconstruction"}, {"id": "ch01_070c_listen", "type": "vn", "bg": "linear-gradient(180deg,#060610,#080818)", "beats": [{"text": "「ミオ、あの椅子のこと——話せる？」", "speaker": {"name": "トウ", "color": "#90a0c8", "role": ""}, "sprites": []}, {"text": "少し間があった。", "speaker": null, "sprites": []}, {"text": "「……うん。話すよ。ちゃんと。」", "speaker": {"name": "ミオ", "color": "#8090c8", "role": ""}, "sprites": []}], "next": "ch01_070_reconstruction"}, {"id": "ch01_070d_wait", "type": "vn", "bg": "linear-gradient(180deg,#060610,#080818)", "beats": [{"text": "何も言わずに、ただ隣にいた。", "speaker": null, "sprites": []}, {"text": "ミオはしばらく黙っていた。", "speaker": null, "sprites": []}, {"text": "「……ここにいてくれるだけで、いいや。」", "speaker": {"name": "ミオ", "color": "#8090c8", "role": ""}, "sprites": []}], "next": "ch01_070_reconstruction"}, {"id": "ch01_070_reconstruction", "type": "memory", "prompt": "何が消えたのか——断片を選ぶ", "options": [{"text": "地面に残った四角い跡", "next": null}, {"text": "誰も椅子を覚えていない", "next": null}, {"text": "ミオだけが違和感を持っている", "next": null}, {"text": "ミオとトウがその椅子に座った記憶", "next": "ch01_080_truth"}]}, {"id": "ch01_080_truth", "type": "vn", "bg": "linear-gradient(180deg,#08080f,#0a0818)", "beats": [{"text": "——椅子そのものが消えたのではない。", "speaker": null, "sprites": []}, {"text": "椅子に結びついていた「記憶」「関係」「意味」が、白く抜け始めている。", "speaker": null, "sprites": []}, {"text": "「消えてるのは、椅子じゃない。」", "speaker": {"name": "ミオ", "color": "#8090c8", "role": ""}, "sprites": []}, {"text": "「わたしたちが、あそこにいたって——記憶が。」", "speaker": {"name": "ミオ", "color": "#8090c8", "role": ""}, "sprites": []}]}, {"id": "ch01_090_phone", "type": "phone", "messages": [{"from": "ミオ", "text": "今日はきてくれて ありがとう。", "delay": 700}, {"from": "ミオ", "text": "またね。", "delay": 1400}, {"unknown": true, "from_parts": [{"t": "ミ"}, {"b": "　　"}], "text_parts": [{"t": "ねえ、わたしの"}, {"b": "　　　"}, {"t": "こと、"}, {"b": "　　　　　"}, {"t": "ないでね。"}], "delay": 2200}]}, {"id": "ch01_099_continued", "type": "continued"}];
+
+/* ゲームエンジンの準備完了 */
+console.log('[RewriteMemory] Engine ready. Waiting for scenario data.');
 </script>
 </body>
 </html>
