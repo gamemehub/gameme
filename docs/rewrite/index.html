@@ -10,19 +10,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:#0a0a12;color:#e0e0e
 button{cursor:pointer;font-family:inherit}
 .screen{position:fixed;inset:0;display:none;flex-direction:column}
 .screen.active{display:flex}
-
-/* TITLE */
 #S-title{align-items:center;justify-content:center;background:#0a0a12}
-.title-logo{font-size:clamp(32px,8vw,56px);font-weight:900;letter-spacing:.15em;color:#c8d0e8;text-align:center;margin-bottom:8px}
-.title-sub{font-size:12px;color:#4a5068;letter-spacing:.3em;text-align:center;margin-bottom:48px}
+.title-logo{font-size:clamp(28px,7vw,48px);font-weight:900;letter-spacing:.15em;color:#c8d0e8;text-align:center;margin-bottom:8px}
+.title-sub{font-size:11px;color:#4a5068;letter-spacing:.3em;text-align:center;margin-bottom:48px}
 .start-btn{background:transparent;border:1px solid #3a4060;color:#8090b8;padding:14px 40px;font-size:11px;letter-spacing:.25em;border-radius:2px}
-
-/* SCENE / VN */
 #S-scene{background:#0a0a12;cursor:pointer}
 .scene-bg{position:absolute;inset:0;background:#0a0a12;transition:background 1s}
 .scene-sprites{position:absolute;bottom:180px;left:0;right:0;display:flex;justify-content:center;gap:24px;align-items:flex-end}
-.sprite-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;transition:opacity .4s}
-.sprite-name{font-size:9px;color:#4a5068;letter-spacing:.1em}
 .sprite-img{image-rendering:pixelated;image-rendering:crisp-edges;filter:drop-shadow(0 4px 12px rgba(0,0,0,.7))}
 .dialogue-box{position:absolute;bottom:0;left:0;right:0;background:rgba(8,8,18,.95);border-top:1px solid #1e2035;padding:0 0 8px}
 .dlg-speaker{display:flex;align-items:center;gap:10px;padding:10px 16px 6px;border-bottom:1px solid #12141e}
@@ -30,9 +24,7 @@ button{cursor:pointer;font-family:inherit}
 .dlg-role{font-size:8px;color:#2a2e48;margin-left:auto}
 .dlg-text{padding:10px 16px 6px;font-size:12px;color:#c8d0e8;line-height:2;min-height:68px;white-space:pre-wrap}
 .dlg-inner{padding:4px 16px 8px;font-size:10px;color:#4a5878;line-height:1.9;font-style:italic;border-left:2px solid #1e2840;margin:0 16px 6px;background:rgba(10,20,40,.4);display:none;white-space:pre-wrap}
-.dlg-next{text-align:center;padding:8px;font-size:9px;color:#1e2840;letter-spacing:.2em;border-top:1px solid #10121e;display:none}
-
-/* MEMORY (書き換え画面) */
+.dlg-next{text-align:center;padding:8px;font-size:9px;color:#3a4858;letter-spacing:.2em;border-top:1px solid #10121e;display:none}
 #S-memory{background:#06060e;align-items:center;justify-content:center;padding:20px}
 .memory-title{font-size:10px;color:#3a4060;letter-spacing:.3em;margin-bottom:20px;text-align:center}
 .memory-cards{width:100%;max-width:360px;display:flex;flex-direction:column;gap:10px}
@@ -44,18 +36,14 @@ button{cursor:pointer;font-family:inherit}
 </style>
 </head>
 <body>
-
-<!-- TITLE -->
 <div class="screen active" id="S-title">
   <div style="text-align:center">
     <div class="title-logo">RewriteMemory</div>
-    <div class="title-sub">記憶は、書き換えられる。</div>
-    <button class="start-btn" id="start-btn">はじめる</button>
+    <div class="title-sub">\u8a18\u61b6\u306f\u3001\u66f8\u304d\u63db\u3048\u3089\u308c\u308b\u3002</div>
+    <button class="start-btn" id="start-btn">\u306f\u3058\u3081\u308b</button>
   </div>
-  <div style="position:absolute;bottom:16px;width:100%;text-align:center;font-size:8px;color:#1e2030;letter-spacing:.15em">GC2026 — Chapter 01</div>
+  <div style="position:absolute;bottom:16px;width:100%;text-align:center;font-size:8px;color:#1e2030;letter-spacing:.15em">GC2026 \u2014 Chapter 01</div>
 </div>
-
-<!-- SCENE / VN -->
 <div class="screen" id="S-scene">
   <div class="scene-bg" id="scene-bg"></div>
   <div class="scene-sprites" id="scene-sprites"></div>
@@ -66,122 +54,89 @@ button{cursor:pointer;font-family:inherit}
     </div>
     <div class="dlg-text" id="dlg-text"></div>
     <div class="dlg-inner" id="dlg-inner"></div>
-    <div class="dlg-next" id="dlg-next">▸ タップして続ける</div>
+    <div class="dlg-next" id="dlg-next">\u25b8 \u30bf\u30c3\u30d7\u3057\u3066\u7d9a\u3051\u308b</div>
   </div>
 </div>
-
-<!-- MEMORY REWRITE -->
 <div class="screen" id="S-memory">
-  <div class="memory-title">── 記憶の書き換え ──</div>
+  <div class="memory-title">\u2500\u2500 \u8a18\u61b6\u306e\u518d\u69cb\u6210 \u2500\u2500</div>
   <div class="memory-cards" id="memory-cards"></div>
-  <button class="memory-confirm" id="memory-confirm">この記憶を書き換える</button>
+  <button class="memory-confirm" id="memory-confirm">\u3053\u306e\u8a18\u61b6\u3092\u9078\u3076</button>
 </div>
-
 <script>
-/* ═══ SPRITE SYSTEM ═══════════════════════════════════════ */
-var SPRITES = {};
-var _SC = {};
-
-function mkSprite(id) {
-  var d = SPRITES[id]; if (!d) return null;
-  var s = 5, h = d.px.length, w = d.px[0].length;
-  var c = document.createElement('canvas');
-  c.width = w*s; c.height = h*s;
-  var x = c.getContext('2d');
-  for (var y=0;y<h;y++) for (var i=0;i<w;i++) {
-    var ci = d.px[y][i];
-    if (ci > 0 && d.pal[ci]) { x.fillStyle=d.pal[ci]; x.fillRect(i*s,y*s,s,s); }
-  }
-  return c.toDataURL();
-}
-function getSprite(id) { if(!_SC[id])_SC[id]=mkSprite(id); return _SC[id]||''; }
-
-/* ═══ SCENE ENGINE ═══════════════════════════════════════ */
 var si=0, beat=0, tTimer=null;
-var SCENES = []; /* ← シナリオデータはここに入る */
+var SCENES = [];
+var selectedMemory = null;
 
-function sc() { return SCENES[si]||null; }
-function ns() { si++; runScene(); }
+function sc(){ return SCENES[si]||null; }
+function ns(){ si++; runScene(); }
 
-function runScene() {
-  var s = sc(); if (!s) { showEnd(); return; }
-  if (s.type === 'vn')     showVN(s);
-  else if (s.type === 'memory') showMemory(s);
+function runScene(){
+  var s=sc();
+  if(!s){ show('S-title'); return; }
+  if(s.type==='vn') showVN(s);
+  else if(s.type==='memory') showMemory(s);
 }
 
-function showVN(s) {
+function showVN(s){
   show('S-scene');
-  beat = 0;
-  var bg = document.getElementById('scene-bg');
-  bg.style.background = s.bg || '#0a0a12';
+  beat=0;
+  document.getElementById('scene-bg').style.background = s.bg||'#0a0a12';
   showBeat(s);
 }
 
-function showBeat(s) {
-  var b = s.beats[beat]; if (!b) { ns(); return; }
-  var sp = document.getElementById('dlg-speaker');
-  var nm = document.getElementById('dlg-name');
-  var rl = document.getElementById('dlg-role');
-  var tx = document.getElementById('dlg-text');
-  var inn = document.getElementById('dlg-inner');
-  var nx = document.getElementById('dlg-next');
+function showBeat(s){
+  var b=s.beats[beat];
+  if(!b){ ns(); return; }
+  var sp=document.getElementById('dlg-speaker');
+  var nm=document.getElementById('dlg-name');
+  var rl=document.getElementById('dlg-role');
+  var tx=document.getElementById('dlg-text');
+  var inn=document.getElementById('dlg-inner');
+  var nx=document.getElementById('dlg-next');
   tx.textContent=''; inn.textContent=''; inn.style.display='none'; nx.style.display='none';
-
-  /* スプライト更新 */
-  updateSprites(b.sprites);
-
-  if (b.speaker) {
-    sp.style.display='flex';
-    nm.textContent=b.speaker.name; nm.style.color=b.speaker.color||'#c8d0e8';
-    rl.textContent=b.speaker.role||'';
-  } else {
-    sp.style.display='none';
-  }
-
-  if (b.text) typewrite(tx, b.text, 16);
-  if (b.inner) { inn.style.display='block'; typewrite(inn, b.inner, 14); }
+  if(b.sprites) updateSprites(b.sprites);
+  if(b.speaker){ sp.style.display='flex'; nm.textContent=b.speaker.name; nm.style.color=b.speaker.color||'#c8d0e8'; rl.textContent=b.speaker.role||''; }
+  else{ sp.style.display='none'; }
+  if(b.text) typewrite(tx, b.text, 16);
+  if(b.inner){ inn.style.display='block'; typewrite(inn, b.inner, 14); }
   setTimeout(function(){ nx.style.display='block'; }, 400);
 }
 
-function updateSprites(list) {
-  var zone = document.getElementById('scene-sprites');
-  zone.innerHTML = '';
-  if (!list) return;
-  list.forEach(function(sp) {
-    var wrap = document.createElement('div'); wrap.className='sprite-wrap';
-    var src = getSprite(sp.id);
-    if (src) {
-      var img = document.createElement('img');
-      img.src=src; img.className='sprite-img';
-      img.style.height = (sp.height||96)+'px';
-      if (sp.flip) img.style.transform='scaleX(-1)';
-      wrap.appendChild(img);
+function updateSprites(list){
+  var zone=document.getElementById('scene-sprites');
+  zone.innerHTML='';
+  if(!list) return;
+  list.forEach(function(sp){
+    if(sp.src){
+      var img=document.createElement('img');
+      img.src=sp.src; img.className='sprite-img';
+      img.style.height=(sp.height||96)+'px';
+      if(sp.flip) img.style.transform='scaleX(-1)';
+      zone.appendChild(img);
     }
-    if (sp.label) {
-      var lbl = document.createElement('div'); lbl.className='sprite-name';
-      lbl.textContent=sp.label; wrap.appendChild(lbl);
-    }
-    zone.appendChild(wrap);
   });
 }
 
-function typewrite(el, txt, spd) {
-  if(tTimer)clearInterval(tTimer);
+function typewrite(el, txt, spd){
+  if(tTimer) clearInterval(tTimer);
   el.textContent=''; var i=0;
   tTimer=setInterval(function(){
     el.textContent+=txt[i++];
-    if(i>=txt.length){clearInterval(tTimer);tTimer=null;}
-  }, spd||14);
+    if(i>=txt.length){ clearInterval(tTimer); tTimer=null; }
+  }, spd||16);
 }
 
-document.getElementById('S-scene').addEventListener('click', function() {
-  if (tTimer) { clearInterval(tTimer); tTimer=null;
-    var s=sc(); if(s&&s.beats&&s.beats[beat]) {
+document.getElementById('S-scene').addEventListener('click', function(){
+  if(tTimer){
+    clearInterval(tTimer); tTimer=null;
+    var s=sc();
+    if(s&&s.beats&&s.beats[beat]){
       var b=s.beats[beat];
       document.getElementById('dlg-text').textContent=b.text||'';
-      if(b.inner)document.getElementById('dlg-inner').textContent=b.inner;
+      if(b.inner) document.getElementById('dlg-inner').textContent=b.inner;
     }
-    document.getElementById('dlg-next').style.display='block'; return;
+    document.getElementById('dlg-next').style.display='block';
+    return;
   }
   beat++;
   var s=sc();
@@ -189,87 +144,85 @@ document.getElementById('S-scene').addEventListener('click', function() {
   else ns();
 });
 
-/* ═══ MEMORY REWRITE ═══════════════════════════════════ */
-var selectedMemory = null;
-
-function showMemory(s) {
+function showMemory(s){
   show('S-memory');
-  selectedMemory = null;
-  var ct = document.getElementById('memory-cards');
-  var btn = document.getElementById('memory-confirm');
+  selectedMemory=null;
+  var ct=document.getElementById('memory-cards');
+  var btn=document.getElementById('memory-confirm');
   ct.innerHTML=''; btn.style.display='none';
-
-  s.options.forEach(function(opt, i) {
-    var card = document.createElement('div'); card.className='memory-card';
-    card.innerHTML='<div class="memory-card-label">記憶 '+(i+1)+'</div>'
-      +'<div class="memory-card-text">'+opt.text+'</div>';
-    card.onclick = function() {
-      document.querySelectorAll('.memory-card').forEach(function(c){c.classList.remove('selected');});
+  s.options.forEach(function(opt,i){
+    var card=document.createElement('div'); card.className='memory-card';
+    card.innerHTML='<div class="memory-card-label">\u8a18\u61b6 '+(i+1)+'</div><div class="memory-card-text">'+opt.text+'</div>';
+    card.addEventListener('click', function(){
+      document.querySelectorAll('.memory-card').forEach(function(c){ c.classList.remove('selected'); });
       card.classList.add('selected');
-      selectedMemory = opt;
+      selectedMemory=opt;
       btn.style.display='block';
-    };
+    });
     ct.appendChild(card);
   });
-
-  btn.onclick = function() {
-    if (!selectedMemory) return;
-    if (selectedMemory.next) { si = selectedMemory.next; runScene(); }
+  btn.addEventListener('click', function(){
+    if(!selectedMemory) return;
+    if(selectedMemory.next!=null){ si=selectedMemory.next; runScene(); }
     else ns();
-  };
+  });
 }
 
-/* ═══ UTILS ═══════════════════════════════════════════ */
-function show(id) {
-  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+function show(id){
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
   document.getElementById(id).classList.add('active');
 }
-function showEnd() {
-  show('S-title');
-}
 
-/* ═══ START ═══════════════════════════════════════════ */
-document.getElementById('start-btn').addEventListener('click', function() {
+document.getElementById('start-btn').addEventListener('click', function(){
   si=0; beat=0; runScene();
 });
 
-/* ═══ PLACEHOLDER SCENE (構想が届いたら差し替え) ══════ */
 SCENES = [
   {
     type: 'vn',
-    bg: 'linear-gradient(180deg,#08080f,#0c0e18)',
+    bg: 'linear-gradient(180deg,#ffffff,#e8e8f0)',
     beats: [
-      {
-        text: '——夕暮れの広場。
-
-あたたかいはずの橙色が、今日はどこか冷たく見える。',
-        inner: null, speaker: null, sprites: []
-      },
-      {
-        text: '（ここに来たのは何度目だろう。
-　でも——何かが、違う。）',
-        inner: null, speaker: null, sprites: []
-      },
-      {
-        text: '構想を入力してください。
-このシーンはプレースホルダーです。',
-        speaker: {name:'システム', role:'RewriteMemory', color:'#4a60a0'},
-        sprites: [], inner: 'Chapter01の構想をClaudeに渡すと
-ここが実際のシナリオに置き換わります。'
-      }
+      { text: '\u767d\u3044\u5e83\u5834\u3002\u6642\u8a08\u5854\u3002\u6905\u5b50\u3002', speaker: null, sprites: [] },
+      { text: '\u30df\u30aa\u3002', speaker: null, sprites: [] },
+      { text: '\u300c\u3054\u3081\u3093\u306a\u3055\u3044\u300d', speaker: {name:'\u30df\u30aa', color:'#8090c8', role:'RewriteMemory'}, sprites: [] },
+      { text: '\u300c\u3042\u306a\u305f\u306f\u3001\u8ab0\u3067\u3059\u304b\uff1f\u300d', speaker: {name:'\u30df\u30aa', color:'#8090c8', role:''}, sprites: [] },
+      { text: '\u300c\u3053\u308c\u306f\u3001\u6700\u5f8c\u306e\u65e5\u306e\u8a18\u61b6\u3060\u304b\u3089\u300d', speaker: {name:'???', color:'#606070', role:''}, sprites: [] },
+      { text: '\u2014\u2014\u30d7\u30ed\u30ed\u30fc\u30b0\u7d42\u308f\u308a\u30023\u65e5\u524d\u3078\u2014\u2014', speaker: null, sprites: [] }
+    ]
+  },
+  {
+    type: 'vn',
+    bg: 'linear-gradient(180deg,#08080f,#0c1020)',
+    beats: [
+      { text: '\u5e83\u5834\u3067\u4f1a\u3046\u7d04\u675f\u306e\u30e1\u30c3\u30bb\u30fc\u30b8\u304c\u5c4a\u3044\u305f\u3002', speaker: null, sprites: [] },
+      { text: '\u30df\u30aa\u306f\u3044\u3064\u3082\u3088\u308a\u660e\u308b\u304f\u6319\u52d5\u3057\u3066\u3044\u305f\u3002\u3067\u3082\u2014\u2014\u5c11\u3057\u3060\u3051\u3001\u4e0d\u5b89\u305d\u3046\u306b\u898b\u3048\u305f\u3002', speaker: null, sprites: [] },
+      { text: '\u300c\u9061\u308c\u305f\uff1f\u300d', speaker: {name:'\u30df\u30aa', color:'#8090c8', role:''}, sprites: [] },
+      { text: '\u5e83\u5834\u306e\u4e2d\u592e\u306b\u3001\u6602\u304b\u3089\u3042\u308b\u306f\u305a\u306e\u6905\u5b50\u304c\u306a\u3044\u3002', speaker: null, sprites: [] },
+      { text: '\u5730\u9762\u306b\u306f\u8de1\u3060\u3051\u304c\u6b8b\u3063\u3066\u3044\u308b\u3002', speaker: null, sprites: [] },
+      { text: '\u300c\u2026\u2026\u3053\u308c\u3001\u304a\u304b\u3057\u304f\u306a\u3044\uff1f\u300d', speaker: {name:'\u30df\u30aa', color:'#8090c8', role:''}, sprites: [] }
     ]
   },
   {
     type: 'memory',
     options: [
-      {text: '広場に来たのは初めてだった。', next: null},
-      {text: '広場には何度も来たことがある。でも——椅子の数が違う。', next: null},
+      {text: '\u89b3\u6e2c\u3059\u308b', next: null},
+      {text: '\u898b\u306a\u3044', next: null},
+      {text: '\u30df\u30aa\u306b\u8074\u304f', next: null},
+      {text: '\u5f85\u3064', next: null}
+    ]
+  },
+  {
+    type: 'vn',
+    bg: 'linear-gradient(180deg,#08080f,#0a0818)',
+    beats: [
+      { text: '\u2014\u2014\u6905\u5b50\u305d\u306e\u3082\u306e\u304c\u6d88\u3048\u305f\u306e\u3067\u306f\u306a\u3044\u3002', speaker: null, sprites: [] },
+      { text: '\u6905\u5b50\u306b\u7d50\u3073\u3064\u3044\u3066\u3044\u305f\u300c\u8a18\u61b6\u300d\u300c\u95a2\u4fc2\u300d\u300c\u610f\u5473\u300d\u304c\u767d\u304f\u629c\u3051\u59cb\u3081\u3066\u3044\u308b\u3002', speaker: null, sprites: [] },
+      { text: '\u30b9\u30de\u30db\u306b\u30e1\u30c3\u30bb\u30fc\u30b8\u304c\u5c4a\u3044\u305f\u3002', speaker: null, sprites: [] },
+      { text: '\u9001\u4fe1\u8005\u540d\u304c\u2014\u2014\u767d\u304f\u629c\u3051\u3066\u3044\u308b\u3002', speaker: null, sprites: [] },
+      { text: 'To be continued...', speaker: null, sprites: [] }
     ]
   }
 ];
-
-/* ゲームエンジンの準備完了 */
-console.log('[RewriteMemory] Engine ready. Waiting for scenario data.');
 </script>
 </body>
 </html>
