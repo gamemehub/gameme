@@ -424,10 +424,11 @@ function showMemory(s) {
   var btn = document.getElementById('memory-confirm');
   ct.innerHTML=''; btn.style.display='none';
 
-  s.options.forEach(function(opt, i) {
+  var opts = s.options || s.choices || [];
+  opts.forEach(function(opt, i) {
     var card = document.createElement('div'); card.className='memory-card';
     card.innerHTML='<div class="memory-card-label">記憶 '+(i+1)+'</div>'
-      +'<div class="memory-card-text">'+opt.text+'</div>';
+      +'<div class="memory-card-text">'+(opt.text||opt.label||'')+'</div>';
     card.onclick = function() {
       SE.resume();
       SE.memoryClick(); /* 記憶断片クリック */
