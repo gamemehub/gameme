@@ -28,11 +28,11 @@ button{cursor:pointer;font-family:inherit}
 .sprite-wrap{display:flex;flex-direction:column;align-items:center;gap:6px;transition:opacity .4s}
 .sprite-name{font-size:9px;color:#4a5068;letter-spacing:.1em}
 .sprite-img{image-rendering:pixelated;image-rendering:crisp-edges;filter:drop-shadow(0 4px 12px rgba(0,0,0,.7))}
-.dialogue-box{position:absolute;bottom:0;left:0;right:0;height:200px;background:rgba(8,8,18,.95);border-top:1px solid #1e2035;padding:0 0 8px;display:flex;flex-direction:column}
+.dialogue-box{position:absolute;bottom:0;left:0;right:0;min-height:180px;max-height:60%;background:rgba(8,8,18,.95);border-top:1px solid #1e2035;padding:0 0 8px;display:flex;flex-direction:column}
 .dlg-speaker{display:flex;align-items:center;gap:10px;padding:10px 16px 6px;border-bottom:1px solid #12141e}
 .dlg-name{font-size:11px;font-weight:700}
 .dlg-role{font-size:8px;color:#2a2e48;margin-left:auto}
-.dlg-text{padding:10px 16px 6px;font-size:13px;color:#c8d0e8;line-height:2;height:96px;overflow-y:auto;white-space:pre-wrap}
+.dlg-text{padding:10px 16px 6px;font-size:13px;color:#c8d0e8;line-height:2;max-height:180px;overflow-y:auto;white-space:pre-wrap;flex:1}
 .dlg-inner{padding:4px 16px 8px;font-size:10px;color:#4a5878;line-height:1.9;font-style:italic;border-left:2px solid #1e2840;margin:0 16px 6px;background:rgba(10,20,40,.4);display:none;white-space:pre-wrap}
 .dlg-next{text-align:center;padding:8px;font-size:9px;color:#1e2840;letter-spacing:.2em;border-top:1px solid #10121e;display:none}
 
