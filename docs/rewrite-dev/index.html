@@ -562,6 +562,20 @@ function showEnd() {
   function go(e){ if(e) e.preventDefault(); SE.unlock(); si=0; beat=0; runScene(); }
   btn.addEventListener('touchstart', go, {passive:false});
   btn.addEventListener('click',      go, false);
+
+  /* ?scene=シーンID でそのシーンから直接開始（開発用） */
+  var urlScene = new URLSearchParams(location.search).get('scene');
+  if (urlScene) {
+    var idx = SCENES.findIndex(function(s){ return s.id === urlScene; });
+    if (idx >= 0) {
+      SE.unlock();
+      si = idx; beat = 0;
+      /* タイトル画面を非表示にしてシーンを開始 */
+      var titleEl = document.getElementById('S-title');
+      if (titleEl) titleEl.classList.remove('active');
+      runScene();
+    }
+  }
 })();
 
 /* ═══ PLACEHOLDER SCENE (構想が届いたら差し替え) ══════ */
