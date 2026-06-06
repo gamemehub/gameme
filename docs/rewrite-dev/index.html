@@ -233,8 +233,8 @@ var SE = (function() {
       if (character === 'tou') {
         tone({ type: 'sine', freq: 180, dur: 0.06, gain: 0.16 });
       } else if (character === 'mio') {
-        var v = (Math.random() * 20 - 10); /* pitchVariance ±10Hz */
-        tone({ type: 'triangle', freq: 320 + v, dur: 0.06, gain: 0.14 });
+        var v = (Math.random() * 40 - 20); /* pitchVariance ±20Hz */
+        tone({ type: 'triangle', freq: 520 + v, dur: 0.06, gain: 0.13 });
       } else if (character === 'noa') {
         tone({ type: 'sine', freq: 880, dur: 0.06, gain: 0.1, reverb: true });
       }
@@ -533,6 +533,19 @@ function showEnd() {
 
 /* ═══ START ═══════════════════════════════════════════ */
 document.getElementById('start-btn').addEventListener('click', function() {
+  /* ① AudioContextをユーザー操作のスタックで同期生成・起動 */
+  var AC = window.AudioContext || window.webkitAudioContext;
+  if (AC && !window._seCtx) {
+    try {
+      window._seCtx = new AC();
+      /* ② silentバッファを即再生してautoplay制限を解除 */
+      var buf = window._seCtx.createBuffer(1, 1, 22050);
+      var src = window._seCtx.createBufferSource();
+      src.buffer = buf;
+      src.connect(window._seCtx.destination);
+      src.start(0);
+    } catch(e) {}
+  }
   SE.resume();
   si=0; beat=0; runScene();
 });
