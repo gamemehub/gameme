@@ -150,148 +150,102 @@ function getSprite(id) { if(!_SC[id])_SC[id]=mkSprite(id); return _SC[id]||''; }
    - 音量ON/OFFは localStorage('se_enabled') に保存（既定ON）
    - テキストブリップは 80ms 間隔で連続再生制御
 */
-var SE = (function() {
-  var ctx = null;
-  var enabled = (localStorage.getItem('se_enabled') !== 'off'); /* 既定ON */
-  var lastBlipTime = 0;
-  var BLIP_INTERVAL = 80; /* ms：テキスト送り連打防止 */
-  var MASTER = 0.32;      /* マスター音量（控えめ） */
+var SE = /* ─── Web Audio SE エンジン (iOS/Android 対応) ─── */
+(function(){
+  var _ctx      = null;
+  var _unlocked = false;
+  var _enabled  = (localStorage.getItem('se_enabled') !== 'off');
+  var _lastBlip = 0;
+  var INTERVAL  = 80;
+  var MASTER    = 0.30;
 
-  /* AudioContext を遅延生成。ユーザー操作後に resume する（iOS対応） */
-  function ac() {
-    if (!ctx) {
-      var AC = window.AudioContext || window.webkitAudioContext;
-      if (!AC) return null;
-      try { ctx = new AC(); } catch (e) { ctx = null; return null; }
-    }
-    if (ctx.state === 'suspended') {
-      try {
-        ctx.resume();
-        /* iOS Safari: silentバッファを同期で叩くことでsuspended状態を解除 */
-        var ub = ctx.createBuffer(1, 1, ctx.sampleRate);
-        var us = ctx.createBufferSource();
-        us.buffer = ub; us.connect(ctx.destination); us.start(0);
-      } catch (e) {}
-    }
-    return ctx;
+  /* iOS Safari unlock: ジェスチャー内でOscillatorを即起動するのが唯一確実な方法 */
+  function _unlock() {
+    if (_unlocked && _ctx && _ctx.state === 'running') return;
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    if (!_ctx) { try { _ctx = new AC(); } catch(e){ return; } }
+    try {
+      if (_ctx.state === 'suspended') _ctx.resume();
+      var o = _ctx.createOscillator();
+      var g = _ctx.createGain();
+      g.gain.setValueAtTime(0.0001, _ctx.currentTime);
+      o.connect(g); g.connect(_ctx.destination);
+      o.start(_ctx.currentTime);
+      o.stop(_ctx.currentTime + 0.001);
+      _unlocked = true;
+    } catch(e) {}
   }
 
-  /* 単音オシレータ。エンベロープ付き。reverb指定で軽い残響を付与 */
-  function tone(o) {
-    var c = ac(); if (!c) return;
-    var t0 = c.currentTime;
-    var dur = o.dur || 0.1;
-    var peak = (o.gain == null ? 0.18 : o.gain) * MASTER;
-    var osc = c.createOscillator();
-    var g = c.createGain();
-    osc.type = o.type || 'sine';
-    osc.frequency.setValueAtTime(o.freq, t0 + (o.at || 0));
-    if (o.freqTo) osc.frequency.linearRampToValueAtTime(o.freqTo, t0 + (o.at || 0) + dur);
-    g.gain.setValueAtTime(0.0001, t0 + (o.at || 0));
-    g.gain.exponentialRampToValueAtTime(Math.max(0.0002, peak), t0 + (o.at || 0) + 0.008);
-    g.gain.exponentialRampToValueAtTime(0.0001, t0 + (o.at || 0) + dur);
-    osc.connect(g);
-    g.connect(c.destination);
-    if (o.reverb) {
-      /* フィードバックディレイで軽いリバーブ感（ノア用） */
-      var dl = c.createDelay(); dl.delayTime.value = 0.05;
-      var fb = c.createGain(); fb.gain.value = 0.28;
-      var wet = c.createGain(); wet.gain.value = 0.4 * MASTER;
-      g.connect(dl); dl.connect(fb); fb.connect(dl); dl.connect(wet); wet.connect(c.destination);
-    }
-    osc.start(t0 + (o.at || 0));
-    osc.stop(t0 + (o.at || 0) + dur + (o.reverb ? 0.35 : 0.03));
+  function _ready() {
+    return _enabled && _unlocked && _ctx && _ctx.state === 'running';
   }
 
-  /* ノイズバースト（不安な通知用） */
-  function noise(dur, gain, lp) {
-    var c = ac(); if (!c) return;
-    var t0 = c.currentTime;
-    var len = Math.floor(c.sampleRate * dur);
+  function _tone(freq, type, dur, gain, at, freqTo, reverb) {
+    if (!_ready()) return;
+    var c = _ctx, t0 = c.currentTime + (at||0) + 0.001;
+    var pk = (gain==null?0.18:gain) * MASTER;
+    var osc = c.createOscillator(), gn = c.createGain();
+    osc.type = type||'sine';
+    osc.frequency.setValueAtTime(freq, t0);
+    if (freqTo) osc.frequency.linearRampToValueAtTime(freqTo, t0+(dur||0.08));
+    gn.gain.setValueAtTime(0.0001, t0);
+    gn.gain.exponentialRampToValueAtTime(Math.max(0.0002,pk), t0+0.008);
+    gn.gain.exponentialRampToValueAtTime(0.0001, t0+(dur||0.08));
+    osc.connect(gn); gn.connect(c.destination);
+    if (reverb) {
+      var dl=c.createDelay(); dl.delayTime.value=0.06;
+      var fb=c.createGain(); fb.gain.value=0.25;
+      var wt=c.createGain(); wt.gain.value=0.35*MASTER;
+      gn.connect(dl); dl.connect(fb); fb.connect(dl); dl.connect(wt); wt.connect(c.destination);
+    }
+    osc.start(t0); osc.stop(t0+(dur||0.08)+(reverb?0.4:0.02));
+  }
+
+  function _noise(dur, gain, lp) {
+    if (!_ready()) return;
+    var c = _ctx, t0 = c.currentTime;
+    var len = Math.floor(c.sampleRate*(dur||0.3));
     var buf = c.createBuffer(1, len, c.sampleRate);
-    var data = buf.getChannelData(0);
-    for (var i = 0; i < len; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / len);
+    var arr = buf.getChannelData(0);
+    for (var i=0; i<len; i++) arr[i] = (Math.random()*2-1)*(1-i/len);
     var src = c.createBufferSource(); src.buffer = buf;
-    var g = c.createGain(); g.gain.value = (gain == null ? 0.1 : gain) * MASTER;
+    var gn  = c.createGain(); gn.gain.value = (gain==null?0.09:gain)*MASTER;
     var node = src;
-    if (lp) {
-      var f = c.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = lp;
-      src.connect(f); node = f;
-    }
-    node.connect(g); g.connect(c.destination);
-    src.start(t0);
+    if (lp) { var f=c.createBiquadFilter(); f.type='lowpass'; f.frequency.value=lp; src.connect(f); node=f; }
+    node.connect(gn); gn.connect(c.destination); src.start(t0);
   }
 
-  return {
-    isEnabled: function() { return enabled; },
-    /* ユーザー操作直後に呼んで AudioContext を確実に起こす */
-    /* ユーザー操作のスタック内で呼ぶこと（iOS必須） */
-    unlock: function() {
-      var AC = window.AudioContext || window.webkitAudioContext;
-      if (!AC) return;
-      if (!ctx) { try { ctx = new AC(); } catch(e) { return; } }
-      if (ctx.state === 'suspended') {
-        try {
-          ctx.resume();
-          var ub = ctx.createBuffer(1,1,ctx.sampleRate);
-          var us = ctx.createBufferSource();
-          us.buffer = ub; us.connect(ctx.destination); us.start(0);
-        } catch(e) {}
-      }
+  window.SE = {
+    unlock:    _unlock,
+    resume:    function() { _unlock(); },
+    isEnabled: function() { return _enabled; },
+    toggle: function() {
+      _enabled = !_enabled;
+      try { localStorage.setItem('se_enabled', _enabled?'on':'off'); } catch(e){}
+      return _enabled;
     },
-    resume: function() { this.unlock(); },
-    setEnabled: function(v) {
-      enabled = !!v;
-      localStorage.setItem('se_enabled', enabled ? 'on' : 'off');
-    },
-    toggle: function() { this.setEnabled(!enabled); return enabled; },
-
-    /* キャラ別テキストブリップ（80ms連続再生制御） */
-    blip: function(character) {
-      if (!enabled || !character) return;
+    blip: function(chr) {
+      if (!_ready()) return;
       var now = Date.now();
-      if (now - lastBlipTime < BLIP_INTERVAL) return;
-      lastBlipTime = now;
-      if (character === 'tou') {
-        tone({ type: 'sine', freq: 180, dur: 0.06, gain: 0.16 });
-      } else if (character === 'mio') {
-        var v = (Math.random() * 40 - 20); /* pitchVariance ±20Hz */
-        tone({ type: 'triangle', freq: 520 + v, dur: 0.06, gain: 0.13 });
-      } else if (character === 'noa') {
-        tone({ type: 'sine', freq: 880, dur: 0.06, gain: 0.1, reverb: true });
+      if (now - _lastBlip < INTERVAL) return;
+      _lastBlip = now;
+      if (chr === 'mio') {
+        _tone(520 + (Math.random()*40-20), 'triangle', 0.06, 0.13);
+      } else if (chr === 'noa') {
+        _tone(880, 'sine', 0.07, 0.10, 0, null, true);
+      } else {
+        _tone(260, 'sine', 0.06, 0.12);
       }
     },
-
-    /* 選択肢選択：短い上昇音 120ms */
-    select: function() {
-      if (!enabled) return;
-      tone({ type: 'sine', freq: 440, freqTo: 660, dur: 0.12, gain: 0.16 });
-    },
-    /* スマホ通知（通常）：柔らかい2音チャイム */
-    notify: function() {
-      if (!enabled) return;
-      tone({ type: 'sine', freq: 660, dur: 0.14, gain: 0.13 });
-      tone({ type: 'sine', freq: 880, dur: 0.18, gain: 0.12, at: 0.12 });
-    },
-    /* 空白メッセージ：ノイズ＋低周波で不安な感じ */
-    notifyBlank: function() {
-      if (!enabled) return;
-      noise(0.45, 0.09, 1400);
-      tone({ type: 'sine', freq: 70, dur: 0.5, gain: 0.16 });
-      tone({ type: 'sine', freq: 96, dur: 0.5, gain: 0.08 });
-    },
-    /* 記憶断片クリック：水滴系の短い高音 */
-    memoryClick: function() {
-      if (!enabled) return;
-      tone({ type: 'sine', freq: 1200, freqTo: 620, dur: 0.09, gain: 0.14 });
-    },
-    /* 再構成成功：複数音の和音（達成感） */
+    select:         function() { _tone(520,'sine',0.06,0.15); _tone(660,'sine',0.06,0.12,0.07); },
+    notify:         function() { _tone(880,'sine',0.08,0.13); _tone(1100,'sine',0.06,0.10,0.09); },
+    notifyBlank:    function() { _noise(0.35, 0.06, 600); },
+    memoryClick:    function() { _tone(1320,'sine',0.04,0.12); },
     reconstruction: function() {
-      if (!enabled) return;
-      tone({ type: 'sine', freq: 523.25, dur: 0.6, gain: 0.12 });            /* C */
-      tone({ type: 'sine', freq: 659.25, dur: 0.6, gain: 0.11, at: 0.06 });  /* E */
-      tone({ type: 'sine', freq: 783.99, dur: 0.65, gain: 0.1, at: 0.12 });  /* G */
-      tone({ type: 'sine', freq: 1046.5, dur: 0.7, gain: 0.08, at: 0.2 });   /* C(oct) */
+      _tone(523,'sine',0.12,0.14);
+      _tone(659,'sine',0.12,0.12,0.10);
+      _tone(784,'sine',0.18,0.14,0.20);
     }
   };
 })();
@@ -314,6 +268,7 @@ var SE = (function() {
   });
 })();
 
+document.addEventListener('touchstart',function(){ SE.unlock(); },{passive:true,once:false});
 /* ═══ SCENE ENGINE ═══════════════════════════════════════ */
 var si=0, beat=0, tTimer=null;
 var SCENES = []; /* ← シナリオデータはここに入る */
@@ -554,18 +509,11 @@ function showEnd() {
 }
 
 /* ═══ START ═══════════════════════════════════════════ */
-(function() {
+(function(){
   var btn = document.getElementById('start-btn');
-  function go() { SE.unlock(); si=0; beat=0; runScene(); }
-  /* touchstart: iOSでユーザージェスチャースタック内でAudioContextを起動 */
-  btn.addEventListener('touchstart', function(e) {
-    e.preventDefault(); /* touchの後続clickを防ぐ */
-    go();
-  }, { passive: false });
-  /* click: PCブラウザ用 */
-  btn.addEventListener('click', function(e) {
-    go();
-  });
+  function go(e){ if(e) e.preventDefault(); SE.unlock(); si=0; beat=0; runScene(); }
+  btn.addEventListener('touchstart', go, {passive:false});
+  btn.addEventListener('click',      go, false);
 })();
 
 /* ═══ PLACEHOLDER SCENE (構想が届いたら差し替え) ══════ */
