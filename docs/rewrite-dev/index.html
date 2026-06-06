@@ -9,6 +9,10 @@
 html,body{width:100%;height:100%;overflow:hidden;background:#0a0a12;color:#e0e0e8;font-family:'Courier New',monospace}
 button{cursor:pointer;font-family:inherit}
 .screen{position:fixed;inset:0;display:none;flex-direction:column}
+
+/* SE TOGGLE */
+.se-toggle{position:fixed;top:10px;right:10px;z-index:100;background:rgba(20,24,40,.7);border:1px solid #2a3050;color:#6a78a0;font-size:10px;letter-spacing:.12em;padding:6px 12px;border-radius:3px}
+.se-toggle.off{color:#3a4060;border-color:#1e2035}
 .screen.active{display:flex}
 
 /* TITLE */
@@ -66,6 +70,9 @@ button{cursor:pointer;font-family:inherit}
 </style>
 </head>
 <body>
+
+<!-- SE 音量トグル（全画面共通） -->
+<button class="se-toggle" id="se-toggle" aria-label="効果音 ON/OFF">♪ ON</button>
 
 <!-- TITLE -->
 <div class="screen active" id="S-title">
@@ -137,6 +144,154 @@ function mkSprite(id) {
 }
 function getSprite(id) { if(!_SC[id])_SC[id]=mkSprite(id); return _SC[id]||''; }
 
+/* ═══ SOUND ENGINE (Web Audio API・全SE自作/ゼロ素材) ════════
+   仕様: docs/specs/chapter01_se_spec.md
+   - 外部音源ファイルは一切使わず、その場で波形を合成する
+   - 音量ON/OFFは localStorage('se_enabled') に保存（既定ON）
+   - テキストブリップは 80ms 間隔で連続再生制御
+*/
+var SE = (function() {
+  var ctx = null;
+  var enabled = (localStorage.getItem('se_enabled') !== 'off'); /* 既定ON */
+  var lastBlipTime = 0;
+  var BLIP_INTERVAL = 80; /* ms：テキスト送り連打防止 */
+  var MASTER = 0.32;      /* マスター音量（控えめ） */
+
+  /* AudioContext を遅延生成。ユーザー操作後に resume する */
+  function ac() {
+    if (!ctx) {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      try { ctx = new AC(); } catch (e) { ctx = null; return null; }
+    }
+    if (ctx.state === 'suspended') { try { ctx.resume(); } catch (e) {} }
+    return ctx;
+  }
+
+  /* 単音オシレータ。エンベロープ付き。reverb指定で軽い残響を付与 */
+  function tone(o) {
+    var c = ac(); if (!c) return;
+    var t0 = c.currentTime;
+    var dur = o.dur || 0.1;
+    var peak = (o.gain == null ? 0.18 : o.gain) * MASTER;
+    var osc = c.createOscillator();
+    var g = c.createGain();
+    osc.type = o.type || 'sine';
+    osc.frequency.setValueAtTime(o.freq, t0 + (o.at || 0));
+    if (o.freqTo) osc.frequency.linearRampToValueAtTime(o.freqTo, t0 + (o.at || 0) + dur);
+    g.gain.setValueAtTime(0.0001, t0 + (o.at || 0));
+    g.gain.exponentialRampToValueAtTime(Math.max(0.0002, peak), t0 + (o.at || 0) + 0.008);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + (o.at || 0) + dur);
+    osc.connect(g);
+    g.connect(c.destination);
+    if (o.reverb) {
+      /* フィードバックディレイで軽いリバーブ感（ノア用） */
+      var dl = c.createDelay(); dl.delayTime.value = 0.05;
+      var fb = c.createGain(); fb.gain.value = 0.28;
+      var wet = c.createGain(); wet.gain.value = 0.4 * MASTER;
+      g.connect(dl); dl.connect(fb); fb.connect(dl); dl.connect(wet); wet.connect(c.destination);
+    }
+    osc.start(t0 + (o.at || 0));
+    osc.stop(t0 + (o.at || 0) + dur + (o.reverb ? 0.35 : 0.03));
+  }
+
+  /* ノイズバースト（不安な通知用） */
+  function noise(dur, gain, lp) {
+    var c = ac(); if (!c) return;
+    var t0 = c.currentTime;
+    var len = Math.floor(c.sampleRate * dur);
+    var buf = c.createBuffer(1, len, c.sampleRate);
+    var data = buf.getChannelData(0);
+    for (var i = 0; i < len; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / len);
+    var src = c.createBufferSource(); src.buffer = buf;
+    var g = c.createGain(); g.gain.value = (gain == null ? 0.1 : gain) * MASTER;
+    var node = src;
+    if (lp) {
+      var f = c.createBiquadFilter(); f.type = 'lowpass'; f.frequency.value = lp;
+      src.connect(f); node = f;
+    }
+    node.connect(g); g.connect(c.destination);
+    src.start(t0);
+  }
+
+  return {
+    isEnabled: function() { return enabled; },
+    /* ユーザー操作直後に呼んで AudioContext を確実に起こす */
+    resume: function() { ac(); },
+    setEnabled: function(v) {
+      enabled = !!v;
+      localStorage.setItem('se_enabled', enabled ? 'on' : 'off');
+    },
+    toggle: function() { this.setEnabled(!enabled); return enabled; },
+
+    /* キャラ別テキストブリップ（80ms連続再生制御） */
+    blip: function(character) {
+      if (!enabled || !character) return;
+      var now = Date.now();
+      if (now - lastBlipTime < BLIP_INTERVAL) return;
+      lastBlipTime = now;
+      if (character === 'tou') {
+        tone({ type: 'sine', freq: 180, dur: 0.06, gain: 0.16 });
+      } else if (character === 'mio') {
+        var v = (Math.random() * 20 - 10); /* pitchVariance ±10Hz */
+        tone({ type: 'triangle', freq: 320 + v, dur: 0.06, gain: 0.14 });
+      } else if (character === 'noa') {
+        tone({ type: 'sine', freq: 880, dur: 0.06, gain: 0.1, reverb: true });
+      }
+    },
+
+    /* 選択肢選択：短い上昇音 120ms */
+    select: function() {
+      if (!enabled) return;
+      tone({ type: 'sine', freq: 440, freqTo: 660, dur: 0.12, gain: 0.16 });
+    },
+    /* スマホ通知（通常）：柔らかい2音チャイム */
+    notify: function() {
+      if (!enabled) return;
+      tone({ type: 'sine', freq: 660, dur: 0.14, gain: 0.13 });
+      tone({ type: 'sine', freq: 880, dur: 0.18, gain: 0.12, at: 0.12 });
+    },
+    /* 空白メッセージ：ノイズ＋低周波で不安な感じ */
+    notifyBlank: function() {
+      if (!enabled) return;
+      noise(0.45, 0.09, 1400);
+      tone({ type: 'sine', freq: 70, dur: 0.5, gain: 0.16 });
+      tone({ type: 'sine', freq: 96, dur: 0.5, gain: 0.08 });
+    },
+    /* 記憶断片クリック：水滴系の短い高音 */
+    memoryClick: function() {
+      if (!enabled) return;
+      tone({ type: 'sine', freq: 1200, freqTo: 620, dur: 0.09, gain: 0.14 });
+    },
+    /* 再構成成功：複数音の和音（達成感） */
+    reconstruction: function() {
+      if (!enabled) return;
+      tone({ type: 'sine', freq: 523.25, dur: 0.6, gain: 0.12 });            /* C */
+      tone({ type: 'sine', freq: 659.25, dur: 0.6, gain: 0.11, at: 0.06 });  /* E */
+      tone({ type: 'sine', freq: 783.99, dur: 0.65, gain: 0.1, at: 0.12 });  /* G */
+      tone({ type: 'sine', freq: 1046.5, dur: 0.7, gain: 0.08, at: 0.2 });   /* C(oct) */
+    }
+  };
+})();
+
+/* SE トグルボタン制御 */
+(function() {
+  var btn = document.getElementById('se-toggle');
+  function paint() {
+    var on = SE.isEnabled();
+    btn.textContent = on ? '♪ ON' : '♪ OFF';
+    btn.classList.toggle('off', !on);
+  }
+  paint();
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    SE.resume();
+    var on = SE.toggle();
+    paint();
+    if (on) SE.select(); /* ONにした時だけ確認音 */
+  });
+})();
+
 /* ═══ SCENE ENGINE ═══════════════════════════════════════ */
 var si=0, beat=0, tTimer=null;
 var SCENES = []; /* ← シナリオデータはここに入る */
@@ -160,6 +315,16 @@ function showVN(s) {
   showBeat(s);
 }
 
+/* 話者名 → ブリップ用キャラキー（ト書き=無音） */
+function blipKey(speaker) {
+  if (!speaker || !speaker.name) return null;
+  var n = speaker.name;
+  if (n.indexOf('トウ') >= 0) return 'tou';
+  if (n.indexOf('ミオ') >= 0) return 'mio';
+  if (n.indexOf('ノア') >= 0) return 'noa';
+  return null;
+}
+
 function showBeat(s) {
   var b = s.beats[beat]; if (!b) { ns(); return; }
   var sp = document.getElementById('dlg-speaker');
@@ -181,8 +346,8 @@ function showBeat(s) {
     sp.style.display='none';
   }
 
-  if (b.text) typewrite(tx, b.text, 16);
-  if (b.inner) { inn.style.display='block'; typewrite(inn, b.inner, 14); }
+  if (b.text) typewrite(tx, b.text, 16, blipKey(b.speaker));
+  if (b.inner) { inn.style.display='block'; typewrite(inn, b.inner, 14, null); }
   setTimeout(function(){ nx.style.display='block'; }, 400);
 }
 
@@ -208,16 +373,20 @@ function updateSprites(list) {
   });
 }
 
-function typewrite(el, txt, spd) {
+function typewrite(el, txt, spd, blipChar) {
   if(tTimer)clearInterval(tTimer);
   el.textContent=''; var i=0;
   tTimer=setInterval(function(){
-    el.textContent+=txt[i++];
+    var ch=txt[i++];
+    el.textContent+=ch;
+    /* 空白・改行以外の文字でキャラ別ブリップ（内部で80ms制御） */
+    if(blipChar && ch && ch!=='\n' && ch!=='　' && ch!==' ') SE.blip(blipChar);
     if(i>=txt.length){clearInterval(tTimer);tTimer=null;}
   }, spd||14);
 }
 
 document.getElementById('S-scene').addEventListener('click', function() {
+  SE.resume();
   if (tTimer) { clearInterval(tTimer); tTimer=null;
     var s=sc(); if(s&&s.beats&&s.beats[beat]) {
       var b=s.beats[beat];
@@ -247,6 +416,8 @@ function showMemory(s) {
     card.innerHTML='<div class="memory-card-label">記憶 '+(i+1)+'</div>'
       +'<div class="memory-card-text">'+opt.text+'</div>';
     card.onclick = function() {
+      SE.resume();
+      SE.memoryClick(); /* 記憶断片クリック */
       document.querySelectorAll('.memory-card').forEach(function(c){c.classList.remove('selected');});
       card.classList.add('selected');
       selectedMemory = opt;
@@ -255,8 +426,12 @@ function showMemory(s) {
     ct.appendChild(card);
   });
 
+  var isReconstruction = (s.id && s.id.indexOf('reconstruction') >= 0);
   btn.onclick = function() {
     if (!selectedMemory) return;
+    /* 再構成シーンで正解（次へ進む）なら和音、それ以外は選択音 */
+    if (isReconstruction && selectedMemory.next) SE.reconstruction();
+    else SE.select();
     if (selectedMemory.next) { si = selectedMemory.next; runScene(); }
     else ns();
   };
@@ -291,6 +466,16 @@ function addPhoneMsg(m) {
   thread.scrollTop = thread.scrollHeight;
 }
 
+/* 空白メッセージ判定（unknown、または b: 抜け部分を含むセグメント） */
+function segHasBlank(seg) {
+  if (!seg || typeof seg === 'string') return false;
+  return seg.some(function(p) { return p && p.b != null; });
+}
+function isBlankMsg(m) {
+  return !!(m.unknown || segHasBlank(m.text) || segHasBlank(m.text_parts) ||
+            segHasBlank(m.from) || segHasBlank(m.from_parts));
+}
+
 function phoneStep() {
   if (phone.idx >= phone.msgs.length) {
     phone.done = true;
@@ -299,6 +484,7 @@ function phoneStep() {
   }
   var m = phone.msgs[phone.idx++];
   addPhoneMsg(m);
+  if (isBlankMsg(m)) SE.notifyBlank(); else SE.notify();
   phone.timer = setTimeout(phoneStep, m.delay || 900);
 }
 
@@ -314,10 +500,17 @@ function showPhone(s) {
 }
 
 document.getElementById('S-phone').addEventListener('click', function() {
+  SE.resume();
   if (!phone.done) {
-    /* 残りメッセージを一括表示 */
+    /* 残りメッセージを一括表示（音は最後に1回だけ：空白があれば不安音） */
     if (phone.timer) { clearTimeout(phone.timer); phone.timer = null; }
-    while (phone.idx < phone.msgs.length) addPhoneMsg(phone.msgs[phone.idx++]);
+    var sawBlank = false;
+    while (phone.idx < phone.msgs.length) {
+      var rm = phone.msgs[phone.idx++];
+      if (isBlankMsg(rm)) sawBlank = true;
+      addPhoneMsg(rm);
+    }
+    if (sawBlank) SE.notifyBlank(); else SE.notify();
     phone.done = true;
     document.getElementById('phone-next').style.display = 'block';
     return;
@@ -340,6 +533,7 @@ function showEnd() {
 
 /* ═══ START ═══════════════════════════════════════════ */
 document.getElementById('start-btn').addEventListener('click', function() {
+  SE.resume();
   si=0; beat=0; runScene();
 });
 
