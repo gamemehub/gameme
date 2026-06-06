@@ -254,18 +254,18 @@ var SE = /* ─── Web Audio SE エンジン (iOS/Android 対応) ─── *
 /* SE トグルボタン制御 */
 (function() {
   var btn = document.getElementById('se-toggle');
+  if (!btn) return;
   function paint() {
-    var on = SE.isEnabled();
-    btn.textContent = on ? '♪ ON' : '♪ OFF';
-    btn.classList.toggle('off', !on);
+    try {
+      var on = SE && SE.isEnabled ? SE.isEnabled() : true;
+      btn.textContent = on ? '♪ ON' : '♪ OFF';
+      btn.classList.toggle('off', !on);
+    } catch(e) {}
   }
   paint();
   btn.addEventListener('click', function(e) {
     e.stopPropagation();
-    SE.resume();
-    var on = SE.toggle();
-    paint();
-    if (on) SE.select(); /* ONにした時だけ確認音 */
+    try { if (SE) { SE.unlock(); var on = SE.toggle(); paint(); if (on) SE.select(); } } catch(e) {}
   });
 })();
 
