@@ -526,8 +526,20 @@ document.getElementById('S-phone').addEventListener('click', function() {
 });
 
 /* ═══ CHAPTER END ═════════════════════════════════════ */
-function showContinued() { show('S-continued'); }
-document.getElementById('cont-btn').addEventListener('click', function() { showEnd(); });
+function showContinued(s) {
+  show('S-continued');
+  var btn = document.getElementById('cont-btn');
+  /* 次のシーンがあれば「次の章へ」、なければ「タイトルへ戻る」 */
+  var hasNext = (si + 1) < SCENES.length;
+  btn.textContent = hasNext ? '次の章へ' : 'タイトルへ戻る';
+  /* クリックハンドラを付け替え（重複防止） */
+  var newBtn = btn.cloneNode(true);
+  btn.parentNode.replaceChild(newBtn, btn);
+  newBtn.addEventListener('click', function() {
+    if (hasNext) { si++; beat=0; runScene(); }
+    else { showEnd(); }
+  });
+}
 
 /* ═══ UTILS ═══════════════════════════════════════════ */
 function show(id) {
