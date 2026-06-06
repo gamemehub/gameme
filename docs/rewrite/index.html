@@ -303,7 +303,13 @@ document.addEventListener('touchstart',function(){ SE.unlock(); },{passive:true,
 var si=0, beat=0, tTimer=null;
 var SCENES = []; /* ← シナリオデータはここに入る */
 
-function sc() { return SCENES[si]||null; }
+function sc() {
+  if (typeof si === 'string') {
+    var idx = SCENES.findIndex(function(s){ return s.id === si; });
+    if (idx >= 0) { si = idx; } else { return null; }
+  }
+  return SCENES[si] || null;
+}
 function ns() { si++; runScene(); }
 
 function runScene() {
