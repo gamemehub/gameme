@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-08T14:22:11.499222+09:00",
+  "updated_at": "2026-06-09T13:57:15.320227+09:00",
   "entries": [
     {
       "rank": 1,
@@ -405,7 +405,7 @@
       "publisher": "Valve",
       "is_major": true,
       "release_date": "",
-      "price": "$9.99",
+      "price": "$4.99",
       "review_summary": "圧倒的に好評",
       "review_count": "1,159,707",
       "review_score": 96,
@@ -711,7 +711,7 @@
       "publisher": "Warner Bros. Games",
       "is_major": true,
       "release_date": "",
-      "price": "$8.99",
+      "price": "$59.99",
       "review_summary": "非常に好評",
       "review_count": "321,395",
       "review_score": 90,
@@ -1737,7 +1737,7 @@
       "publisher": "Coffee Stain Publishing",
       "is_major": false,
       "release_date": "",
-      "price": "$27.99",
+      "price": "$39.99",
       "review_summary": "圧倒的に好評",
       "review_count": "232,064",
       "review_score": 97,
