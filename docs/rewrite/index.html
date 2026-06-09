@@ -384,6 +384,21 @@ function showBeat(s) {
 
   /* スプライト更新 */
   updateSprites(b.sprites);
+  /* ミオの立ち絵を自動表示（スプライトが空の時） */
+  (function(){
+    var zone=document.getElementById('scene-sprites');
+    var spkName=(b.speaker&&b.speaker.name)||'';
+    var showMio=['ミオ','＿＿','＿　オ'].indexOf(spkName)>=0;
+    if(showMio && zone.innerHTML===''){
+      var anxKW=['大丈夫','怖','消え','いなければ','ここにいる','ちゃんと'];
+      var src=anxKW.some(function(k){return(b.text||'').indexOf(k)>=0;})?MIO_SRC_ANXIOUS:MIO_SRC_NORMAL;
+      var el=document.createElement('img');
+      el.style.cssText='image-rendering:pixelated;image-rendering:crisp-edges;width:80px;height:auto;opacity:0;transition:opacity .4s,transform .3s;transform:translateY(8px)';
+      el.src=src;
+      zone.appendChild(el);
+      setTimeout(function(){el.style.opacity='1';el.style.transform='translateY(0)';},30);
+    }
+  })();
 
   if (b.speaker) {
     sp.style.display='flex';
