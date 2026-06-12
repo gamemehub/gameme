@@ -74,6 +74,60 @@ button{cursor:pointer;font-family:inherit}
 #pw-input{background:transparent;border:none;border-bottom:1px solid #2a3050;color:#8090c8;font-size:20px;letter-spacing:.5em;text-align:center;width:120px;outline:none;padding:8px 0;margin-bottom:24px}
 #pw-error{color:#c87060;font-size:10px;letter-spacing:.2em;height:16px;margin-bottom:16px}
 #pw-btn{background:transparent;border:1px solid #2a3050;color:#6a78a0;padding:10px 32px;font-size:10px;letter-spacing:.3em;cursor:pointer;border-radius:2px}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   モバイル最適化 (Issues #148-153)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+/* VN本文：スマホで読みやすく */
+@media (max-width: 480px) {
+  .dlg-text { font-size: 14px; line-height: 2.1; padding: 12px 14px 6px; }
+  .dlg-inner { font-size: 11px; line-height: 1.8; }
+  .dlg-speaker { padding: 10px 14px 6px; }
+  .dlg-name { font-size: 12px; }
+  .dialogue-box { min-height: 200px; max-height: 65%; }
+  .dlg-next { padding: 10px; font-size: 10px; }
+}
+
+/* メモリーカード：スマホで押しやすく */
+@media (max-width: 480px) {
+  #S-memory { padding: 16px 12px; }
+  .memory-cards { max-width: 100%; }
+  .memory-card { padding: 14px 12px; font-size: 13px; }
+  .memory-card .card-text { font-size: 13px; line-height: 1.7; }
+  .memory-confirm { padding: 14px; font-size: 11px; width: 100%; }
+}
+
+/* phoneシーン：スマホで見やすく */
+@media (max-width: 480px) {
+  .phone-frame { max-width: 100%; border-radius: 20px; }
+  .phone-header { font-size: 12px; padding: 10px 14px; }
+  .phone-thread { padding: 12px 10px; gap: 10px; }
+  .phone-bubble { font-size: 12px; line-height: 1.8; padding: 10px 12px; max-width: 88%; }
+  .phone-next { font-size: 9px; margin-top: 12px; }
+}
+
+/* タイトル画面：スマホで見やすく */
+@media (max-width: 480px) {
+  .title-logo { font-size: clamp(28px, 10vw, 48px); letter-spacing: .08em; }
+  .title-sub { font-size: 10px; letter-spacing: .2em; margin-bottom: 36px; }
+  .start-btn { padding: 14px 32px; font-size: 11px; }
+  #after-menu-btn { font-size: 9px; padding: 10px 20px; }
+}
+
+/* continued画面：スマホで余白調整 */
+@media (max-width: 480px) {
+  .cont-wrap { padding: 32px 20px; }
+  .cont-chapter { font-size: 8px; }
+  .cont-title { font-size: 14px; }
+  .cont-btn { padding: 14px 28px; font-size: 10px; }
+}
+
+/* 重要テキストに余韻 (#153) */
+.beat-important .dlg-text {
+  color: #d8e0f0;
+  text-shadow: 0 0 20px rgba(160,180,255,0.15);
+}
 </style>
 </head>
 <body>
@@ -140,7 +194,7 @@ button{cursor:pointer;font-family:inherit}
   <div class="cont-wrap">
     <div class="cont-chapter">CHAPTER 01 — END</div>
     <div class="cont-title">To be continued</div>
-    <div class="cont-sub">Chapter 02 ── coming soon</div>
+    <div class="cont-sub">Chapter 02 ── coming soon — もう一度選択を変えてみる？</div>
     <div id="cont-label" style="font-size:11px;color:#6a78a0;letter-spacing:.2em;margin-bottom:16px"></div>
 <button class="cont-btn" id="cont-btn">タイトルへ戻る</button>
   </div>
