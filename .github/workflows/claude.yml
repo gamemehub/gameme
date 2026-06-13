@@ -3,7 +3,7 @@ name: Claude Code (autonomous, @claude)
 # Issue/PR コメントに @claude を含めると Claude Code が起動し、実装→PR作成まで行う。
 #
 # 【セキュリティ方針】
-#  1. 起動できるのは許可ユーザー(miyaharatoshihisa)のコメントのみ（下の if: で厳格にゲート）。
+#  1. 起動できるのは許可ユーザー(gamemehub)のコメントのみ（下の if: で厳格にゲート）。
 #     他人・外部コントリビューター・bot のコメントでは job 自体が起動しない。
 #  2. fork からの pull_request_target は使わない（issue_comment / PR review comment のみ）。
 #  3. プロンプトインジェクション対策:
@@ -28,7 +28,7 @@ jobs:
   claude:
     # === 起動ゲート：許可ユーザー かつ @claude を含むコメントのみ ===
     if: >-
-      github.event.comment.user.login == 'miyaharatoshihisa' &&
+      github.event.comment.user.login == 'gamemehub' &&
       contains(github.event.comment.body, '@claude')
     runs-on: ubuntu-latest
     permissions:
@@ -48,7 +48,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           trigger_phrase: "@claude"
           # 文脈に取り込むコメントも許可ユーザーに限定（多重防御）
-          include_comments_by_actor: "miyaharatoshihisa"
+          include_comments_by_actor: "gamemehub"
           claude_args: "--max-turns 20"
           prompt: |
             あなたは gamemehub/gameme リポジトリの開発支援エージェントです。
