@@ -1,0 +1,47 @@
+name: Promote dev → stage
+
+# 手動トリガー専用。dev(rewrite-dev) の内容を stage(rewrite-stage) へコピーするだけ。
+# 自動実行はしない（push/schedule トリガーなし）。
+# 本番(rewrite) には一切触れない。本番反映は人間承認PRで別途行う。
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: promote-dev-to-stage
+  cancel-in-progress: false
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Copy rewrite-dev -> rewrite-stage
+        run: |
+          set -euo pipefail
+          if [ ! -d docs/rewrite-dev ]; then
+            echo "::error::docs/rewrite-dev が存在しません"; exit 1
+          fi
+          mkdir -p docs/rewrite-stage
+          # dev の内容で stage を完全に置き換える（追加・更新・削除を反映）
+          rsync -a --delete docs/rewrite-dev/ docs/rewrite-stage/
+          echo "[OK] rewrite-dev の内容を rewrite-stage にコピーしました"
+
+      - name: Commit & push (差分がある場合のみ)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git add docs/rewrite-stage/
+          if git diff --staged --quiet; then
+            echo "[SKIP] 差分なし: stage は既に dev と同一です"
+          else
+            git commit -m "promote: rewrite-dev -> rewrite-stage ($(date +'%Y-%m-%d'))"
+            git push
+            echo "[OK] rewrite-stage を更新しました"
+          fi
