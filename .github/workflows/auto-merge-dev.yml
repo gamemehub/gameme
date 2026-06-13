@@ -1,0 +1,58 @@
+name: Auto-merge dev PRs
+
+# dev向けPRを「CIグリーン後に」自動マージする。
+#
+# 【発火条件】
+#  - base が main
+#  - ラベル auto-merge-dev が付いている
+#
+# 【絶対に自動マージしないもの（本番保護）】
+#  - docs/rewrite/（本番）を変更するPR  → 人間承認PRのみ
+#  - .github/（ワークフロー/CI）を変更するPR → 人間レビュー必須
+#  上記を含む場合は guard ステップで失敗させ、自動マージを行わない。
+#
+# 【CIグリーンの担保】
+#  gh pr merge --auto は GitHub のネイティブ auto-merge を有効化する。
+#  main に必須ステータスチェック scene-integrity を設定しておくことで、
+#  CI が成功するまでマージは保留される（設定方法は PR 本文/README参照）。
+
+on:
+  pull_request:
+    types: [labeled, opened, synchronize, reopened]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-merge:
+    if: >-
+      github.event.pull_request.base.ref == 'main' &&
+      contains(github.event.pull_request.labels.*.name, 'auto-merge-dev')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Guard — 本番/ワークフロー変更は自動マージ禁止
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          files=$(gh pr view "$PR" --repo "$REPO" --json files --jq '.files[].path')
+          echo "変更ファイル:"; echo "$files"
+          if echo "$files" | grep -E '^docs/rewrite/' ; then
+            echo "::error::本番(docs/rewrite/)を含むPRは自動マージできません。人間承認PRで反映してください。"
+            exit 1
+          fi
+          if echo "$files" | grep -E '^\.github/' ; then
+            echo "::error::.github/（ワークフロー/CI）を含むPRは自動マージできません。人間レビューが必要です。"
+            exit 1
+          fi
+          echo "OK: dev向け変更のみ。自動マージ対象です。"
+
+      - name: Enable auto-merge (CIグリーン後にマージ)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: gh pr merge "$PR" --repo "$REPO" --auto --merge --delete-branch
