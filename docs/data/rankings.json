@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-12T14:28:31.325294+09:00",
+  "updated_at": "2026-06-13T14:13:57.655198+09:00",
   "entries": [
     {
       "rank": 1,
@@ -333,7 +333,7 @@
       "publisher": "Grinding Gear Games",
       "is_major": false,
       "release_date": "",
-      "price": "$14.99",
+      "price": "$29.99",
       "review_summary": "好評",
       "review_count": "169,021",
       "review_score": 70,
@@ -531,7 +531,7 @@
       "publisher": "Endnight Games Ltd",
       "is_major": false,
       "release_date": "",
-      "price": "$4.39",
+      "price": "$19.99",
       "review_summary": "圧倒的に好評",
       "review_count": "627,791",
       "review_score": 95,
@@ -801,7 +801,7 @@
       "publisher": "2K, Aspyr (Mac), Aspyr (Linux)",
       "is_major": false,
       "release_date": "",
-      "price": "$19.99",
+      "price": "$4.99",
       "review_summary": "非常に好評",
       "review_count": "295,218",
       "review_score": 92,
@@ -1539,7 +1539,7 @@
       "publisher": "Paradox Interactive",
       "is_major": true,
       "release_date": "",
-      "price": "$29.99",
+      "price": "$8.99",
       "review_summary": "非常に好評",
       "review_count": "275,770",
       "review_score": 92,
