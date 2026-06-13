@@ -1,0 +1,27 @@
+name: scene-integrity
+
+# dev(rewrite-dev) のシーン参照整合性を検証する PR CI。
+# auto-merge-dev の「CIグリーン後に自動マージ」の判定対象となるチェック。
+# main 宛て全PRで実行し、check_scenes.py が PASS すれば成功。
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  scene-integrity:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Validate scene references (docs/rewrite-dev)
+        run: python3 tools/check_scenes.py docs/rewrite-dev/index.html
