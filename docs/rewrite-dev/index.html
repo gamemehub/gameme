@@ -442,7 +442,14 @@ function sc() {
   }
   return SCENES[si] || null;
 }
-function ns() { si++; runScene(); }
+function ns() {
+  var s = sc();
+  if (s && s.next) {
+    var idx = SCENES.findIndex(function(x){ return x.id === s.next; });
+    if (idx >= 0) { si = idx; runScene(); return; }
+  }
+  si++; runScene();
+}
 
 function runScene() {
   var s = sc(); if (!s) { showEnd(); return; }
