@@ -26,9 +26,11 @@ concurrency:
 
 jobs:
   claude:
-    # === 起動ゲート：許可ユーザー かつ @claude を含むコメントのみ ===
+    # === 起動ゲート：許可ユーザー(miyaharatoshihisa / gamemehub) かつ Botでない かつ @claude を含むコメントのみ ===
     if: >-
-      github.event.comment.user.login == 'gamemehub' &&
+      (github.event.comment.user.login == 'miyaharatoshihisa' ||
+       github.event.comment.user.login == 'gamemehub') &&
+      github.event.comment.user.type != 'Bot' &&
       contains(github.event.comment.body, '@claude')
     runs-on: ubuntu-latest
     permissions:
@@ -48,7 +50,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           trigger_phrase: "@claude"
           # 文脈に取り込むコメントも許可ユーザーに限定（多重防御）
-          include_comments_by_actor: "gamemehub"
+          include_comments_by_actor: "miyaharatoshihisa,gamemehub"
           claude_args: "--max-turns 20"
           prompt: |
             あなたは gamemehub/gameme リポジトリの開発支援エージェントです。
