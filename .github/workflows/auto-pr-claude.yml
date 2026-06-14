@@ -1,0 +1,70 @@
+name: Auto-PR for claude branches
+
+# クラウドClaude（claude-code-action）が claude/* ブランチを push したら、
+# 自動でPRを作成し、dev向け変更なら auto-merge-dev ラベルを付与する。
+# これにより「実装→ブランチpush→PR作成→CI→自動マージ」が無人で完走する。
+#
+# 【重要・PATが必要な理由】
+#  既定の GITHUB_TOKEN で作成したPRやラベル付与は、GitHubの仕様により
+#  他ワークフロー（scene-integrity / auto-merge-dev）を起動しない。
+#  そのため secrets.GH_PAT（PR・contents 書き込み権のあるPAT）を設定しておくと、
+#  作成PRが scene-integrity を起動し、ラベルが auto-merge-dev を起動して完全自動化される。
+#  未設定なら GITHUB_TOKEN にフォールバックし、PR作成とラベル付与までは行うが、
+#  CI/自動マージは手動での再実行 or ラベル付け直しが必要になる。
+
+on:
+  push:
+    branches:
+      - 'claude/**'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: auto-pr-${{ github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  auto-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create PR and label (dev向けのみ)
+        env:
+          # PATがあれば優先（downstreamワークフローを起動できる）。無ければ GITHUB_TOKEN。
+          GH_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+          BR: ${{ github.ref_name }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+
+          # main と差分が無ければ何もしない
+          if [ -z "$(git rev-list origin/main..HEAD 2>/dev/null)" ]; then
+            echo "main との差分なし。スキップ。"; exit 0
+          fi
+
+          # 既存のオープンPRが無ければ作成
+          PR=$(gh pr list --repo "$REPO" --head "$BR" --state open --json number --jq '.[0].number // empty')
+          if [ -z "$PR" ]; then
+            gh pr create --repo "$REPO" --base main --head "$BR" \
+              --title "auto: ${BR}" \
+              --body "claude/* ブランチの push により自動作成。変更内容はコミットを参照。dev(rewrite-dev)のみなら auto-merge-dev ラベルで CI 後に自動マージされます。"
+            PR=$(gh pr list --repo "$REPO" --head "$BR" --state open --json number --jq '.[0].number // empty')
+          fi
+          if [ -z "$PR" ]; then echo "PRを特定できませんでした"; exit 0; fi
+          echo "PR #$PR"
+
+          # 変更ファイルを確認。本番(docs/rewrite/)または .github/ を含む場合はラベルを付けない
+          FILES=$(gh pr view "$PR" --repo "$REPO" --json files --jq '.files[].path')
+          echo "変更ファイル:"; echo "$FILES"
+          if echo "$FILES" | grep -E '^docs/rewrite/|^\.github/' >/dev/null 2>&1; then
+            echo "::notice::本番/.github を含むため auto-merge-dev は付与しません（人間レビュー / guard に委ねる）。"
+          else
+            gh pr edit "$PR" --repo "$REPO" --add-label "auto-merge-dev"
+            echo "auto-merge-dev ラベルを付与しました。"
+          fi
