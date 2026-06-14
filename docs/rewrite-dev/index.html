@@ -148,26 +148,45 @@ button{cursor:pointer;font-family:inherit}
 .walk-player-name{font-size:7px;color:#4a5878;letter-spacing:.05em;white-space:nowrap}
 /* NPCやオブジェクト */
 .walk-npc{position:absolute;bottom:0;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;transition:opacity .2s}
-.walk-npc-body{width:12px;height:18px;background:#8090c8;border-radius:2px 2px 0 0}
-.walk-npc-head{width:10px;height:10px;background:#c8a87a;border-radius:50%}
+.walk-npc-body{width:12px;height:18px;background:#8090c8;border-radius:2px 2px 0 0;transition:box-shadow .25s}
+.walk-npc-head{width:10px;height:10px;background:#c8a87a;border-radius:50%;transition:box-shadow .25s}
 .walk-npc-name{font-size:7px;color:#6a78a0;letter-spacing:.05em;white-space:nowrap}
 .walk-obj{position:absolute;bottom:0;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
-.walk-obj-icon{font-size:16px;line-height:1}
+.walk-obj-icon{font-size:16px;line-height:1;transition:text-shadow .25s}
 .walk-obj-name{font-size:7px;color:#3a4858;letter-spacing:.05em;white-space:nowrap}
-/* アクションボタン */
-.walk-action{position:absolute;background:rgba(128,160,200,.12);border:1px solid rgba(128,160,200,.35);border-radius:3px;font-size:9px;color:rgba(200,220,255,.7);letter-spacing:.1em;padding:5px 12px;cursor:pointer;font-family:inherit;white-space:nowrap;animation:hsPulse 2s ease-in-out infinite;transform:translateX(-50%)}
+/* インジケーター（話せる=… / 調べられる=✦）*/
+.walk-ind{height:13px;font-size:12px;line-height:1;color:rgba(220,225,240,.5);letter-spacing:.05em;transition:color .25s,text-shadow .25s,transform .25s}
+.walk-ind.near{color:rgba(255,255,255,.95);text-shadow:0 0 8px rgba(255,255,255,.6),0 0 14px rgba(255,255,255,.3);transform:translateY(-2px)}
+/* 近接時：白く淡くにじむ（白層化モチーフ）*/
+.walk-npc.near .walk-npc-head,.walk-npc.near .walk-npc-body{box-shadow:0 0 8px rgba(255,255,255,.3),0 0 16px rgba(255,255,255,.2)}
+.walk-obj.near .walk-obj-icon{text-shadow:0 0 8px rgba(255,255,255,.3),0 0 16px rgba(255,255,255,.2)}
+/* アクションラベル（白いにじみのみ）*/
+.walk-action{position:absolute;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.28);border-radius:3px;font-size:9px;color:rgba(255,255,255,.85);letter-spacing:.1em;padding:5px 12px;cursor:pointer;font-family:inherit;white-space:nowrap;animation:hsPulse 2s ease-in-out infinite;transform:translateX(-50%)}
+/* 右上HUD（現在地 / 時刻）常時表示 */
+.walk-hud{position:absolute;top:12px;right:12px;display:flex;align-items:center;gap:6px;background:rgba(8,10,18,.5);border:1px solid rgba(255,255,255,.08);border-radius:4px;padding:5px 10px;font-size:9px;color:rgba(220,225,240,.75);letter-spacing:.12em;white-space:nowrap;pointer-events:none;z-index:5}
+.walk-hud-sep{opacity:.4}
+.walk-hud-clock{font-size:11px;opacity:.7}
 /* 操作バー */
 .walk-controls{position:absolute;bottom:0;left:0;right:0;height:80px;background:rgba(6,6,14,.92);border-top:1px solid #111820;display:flex;align-items:center;justify-content:space-between;padding:0 16px}
 .walk-dpad{display:flex;gap:8px}
 .walk-btn{background:rgba(128,144,200,.08);border:1px solid #1e2838;color:#4a5878;width:44px;height:44px;border-radius:4px;font-size:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-family:inherit;user-select:none;-webkit-user-select:none}
 .walk-btn:active{background:rgba(128,144,200,.2);border-color:#3a4868}
 .walk-info{font-size:8px;color:#2a3040;letter-spacing:.15em;text-align:center;flex:1}
+/* 操作説明Aボタン（常時表示・近接時に白くにじむ）*/
+.walk-act{width:auto;padding:0 16px;font-size:9px;letter-spacing:.1em;color:rgba(200,210,235,.4);border-color:rgba(255,255,255,.12);white-space:nowrap;transition:color .25s,border-color .25s,background .25s,box-shadow .25s}
+.walk-act.on{color:rgba(255,255,255,.95);border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.06);box-shadow:0 0 10px rgba(255,255,255,.25)}
 
 </style>
 </head>
 <body>
 <div class="screen" id="S-walk">
   <div class="walk-bg" id="walk-bg"></div>
+  <div class="walk-hud" id="walk-hud">
+    <span id="walk-hud-loc"></span>
+    <span class="walk-hud-sep">/</span>
+    <span id="walk-hud-time">17:17</span>
+    <span class="walk-hud-clock">◷</span>
+  </div>
   <div class="walk-world" id="walk-world">
     <div class="walk-layer" id="walk-layer"></div>
     <div class="walk-player" id="walk-player">
@@ -181,8 +200,8 @@ button{cursor:pointer;font-family:inherit}
       <button class="walk-btn" id="walk-left" ontouchstart="WK.startMove(-1)" ontouchend="WK.stopMove()" onmousedown="WK.startMove(-1)" onmouseup="WK.stopMove()">←</button>
       <button class="walk-btn" id="walk-right" ontouchstart="WK.startMove(1)" ontouchend="WK.stopMove()" onmousedown="WK.startMove(1)" onmouseup="WK.stopMove()">→</button>
     </div>
-    <div class="walk-info" id="walk-info"></div>
-    <button class="walk-btn" id="walk-act" style="display:none;width:auto;padding:0 16px;font-size:9px;letter-spacing:.1em;color:#8090c8;border-color:#2a3860" onclick="WK.doAction()">話す / 調べる</button>
+    <div class="walk-info" id="walk-info">← → 移動</div>
+    <button class="walk-btn walk-act" id="walk-act" onclick="WK.doAction()">Ⓐ 話す / 調べる</button>
   </div>
 </div>
 <div id="S-password" class="pw-screen">
@@ -481,8 +500,9 @@ function showWalk(s) {
   WK.playerX = s.startX || 20;
   WK.dir = 0; WK.nearTarget = null;
   document.getElementById('walk-bg').style.background = s.bg || '#0a0a12';
-  document.getElementById('walk-info').textContent = s.location || '';
-  document.getElementById('walk-act').style.display = 'none';
+  document.getElementById('walk-hud-loc').textContent = s.location || '';
+  document.getElementById('walk-hud-time').textContent = s.time || '17:17';
+  document.getElementById('walk-act').classList.remove('on');
   wkRender();
   clearInterval(WK.moveIv);
   WK.moveIv = setInterval(wkTick, 30);
@@ -508,7 +528,7 @@ WK.doAction = function() {
   clearInterval(WK.moveIv);
   window.removeEventListener('keydown', WK._keydown);
   window.removeEventListener('keyup',   WK._keyup);
-  document.getElementById('walk-act').style.display = 'none';
+  document.getElementById('walk-act').classList.remove('on');
   var next = WK.nearTarget.scene;
   if (WK.nearTarget.sceneIfFlag && hasCh01Flag(WK.nearTarget.sceneIfFlag.flag)) {
     next = WK.nearTarget.sceneIfFlag.scene;
@@ -533,13 +553,8 @@ function wkTick() {
     if (Math.abs(WK.playerX - obj.x) < 8) near = obj;
   });
   WK.nearTarget = near;
-  var actBtn = document.getElementById('walk-act');
-  if (near) {
-    actBtn.style.display = 'flex';
-    actBtn.textContent = near.action || '話す / 調べる';
-  } else {
-    actBtn.style.display = 'none';
-  }
+  // Aボタンは常時表示。近接時のみ白く点灯する
+  document.getElementById('walk-act').classList.toggle('on', !!near);
 }
 
 function wkRender() {
@@ -558,10 +573,17 @@ function wkRender() {
   var layer = document.getElementById('walk-layer');
   layer.innerHTML = '';
   (WK.scene ? (WK.scene.objects || []) : []).forEach(function(obj) {
+    var isNpc = obj.type === 'npc';
+    var near  = Math.abs(WK.playerX - obj.x) < 8;
     var el = document.createElement('div');
-    el.className = obj.type === 'npc' ? 'walk-npc' : 'walk-obj';
+    el.className = (isNpc ? 'walk-npc' : 'walk-obj') + (near ? ' near' : '');
     el.style.left = obj.x + '%';
-    if (obj.type === 'npc') {
+    // 頭上インジケーター（話せる=… / 調べられる=✦）
+    var ind=document.createElement('div');
+    ind.className='walk-ind'+(near?' near':'');
+    ind.textContent = isNpc ? '…' : '✦';
+    el.appendChild(ind);
+    if (isNpc) {
       var nm=document.createElement('div'); nm.className='walk-npc-name'; nm.textContent=obj.name||'';
       var hd=document.createElement('div'); hd.className='walk-npc-head';
       var bd=document.createElement('div'); bd.className='walk-npc-body';
@@ -572,11 +594,11 @@ function wkRender() {
       var lb=document.createElement('div'); lb.className='walk-obj-name'; lb.textContent=obj.name||'';
       el.appendChild(ic); el.appendChild(lb);
     }
-    // 近接ハイライト
-    if (Math.abs(WK.playerX - obj.x) < 8) {
+    // 近接ハイライト（白いにじみのアクションラベル）
+    if (near) {
       var act=document.createElement('div'); act.className='walk-action';
-      act.textContent=obj.action||'話す'; act.style.bottom='110%'; act.style.left='50%';
-      el.style.position='absolute'; el.appendChild(act);
+      act.textContent=obj.action||'話す'; act.style.bottom='130%'; act.style.left='50%';
+      el.appendChild(act);
     }
     layer.appendChild(el);
   });
