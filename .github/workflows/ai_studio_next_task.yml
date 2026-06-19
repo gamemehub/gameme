@@ -1,0 +1,121 @@
+name: AI Studio - Next Task
+
+on:
+  workflow_dispatch:
+  # schedule:
+  #   - cron: '0 9 * * 1'  # 毎週月曜 09:00 UTC（必要時に有効化）
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  queue-next-task:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check for existing AI Studio issue
+        id: check_issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: 'ai-studio-task'
+            });
+
+            const existing = issues.data.find(i =>
+              i.title.startsWith('[AI Studio] Next task:')
+            );
+
+            if (existing) {
+              core.notice(`既存の AI Studio Issue が見つかりました: #${existing.number} "${existing.title}" — スキップします`);
+              core.setOutput('skip', 'true');
+            } else {
+              core.setOutput('skip', 'false');
+            }
+
+      - name: Read TASK_QUEUE.md and extract first Ready task
+        id: read_queue
+        if: steps.check_issue.outputs.skip == 'false'
+        run: |
+          QUEUE_FILE="TASK_QUEUE.md"
+
+          if [ ! -f "$QUEUE_FILE" ]; then
+            echo "TASK_QUEUE.md が見つかりません。スキップします。"
+            echo "task_found=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Ready セクションの最初の1件を取得（## Ready または ### Ready 対応）
+          # パターン: "- " または "* " で始まる行、または "| Ready |" テーブル行
+          TASK=$(awk '
+            /^#{1,3} Ready/ { in_ready=1; next }
+            /^#{1,3} / && in_ready { exit }
+            in_ready && /^[-*] / {
+              sub(/^[-*] /, "")
+              print
+              exit
+            }
+          ' "$QUEUE_FILE")
+
+          if [ -z "$TASK" ]; then
+            echo "Ready セクションにタスクが見つかりません。スキップします。"
+            echo "task_found=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "Found task: $TASK"
+          echo "task_found=true" >> "$GITHUB_OUTPUT"
+          # 改行・特殊文字を安全に渡す
+          echo "task_title<<EOF_TITLE" >> "$GITHUB_OUTPUT"
+          echo "$TASK" >> "$GITHUB_OUTPUT"
+          echo "EOF_TITLE" >> "$GITHUB_OUTPUT"
+
+      - name: Create AI Studio Issue
+        if: >
+          steps.check_issue.outputs.skip == 'false' &&
+          steps.read_queue.outputs.task_found == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const taskTitle = `${{ steps.read_queue.outputs.task_title }}`.trim();
+            const title = `[AI Studio] Next task: ${taskTitle}`;
+
+            const body = [
+              '## AI Studio 自動生成タスク',
+              '',
+              `> TASK_QUEUE.md の Ready 先頭から自動取得`,
+              '',
+              `**タスク:** ${taskTitle}`,
+              '',
+              '---',
+              '',
+              '### このIssueについて',
+              '- このIssueは `ai_studio_next_task.yml` が自動生成しました',
+              '- **コード編集・デプロイ・自動マージ・削除は禁止**です',
+              '- 作業開始前に人間レビューを確認してください',
+              '- 完了またはキャンセル時はこのIssueをクローズしてください',
+              '',
+              '### 次のステップ',
+              '1. タスク内容を確認する',
+              '2. 必要であれば仕様をChatGPTで整理する',
+              '3. Claudeに実装を依頼する（Issue範囲内のみ）',
+            ].join('\n');
+
+            const issue = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: title,
+              body: body,
+              labels: ['ai-studio-task']
+            });
+
+            core.notice(`Issue を作成しました: #${issue.data.number} "${title}"`);
+            core.summary.addHeading('AI Studio Next Task Issue 作成完了');
+            core.summary.addRaw(`- Issue: [#${issue.data.number}](${issue.data.html_url})\n- タスク: ${taskTitle}`);
+            await core.summary.write();
