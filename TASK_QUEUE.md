@@ -1,7 +1,8 @@
 # TASK QUEUE
 
 ## Ready
-- Chapter01 Full Playthrough Review: 最初から最後まで通しで確認し、イベント未発火・テンポ問題・感情フック不足・操作説明不足を洗い出す。成果物: CH01_PLAYTEST.md
+- Mio Character Bible拡張: docs/characters/01_Mio_Character_Bible.md に顔・髪・瞳・衣装・白層化差分・表情10種・小物・作画メモ・画像生成プロンプト・手描き注意点を追加。docsのみ、コード変更なし。
+
 
 
 ## In Progress
