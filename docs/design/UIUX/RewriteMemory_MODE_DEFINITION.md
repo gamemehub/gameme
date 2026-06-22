@@ -183,6 +183,31 @@ graph TD
 - 二重入力や遷移の割り込みによる状態不整合を防ぐ
 - 演出専用モード（M10）でも同様に入力を抑制し、演出を最後まで見せる
 
+### StateMachine 実装規約
+- 状態は単一変数 `currentMode` を常に1つ保持する。
+- `isTransitioning` 中は全入力を無効化する（二重発火防止）。
+- 入力ハンドラ冒頭で必ずガードする。
+
+```js
+function handleInput(e){ if (isTransitioning) return; if (currentMode !== expectedMode) return; /* ... */ }
+function enterMode(next){ isTransitioning = true; /* fade(M10/M11) */ currentMode = next; applyUIGuards(next); isTransitioning = false; }
+```
+
+### モード別 UI ガード（許可/禁止UIをコードで強制）
+- M02 EXPLORE：立ち絵・会話ウィンドウは非表示。常時ボタン禁止。
+- M04 VN_OVERLAY：探索入力を無効化、探索UIを減光、HP非表示。
+- M01 VN：探索UI・常時操作UIを禁止。
+- 各モードの禁止UIはアサーションで担保し、モードの混在を防ぐ。
+
+### DESIGN_TOKEN 参照方針
+- 色・サイズ・余白・透明度・時間は `DESIGN_TOKEN.md` を正本として参照する。
+- 生値（マジックナンバー）をコードに直書きしない。値変更は DESIGN_TOKEN を1か所更新して反映する。
+
+### Claude Code 自律実装 遵守事項
+- 1 Issue = 1 PR、最小変更。新規画面を自由に作らず、必ず既存モードに分類する。
+- main / develop へ直接 push 禁止、自動マージ禁止、人間レビュー前提。
+- 物語・世界観・キャラクター設定・章構成・優先順位の判断は行わない（仕様 / 人間承認に従う）。
+
 ---
 
 ## 探索中のインタラクション（UI 表示ルール）
