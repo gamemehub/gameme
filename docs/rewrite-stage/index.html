@@ -148,12 +148,17 @@ button{cursor:pointer;font-family:inherit}
 .walk-player-name{font-size:7px;color:#4a5878;letter-spacing:.05em;white-space:nowrap}
 /* NPCやオブジェクト */
 .walk-npc{position:absolute;bottom:0;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;transition:opacity .2s}
-.walk-npc-body{width:12px;height:18px;background:#8090c8;border-radius:2px 2px 0 0}
-.walk-npc-head{width:10px;height:10px;background:#c8a87a;border-radius:50%}
+.walk-npc-body{width:12px;height:18px;background:#8090c8;border-radius:2px 2px 0 0;transition:box-shadow .25s}
+.walk-npc-head{width:10px;height:10px;background:#c8a87a;border-radius:50%;transition:box-shadow .25s}
 .walk-npc-name{font-size:7px;color:#6a78a0;letter-spacing:.05em;white-space:nowrap}
 .walk-obj{position:absolute;bottom:0;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
-.walk-obj-icon{font-size:16px;line-height:1}
+.walk-obj-icon{font-size:16px;line-height:1;transition:text-shadow .25s}
 .walk-obj-name{font-size:7px;color:#3a4858;letter-spacing:.05em;white-space:nowrap}
+/* 近接時のみ: 対象物の微発光（遠距離では何も出さず世界を見せる） */
+.walk-obj.near .walk-obj-icon{text-shadow:0 0 8px rgba(255,255,255,.3),0 0 16px rgba(255,255,255,.2)}
+.walk-npc.near .walk-npc-head,.walk-npc.near .walk-npc-body{box-shadow:0 0 8px rgba(255,255,255,.3),0 0 16px rgba(255,255,255,.2)}
+/* 近接時のみ: 頭上インジケーター（調べられる=✦ / 話せる=…） */
+.walk-ind{font-size:9px;line-height:1;color:rgba(255,255,255,.9);text-shadow:0 0 6px rgba(255,255,255,.5);margin-bottom:1px}
 /* アクションボタン */
 .walk-action{position:absolute;background:rgba(128,160,200,.12);border:1px solid rgba(128,160,200,.35);border-radius:3px;font-size:9px;color:rgba(200,220,255,.7);letter-spacing:.1em;padding:5px 12px;cursor:pointer;font-family:inherit;white-space:nowrap;animation:hsPulse 2s ease-in-out infinite;transform:translateX(-50%)}
 /* 操作バー */
@@ -552,6 +557,11 @@ function wkTick() {
     if (Math.abs(WK.playerX - obj.x) < 8) near = obj;
   });
   WK.nearTarget = near;
+  // 停止中でも近接状態が変わったら再描画（発光・頭上インジケーターを正しく更新）
+  var nearKey = near ? near.name : '';
+  if (WK.dir === 0 && nearKey !== WK._nearKey) wkRender();
+  WK._nearKey = nearKey;
+  // 下部アクションボタンは近接時のみ表示（常時ボタンは出さない）
   var actBtn = document.getElementById('walk-act');
   if (near) {
     actBtn.style.display = 'flex';
@@ -577,9 +587,16 @@ function wkRender() {
   var layer = document.getElementById('walk-layer');
   layer.innerHTML = '';
   (WK.scene ? (WK.scene.objects || []) : []).forEach(function(obj) {
+    var near = Math.abs(WK.playerX - obj.x) < 8;
     var el = document.createElement('div');
-    el.className = obj.type === 'npc' ? 'walk-npc' : 'walk-obj';
+    el.className = (obj.type === 'npc' ? 'walk-npc' : 'walk-obj') + (near ? ' near' : '');
     el.style.left = obj.x + '%';
+    // 近接時のみ: 頭上インジケーター（調べられる=✦ / 話せる=…）
+    if (near) {
+      var ind=document.createElement('div'); ind.className='walk-ind';
+      ind.textContent = obj.type === 'npc' ? '…' : '✦';
+      el.appendChild(ind);
+    }
     if (obj.type === 'npc') {
       var nm=document.createElement('div'); nm.className='walk-npc-name'; nm.textContent=obj.name||'';
       var hd=document.createElement('div'); hd.className='walk-npc-head';
@@ -591,8 +608,8 @@ function wkRender() {
       var lb=document.createElement('div'); lb.className='walk-obj-name'; lb.textContent=obj.name||'';
       el.appendChild(ic); el.appendChild(lb);
     }
-    // 近接ハイライト
-    if (Math.abs(WK.playerX - obj.x) < 8) {
+    // 近接時のみ: アクションラベル（対象物の上に表示）
+    if (near) {
       var act=document.createElement('div'); act.className='walk-action';
       act.textContent=obj.action||'話す'; act.style.bottom='110%'; act.style.left='50%';
       el.style.position='absolute'; el.appendChild(act);
