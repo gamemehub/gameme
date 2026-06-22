@@ -163,6 +163,13 @@ button{cursor:pointer;font-family:inherit}
 .walk-btn:active{background:rgba(128,144,200,.2);border-color:#3a4868}
 .walk-info{font-size:8px;color:#2a3040;letter-spacing:.15em;text-align:center;flex:1}
 
+/* WALK VN OVERLAY (探索画面に重ねる軽量VN層 / 第1段階) */
+.wkvn{position:absolute;inset:0;z-index:60;display:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.wkvn-dim{position:absolute;inset:0;background:rgba(4,6,12,.55)}
+.wkvn-box{position:absolute;left:4%;right:4%;bottom:4%;height:24%;box-sizing:border-box;background:rgba(8,10,18,.92);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:16px 18px;display:flex;flex-direction:column;justify-content:space-between}
+.wkvn-text{flex:1;overflow-y:auto;font-size:13px;line-height:1.7;color:#d8e0f0;white-space:pre-wrap}
+.wkvn-hint{margin-top:8px;font-size:8px;color:rgba(160,180,220,.42);letter-spacing:.12em;text-align:right;white-space:nowrap}
+
 </style>
 </head>
 <body>
@@ -183,6 +190,13 @@ button{cursor:pointer;font-family:inherit}
     </div>
     <div class="walk-info" id="walk-info"></div>
     <button class="walk-btn" id="walk-act" style="display:none;width:auto;padding:0 16px;font-size:9px;letter-spacing:.1em;color:#8090c8;border-color:#2a3860" onclick="WK.doAction()">話す / 調べる</button>
+  </div>
+  <div class="wkvn" id="walk-vn" onclick="WKVN.next()">
+    <div class="wkvn-dim"></div>
+    <div class="wkvn-box">
+      <div class="wkvn-text" id="walk-vn-text"></div>
+      <div class="wkvn-hint">クリック / Space で進む ・ Esc で閉じる</div>
+    </div>
   </div>
 </div>
 <div id="S-password" class="pw-screen">
@@ -476,9 +490,13 @@ function showWalk(s) {
   document.getElementById('walk-info').textContent = s.location || '';
   document.getElementById('walk-act').style.display = 'none';
   wkRender();
+  wkBindInput();
+}
+
+// walk2d の入力（移動interval + キーボード）を有効化する
+function wkBindInput() {
   clearInterval(WK.moveIv);
   WK.moveIv = setInterval(wkTick, 30);
-  // キーボード
   WK._keydown = function(e) {
     if(e.key==='ArrowLeft'||e.key==='a') WK.dir=-1;
     if(e.key==='ArrowRight'||e.key==='d') WK.dir=1;
@@ -491,16 +509,29 @@ function showWalk(s) {
   window.addEventListener('keyup',   WK._keyup);
 }
 
+// walk2d の入力を一時停止する（オーバーレイ再生中など）
+function wkUnbindInput() {
+  clearInterval(WK.moveIv);
+  WK.dir = 0;
+  window.removeEventListener('keydown', WK._keydown);
+  window.removeEventListener('keyup',   WK._keyup);
+}
+
 WK.startMove = function(d){ WK.dir = d; };
 WK.stopMove  = function(){ WK.dir = 0; };
 
 WK.doAction = function() {
   if (!WK.nearTarget) return;
+  var next = WK.nearTarget.scene;
+  document.getElementById('walk-act').style.display = 'none';
+  // 第1段階: 空席イベントは本編VN画面へ遷移せず walk2d 内オーバーレイで再生する
+  if (next && WKVN.OVERLAY_SCENES.indexOf(next) !== -1 && WKVN.open(next)) {
+    return;
+  }
+  // それ以外は従来通り本編VN画面へ遷移する
   clearInterval(WK.moveIv);
   window.removeEventListener('keydown', WK._keydown);
   window.removeEventListener('keyup',   WK._keyup);
-  document.getElementById('walk-act').style.display = 'none';
-  var next = WK.nearTarget.scene;
   if (next) {
     var idx = SCENES.findIndex(function(sc){ return sc.id === next; });
     if (idx >= 0) { si = idx; beat = 0; runScene(); }
@@ -569,6 +600,62 @@ function wkRender() {
     layer.appendChild(el);
   });
 }
+
+/* ━━━━ WALK VN OVERLAY (第1段階: 軽量VN層) ━━━━
+   探索画面(walk2d)の上に暗転＋下部テキストボックスを重ね、
+   既存シーンの beats をその場で再生する。本編VN(runScene)には触れない。 */
+var WKVN = {
+  OVERLAY_SCENES: ['ch01_explore_seat'], // オーバーレイ再生するシーンid
+  active: false,
+  beats: null,
+  i: 0,
+};
+
+// 指定シーンの beats をオーバーレイ再生する。再生できたら true を返す。
+WKVN.open = function(sceneId) {
+  var sc = SCENES.find(function(s){ return s.id === sceneId; });
+  if (!sc || !sc.beats || !sc.beats.length) return false;
+  WKVN.beats = sc.beats;
+  WKVN.i = 0;
+  WKVN.active = true;
+  wkUnbindInput(); // walk2d 入力との競合を防ぐ
+  document.getElementById('walk-vn').style.display = 'block';
+  WKVN.render();
+  WKVN._key = function(e) {
+    if (!WKVN.active) return;
+    if (e.key === 'Escape') { e.preventDefault(); WKVN.close(); }
+    else if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); WKVN.next(); }
+  };
+  window.addEventListener('keydown', WKVN._key);
+  return true;
+};
+
+WKVN.render = function() {
+  var b = WKVN.beats[WKVN.i];
+  // 第1段階: 立ち絵・名前表示なし。物語テキストのみを表示する。
+  document.getElementById('walk-vn-text').textContent = (b && b.text) || '';
+};
+
+// 次の beat へ。最後まで進んだら閉じる。
+WKVN.next = function() {
+  if (!WKVN.active) return;
+  WKVN.i++;
+  if (WKVN.i >= WKVN.beats.length) { WKVN.close(); return; }
+  WKVN.render();
+};
+
+// オーバーレイを閉じ、探索画面を同じ場所から再開する。
+WKVN.close = function() {
+  if (!WKVN.active) return;
+  WKVN.active = false;
+  window.removeEventListener('keydown', WKVN._key);
+  document.getElementById('walk-vn').style.display = 'none';
+  WKVN.beats = null;
+  WKVN.i = 0;
+  // S-walk 表示中のみ walk2d 入力を再開する
+  var sw = document.getElementById('S-walk');
+  if (sw && sw.classList.contains('active')) wkBindInput();
+};
 
 /* EXPLORE ENGINE */
 function showExplore(s){
