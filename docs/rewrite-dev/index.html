@@ -135,6 +135,31 @@ button{cursor:pointer;font-family:inherit}
 .explore-hint{position:absolute;bottom:192px;left:50%;transform:translateX(-50%);font-size:8px;color:rgba(128,160,200,0.35);letter-spacing:.2em;pointer-events:none;white-space:nowrap}
 @keyframes hsPulse{0%,100%{opacity:.55}50%{opacity:1}}
 
+/* M03A 探索会話（DESIGN_TOKEN: --rm-dialog-m03-*） */
+:root{
+  --rm-dialog-m03-bg:#0B0D16;
+  --rm-dialog-m03-border:#EDEDED;
+  --rm-dialog-m03-text:#FFFFFF;
+}
+/* 探索画面を保持したまま下部に出す会話枠（操作バーの上）*/
+.m03a-dialog{position:absolute;left:0;right:0;bottom:80px;z-index:6;display:none;
+  flex-direction:row;align-items:flex-end;gap:10px;padding:12px 14px;min-height:96px;
+  background:var(--rm-dialog-m03-bg);border-top:1px solid var(--rm-dialog-m03-border);
+  color:var(--rm-dialog-m03-text);cursor:pointer}
+.m03a-dialog.show{display:flex}
+/* PortraitSmall（64〜96px・DialogBox 左）*/
+.m03a-portrait{flex:0 0 auto;width:72px;height:72px;border-radius:4px;object-fit:cover;
+  background:rgba(255,255,255,.04);border:1px solid rgba(237,237,237,.25);
+  image-rendering:auto;align-self:flex-end}
+.m03a-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;padding-bottom:2px}
+.m03a-name{font-size:11px;font-weight:700;letter-spacing:.08em;color:#AEE6FF}
+.m03a-text{font-size:13px;line-height:1.7;white-space:pre-wrap;color:var(--rm-dialog-m03-text)}
+.m03a-next{font-size:9px;letter-spacing:.2em;text-align:right;color:rgba(255,255,255,.4)}
+@media (max-width:480px){
+  .m03a-dialog{min-height:104px;padding:12px}
+  .m03a-portrait{width:64px;height:64px}
+  .m03a-text{font-size:14px;line-height:1.8}
+}
 
 /* WALK (移動操作シーン) */
 #S-walk{background:#0a0a12;overflow:hidden;cursor:default}
@@ -200,6 +225,15 @@ button{cursor:pointer;font-family:inherit}
     <div class="walk-layer" id="walk-layer"></div>
     <div class="walk-player" id="walk-player">
       <img class="walk-sprite walk-player-img" src="assets/tou_sprite_front.png" alt="トウ">
+    </div>
+  </div>
+  <!-- M03A 探索会話（探索画面を保持したまま会話）-->
+  <div class="m03a-dialog" id="m03a-dialog" onclick="M03A.next()">
+    <img class="m03a-portrait" id="m03a-portrait" alt="" style="display:none">
+    <div class="m03a-body">
+      <div class="m03a-name" id="m03a-name" style="display:none"></div>
+      <div class="m03a-text" id="m03a-text"></div>
+      <div class="m03a-next" id="m03a-next">▸ タップして続ける</div>
     </div>
   </div>
   <div class="walk-controls">
@@ -529,21 +563,100 @@ function showWalk(s) {
 WK.startMove = function(d){ WK.dir = d; };
 WK.stopMove  = function(){ WK.dir = 0; };
 
-WK.doAction = function() {
-  if (!WK.nearTarget) return;
-  if (WK.nearTarget.setFlag) setCh01Flag(WK.nearTarget.setFlag);
-  clearInterval(WK.moveIv);
+WK.teardown = function() {
+  clearInterval(WK.moveIv); WK.moveIv = null;
   window.removeEventListener('keydown', WK._keydown);
   window.removeEventListener('keyup',   WK._keyup);
   document.getElementById('walk-act').classList.remove('on');
-  var next = WK.nearTarget.scene;
-  if (WK.nearTarget.sceneIfFlag && hasCh01Flag(WK.nearTarget.sceneIfFlag.flag)) {
-    next = WK.nearTarget.sceneIfFlag.scene;
-  }
+};
+// 探索を一時停止（M03A 会話中は移動・近接判定を止める）
+WK.pause = function() {
+  WK.dir = 0;
+  clearInterval(WK.moveIv); WK.moveIv = null;
+  window.removeEventListener('keydown', WK._keydown);
+  window.removeEventListener('keyup',   WK._keyup);
+  document.getElementById('walk-act').classList.remove('on');
+};
+// 探索へ復帰
+WK.resume = function() {
+  WK.dir = 0; WK.nearTarget = null;
+  clearInterval(WK.moveIv);
+  WK.moveIv = setInterval(wkTick, 30);
+  window.addEventListener('keydown', WK._keydown);
+  window.addEventListener('keyup',   WK._keyup);
+};
+// 遷移先シーンがあれば進む。なければ false
+WK.gotoScene = function(t) {
+  var next = t.scene;
+  if (t.sceneIfFlag && hasCh01Flag(t.sceneIfFlag.flag)) next = t.sceneIfFlag.scene;
   if (next) {
     var idx = SCENES.findIndex(function(sc){ return sc.id === next; });
-    if (idx >= 0) { si = idx; beat = 0; runScene(); }
+    if (idx >= 0) { si = idx; beat = 0; runScene(); return true; }
   }
+  return false;
+};
+
+WK.doAction = function() {
+  if (M03A.active) return;          // 会話中の二重起動を防ぐ
+  if (!WK.nearTarget) return;
+  var t = WK.nearTarget;
+  if (t.setFlag) setCh01Flag(t.setFlag);
+  // M03A 探索会話: 探索画面を保持したまま会話する（PortraitSmall・名前あり）
+  if (t.talk && t.talk.length) {
+    WK.pause();
+    M03A.start(t.talk, function() {
+      // 会話後、遷移先があれば進む。なければ探索へ戻る
+      if (!WK.gotoScene(t)) WK.resume();
+    });
+    return;
+  }
+  // それ以外: フルシーンへ遷移（M03B イベント会話 / M04 等）
+  WK.teardown();
+  WK.gotoScene(t);
+};
+
+/* ━━━━ M03A 探索会話エンジン（探索画面を保持したまま会話）━━━━ */
+/* lines: [{ name?, portrait?, text }] — name/portrait は任意（独り言・通知は名前なし）*/
+var M03A = { lines: null, idx: 0, onDone: null, active: false };
+M03A.start = function(lines, onDone) {
+  if (!lines || !lines.length) { if (onDone) onDone(); return; }
+  M03A.lines = lines; M03A.idx = 0; M03A.onDone = onDone || null; M03A.active = true;
+  document.getElementById('m03a-dialog').classList.add('show');
+  window.addEventListener('keydown', M03A._key);
+  M03A.render();
+};
+M03A.render = function() {
+  var ln = M03A.lines[M03A.idx] || {};
+  var nameEl = document.getElementById('m03a-name');
+  var portEl = document.getElementById('m03a-portrait');
+  var textEl = document.getElementById('m03a-text');
+  var nextEl = document.getElementById('m03a-next');
+  // 名前あり（M03A）。独り言・システム通知など名前なしは省略
+  if (ln.name) { nameEl.textContent = ln.name; nameEl.style.display = ''; }
+  else { nameEl.style.display = 'none'; }
+  // PortraitSmall（顔グラ）。指定が無ければ非表示
+  if (ln.portrait) { portEl.src = ln.portrait; portEl.alt = ln.name || ''; portEl.style.display = ''; }
+  else { portEl.removeAttribute('src'); portEl.style.display = 'none'; }
+  textEl.textContent = ln.text || '';
+  var last = M03A.idx >= M03A.lines.length - 1;
+  nextEl.textContent = last ? '▸ とじる' : '▸ タップして続ける';
+};
+M03A.next = function() {
+  if (!M03A.active) return;
+  if (M03A.idx < M03A.lines.length - 1) { M03A.idx++; M03A.render(); return; }
+  M03A.end();
+};
+M03A.end = function() {
+  if (!M03A.active) return;
+  M03A.active = false;
+  document.getElementById('m03a-dialog').classList.remove('show');
+  window.removeEventListener('keydown', M03A._key);
+  var cb = M03A.onDone;
+  M03A.onDone = null; M03A.lines = null;
+  if (cb) cb();
+};
+M03A._key = function(e) {
+  if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); M03A.next(); }
 };
 
 function wkTick() {
