@@ -69,6 +69,11 @@ RewriteMemory の色、余白、サイズ、透明度、時間、発光を一元
   --rm-dialog-radius: 6px;
   --rm-dialog-line-height: 1.7;
 
+  /* M03 会話ボックス（SCREEN_EXPLORE_DIALOG） */
+  --rm-dialog-m03-bg: #0B0D16;
+  --rm-dialog-m03-border: #EDEDED;
+  --rm-dialog-m03-text: #FFFFFF;
+
   /* Portrait */
   --rm-portrait-max-height: 48vh;
   --rm-portrait-max-width: 38vw;
