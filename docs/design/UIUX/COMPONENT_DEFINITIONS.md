@@ -21,7 +21,8 @@ RewriteMemory の共通 UI 部品を定義する。
 
 - DialogBox
 - NamePlate
-- Portrait
+- PortraitSmall
+- PortraitFull
 - OverlayDim
 - ChoiceList
 - ExploreIndicator
@@ -99,18 +100,51 @@ M04 ではミオ表示時に使用する。
 
 ## 5. Portrait
 
-用途。
-
-立ち絵表示。
-
-使用モード。
-
-- M01 VN
-- M04 VN オーバーレイ
+Portrait は M03 v0.2 に合わせて PortraitSmall / PortraitFull に分離する。
 
 M02 探索では使わない。
 
 M02 では探索スプライトを使う。
+
+### 5.1 PortraitSmall
+
+用途。
+
+M03A 探索会話用。
+
+顔グラ・小型表情用。
+
+表示位置。
+
+DialogBox 左側に表示。
+
+推奨サイズ。
+
+64〜96px 程度。
+
+使用モード。
+
+- M03A 探索会話
+
+### 5.2 PortraitFull
+
+用途。
+
+正面立ち絵。
+
+M03B イベント会話用。
+
+使用シーン。
+
+- 重要会話
+- ボス会話
+- 感情イベント
+
+使用モード。
+
+- M01 VN
+- M03B イベント会話
+- M04 VN オーバーレイ
 
 推奨 CSS。
 
