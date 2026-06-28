@@ -1,5 +1,9 @@
 # SCREEN_VN_OVERLAY v1.0
 
+> **M04 VN Overlay は「重要イベント専用」。通常会話は M03 Talk Window（顔アイコン式 / SCREEN_TALK_WINDOW.md）で扱う。**  
+> 旧 M01（VN 会話向き）と旧 M03B（立ち絵イベント会話）の用途は本モードに統合する。  
+> 対象: 記憶断片・白層化・章ラスト・ボス前後・感情が大きく動く重要会話。
+
 > 役割：M04 VN オーバーレイモードの画面仕様。  
 > 構造定義は `RewriteMemory_MODE_DEFINITION.md`、数値は `DESIGN_TOKEN.md`、部品は `COMPONENT_DEFINITIONS.md` を参照する。
 
