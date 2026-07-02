@@ -259,9 +259,10 @@ func _theme() -> Theme:
 	var t := Theme.new()
 	var fp := "res://assets/font_jp.ttf"
 	if FileAccess.file_exists(fp):
-		var f = load(fp)
-		if f:
-			t.set_default_font(f)
+		# import不要で生TTFを直接読む（ヘッドレスでもGUIでも動く）
+		var f := FontFile.new()
+		f.load_dynamic_font(fp)
+		t.set_default_font(f)
 	t.set_default_font_size(20)
 	return t
 
