@@ -380,15 +380,15 @@ func _say(face_path: String, who: String, lines: Array, level: int, on_end := Ca
 	dq = lines.duplicate()
 	dq_end = on_end
 	panel.visible = true
-	face.texture = _face_tex(face_path) if face_path != "" else null
+	# 顔アイコンは Lv1/Lv2 のキャラ会話のみ。Lv3はバストアップに任せ、地の文(話者なし)は非表示。
+	var show_face := face_path != "" and level < 3
+	face.visible = show_face
+	if show_face:
+		face.texture = _face_tex(face_path)
+		face.modulate = Color(0.85, 0.85, 0.9) if level >= 2 else Color(1, 1, 1)
 	name_lbl.text = who
-	# Lv2は不穏さ: 名前色をくすませ、顔をわずかに暗く
-	if level >= 2:
-		name_lbl.modulate = Color(0.75, 0.78, 0.85)
-		face.modulate = Color(0.85, 0.85, 0.9)
-	else:
-		name_lbl.modulate = Color(1, 1, 1)
-		face.modulate = Color(1, 1, 1)
+	name_lbl.visible = who != ""
+	name_lbl.modulate = Color(0.75, 0.78, 0.85) if level >= 2 else Color(1, 1, 1)
 	_advance_dialogue()
 
 func _advance_dialogue() -> void:
@@ -406,12 +406,14 @@ func _advance_dialogue() -> void:
 func _talk_mio() -> void:
 	var f := "res://assets/mio_sprite_front.png"
 	if flags.get("package_opened", false):
-		# 開封後は不穏な反応版(Lv2)
+		# 開封後: ミオの感情が動く場面 → Lv3バストアップ(暗幕+立ち絵)
+		_fade_overlay(0.55)
+		bust.visible = true
 		_say(f, "ミオ", [
 			"……それ、どこで見つけたの。",
 			"変だね。知らないはずなのに、怖い。",
 			"名前を呼ばれると、少しだけ戻ってこられる気がする。",
-		], 2)
+		], 3)
 	else:
 		_say(f, "ミオ", [
 			"……ここ、静かだね。",
@@ -421,14 +423,13 @@ func _talk_mio() -> void:
 
 func _open_package() -> void:
 	flags["package_opened"] = true
-	# Lv3: 暗幕＋バストアップの記憶シーン
-	_fade_overlay(0.6)
-	bust.visible = true
-	_say("res://assets/mio_sprite_front.png", "記憶の断片", [
-		"白いリボン。",
-		"髪と、リボンと、白紙の手紙。",
-		"（誰かの気配が、指先に残っている）",
-	], 3)
+	# 小包を"調べる"=地の文(ナレーション)。ミオの立ち絵は出さない。
+	_fade_overlay(0.4)
+	_say("", "", [
+		"小包を開けた。",
+		"白いリボン。ほどけた髪。そして、白紙の手紙。",
+		"（誰かの気配が、指先に残っている。でも、名前は出てこない）",
+	], 1)
 
 func _seat_trace() -> void:
 	_choice("五つ目の席の跡がある。", [
