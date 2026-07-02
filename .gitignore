@@ -1,0 +1,5 @@
+# 自律基盤のローカル秘密設定（絶対にコミットしない）
+tools/autonomy/config.sh
+
+# エージェントのローカル作業物（Mac mini 上・通常はリポジトリ外だが念のため）
+rewrite-autonomy/
