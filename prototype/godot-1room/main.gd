@@ -7,9 +7,12 @@ extends Node2D
 const SPEED := 220.0
 const WORLD := Vector2(2600, 1500)      # 部屋の広さ(px)
 const WALL := 40.0                       # 外周の壁厚
+const WALK_COLS := 4                      # 歩行シート: 1方向あたりのコマ数
+const DIR_ROWS := ["down", "left", "right", "up"]   # 歩行シートの行順(上から)
 
 var player: CharacterBody2D
-var player_spr: Sprite2D
+var player_anim: AnimatedSprite2D
+var _facing := "down"
 var cam: Camera2D
 var ui_root: Control
 var hud: Label
@@ -90,10 +93,11 @@ func _build_player() -> void:
 	player.position = Vector2(300, 760)   # PLAYER_START(白い広場の左)
 	player.motion_mode = CharacterBody2D.MOTION_MODE_FLOATING  # トップダウン: 全方向で素直に壁ずり
 	player.z_index = 1                                          # オブジェクトより手前に描く
-	player_spr = Sprite2D.new()
-	player_spr.texture = _tex("res://assets/tou_sprite_front.png")
-	player_spr.scale = Vector2(0.35, 0.35)
-	player.add_child(player_spr)
+	player_anim = AnimatedSprite2D.new()
+	player_anim.sprite_frames = _build_player_frames()
+	player_anim.scale = Vector2(0.35, 0.35)   # フォールバック静止画に合わせた仮スケール
+	player_anim.play("idle_down")
+	player.add_child(player_anim)
 	var col := CollisionShape2D.new()
 	var shape := CircleShape2D.new()
 	shape.radius = 26.0
@@ -175,6 +179,40 @@ func _tex(path: String) -> Texture2D:
 	if ResourceLoader.exists(path):
 		return load(path)
 	return null
+
+# 歩行アニメの土台: assets/tou_walk.png があれば4方向歩行、無ければ正面静止でフォールバック。
+# シート規約: 横 WALK_COLS 列 × 縦 4 行(上から down/left/right/up)。1コマ=シート幅/列・高さ/4。
+func _build_player_frames() -> SpriteFrames:
+	var sf := SpriteFrames.new()
+	var sheet := _tex("res://assets/tou_walk.png")
+	if sheet != null:
+		var fw := int(sheet.get_size().x) / WALK_COLS
+		var fh := int(sheet.get_size().y) / DIR_ROWS.size()
+		for r in range(DIR_ROWS.size()):
+			var d := String(DIR_ROWS[r])
+			_add_sheet_anim(sf, "walk_" + d, sheet, fw, fh, r, WALK_COLS, 8.0, true)
+			_add_sheet_anim(sf, "idle_" + d, sheet, fw, fh, r, 1, 1.0, false)
+	else:
+		var stand := _tex("res://assets/tou_sprite_front.png")
+		for dv in DIR_ROWS:
+			var d := String(dv)
+			for pre in ["walk_", "idle_"]:
+				var nm := String(pre) + d
+				sf.add_animation(nm)
+				sf.set_animation_loop(nm, false)
+				if stand != null:
+					sf.add_frame(nm, stand)
+	return sf
+
+func _add_sheet_anim(sf: SpriteFrames, nm: String, sheet: Texture2D, fw: int, fh: int, row: int, cols: int, fps: float, loop: bool) -> void:
+	sf.add_animation(nm)
+	sf.set_animation_speed(nm, fps)
+	sf.set_animation_loop(nm, loop)
+	for c in range(cols):
+		var at := AtlasTexture.new()
+		at.atlas = sheet
+		at.region = Rect2(c * fw, row * fh, fw, fh)
+		sf.add_frame(nm, at)
 
 # 全身スプライトの頭部だけを正方形で切り出して「顔アイコン」にする
 func _face_tex(path: String) -> Texture2D:
@@ -290,12 +328,21 @@ func _theme() -> Theme:
 func _physics_process(_dt: float) -> void:
 	if state != "explore":
 		player.velocity = Vector2.ZERO
+		if player_anim:
+			player_anim.play("idle_" + _facing)
 		return
 	var dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	player.velocity = dir * SPEED
 	player.move_and_slide()
-	# 歩行アニメは本実装で「歩行スプライトシート(4方向)」をAnimatedSprite2Dで再生する。
-	# プロトでは静止のまま(アート未整備のため)。
+	# 進行方向でアニメ切替(歩行シートがあれば歩行、無ければ静止フォールバック)
+	if dir != Vector2.ZERO:
+		if absf(dir.x) > absf(dir.y):
+			_facing = "right" if dir.x > 0.0 else "left"
+		else:
+			_facing = "down" if dir.y > 0.0 else "up"
+		player_anim.play("walk_" + _facing)
+	else:
+		player_anim.play("idle_" + _facing)
 
 func _process(_dt: float) -> void:
 	if state != "explore":
