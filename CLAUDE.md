@@ -36,6 +36,7 @@ python3 tools/check_scenes.py docs/rewrite-dev/index.html
 ## 自動化パイプライン（発動条件の要約）
 
 1. `claude/**` へ push → `auto-pr-claude.yml` が自動でPR作成。変更が `docs/rewrite/`・`.github/` を含まなければ `auto-merge-dev` ラベル付与。
+   ※ 2026-07-02 実測: `secrets.GH_PAT` 未設定のため **PR自動作成は権限エラーで不発**（詳細は `docs/audit/INFRA_AUDIT_2026-07-02.md` §4）。PRは手動作成が必要。
 2. base=main + `auto-merge-dev` ラベル → `auto-merge-dev.yml` が発火。`docs/rewrite/` か `.github/` を含むPRは guard で拒否。通過するとネイティブ auto-merge を有効化。
 3. main 宛て全PRで `ci-dev.yml`（scene-integrity）が `check_scenes.py` を実行。これがグリーンでマージされる。
 4. dev→stage 反映は `promote-dev-to-stage.yml`（手動 workflow_dispatch のみ）。
