@@ -9,6 +9,8 @@ const WORLD := Vector2(2600, 1500)      # 部屋の広さ(px)
 const WALL := 40.0                       # 外周の壁厚
 
 var player: CharacterBody2D
+var player_spr: Sprite2D
+var _walk_t := 0.0
 var cam: Camera2D
 var ui_root: Control
 var hud: Label
@@ -89,10 +91,10 @@ func _build_player() -> void:
 	player.position = Vector2(300, 760)   # PLAYER_START(白い広場の左)
 	player.motion_mode = CharacterBody2D.MOTION_MODE_FLOATING  # トップダウン: 全方向で素直に壁ずり
 	player.z_index = 1                                          # オブジェクトより手前に描く
-	var spr := Sprite2D.new()
-	spr.texture = _tex("res://assets/tou_sprite_front.png")
-	spr.scale = Vector2(0.35, 0.35)
-	player.add_child(spr)
+	player_spr = Sprite2D.new()
+	player_spr.texture = _tex("res://assets/tou_sprite_front.png")
+	player_spr.scale = Vector2(0.35, 0.35)
+	player.add_child(player_spr)
 	var col := CollisionShape2D.new()
 	var shape := CircleShape2D.new()
 	shape.radius = 26.0
@@ -213,8 +215,8 @@ func _build_ui() -> void:
 	bust.texture = _tex("res://assets/mio_sprite_front.png")
 	bust.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	bust.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	bust.size = Vector2(420, 560)
-	bust.position = Vector2(430, 90)
+	bust.size = Vector2(400, 470)
+	bust.position = Vector2(440, 40)   # 会話パネル(y=540)の上に収める
 	bust.visible = false
 	ui_root.add_child(bust)
 
@@ -223,18 +225,21 @@ func _build_ui() -> void:
 	panel.size = Vector2(1120, 150)
 	panel.position = Vector2(80, 540)
 	panel.visible = false
+	panel.clip_contents = true
 	ui_root.add_child(panel)
 	face = TextureRect.new()
 	face.size = Vector2(96, 96)
 	face.position = Vector2(20, 27)
+	face.expand_mode = TextureRect.EXPAND_IGNORE_SIZE      # 枠(96x96)に必ず収める
 	face.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	face.clip_contents = true
 	panel.add_child(face)
 	name_lbl = Label.new()
-	name_lbl.position = Vector2(130, 12)
+	name_lbl.position = Vector2(140, 12)
 	panel.add_child(name_lbl)
 	text_lbl = Label.new()
-	text_lbl.position = Vector2(130, 46)
-	text_lbl.size = Vector2(960, 90)
+	text_lbl.position = Vector2(140, 46)
+	text_lbl.size = Vector2(950, 90)
 	text_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	panel.add_child(text_lbl)
 
@@ -274,6 +279,15 @@ func _physics_process(_dt: float) -> void:
 	var dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	player.velocity = dir * SPEED
 	player.move_and_slide()
+	# 歩行の"生き"付け: 進行方向で反転＋軽い上下バウンド（仮アニメ）
+	if dir.x != 0.0:
+		player_spr.flip_h = dir.x < 0.0
+	if dir != Vector2.ZERO:
+		_walk_t += _dt * 12.0
+		player_spr.position.y = -absf(sin(_walk_t)) * 4.0
+	else:
+		_walk_t = 0.0
+		player_spr.position.y = 0.0
 
 func _process(_dt: float) -> void:
 	if state != "explore":
