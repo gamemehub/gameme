@@ -10,7 +10,6 @@ const WALL := 40.0                       # 外周の壁厚
 
 var player: CharacterBody2D
 var player_spr: Sprite2D
-var _walk_t := 0.0
 var cam: Camera2D
 var ui_root: Control
 var hud: Label
@@ -177,6 +176,18 @@ func _tex(path: String) -> Texture2D:
 		return load(path)
 	return null
 
+# 全身スプライトの頭部だけを正方形で切り出して「顔アイコン」にする
+func _face_tex(path: String) -> Texture2D:
+	var t := _tex(path)
+	if t == null:
+		return null
+	var sz := t.get_size()
+	var side: float = sz.x * 0.55
+	var at := AtlasTexture.new()
+	at.atlas = t
+	at.region = Rect2(sz.x * 0.5 - side * 0.5, sz.y * 0.04, side, side)  # 上部中央=頭
+	return at
+
 # ---------- UI ----------
 func _build_ui() -> void:
 	var layer := CanvasLayer.new()
@@ -226,6 +237,10 @@ func _build_ui() -> void:
 	panel.position = Vector2(80, 540)
 	panel.visible = false
 	panel.clip_contents = true
+	var sb := StyleBoxFlat.new()
+	sb.bg_color = Color(0.05, 0.06, 0.10, 0.88)   # 半透明の暗色=世界のトーン
+	sb.set_corner_radius_all(10)
+	panel.add_theme_stylebox_override("panel", sb)
 	ui_root.add_child(panel)
 	face = TextureRect.new()
 	face.size = Vector2(96, 96)
@@ -279,15 +294,8 @@ func _physics_process(_dt: float) -> void:
 	var dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	player.velocity = dir * SPEED
 	player.move_and_slide()
-	# 歩行の"生き"付け: 進行方向で反転＋軽い上下バウンド（仮アニメ）
-	if dir.x != 0.0:
-		player_spr.flip_h = dir.x < 0.0
-	if dir != Vector2.ZERO:
-		_walk_t += _dt * 12.0
-		player_spr.position.y = -absf(sin(_walk_t)) * 4.0
-	else:
-		_walk_t = 0.0
-		player_spr.position.y = 0.0
+	# 歩行アニメは本実装で「歩行スプライトシート(4方向)」をAnimatedSprite2Dで再生する。
+	# プロトでは静止のまま(アート未整備のため)。
 
 func _process(_dt: float) -> void:
 	if state != "explore":
@@ -325,7 +333,7 @@ func _say(face_path: String, who: String, lines: Array, level: int, on_end := Ca
 	dq = lines.duplicate()
 	dq_end = on_end
 	panel.visible = true
-	face.texture = _tex(face_path) if face_path != "" else null
+	face.texture = _face_tex(face_path) if face_path != "" else null
 	name_lbl.text = who
 	# Lv2は不穏さ: 名前色をくすませ、顔をわずかに暗く
 	if level >= 2:
