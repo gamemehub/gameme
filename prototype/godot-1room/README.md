@@ -6,12 +6,15 @@ RewriteMemory「白い広場」の1部屋を、Godot 4 で歩いて確かめる�
 ## 動かし方（Mac mini / Godot 4.2 以上）
 1. [Godot 4.2+](https://godotengine.org/) をインストール（Standard版でOK。C#不要）。
 2. Godot を起動 → **「インポート」** → この `prototype/godot-1room/` の中の **`project.godot`** を選択 → 開く。
-3. 右上の **▶（実行）** を押す。`Main.tscn` が起動する。
+   （パス欄に `.../gameme/prototype/godot-1room/project.godot` を直接入れてもOK）
+3. 右上の **▶（実行 / F5）** を押す。`Main.tscn` が起動する。
 
 ## 操作
-- **矢印キー**：移動（トウを歩かせる。カメラが追従）
-- **Space / Enter**：調べる・話す・会話を送る／選択肢はマウスクリック
+- **矢印キー または WASD**：移動（トウを歩かせる。カメラが追従）
+- **Space / Enter**：調べる・話す・会話を送る／選択肢は Space/Enter でも マウスクリックでも可
 - 近づくと画面下に「[ Space ] ○○」のプロンプトが出る（近接時のみ）
+
+日本語フォント（Noto Sans JP）は `assets/font_jp.ttf` として**同梱済み**。手動作業は不要。
 
 ## 触れるもの（白い広場）
 - **ミオ**（左中央）：話しかける＝会話 Lv1。小包を開けた後に話すと不穏な反応 Lv2。
@@ -29,10 +32,9 @@ RewriteMemory「白い広場」の1部屋を、Godot 4 で歩いて確かめる�
 **不合格** → Web+Phaser(+Tauri) に戻し、同じ1部屋を Phaser で作って再判定。
 
 ## 既知の注意 / つまずいたら
-- **日本語が「□□□（豆腐）」になる場合**：Godot標準フォントがCJK未対応のため。
-  日本語フォント（例 [Noto Sans JP](https://fonts.google.com/noto/specimen/Noto+Sans+JP)）の `.ttf` を
-  **`assets/font_jp.ttf`** という名前で置くと、自動で全UIに適用される（`main.gd` が存在チェックして読み込む）。
+- **日本語フォントは同梱済み**（`assets/font_jp.ttf` = Noto Sans JP, SIL Open Font License）。万一豆腐（□）になったらファイルの有無を確認。差し替えたい場合は同名で置けば `main.gd` が自動適用する。
 - 画像は `docs/rewrite-dev/assets/` からコピーした仮素材（トウ/ミオ/小包/✦）。背景・タイルは仮の単色。**見た目の作り込みは判定対象外**（操作感・切替の自然さを見る）。
+- **エラーが出たら**：Godot下部「デバッガ/出力」の赤い文字をコピーして共有。
 - これは**使い捨てプロトタイプ**。ボス/パズル/セーブ/複数エリアは意図的に未実装。
 
 ## 構成

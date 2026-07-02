@@ -30,10 +30,27 @@ var near = null
 var flags := {}
 
 func _ready() -> void:
+	_setup_input()
 	_build_world()
 	_build_player()
 	_build_ui()
 	_place_objects()
+
+# 矢印＋WASD を移動アクションに登録（project.godotの入力定義を書かず、コードで確実に）
+func _setup_input() -> void:
+	var binds := {
+		"move_left": [KEY_LEFT, KEY_A],
+		"move_right": [KEY_RIGHT, KEY_D],
+		"move_up": [KEY_UP, KEY_W],
+		"move_down": [KEY_DOWN, KEY_S],
+	}
+	for action in binds.keys():
+		if not InputMap.has_action(action):
+			InputMap.add_action(action)
+		for kc in binds[action]:
+			var ev := InputEventKey.new()
+			ev.physical_keycode = kc
+			InputMap.action_add_event(action, ev)
 
 # ---------- 構築 ----------
 func _build_world() -> void:
@@ -70,6 +87,8 @@ func _add_wall(center: Vector2, size: Vector2) -> void:
 func _build_player() -> void:
 	player = CharacterBody2D.new()
 	player.position = Vector2(300, 760)   # PLAYER_START(白い広場の左)
+	player.motion_mode = CharacterBody2D.MOTION_MODE_FLOATING  # トップダウン: 全方向で素直に壁ずり
+	player.z_index = 1                                          # オブジェクトより手前に描く
 	var spr := Sprite2D.new()
 	spr.texture = _tex("res://assets/tou_sprite_front.png")
 	spr.scale = Vector2(0.35, 0.35)
@@ -90,6 +109,7 @@ func _build_player() -> void:
 	cam.limit_bottom = int(WORLD.y)
 	player.add_child(cam)
 	cam.make_current()
+	cam.reset_smoothing()   # 起動直後のカメラ滑り出しを防ぐ
 
 func _place_objects() -> void:
 	# ミオ（会話 Lv1→Lv2）
@@ -250,7 +270,7 @@ func _physics_process(_dt: float) -> void:
 	if state != "explore":
 		player.velocity = Vector2.ZERO
 		return
-	var dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	var dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	player.velocity = dir * SPEED
 	player.move_and_slide()
 
@@ -416,6 +436,11 @@ func _choice(prompt_text: String, opts: Array) -> void:
 		)
 		choices.add_child(b)
 	choices.visible = true
+	# キーボード/パッドで選択肢を確定できるよう先頭ボタンにフォーカス
+	for c in choices.get_children():
+		if c is Button:
+			(c as Button).grab_focus()
+			break
 
 # ---------- 補助 ----------
 func _hide_all_dialogue() -> void:
