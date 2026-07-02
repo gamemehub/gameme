@@ -1,0 +1,60 @@
+name: godot-check
+
+# Godotプロジェクトのパース/インポート整合を検証する PR CI（Phase1）。
+# prototype/godot-1room（将来は game/）を対象に、Godot 4.2 をヘッドレスで開き、
+# GDScriptのパースエラー/インポートエラーが無いことを確認する。
+# 目的: AIが未検証コードをPRしても、実機を触る前にCIで破綻を止める。
+#
+# 【承認レーン】.github/ の変更のため自動マージされない（人間レビュー必須）。
+# 【必須チェック化】Godot採用に伴い、main の必須チェックを scene-integrity から
+#   godot-check へ移行することを想定（Settings → Branches で設定）。
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'prototype/godot-1room/**'
+      - 'game/**'
+      - '.github/workflows/godot-check.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: godot-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  godot-import-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download Godot 4.2.2 (headless/linux)
+        run: |
+          set -euo pipefail
+          curl -fsSL -o godot.zip \
+            "https://github.com/godotengine/godot/releases/download/4.2.2-stable/Godot_v4.2.2-stable_linux.x86_64.zip"
+          unzip -q godot.zip
+          mv Godot_v4.2.2-stable_linux.x86_64 godot
+          chmod +x godot
+          ./godot --version || true
+
+      - name: Import & parse check (対象Godotプロジェクト)
+        run: |
+          set -uo pipefail
+          fail=0
+          for proj in prototype/godot-1room game; do
+            if [ -f "$proj/project.godot" ]; then
+              echo "==== $proj ===="
+              OUT=$(./godot --headless --path "$proj" --quit 2>&1 || true)
+              echo "$OUT"
+              if echo "$OUT" | grep -E "SCRIPT ERROR|Parse Error|Parser Error|Failed to load script"; then
+                echo "::error::[$proj] Godot のスクリプト/パースエラーを検出しました"
+                fail=1
+              fi
+            fi
+          done
+          if [ "$fail" -ne 0 ]; then exit 1; fi
+          echo "OK: Godot import/parse クリーン"
