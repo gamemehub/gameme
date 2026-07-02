@@ -39,19 +39,36 @@
 
 ---
 
-## 2. 役割分担（責務分離）
+## 2. 責務(Role)定義と担当（**担当AIは差替可能**）
+**設計原則：製品名でなく"責務(Role)"を固定し、担当AIを交換可能にする。** これによりベンダー非依存となり、将来のGPT-6 / Claude 6 / Codex Next / 他AIへ、担当表を差し替えるだけで移行できる。
 
-| 主体 | 役割 | **その主体にしかできない/最も向く仕事** | やらないこと |
-|---|---|---|---|
-| **人間(Chairman/Miya)** | 最終決裁 | **体験の"気持ちよさ"最終判定**、資金・契約、Steam公開/GC応募のGo、価値・倫理・法的判断、方針の最終決定 | 細かいGitHub管理・実装 |
-| **GPT** | PM/アーキテクト/設計レビュー/QA/優先順位/リスク管理 | **戦略と判断**：ロードマップ・仕様確定・レビュー基準・優先順位・アーキ整合・リスク評価・Miya向け"おすすめ"提示 | 実装（コードを書かない） |
-| **Claude (Claude Code)** | 実装統括＋CI/検証＋Knowledge Manager＋PM補佐 | **リポジトリ直アクセス〜GitHub運用〜CI連携〜実機確認〜docs資産化を一気通貫**。24h自律ループのオーケストレーション。長コンテキスト・ツール実行 | 仕様の最終決定（GPT/人間の領分）、体験の最終判定 |
-| **Codex** | 副実装エンジン | **明確な仕様の局所コードを量産/並列**（定型実装・テスト生成）。Claudeが振ったサブタスクの実装、代替系 | 設計判断（迷ったら停止しGPTレビュー待ち） |
+### 2.1 責務(Role)
+| Role | 内容（何をする） | 位置づけ |
+|---|---|---|
+| **PM** | ロードマップ・優先順位・Issue作成・進行管理・リスク管理 | 上流(非同期) |
+| **Architect Review** | 設計整合・正本整合・invariant・技術リスクの事前レビュー | 節目(非同期) |
+| **Implementation** | 実装・commit・push。統括担当は repo/CI/検証/docs を一気通貫 | 実行 |
+| **Self Review** | 実装者自身の自己点検（仕様整合・参照切れ・未使用コード・命名・コメント・テスト） | 実装直後(必須) |
+| **Cross AI Review** | **実装者以外**のAIによる独立レビュー（別モデル/新規コンテキスト） | 毎PR(非ブロッキング) |
+| **QA** | 勝利条件・体験基準に沿った検証 | 節目 |
+| **Human Approval** | **ゲーム体験・演出・感情・世界観・UX** の最終判断／承認 | 確認レーンのみ |
 
-**切り分けの原則**
-- **判断はGPT/人間、実装はClaude/Codex、承認は人間。**
-- Claude と Codex はどちらも実装できるが、**Claude=オーケストレータ兼メイン**（repo/CI/検証/docsまで通す）、**Codex=局所・並列のサブ**。まずClaude単独で回し、量が増えたらCodexを足す（拡張性を保持）。
-- 迷い・仕様矛盾・大規模改修・本番影響 → **停止して報告**（PROJECT_OPERATING_SYSTEM §14）。
+### 2.2 現在の担当（**差替可能マッピング**・2026-07時点）
+| Role | 現担当 | 将来の差替候補 |
+|---|---|---|
+| PM | GPT | GPT-6 / Claude / 他 |
+| Architect Review | GPT（＋Claudeが地上検証で双方向） | 任意の上位AI |
+| Implementation（統括） | **Claude Code**（repo/CI/検証/docs） | Claude / Codex / 他 |
+| Implementation（副・局所量産） | Codex | 任意 |
+| Self Review | 実装した本人AI | — |
+| Cross AI Review | **実装者以外**：GPT-API / 2nd Claude(新規context) / Codex | 追加AI |
+| QA | GPT | 任意 |
+| Human Approval | 人間(Miya) | 人間固定 |
+
+**原則**
+- **責務中心**：AIを固定せず責務を固定。担当は上表で差し替えるだけ＝特定ベンダーに依存しない。
+- **「実装したAIはCross Reviewしない」**（本人以外が必ず見る）。
+- 判断=PM/Architect/QA/人間、実装=Implementation、承認=Human Approval。迷い・仕様矛盾・大規模改修・本番影響 → **停止して報告**（PROJECT_OPERATING_SYSTEM §14）。
 
 ---
 
@@ -99,32 +116,38 @@
 
 ## 5. 運用フロー
 ```
-GPT: Ready Issue作成(仕様/invariant/完了条件) → ラベル ai-ready
+[PM] Ready Issue作成(仕様/invariant/完了条件) → ラベル ai-ready
+        ▼
+[Architect Review] 設計/正本/invariant整合を事前確認(節目・非同期)
         ▼ (Mac mini launchd, 300s間隔)
 Dispatcher: ai-ready を1件取得 → claude/ ブランチ作成 → in-progress
         ▼
-Claude(主) / Codex(副): 実装 → commit → push
+[Implementation] 統括AI(現Claude)/副(現Codex): 実装 → commit
         ▼
-auto-pr: PR作成   godot-check(CI): パース/インポート検証(green)
+[Self Review] 実装者本人: 仕様整合/参照切れ/未使用/命名/コメント/テスト → push
         ▼
-自動AIレビュー(相互・非ブロッキング) → 安全レーンは自動マージ / 体験系は人間承認待ち
+auto-pr: PR作成   [L1 CI] godot-check: 必須ゲート(green)
         ▼
-Miya: URLで承認(番号回答) → マージ → Issue close
+[Cross AI Review] 実装者以外(別モデル/新規context・非ブロッキング): PRコメント
         ▼
-Supervisor: 常時監視(下記) / 日次レポート
+安全レーン=自動マージ / 体験系=[Human Approval] URL承認(体験/演出/UXのみ)
+        ▼
+Merge → Issue close / Supervisor監視 / Daily Report
 ```
 
 ## 5.5 レビュー体制（多層・相互・非ブロッキング）
 **大原則：GPT/人間を"毎PRの同期ゲート"にしない**（それが「半自律」ボトルネックの正体）。GPTは上流(Issue/仕様)と節目に非同期で入り、毎PRの品質は自動レビューで担保する。
 
-| 層 | 誰 | タイミング | ブロッキング |
+| 層 | Role | 担当（差替可） | 毎PR止める |
 |---|---|---|---|
-| **L1 CI(godot-check)** | 自動 | 毎PR | ✅ 必須ゲート |
-| **L2 相互AIレビュー** | 独立レビュアー＝**別モデル/新規コンテキスト**（GPT-API or 2nd Claude・懐疑プロンプト） | 毎PR | ✕ 非ブロッキング（指摘をPRコメント） |
-| **L3 設計相互レビュー(双方向)** | **GPT↔Claude** | Issue作成/節目 | ✕ 非同期 |
-| **L4 人間承認** | Miya | **確認レーン(体験系)のみ** | ✅ 体験系のみ |
+| **L0 Self Review** | Self Review | 実装者本人AI | ✕（必須自己点検） |
+| **L1 CI(godot-check)** | — | 自動 | ✅ 必須ゲート |
+| **L2 Cross AI Review** | Cross AI Review | **実装者以外**（GPT-API / 2nd Claude(新規context) / Codex / 追加AI） | ✕ 非ブロッキング（PRコメント） |
+| **L3 Architect/設計相互(双方向)** | Architect Review | GPT↔Claude（現担当） | ✕ 非同期 |
+| **L4 Human Approval** | Human Approval | Miya（**体験/演出/感情/世界観/UXのみ**） | ✅ 体験系のみ |
 
-- **相互(クロス)レビュー**：実装は必ず"作った本人以外"が見る。**別モデル/新規コンテキスト**でレビュー＝多様な失敗モードを捕捉。GPT-APIを繋げばGPTも自動レビュアーに。
+- **Self Review(L0)標準化**：実装者本人が push 前に必ず自己点検 — 仕様整合／参照切れ0／未使用コード除去／命名／コメント／テスト。
+- **Cross AI Review(L2)**：実装は必ず"作った本人以外"が見る。**別モデル/新規コンテキスト**でレビュー＝多様な失敗モードを捕捉。担当は GPT-API / 2nd Claude / Codex / 追加AI から差替可能。
 - **双方向**：GPT→Claude（設計/優先順位/リスク）に加え、**Claude→GPT**（Claudeはrepo実体を見られるので、**GPTの仕様が実装/参照/invariantと矛盾していないかを地に足で検証**）。GPTにできない地上検証をClaudeが担う。
 - **GPTを止める要素にしない**：GPT自動化にはGPT-APIのMac miniループ接続が必要。未接続の間はGPTを**非同期の節目レビュー**に留め、毎PRは L1+L2 で回す＝ループは止まらない。
 
@@ -178,6 +201,8 @@ GC2026応募(〜2027/3/15・無償公開) → 結果(6/30) → **Steam有償化*
 ① 実勢為替 ② Agent SDKクレジット課金の再導入 ③ Sonnet導入価格終了(8/31)後 ④ 採用GPT/Codexモデルの確定単価 ⑤ 自環境の実トークン係数（`count_tokens`実測） ⑥ 各社ToSの最新版での自動化可否。
 
 ## 10. 確定事項（v1.0）
+- **責務中心設計**：AIを固定せず**責務(Role)を固定**（PM / Architect Review / Implementation / Self Review / Cross AI Review / QA / Human Approval）。担当AIは §2.2 の差替可能マッピングで交換＝**ベンダー非依存**（GPT-6/Claude 6/Codex Next 等へ移行容易）。
+- **標準パイプライン**：PM → Issue作成 → Architect Review → Implementation → Self Review → Cross AI Review → CI → Human Review → Merge。Architect Review / Cross Review / Implementation は**責務**であり担当AIは固定しない。
 - **AI運用＝C案（対話Max＋無人ループAPI）を採用。**
 - **役割**：判断=GPT/人間、実装=Claude(主)/Codex(副)、承認=人間。
 - **コスト制御**：Sonnet主力＋キャッシュ＋Batch＋難所Opus＋Supervisor日次上限。
