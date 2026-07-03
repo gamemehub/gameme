@@ -1,0 +1,5 @@
+schema: repo-identity/v1
+repo: gamemehub/gameme
+role: independent-product
+accepts_ai_development: true
+note: GameMe は独立プロダクト。自身のツール/自動化を持ってよい。ただし RewriteMemory のゲーム本体・エンジン(Godot 等)と RewriteMemory 専用開発基盤は RewriteMemory 側で管理し、gameme では開発しない。
