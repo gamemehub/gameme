@@ -1,0 +1,20 @@
+; Godot 4 project — RewriteMemory 1room Prototype (Phase1 / Go-No-Go)
+; 対象: Godot 4.2 以上。Mac mini で「プロジェクトをインポート」→ ▶ 実行。
+
+config_version=5
+
+[application]
+
+config/name="RewriteMemory - 1room Prototype"
+run/main_scene="res://Main.tscn"
+config/features=PackedStringArray("4.2", "GL Compatibility")
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"

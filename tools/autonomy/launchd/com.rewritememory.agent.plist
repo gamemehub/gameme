@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- RewriteMemory 自律エージェント Runner の常駐設定（launchd）。
+     パス(macmini部分・リポジトリ位置)を自分の環境に合わせて編集すること。
+     StartInterval で定期起動（例: 300秒ごと）。失敗しても次回で自己回復。 -->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.rewritememory.agent</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/macmini/gameme/tools/autonomy/agent-runner.sh</string>
+  </array>
+  <key>StartInterval</key>
+  <integer>300</integer>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>StandardOutPath</key>
+  <string>/Users/macmini/rewrite-autonomy/logs/agent.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/macmini/rewrite-autonomy/logs/agent.err.log</string>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+  </dict>
+</dict>
+</plist>
