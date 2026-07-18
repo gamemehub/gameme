@@ -1,0 +1,22 @@
+﻿カテゴリ,名称,概要,ファイルパス,公開URL（GitHub Pages）,GitHubソース
+Webアプリ,GameMe Charts,Steam / IGDB / OpenCritic のゲームランキングを集計して表示するチャートサイト,docs/index.html,https://gamemehub.github.io/gameme/,https://github.com/gamemehub/gameme/blob/main/docs/index.html
+ノベルゲーム,FEED（本編）,GC2026応募作品。スワイプ判断・リアルタイムカウンター・ソーシャルUIのノベルゲーム。第1〜2章実装済み,docs/feed/index.html,https://gamemehub.github.io/gameme/feed/,https://github.com/gamemehub/gameme/blob/main/docs/feed/index.html
+ノベルゲーム,FEED ティザー,FEEDのティザー（導入）ページ,docs/feed/teaser.html,https://gamemehub.github.io/gameme/feed/teaser.html,https://github.com/gamemehub/gameme/blob/main/docs/feed/teaser.html
+ツール,FEED キャラクター生成ツール,FEED用のキャラクター生成ツール,docs/feed/generator.html,https://gamemehub.github.io/gameme/feed/generator.html,https://github.com/gamemehub/gameme/blob/main/docs/feed/generator.html
+ノベルゲーム,RewriteMemory（本番）,RewriteMemory 本番ビルド,docs/rewrite/index.html,https://gamemehub.github.io/gameme/rewrite/,https://github.com/gamemehub/gameme/blob/main/docs/rewrite/index.html
+ノベルゲーム,RewriteMemory（dev）,RewriteMemory 開発版,docs/rewrite-dev/index.html,https://gamemehub.github.io/gameme/rewrite-dev/,https://github.com/gamemehub/gameme/blob/main/docs/rewrite-dev/index.html
+ノベルゲーム,RewriteMemory（stage）,RewriteMemory ステージング版,docs/rewrite-stage/index.html,https://gamemehub.github.io/gameme/rewrite-stage/,https://github.com/gamemehub/gameme/blob/main/docs/rewrite-stage/index.html
+ノベルゲーム,FEED ゲーム本体（プロトタイプ）,GC2026応募作品プロトタイプ単体HTML。パスワード: feed2847,FEED_game.html,,https://github.com/gamemehub/gameme/blob/main/FEED_game.html
+ノベルゲーム,FEED（ルートコピー）,ルート直下のFEED公開用HTML,index.html,,https://github.com/gamemehub/gameme/blob/main/index.html
+ノベルゲーム,FEED（feedディレクトリ）,feed/ ディレクトリ版のFEED,feed/index.html,,https://github.com/gamemehub/gameme/blob/main/feed/index.html
+スクレイパー,IGDB スクレイパー,IGDBから未発売ゲームのhypes（注目度）ランキングを取得,igdb_scraper.py,,https://github.com/gamemehub/gameme/blob/main/igdb_scraper.py
+スクレイパー,OpenCritic スクレイパー,OpenCritic（RapidAPI経由）から批評家スコアランキングを取得,opencritic_scraper.py,,https://github.com/gamemehub/gameme/blob/main/opencritic_scraper.py
+スクレイパー,Steam ウィッシュリスト スクレイパー,SteamSpy API経由でSteamのランキングを取得,steam_wishlist_scraper.py,,https://github.com/gamemehub/gameme/blob/main/steam_wishlist_scraper.py
+自動化,ランキング履歴トラッカー,毎日のランキングを docs/data/history.json に蓄積,track_history.py,,https://github.com/gamemehub/gameme/blob/main/track_history.py
+自動化,Twitter 自動投稿,GitHub Actionsから呼び出されるTwitter投稿スクリプト,twitter_poster.py,,https://github.com/gamemehub/gameme/blob/main/twitter_poster.py
+ツール,シーン整合性チェック,rewrite-dev/index.html のシーン整合性チェック（依存なし）,tools/check_scenes.py,,https://github.com/gamemehub/gameme/blob/main/tools/check_scenes.py
+ドキュメント,Mio キャラクターバイブル,キャラクター「Mio」の設定資料,docs/characters/01_Mio_Character_Bible.md,,https://github.com/gamemehub/gameme/blob/main/docs/characters/01_Mio_Character_Bible.md
+ドキュメント,UI/UX デザインドキュメント一式,UIUX_MASTER / DESIGN_TOKEN / COMPONENT_DEFINITIONS など,docs/design/UIUX/,,https://github.com/gamemehub/gameme/blob/main/docs/design/UIUX
+ドキュメント,CH01 Phase2 仕様,Chapter01 Phase2 感情フック仕様書,docs/spec/CH01_PHASE2_EMOTIONAL_HOOK_SPEC.md,,https://github.com/gamemehub/gameme/blob/main/docs/spec/CH01_PHASE2_EMOTIONAL_HOOK_SPEC.md
+データ,チャート用データ（JSON）,history / igdb_upcoming / opencritic / rankings のJSONデータ,docs/data/,,https://github.com/gamemehub/gameme/blob/main/docs/data
+CI/CD,GitHub Actions ワークフロー一式,daily_update / promote-dev-to-stage / ci-dev / auto-merge-dev など7本のワークフロー,.github/workflows/,,https://github.com/gamemehub/gameme/blob/main/.github/workflows
