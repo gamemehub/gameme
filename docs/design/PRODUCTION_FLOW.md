@@ -66,9 +66,9 @@ Phase 4  調整（各Phase末尾）   実機テスト→具体的観察→修正
    - 歩行スプライト：まず左右2方向のみ（現探索は横移動）。待機（idle）とまばたき差分
    - 顔アイコン：ASSET_SPEC の7表情（normal/smile/sad/anxious/serious/surprise/empty）
      最小3枚（normal/anxious/empty）から開始
-   - プロンプト例：
+   - プロンプト例（※GC2026規約：特定作品名を入れない。質感の一般語で組む）：
      "16-bit pixel art character sprite, Japanese high school boy, side view walk cycle,
-      2 frames, muted evening palette, EarthBound-inspired, transparent background"
+      2 frames, muted evening palette, warm hand-drawn feel, transparent background"
 3. Pixel Snapper で真のピクセルグリッドに量子化 → パレット削減
 4. Aseprite で仕上げ（パレット統一・フレーム整列・サイズは表示の2倍）
 5. ASSET_SPEC 命名で配置（例 mio_face_anxious.png）→ PROMPTS.md に生成条件を記録
@@ -107,9 +107,9 @@ Phase 4  調整（各Phase末尾）   実機テスト→具体的観察→修正
    - 奥景：空と校舎シルエット（ほぼ動かない）
    - 中景：木・渡り廊下・掲示板（0.5倍速で流れる）
    - 近景：地面・草・小物の影（1倍速）
-   - プロンプト例：
+   - プロンプト例（※GC2026規約：特定作品名を入れない。質感の一般語で組む）：
      "wide pixel art background, Japanese school courtyard at dusk 17:17, long shadows,
-      muted blue-purple palette with warm orange accents, EarthBound-inspired, no characters,
+      muted blue-purple palette with warm orange accents, warm hand-drawn feel, no characters,
       horizontal panorama 3:1"
 3. 量子化・トーン統一（キャラと同一パレットに寄せる）→ 層別PNG
 4. 実装：walk-world に3層を重ね、スクロール時 translateX × 深度係数で視差
