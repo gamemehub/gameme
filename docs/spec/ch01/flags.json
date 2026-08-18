@@ -1,5 +1,6 @@
 {
-  "$schema_note": "CH01 フラグ台帳（正本）。layer: impl=実装変数（DL-Y3未決のためCanon化しない・セーブ上は impl.* 名前空間に隔離） / story=Story状態（canon明示・write-once）。writers/readers は dialogues.json / scenes.json / CH01_IMPL_SPEC.md のイベントIDと1:1対応。",
+  "$status": "SUPERSEDED FOR DECISIONS — 正は FLAG_REGISTRY.md。本ファイルはスキーマ形状の参考ドラフトであり、mioTrust廃止・whiteLayerStage改名などの『確定』表記は v1.1 で候補（DESIGN REVIEW REQUIRED）へ格下げされた。裁定確定後に本ファイルを更新する。",
+  "$schema_note": "CH01 フラグ台帳（スキーマ参考ドラフト）。layer: impl=実装変数（DL-Y3未決のためCanon化しない・セーブ上は impl.* 名前空間に隔離） / story=Story状態（canon明示・write-once）。writers/readers は dialogues.json / scenes.json / CH01_IMPL_SPEC.md のイベントIDと1:1対応。",
   "version": "1.0",
   "basedOn": "CH01_DETAILED_SCRIPT v0.17 + 裁定D5（mioTrust廃止→mioBond bool分解）",
   "flags": [

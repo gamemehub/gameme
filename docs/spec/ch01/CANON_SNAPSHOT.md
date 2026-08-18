@@ -54,8 +54,10 @@
 | ID | 内容 | 実装上の扱い |
 |---|---|---|
 | U-004 | 時計塔の分類/制度/内部 | 一切出さない |
-| CD-13 | S7 再構成モードの採否・機構・報酬 | flag-off・データ予約のみ（裁定D2） |
+| CD-13 | S7 再構成モードの採否・機構・報酬 | **UNDECIDED 維持**。Prototype は S6→S8 を前提とするが、S7 を採用・実装しない（採否は上位決裁） |
 | DL-Y3 | 実装フラグの Canon 化 | `impl.*` 隔離・Canon 化しない |
+| — | CALLOUT 入力方式 | **UNDECIDED**。S9/S11 で同一操作を使うことのみ Requirement |
+| — | mioTrust 等のデータモデル | **DESIGN REVIEW REQUIRED**（`FLAG_REGISTRY.md` §1/§3 で案比較） |
 | — | D-NOAH（ノア開示）の採否 | 実装しない・予約のみ |
 | — | S0/S8〜S11 のロケ正式確定 | ASSUMPTION 維持・IMAGE-02 待ち |
 | — | S11 介入の機序（「制度が回復を検知」） | CANDIDATE/DESIGN INTERPRETATION・断定描写禁止 |

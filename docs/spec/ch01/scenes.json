@@ -1,5 +1,6 @@
 {
-  "$schema_note": "CH01 シーン台帳（正本）。v0.17 SECTION 1/15/17 の正規化。controlSequence は §17B（P0整合修正後）準拠。flagSummary は導出情報（正は dialogues.json / events の afterState — flags.json rules.writeOwner 参照）。locationStatus/spawn/facing の PROVISIONAL / ASSUMPTION は IMAGE-02 確定まで維持。",
+  "$status": "SUPERSEDED FOR DECISIONS — 正は CH01_IMPL_SPEC.md §3。本ファイルはスキーマ形状の参考ドラフト。S7 flag-off の『裁定済み』表記は誤りで、S7 は UNDECIDED のまま（Prototypeでは S6→S8 を前提とするが、採用可否は上位決裁）。",
+  "$schema_note": "CH01 シーン台帳（スキーマ参考ドラフト）。v0.17 SECTION 1/15/17 の正規化。controlSequence は §17B（P0整合修正後）準拠。flagSummary は導出情報（正は dialogues.json / events の afterState — flags.json rules.writeOwner 参照）。locationStatus/spawn/facing の PROVISIONAL / ASSUMPTION は IMAGE-02 確定まで維持。",
   "version": "1.0",
   "viewMode": "orthographic-top-down-4dir",
   "scenes": [

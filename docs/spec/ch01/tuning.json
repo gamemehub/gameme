@@ -1,5 +1,6 @@
 {
-  "$schema_note": "CH01 チューニング定数台帳（正本）。仕様本文（CH01_IMPL_SPEC.md）は必ず定数名で参照する。Playtestでの調整は本ファイルの数値変更のみで完結させ、仕様改訂を伴わない。単位: *_SEC=秒 / *_STEPS=歩(タイル) / *_COUNT=回数。",
+  "$status": "SUPERSEDED FOR DECISIONS — 正は TUNING.md。本ファイルはスキーマ形状の参考ドラフト。CALLOUT_* 定数は入力方式が UNDECIDED のため定義不能（長押し前提の値は無効）。",
+  "$schema_note": "CH01 チューニング定数台帳（スキーマ参考ドラフト）。仕様本文（CH01_IMPL_SPEC.md）は必ず定数名で参照する。Playtestでの調整は本ファイルの数値変更のみで完結させ、仕様改訂を伴わない。単位: *_SEC=秒 / *_STEPS=歩(タイル) / *_COUNT=回数。",
   "version": "1.0",
   "constants": {
     "S4_IDLE_TRIGGER_SEC": {

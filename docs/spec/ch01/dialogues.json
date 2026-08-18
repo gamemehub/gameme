@@ -1,5 +1,6 @@
 {
-  "$schema_note": "CH01 台詞台帳（正本）。v0.17 SECTION 2/2B の正規化。全テキストは SCRIPT DRAFT（文芸FINALでない・書換可）。keyLine=true の行は★canon確定キーライン＝意図保持・書換慎重。afterState はこの台詞完了時に書き込むフラグ（書込オーナー規則: flags.json rules.writeOwner）。イベントがオーナーの書き込みは events 側（CH01_IMPL_SPEC.md §5）にあり、ここには持たない。文芸FINALパスをGPT等へ依頼する場合は本ファイルの該当エントリのみ切り出して渡す。",
+  "$status": "DRAFT — 台詞テキストの回収先として有効。ただし afterState 中の mioBond 系記述は候補（FLAG_REGISTRY.md §3 の裁定待ち）。台詞本文は SCRIPT DRAFT（文芸FINALでない）。",
+  "$schema_note": "CH01 台詞台帳。v0.17 SECTION 2/2B の正規化。全テキストは SCRIPT DRAFT（文芸FINALでない・書換可）。keyLine=true の行は★canon確定キーライン＝意図保持・書換慎重。afterState はこの台詞完了時に書き込むフラグ（書込オーナー規則: flags.json rules.writeOwner）。イベントがオーナーの書き込みは events 側（CH01_IMPL_SPEC.md §5）にあり、ここには持たない。文芸FINALパスをGPT等へ依頼する場合は本ファイルの該当エントリのみ切り出して渡す。",
   "version": "1.0",
   "forbiddenAllScenes": "記憶局全貌 / アンログ思想 / 白層科学 / 未来のトウ / 母の保存詳細 / ミオ=鍵・原型 / 時計塔の内部・分類・鐘 / 金魚（非採用）",
   "dialogues": [
