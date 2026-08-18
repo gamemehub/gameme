@@ -1,0 +1,113 @@
+{
+  "$status": "SUPERSEDED FOR DECISIONS — 正は TUNING.md。本ファイルはスキーマ形状の参考ドラフト。CALLOUT_* 定数は入力方式が UNDECIDED のため定義不能（長押し前提の値は無効）。",
+  "$schema_note": "CH01 チューニング定数台帳（スキーマ参考ドラフト）。仕様本文（CH01_IMPL_SPEC.md）は必ず定数名で参照する。Playtestでの調整は本ファイルの数値変更のみで完結させ、仕様改訂を伴わない。単位: *_SEC=秒 / *_STEPS=歩(タイル) / *_COUNT=回数。",
+  "version": "1.0",
+  "constants": {
+    "S4_IDLE_TRIGGER_SEC": {
+      "value": 6,
+      "desc": "擬似時計: S3必須ビート完了後、EVT-1717発火までのアイドル/滞在時間。『17:17が近づく』の静かな待ちを作る",
+      "usedBy": "S4トリガー条件（§3.2）"
+    },
+    "S4_NOTIFICATION_LOCK_SEC": {
+      "value": 3,
+      "desc": "S4通知表示中の短時LOCK長（通知openからclose可能まで）",
+      "usedBy": "EVT-1717"
+    },
+    "POST_S4_FREE_STEPS_MIN": {
+      "value": 3,
+      "desc": "S4通知close後、S5開始（5席目接近トリガー）までにプレイヤーが歩ける最小歩数の設計目安。トリガーゾーンの配置距離に反映",
+      "usedBy": "S4→S5遷移（§17B）"
+    },
+    "POST_S4_FREE_STEPS_MAX": {
+      "value": 8,
+      "desc": "同上・最大歩数目安",
+      "usedBy": "S4→S5遷移（§17B）"
+    },
+    "S5_POST_INSPECT_BEAT_SEC": {
+      "value": 2.5,
+      "desc": "S5調査完了後、CHOICE-S6のUIを出すまでのUNLOCK余白（トウが立ち上がりミオが待つ間）",
+      "usedBy": "S5→S6遷移"
+    },
+    "S8_OPENING_LOCK_SEC": {
+      "value": 4,
+      "desc": "S8開始時のOPENING_LOCK長（色抜け・アンログ声の提示）",
+      "usedBy": "EVT-ANLOG-BACKFLOW"
+    },
+    "S8_PROBE_MIN_VERBS": {
+      "value": 2,
+      "desc": "S8操作試行ループの脱出に必要な『異なる動詞』の試行回数（裁定D6）。1に下げると1回で脱出",
+      "usedBy": "S8 PROBE_LOOP脱出条件（§3.4）"
+    },
+    "S8_PROBE_TIMEOUT_SEC": {
+      "value": 20,
+      "desc": "S8操作試行ループのタイムアウト。1回以上試行済みならこの経過で脱出（詰まり防止）",
+      "usedBy": "S8 PROBE_LOOP脱出条件（§3.4）"
+    },
+    "S9_REPROMPT_AFTER_CHOICES": {
+      "value": 2,
+      "desc": "S9で非呼びかけ選択がこの回数続いたら、アンログ声『名前、呼んで』（D-ANLOG既存行）を再掲",
+      "usedBy": "S9 CHOICE_LOOP（§3.4）"
+    },
+    "S10_AFTERGLOW_MIN_SEC": {
+      "value": 5,
+      "desc": "S10余韻のUNLOCK最短時間（この間はS11へ遷移しない）",
+      "usedBy": "S10（§17B UNLOCK_AFTERGLOW）"
+    },
+    "S10_AFTERGLOW_MAX_SEC": {
+      "value": 15,
+      "desc": "S10余韻の最長時間（経過でミオ反応→S11へ）",
+      "usedBy": "S10（§17B UNLOCK_AFTERGLOW）"
+    },
+    "S11_REINTERPRET_MIN_SEC": {
+      "value": 10,
+      "desc": "S11連れ去り後のUNLOCK_REINTERPRET最短時間",
+      "usedBy": "S11（§17B）"
+    },
+    "S11_REINTERPRET_MAX_SEC": {
+      "value": 20,
+      "desc": "同上・最長時間の設計目安（必須再調査が済んでいれば通知反転を発火可能）",
+      "usedBy": "S11（§17B）"
+    },
+    "S11_REQUIRED_REINSPECT_COUNT": {
+      "value": 1,
+      "desc": "EVT-SENDER-INVERT発火に必要なC2再解釈（二番目の席/ベンチのミオがいた位置の調査）回数。Critical Route必須",
+      "usedBy": "EVT-SENDER-INVERT前提条件（§17C）"
+    },
+    "CALLOUT_CHARGE_SEC": {
+      "value": 1.2,
+      "desc": "呼びかけUI: 長押しチャージで名前が満ちるまでの時間（SCREEN_CALLOUT_INPUT）",
+      "usedBy": "S9/S11 CALLOUT_INPUT"
+    },
+    "CALLOUT_SILENCE_BEAT_SEC": {
+      "value": 1.5,
+      "desc": "呼びかけ発声後、他の音が引いてから応答までの無音ビート",
+      "usedBy": "S9/S11 CALLOUT_INPUT"
+    },
+    "CALLOUT_RESPONSE_DELAY_SEC": {
+      "value": 0.8,
+      "desc": "無音ビート後、ミオの応答（『…今の、ちゃんと私だった』/『はい』）表示までの間",
+      "usedBy": "S9/S11 CALLOUT_INPUT"
+    },
+    "MIOB_STOP_WAIT_THRESHOLD_SEC": {
+      "value": 2.5,
+      "desc": "MIO-B『待つ』判定: ミオ停止中にプレイヤーがこの時間以上停止していたら mioBond.waited=true",
+      "usedBy": "S2 P04（flags.json mioBond.waited）"
+    },
+    "MIOC_LINGER_BEAT_SEC": {
+      "value": 4,
+      "desc": "MIO-C『ただ座る』Natural Beatの最短通過時間（着席後、次の会話が始まるまでの何も起きない時間）",
+      "usedBy": "S3"
+    },
+    "WALK_SPEED_INDOOR": {
+      "value": 1.0,
+      "desc": "屋内（Camera FIXED）の移動速度係数",
+      "usedBy": "Area A / プレイヤーコントローラ"
+    },
+    "WALK_SPEED_OUTDOOR": {
+      "value": 1.0,
+      "desc": "屋外（Camera FOLLOW 2x）の移動速度係数。v0.17の『FOLLOW(屋外2x)』はカメラズーム率でありここは移動速度",
+      "usedBy": "Area B/C / プレイヤーコントローラ"
+    }
+  },
+  "note": "初期値はすべて設計仮置き（PROVISIONAL）。Phase 1 灰箱の§17E受け入れ試験とPhase 2 実測で調整する。"
+}
