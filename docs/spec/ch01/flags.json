@@ -1,0 +1,198 @@
+{
+  "$schema_note": "CH01 フラグ台帳（正本）。layer: impl=実装変数（DL-Y3未決のためCanon化しない・セーブ上は impl.* 名前空間に隔離） / story=Story状態（canon明示・write-once）。writers/readers は dialogues.json / scenes.json / CH01_IMPL_SPEC.md のイベントIDと1:1対応。",
+  "version": "1.0",
+  "basedOn": "CH01_DETAILED_SCRIPT v0.17 + 裁定D5（mioTrust廃止→mioBond bool分解）",
+  "flags": [
+    {
+      "id": "whiteLayerStage",
+      "renamedFrom": "whiteLayerProgress",
+      "layer": "impl",
+      "type": "enum",
+      "values": ["none", "intro", "s4", "s5", "s8", "s11"],
+      "init": "none",
+      "writers": [
+        { "event": "EVT-OPENING", "scene": "S0", "set": "intro" },
+        { "event": "EVT-1717", "scene": "S4", "set": "s4" },
+        { "event": "EVT-EMPTYSEAT", "scene": "S5", "set": "s5" },
+        { "event": "EVT-ANLOG-BACKFLOW", "scene": "S8", "set": "s8" },
+        { "event": "EVT-CAPTURE", "scene": "S11", "set": "s11" }
+      ],
+      "readers": [
+        "C2 World State Matrix（NPC通行/環境音/色光/Camera/Interactable/UIの状態variant選択）",
+        "uiRecordRateLabel（表示導出）"
+      ],
+      "note": "旧仕様の『=intro』と『+』の混在を解消するためenum化。進行は全てシーンスクリプト駆動でありカウンタ演算は存在しない。"
+    },
+    {
+      "id": "uiRecordRateLabel",
+      "layer": "impl",
+      "type": "derived-enum",
+      "derived": true,
+      "values": ["normal", "corrupted", "corrupted_up", "named_spike", "carried_lost"],
+      "derivation": {
+        "normal": "whiteLayerStage in [none, intro]（記録率ラベル正常表示）",
+        "corrupted": "whiteLayerStage == s4（--%・名称判読不能）",
+        "corrupted_up": "whiteLayerStage == s4 かつ S5でfragmentCount>=2（--%↑・名称は依然判読不能）",
+        "named_spike": "whiteLayerStage == s8 かつ S8操作試行1回以上（『白層化率』として初判読＋急伸）",
+        "carried_lost": "whiteLayerStage == s11（carried.lost 灰スロット表示）"
+      },
+      "note": "保存しない表示専用の導出値。§17D P0整合（S4では名称未判読・S8の操作失敗後に初判読）を型で保証する。"
+    },
+    {
+      "id": "observation",
+      "layer": "impl",
+      "type": "int",
+      "init": 0,
+      "range": [0, 99],
+      "writers": [
+        { "source": "INT-母部屋（A3・Opt調べ）", "scene": "S1", "delta": 1 },
+        { "source": "INT-空席 初回調査", "scene": "S5", "delta": 1 },
+        { "source": "INT-空席 再調査", "scene": "S5", "delta": 1 },
+        { "source": "CHOICE-S6 observe選択", "scene": "S6", "delta": 2 }
+      ],
+      "readers": [
+        { "scene": "S8", "effect": "逆流強度Tierの決定（下記thresholds）" }
+      ],
+      "thresholds": {
+        "low": { "range": [0, 2], "s8Effect": "色抜け段階=1 / 操作試行ごとの率ジャンプ小" },
+        "mid": { "range": [3, 5], "s8Effect": "色抜け段階=2 / 率ジャンプ中 / D-ANLOG残響レイヤ+1" },
+        "high": { "range": [6, 99], "s8Effect": "色抜け段階=3 / 率ジャンプ大 / D-ANLOG残響レイヤ+2" }
+      },
+      "note": "『observation高いほど逆流強』（v0.17 SECTION 1/S8）の実装写像。Tierの演出内容はPhase 1灰箱でtuning。"
+    },
+    {
+      "id": "mioBond",
+      "supersedes": "mioTrust",
+      "layer": "impl",
+      "type": "object",
+      "fields": {
+        "detour": {
+          "type": "bool", "init": false,
+          "writer": { "source": "MIO-A（P05 寄り道・Optional）", "scene": "S2" },
+          "traceEffect": "S10余韻中、ミオが坂道方向を一度見る（配置差分1点）"
+        },
+        "waited": {
+          "type": "bool", "init": false,
+          "writer": { "source": "MIO-B（P04『待つ』でMIOB_STOP_WAIT_THRESHOLD_SEC以上停止）", "scene": "S2" },
+          "traceEffect": "S9で『待つ』選択時のミオ反応台詞variant（1行差分）"
+        }
+      },
+      "readers": ["S9/S10 微小トレース（上記traceEffect）"],
+      "note": "裁定D5。MIO BOND TRACE『大分岐・好感度システムにしない』（v0.17 SECTION 1）に従い加減算を廃止しbool記録に変更。MIO-C（ただ座る）はNatural BeatとしてCritical Routeで必ず通過するためフラグ化しない。旧mioTrustの読み取り（S3/S6 Flag Read）は効果未定義のデッドリードだったため削除。"
+    },
+    {
+      "id": "mioNameStability",
+      "layer": "impl",
+      "type": "enum",
+      "values": ["unstable", "high", "restored"],
+      "init": "unstable",
+      "writers": [
+        { "dialogue": "D-NAME1", "scene": "S3", "set": "high" },
+        { "event": "EVT-CALLOUT", "scene": "S9", "set": "restored" }
+      ],
+      "readers": [
+        { "scene": "S3", "effect": "ベンチ付近の環境音減衰演出の有無" },
+        { "scene": "S11", "effect": "EVT-CALLOUT-YES 前提条件（restored であること）" }
+      ]
+    },
+    {
+      "id": "anlogPressure",
+      "layer": "impl",
+      "type": "enum",
+      "values": ["none", "high"],
+      "init": "none",
+      "writers": [{ "event": "EVT-ANLOG-BACKFLOW", "scene": "S8", "set": "high" }],
+      "readers": [{ "scene": "S9", "effect": "CHOICE-S9 提示中の背景演出強度（observation Tierと併用）" }],
+      "note": "強度の段階は observation.thresholds 側で持つ。本フラグは状態の有無のみ。"
+    },
+    {
+      "id": "fragmentCount",
+      "layer": "impl",
+      "type": "int",
+      "init": 0,
+      "range": [0, 9],
+      "status": "RESERVED (dormant)",
+      "writers": [
+        { "source": "INT-空席 再調査", "scene": "S5", "delta": 1 }
+      ],
+      "readers": [
+        { "scene": "S7", "effect": "再構成モード入力（CD-13 UNDECIDED・S7未実装のため現行読者なし）" }
+      ],
+      "note": "裁定D2。S7がflag-off（未実装・データ予約のみ）のため休眠カウンタ。書き込みは実装する（uiRecordRateLabel.corrupted_upの導出にも使用）。"
+    },
+    {
+      "id": "playerChoseNotToLook",
+      "layer": "impl",
+      "type": "bool",
+      "init": false,
+      "writers": [
+        { "source": "CHOICE-S6 avoid/wait選択", "scene": "S6" },
+        { "source": "CHOICE-S9 見ない選択", "scene": "S9" }
+      ],
+      "readers": ["CH02持ち越し（CH01内の読者なし・記録のみ）"]
+    },
+    {
+      "id": "mioVoluntarySpeech",
+      "layer": "impl",
+      "type": "bool",
+      "init": false,
+      "writers": [{ "event": "EVT-CALLOUT", "scene": "S9" }],
+      "readers": ["CH02持ち越し（CH01内の読者なし・記録のみ）"]
+    },
+    {
+      "id": "relationAnchor",
+      "layer": "impl",
+      "type": "bool",
+      "init": false,
+      "writers": [
+        { "source": "CHOICE-S9 聞く/待つ/手を取る選択（マイクロフィードバック）", "scene": "S9" },
+        { "event": "EVT-CALLOUT", "scene": "S9" }
+      ],
+      "readers": [{ "scene": "S11", "effect": "EVT-CAPTURE 前提条件（v0.17 SECTION 4準拠）" }]
+    },
+    {
+      "id": "observer_is_tou",
+      "layer": "story",
+      "type": "bool",
+      "init": false,
+      "writeOnce": true,
+      "writers": [{ "event": "EVT-CAPTURE", "scene": "S11" }],
+      "readers": ["CH02"]
+    },
+    {
+      "id": "mio_carried_lost",
+      "layer": "story",
+      "type": "bool",
+      "init": false,
+      "writeOnce": true,
+      "writers": [{ "event": "EVT-CAPTURE", "scene": "S11" }],
+      "readers": ["EVT-SENDER-INVERT 前提条件", "CH02"]
+    },
+    {
+      "id": "notification_sender_inverted",
+      "layer": "story",
+      "type": "bool",
+      "init": false,
+      "writeOnce": true,
+      "writers": [{ "event": "EVT-SENDER-INVERT", "scene": "S11" }],
+      "readers": ["CH02"]
+    }
+  ],
+  "removed": [
+    {
+      "id": "mioTrust",
+      "reason": "裁定D5。仕様自身のMIO BOND TRACE原則（好感度システムにしない）と矛盾し、増分・閾値・読み取り効果が全て未定義だったため mioBond（bool群）へ置換。",
+      "supersededBy": "mioBond"
+    },
+    {
+      "id": "worldKnowledge",
+      "reason": "v0.17自身が『実装変数として未決扱い・S10縮退を理由にCanon化しない』と規定。実装しない。S10の『一部理解』はS8-S9の体験設計で成立させる。",
+      "supersededBy": null
+    }
+  ],
+  "rules": {
+    "writeOwner": "フラグ書き込みのオーナーは Dialogue完了時 または Event完了時 のみ。scenes.json の flagSummary は導出情報であり正ではない（書込タイミング競合の再発防止）。",
+    "namespace": "impl層のフラグはセーブデータ上 impl.* に隔離し、DL-Y3裁定までCanon化しない。story層は canon 準拠。",
+    "writeOnce": "story層は一度trueにしたら以後変更禁止。"
+  }
+}

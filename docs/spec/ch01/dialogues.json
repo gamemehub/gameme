@@ -1,0 +1,365 @@
+{
+  "$schema_note": "CH01 台詞台帳（正本）。v0.17 SECTION 2/2B の正規化。全テキストは SCRIPT DRAFT（文芸FINALでない・書換可）。keyLine=true の行は★canon確定キーライン＝意図保持・書換慎重。afterState はこの台詞完了時に書き込むフラグ（書込オーナー規則: flags.json rules.writeOwner）。イベントがオーナーの書き込みは events 側（CH01_IMPL_SPEC.md §5）にあり、ここには持たない。文芸FINALパスをGPT等へ依頼する場合は本ファイルの該当エントリのみ切り出して渡す。",
+  "version": "1.0",
+  "forbiddenAllScenes": "記憶局全貌 / アンログ思想 / 白層科学 / 未来のトウ / 母の保存詳細 / ミオ=鍵・原型 / 時計塔の内部・分類・鐘 / 金魚（非採用）",
+  "dialogues": [
+    {
+      "id": "D-FORGET", "scene": "S0", "speaker": "ミオ", "target": "トウ",
+      "trigger": "導入（EVT-OPENING内）", "reqOpt": "Req",
+      "purpose": "章の核=不在を予告。誰が/なぜは言わない。",
+      "lines": [
+        { "type": "direction", "text": "セーブデータが滲む。時刻表示は 17:17。" },
+        { "type": "direction", "text": "白い。どこかに、名前の抜けたにおいがする。" },
+        { "type": "direction", "speaker": "ミオ", "text": "こちらを見て、少しだけ笑う。" },
+        { "speaker": "ミオ", "text": "……ごめんなさい。", "keyLine": true },
+        { "speaker": "ミオ", "text": "あなたは、誰ですか？", "keyLine": true },
+        { "type": "direction", "text": "画面が白く滲み、環境音が引いていく。" }
+      ],
+      "playerResponse": "送りのみ",
+      "afterState": {}
+    },
+    {
+      "id": "D-AUNT-WAIT", "scene": "S1", "speaker": "叔母", "target": "トウ",
+      "trigger": "A2会話", "reqOpt": "Req",
+      "purpose": "『待つ』主題の導入。母の詳細は言わない。",
+      "lines": [
+        { "speaker": "叔母", "text": "おはよう、トウ。" },
+        { "speaker": "叔母", "text": "……顔に書いてある。「きょうも、だれかを待ちます」って。" },
+        { "speaker": "トウ", "text": "…そうかな。" },
+        { "speaker": "叔母", "text": "会うまえは、みんな すこし待つものよ。" }
+      ],
+      "playerResponse": "送り",
+      "afterState": {}
+    },
+    {
+      "id": "D-AUNT-NAME", "scene": "S1", "speaker": "叔母", "target": "トウ",
+      "trigger": "A2会話（D-AUNT-WAIT直後）", "reqOpt": "Req",
+      "purpose": "名→安心の伏線＋母の記憶の揺らぎ。母の状態は断定しない。攻略伏線だと説明しない。",
+      "lines": [
+        { "speaker": "叔母", "text": "あの子は、名前を呼ばれると安心するって……お母さんが、よく言ってた。", "keyLine": true }
+      ],
+      "branch": {
+        "prompt": ["聞き返す", "何も言わない"],
+        "聞き返す": [
+          { "speaker": "叔母", "text": "……たぶん、ね。" },
+          { "type": "direction", "text": "一瞬だけ家事の手が止まる。（記憶が、少しゆらぐ）" }
+        ],
+        "何も言わない": [
+          { "type": "direction", "speaker": "叔母", "text": "少し困った顔で笑い、それ以上は説明しない。" }
+        ]
+      },
+      "afterState": {},
+      "note": "旧afterState mioTrust=base は裁定D5（mioTrust廃止）によりSUPERSEDED。書込タイミング競合（台詞時 vs 玄関退出時）も本裁定で消滅。"
+    },
+    {
+      "id": "D-AUNT-FLOWER", "scene": "S1", "speaker": "叔母", "target": "トウ",
+      "trigger": "A3付近/会話後半", "reqOpt": "Opt",
+      "purpose": "叔母の白層化を身近に。母本人は出さない。",
+      "lines": [
+        { "speaker": "叔母", "text": "お母さんの花、替えておいてね。" },
+        { "speaker": "トウ", "text": "…昨日、替えたよ。" },
+        { "speaker": "叔母", "text": "そうだった？ …覚えてることから、先に あやしくなるのね。" }
+      ],
+      "afterState": {}
+    },
+    {
+      "id": "D-5MIN", "scene": "S2", "speaker": "ミオ", "target": "トウ",
+      "trigger": "B1合流・同行中", "reqOpt": "Req",
+      "purpose": "反復行動と『最初の日』の空白。理由は説明させない。",
+      "lines": [
+        { "speaker": "ミオ", "text": "帰ろ。……五分だけ、寄っていい？" }
+      ],
+      "branch": {
+        "prompt": ["いいよ", "どうして？"],
+        "いいよ": [{ "speaker": "ミオ", "text": "ありがとう。" }],
+        "どうして？": [{ "type": "direction", "speaker": "ミオ", "text": "少し笑って、答えない。" }]
+      },
+      "linesAfterBranch": [
+        { "speaker": "トウ", "inner": true, "text": "三か月前から、ずっと「五分だけ」だ。" },
+        { "speaker": "トウ", "inner": true, "text": "……最初の日のことだけ、思い出せない。" }
+      ],
+      "afterState": {}
+    },
+    {
+      "id": "D-WAIT", "alias": "MIO-B", "scene": "S2", "speaker": "ミオ", "target": "トウ",
+      "trigger": "P04 主動線上Natural Event（ミオが2〜3歩先で止まる・進行LOCKなし）", "reqOpt": "Natural",
+      "purpose": "『待つ』を説明ではなく移動操作で経験させる。後半の攻略意味を先に身体化。",
+      "lines": [
+        { "type": "direction", "text": "ミオが立ち止まる。何かを見ている。" }
+      ],
+      "branch": {
+        "prompt": "移動で成立（UI選択なし）: 先へ進む / その場で待つ",
+        "先へ進む": [
+          { "speaker": "ミオ", "text": "あ、待って。" },
+          { "type": "direction", "text": "ミオが追いつき、進行は止まらない。" }
+        ],
+        "待つ": [
+          { "type": "direction", "text": "数秒、同じ方向を見たまま並んで立つ。" },
+          { "speaker": "ミオ", "text": "……トウは、待ってくれるんだ。" },
+          { "speaker": "トウ", "text": "……うん。" },
+          { "type": "direction", "speaker": "ミオ", "text": "少しだけ笑って、歩き出す。" }
+        ]
+      },
+      "afterState": { "mioBond.waited": "true（『待つ』側・MIOB_STOP_WAIT_THRESHOLD_SEC以上停止時）" }
+    },
+    {
+      "id": "D-DETOUR", "alias": "MIO-A", "scene": "S2", "speaker": "ミオ", "target": "トウ",
+      "trigger": "P05 小ループ入口（Optional）", "reqOpt": "Opt / CANDIDATE（猫はIMAGE-02/Playtestで採否）",
+      "purpose": "プロット情報ゼロで『一緒に寄り道した記憶』を作る。",
+      "lines": [
+        { "speaker": "ミオ", "text": "あ、……。" },
+        { "type": "direction", "text": "ミオが主動線から少し外れた方を見る。猫がいる。" },
+        { "speaker": "ミオ", "text": "……大丈夫かな。大丈夫。たぶん。" },
+        { "type": "direction", "text": "近づくと猫が逃げる。" },
+        { "speaker": "ミオ", "text": "……逃げちゃった。" }
+      ],
+      "branch": {
+        "prompt": ["追わない", "もう少し見る"],
+        "追わない": [{ "type": "direction", "text": "ミオも追わない。少しだけ、その場にいる。" }],
+        "もう少し見る": [{ "type": "direction", "text": "猫は少し離れた場所からこちらを見ている。" }]
+      },
+      "linesAfterBranch": [{ "speaker": "ミオ", "text": "帰ろっか。" }],
+      "afterState": { "mioBond.detour": true }
+    },
+    {
+      "id": "NPC-B2-AMBIENT-01", "scene": "S2", "speaker": "住人（掃除の人）", "target": "—",
+      "trigger": "P02 主動線すれ違い（歩行LOCKなし）", "reqOpt": "Natural + Opt再会話",
+      "purpose": "町が機能しているWORLDを説明せず生活行動と軽い可笑しさで記憶させる。制度説明禁止。",
+      "stages": {
+        "initial": [
+          { "speaker": "住人", "text": "おはよう。今日は、落ち葉の方が早起きだ。" },
+          { "type": "direction", "text": "箒は止まらない。" },
+          { "type": "direction", "speaker": "ミオ", "text": "足元の落ち葉を見て、少し笑う。" }
+        ],
+        "optionalTalk": [
+          { "speaker": "住人", "text": "ほら、また一枚。きりがないね。" },
+          { "speaker": "ミオ", "text": "……負けてるね。" }
+        ],
+        "reTalk": [
+          { "speaker": "住人", "text": "まだ負けてるよ。" }
+        ]
+      },
+      "afterState": {},
+      "note": "旧『おかえり。』固定案はSUPERSEDED（v0.12 Canon Guard）。他の旧Area-B住人4名（店主/子ども/老人/近所の人）はPROTOTYPE NON-ACTIVE＝実装しない（候補台帳は原本SECTION 2C）。"
+    },
+    {
+      "id": "D-TOWER-REVEAL", "scene": "S2", "speaker": "ミオ", "target": "トウ",
+      "trigger": "P07 遮蔽切れで塔全体が見える（強制Camera Panなし）", "reqOpt": "Natural",
+      "purpose": "塔の設定を説明せず、ミオの反応で『個人的な意味がある』とだけ感じさせる。",
+      "lines": [
+        { "speaker": "ミオ", "text": "塔、見えてきた。" },
+        { "speaker": "トウ", "text": "……あと五分？" },
+        { "speaker": "ミオ", "text": "うん。たぶん。" },
+        { "type": "direction", "text": "ミオは塔を見たまま、少しだけ歩く速度を落とす。" }
+      ],
+      "afterState": {},
+      "note": "v0.12 B2-P07から正規化時にID付与（旧仕様では無名のScript Candidate）。"
+    },
+    {
+      "id": "D-BENCH1", "scene": "S3", "speaker": "ミオ", "target": "トウ",
+      "trigger": "C1→C2ベンチ接近", "reqOpt": "Req",
+      "purpose": "5席目の伏線。『何か』を明示しない。",
+      "lines": [
+        { "speaker": "ミオ", "text": "一番端は、近すぎるの。" },
+        { "speaker": "ミオ", "text": "…二番目がいい。" },
+        { "speaker": "トウ", "text": "何もないよ、そこ。" },
+        { "type": "direction", "speaker": "ミオ", "text": "二番目の席に座る。" }
+      ],
+      "afterState": {}
+    },
+    {
+      "id": "D-MIOC-LINGER", "alias": "MIO-C", "scene": "S3", "speaker": "ミオ", "target": "トウ",
+      "trigger": "着席後 Natural Beat（UNLOCKのまま・MIOC_LINGER_BEAT_SEC通過）", "reqOpt": "Natural（Critical Routeで必ず通過）",
+      "purpose": "プロット報酬ゼロの共有時間を、後の喪失価値へ変換する。",
+      "lines": [
+        { "type": "direction", "text": "しばらく、何も起きない。風が吹く。" },
+        { "speaker": "ミオ", "text": "……風、気持ちいいね。" },
+        { "type": "direction", "text": "ミオが空を見上げて、笑う。プロットと無関係の、ただの一瞬。" }
+      ],
+      "afterState": {},
+      "note": "v0.15手順12から正規化時にID付与。"
+    },
+    {
+      "id": "D-QUIET", "scene": "S3", "speaker": "ミオ", "target": "トウ",
+      "trigger": "MIO-C通過後", "reqOpt": "Req",
+      "purpose": "白層の局在（名前の近くが静か）。",
+      "lines": [
+        { "speaker": "ミオ", "text": "ここに座ってると、少しだけ静かになる。" },
+        { "speaker": "ミオ", "text": "…音がするのは、私の名前の近くだけ。" }
+      ],
+      "afterState": {}
+    },
+    {
+      "id": "D-NAME1", "scene": "S3", "speaker": "トウ", "target": "ミオ",
+      "trigger": "D-QUIET直後（名前の実演）", "reqOpt": "Req",
+      "purpose": "呼びかけの実演（後の攻略の種）。S9の正解ヒントとして解説しない。",
+      "lines": [
+        { "speaker": "トウ", "text": "ミオ。", "keyLine": true },
+        { "type": "direction", "text": "一瞬、周りの音が止まる。" },
+        { "speaker": "ミオ", "text": "…今の、止まった。ちゃんと、私だった。", "keyLine": true }
+      ],
+      "afterState": { "mioNameStability": "high" },
+      "note": "書込タイミング裁定: D-NAME1完了時（S4遷移時ではない）。"
+    },
+    {
+      "id": "D-BLANK", "scene": "S4", "speaker": "ミオ", "target": "トウ",
+      "trigger": "EVT-1717 通知open", "reqOpt": "Req",
+      "purpose": "空白通知の気味悪さ。宛先は明かさない。--%の名称も明かさない。",
+      "lines": [
+        { "speaker": "トウ", "inner": true, "text": "……送った覚えの、ない通知。" },
+        { "type": "system", "text": "通知を開く。本文は空白。既読だけが付いている。" },
+        { "speaker": "ミオ", "text": "…来たんだ。", "keyLine": true },
+        { "speaker": "ミオ", "text": "たぶん、それ、まだ見ちゃだめ。", "keyLine": true },
+        { "type": "direction", "text": "通知のあと、環境音が一段、引く。" }
+      ],
+      "afterState": {}
+    },
+    {
+      "id": "D-5TH", "scene": "S5", "speaker": "ミオ", "target": "トウ",
+      "trigger": "5席目付近へ接近（EVT-EMPTYSEAT）", "reqOpt": "Req",
+      "purpose": "5席目パズル提示。誰の席かは言わない。",
+      "lines": [
+        { "speaker": "ミオ", "text": "……ほら、五つ目。", "keyLine": true },
+        { "speaker": "トウ", "text": "席は、四つしかないよ。", "keyLine": true },
+        { "speaker": "ミオ", "text": "……そう、だよね。" },
+        { "type": "direction", "text": "（否認）トウは、見なかったことにしようとする。" }
+      ],
+      "afterState": {}
+    },
+    {
+      "id": "CHOICE-S6", "scene": "S6", "speaker": "(システム)", "target": "—",
+      "trigger": "S5余白経過後", "reqOpt": "Req",
+      "purpose": "observe/avoid/ask/wait を手に取らせる。推奨・善悪・True条件を示さない。",
+      "options": [
+        {
+          "intent": "observe", "label": "見る",
+          "reaction": [{ "speaker": "トウ", "inner": true, "text": "もっと調べたら、分かるかも。" }],
+          "afterState": { "observation": "+2" }
+        },
+        {
+          "intent": "avoid", "label": "見ない",
+          "reaction": [{ "speaker": "トウ", "inner": true, "text": "……見ない方がいい気がした。" }],
+          "afterState": { "playerChoseNotToLook": true }
+        },
+        {
+          "intent": "ask", "label": "聞く",
+          "reaction": [
+            { "speaker": "トウ", "text": "……大丈夫？" },
+            { "speaker": "ミオ", "text": "大丈夫。たぶん。", "keyLine": true }
+          ],
+          "afterState": {}
+        },
+        {
+          "intent": "wait", "label": "待つ",
+          "reaction": [{ "type": "direction", "text": "何も言わず、となりにいる。" }],
+          "afterState": { "playerChoseNotToLook": true }
+        }
+      ],
+      "note": "旧afterStateのmioTrust±は裁定D5によりSUPERSEDED。選択はObservation Profileとしてテレメトリ記録（FIRST_ATTITUDE_CHOICE）。"
+    },
+    {
+      "id": "D-ANLOG", "scene": "S8", "speaker": "アンログ（声）", "target": "—",
+      "trigger": "EVT-ANLOG-BACKFLOW（OPENING_LOCK中）", "reqOpt": "Req",
+      "purpose": "残響の言語。正体・思想は明かさない。observation Tier highで残響レイヤ増（flags.json thresholds）。",
+      "lines": [
+        { "type": "direction", "text": "ミオの輪郭から、色が抜けはじめる。" },
+        { "speaker": "アンログ/声", "text": "来て。", "keyLine": true },
+        { "speaker": "アンログ/声", "text": "待ってた。" },
+        { "speaker": "アンログ/声", "text": "トウ。／名前、呼んで。", "keyLine": true },
+        { "speaker": "アンログ/声", "text": "見ないで。／…でも、忘れないで。", "keyLine": true }
+      ],
+      "afterState": {}
+    },
+    {
+      "id": "D-STOP", "scene": "S8", "speaker": "ミオ", "target": "トウ",
+      "trigger": "D-ANLOG直後", "reqOpt": "Req",
+      "purpose": "観測が壊す実感。",
+      "lines": [
+        { "speaker": "ミオ", "text": "やめて。" },
+        { "speaker": "ミオ", "text": "…それ、私の中から出さないで。" }
+      ],
+      "afterState": {}
+    },
+    {
+      "id": "S8-PROBE-FEEDBACK", "scene": "S8", "speaker": "(システム/ト書き)", "target": "—",
+      "trigger": "PARTIAL_UNLOCK_PROBE 各操作試行", "reqOpt": "Req",
+      "purpose": "一方的観測操作＝悪化をGameplay Outcomeで学ばせる。UIで先に答えを言わない。",
+      "options": [
+        { "verb": "移動する", "feedback": [{ "type": "system", "text": "率が跳ぶ。ミオの色がさらに抜ける。" }] },
+        { "verb": "触れる", "feedback": [{ "type": "system", "text": "率が跳ぶ。届かない。" }] },
+        { "verb": "追跡する", "feedback": [{ "type": "system", "text": "率が跳ぶ。逃げるほど悪化する。" }] },
+        { "verb": "記録する", "feedback": [{ "type": "system", "text": "率が跳ぶ。記録しようとするほど消える。" }] }
+      ],
+      "closing": [
+        { "type": "direction", "text": "こちらから固定しようとする操作はすべて——率だけが、上がる。" },
+        { "speaker": "トウ", "inner": true, "text": "…ぼくが、見たから。", "note": "自分で到達・怒り。この直後に『白層化率』初判読（uiRecordRateLabel=named_spike）" }
+      ],
+      "afterState": {}
+    },
+    {
+      "id": "D-NOLOOK", "scene": "S9", "speaker": "ミオ/トウ", "target": "—",
+      "trigger": "CHOICE-S9『見ない』選択", "reqOpt": "Opt（正の別解）",
+      "purpose": "攻略反転=観測しない、の肯定。",
+      "lines": [
+        { "speaker": "ミオ", "text": "……今のは、たぶん正しい。" }
+      ],
+      "afterState": { "playerChoseNotToLook": true }
+    },
+    {
+      "id": "CHOICE-S9", "scene": "S9", "speaker": "(システム)", "target": "—",
+      "trigger": "S8脱出後", "reqOpt": "Req",
+      "purpose": "観測以外の動詞群。名を呼ぶ=Req到達。非呼びかけ選択は失敗ではなくループで戻る（§3.4）。",
+      "options": [
+        { "label": "見ない", "result": "D-NOLOOK再生 → 選択肢へ戻る", "afterState": { "playerChoseNotToLook": true } },
+        { "label": "聞く", "result": "ミオの震えが少し止まる → 選択肢へ戻る", "afterState": { "relationAnchor": true } },
+        { "label": "待つ", "result": "ミオの震えが少し止まる → 選択肢へ戻る（mioBond.waited時は反応variant 1行）", "afterState": { "relationAnchor": true } },
+        { "label": "手を取る", "result": "ミオの震えが少し止まる → 選択肢へ戻る", "afterState": { "relationAnchor": true } },
+        { "label": "名を呼ぶ", "result": "CALLOUT_INPUT起動 → D-NAME2 → S10", "afterState": {} }
+      ],
+      "loop": "非呼びかけ選択が S9_REPROMPT_AFTER_CHOICES 回続いたら D-ANLOG の『名前、呼んで』を再掲"
+    },
+    {
+      "id": "D-NAME2", "scene": "S9", "speaker": "トウ", "target": "ミオ",
+      "trigger": "CALLOUT_INPUT成立（EVT-CALLOUT）", "reqOpt": "Req",
+      "purpose": "名→私に戻る（攻略成立）。観測ではなく相手の応答を待つ行為＝呼びかけ。",
+      "lines": [
+        { "speaker": "トウ", "text": "ミオ。", "keyLine": true },
+        { "type": "direction", "text": "呼びかけのあと、他の音がすべて引く。" },
+        { "speaker": "ミオ", "text": "…今の、ちゃんと、私だった。", "keyLine": true }
+      ],
+      "afterState": {},
+      "note": "フラグ書き込み（mioNameStability=restored 等）のオーナーはEVT-CALLOUT（CH01_IMPL_SPEC.md §5）。"
+    },
+    {
+      "id": "D-5TH-TRUTH-SHORT", "scene": "S10", "speaker": "ミオ", "target": "トウ",
+      "trigger": "余韻中（UNLOCK_AFTERGLOW）", "reqOpt": "Req",
+      "purpose": "S8-S9で体験した事実を短く受け止める。説明し直さない。",
+      "lines": [
+        { "type": "direction", "text": "ミオはすぐには話さない。ベンチ、塔、トウのどれかを見る。" },
+        { "speaker": "ミオ", "text": "……五つ目は、ほんとにあった。" },
+        { "type": "direction", "text": "それ以上は説明しない。夕闇。時計塔のシルエットだけが残る。" }
+      ],
+      "afterState": {}
+    },
+    {
+      "id": "D-NOAH", "scene": "S10", "speaker": "ノア（声）", "target": "—",
+      "status": "RESERVED — 実装しない（CANDIDATE/ASSUMPTION・採否保留）",
+      "implemented": false,
+      "purpose": "採用時のみ制度の断片を最小開示。場所非依存・U-004厳守（塔内部/制度に踏み込まない）。",
+      "note": "CH01_DETAIL S10に無い設計追加のため必須から除外（v0.10）。採用裁定が出るまで本エントリは予約のみ。"
+    },
+    {
+      "id": "D-END", "scene": "S11", "speaker": "通知/トウ独白", "target": "—",
+      "trigger": "EVT-SENDER-INVERT（再解釈1回以上完了後）", "reqOpt": "Req",
+      "purpose": "観測点=トウ/送信者反転。確定的意味は断定しない。",
+      "lines": [
+        { "type": "system", "text": "端末に通知。「次回観測予定：明日 17:17」" },
+        { "type": "system", "text": "通知の送信者が、ミオ → トウ に反転する。" },
+        { "speaker": "トウ", "text": "送った覚えは、なかった。でも、既読だけは付いていた。", "keyLine": true },
+        { "speaker": "トウ", "inner": true, "text": "…必ず、取り戻す。" }
+      ],
+      "afterState": {},
+      "note": "S11の呼びかけ（『ミオ。』→『はい。』★）はCALLOUT_INPUT＋EVT-CALLOUT-YES側で定義。記憶局の台詞は最小（『……保護のため、です。』のみ・多くを語らない）。"
+    }
+  ]
+}
